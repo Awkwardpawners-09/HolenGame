@@ -1,9 +1,10 @@
+using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LobbyInventoryHandler : MonoBehaviour
 {
-    public InventoryUIManager inventoryUIManager; // Reference to InventoryUIManager
+    public GameManager inventoryUIManager; // Reference to InventoryUIManager
     public HolenInventoryManager holenInventoryManager; // Reference to HolenInventoryManager
     public Transform player1SlotParent; // Parent container for Player 1's inventory slots
     public GameObject slotPrefab; // The prefab for displaying an individual item slot
@@ -18,7 +19,7 @@ public class LobbyInventoryHandler : MonoBehaviour
 
         if (inventoryUIManager == null)
         {
-            inventoryUIManager = FindObjectOfType<InventoryUIManager>();
+            inventoryUIManager = FindObjectOfType<GameManager>();
         }
 
         if (player1SlotParent == null || slotPrefab == null)

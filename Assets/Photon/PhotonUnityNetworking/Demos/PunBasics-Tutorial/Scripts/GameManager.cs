@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using Photon.Realtime;
+using System;
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -181,8 +182,13 @@ namespace Photon.Pun.Demo.PunBasics
 			PhotonNetwork.LoadLevel("PunBasics-Room for "+PhotonNetwork.CurrentRoom.PlayerCount);
 		}
 
-		#endregion
+        public void RefreshUI()
+        {
+            throw new NotImplementedException();
+        }
 
-	}
+        #endregion
+
+    }
 
 }

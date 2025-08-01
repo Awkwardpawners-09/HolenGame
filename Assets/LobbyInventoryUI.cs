@@ -1,8 +1,9 @@
+using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
 
 public class LobbyInventoryUI : MonoBehaviour
 {
-    public InventoryUIManager inventoryUIManager; // Reference to the InventoryUIManager
+    public GameManager inventoryUIManager; // Reference to the InventoryUIManager
     public HolenInventoryManager holenInventoryManager; // Reference to the HolenInventoryManager
 
     private void Start()
@@ -10,7 +11,7 @@ public class LobbyInventoryUI : MonoBehaviour
         // Ensure the InventoryUIManager and HolenInventoryManager are properly referenced
         if (inventoryUIManager == null)
         {
-            inventoryUIManager = FindObjectOfType<InventoryUIManager>(); // Fix: reference to InventoryUIManager, not itself
+            inventoryUIManager = FindObjectOfType<GameManager>(); // Fix: reference to InventoryUIManager, not itself
         }
 
         if (holenInventoryManager == null)
