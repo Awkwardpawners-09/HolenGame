@@ -14,6 +14,7 @@ public class HolenSlotUI : MonoBehaviour
     public GameObject contentPrefab; // Reference to Content prefab
     public Transform inventoryView; // Reference to the InventoryView to place the Content GameObject
 
+
     void Start()
     {
         button = GetComponent<Button>();
