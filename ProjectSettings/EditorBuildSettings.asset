@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene3.unity
     guid: 6e68cd342963a7742a603fa074f6256f
   - enabled: 1
+    path: Assets/Scenes/GameSceneHole-in1.unity
+    guid: 7e06b56f13def4947be764ec0894403f
+  - enabled: 1
     path: Assets/Scenes/GameScene4.unity
     guid: 14bd3212fe977e5468921f87e80203b6
   m_configObjects: {}
