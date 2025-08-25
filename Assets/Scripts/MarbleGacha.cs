@@ -4,17 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-[System.Serializable]
-public class Marble
-{
-    public string name; 
-    public Sprite marbleSprite; // optional: for showing in scene
-    public int rarityWeight;  // higher = more common
-}
-
 public class MarbleGacha : MonoBehaviour
 {
-    public List<Marble> marblePool;
+    public List<HolenData> marblePool; // now uses ScriptableObjects
     public PlayerData playerData;
 
     // UI references
@@ -26,7 +18,7 @@ public class MarbleGacha : MonoBehaviour
     {
         if (playerData.SpendCoins(100))
         {
-            Marble awardedMarble = GetRandomMarble();
+            HolenData awardedMarble = GetRandomMarble();
             ShowMarbleResult(awardedMarble);
         }
         else
@@ -35,33 +27,23 @@ public class MarbleGacha : MonoBehaviour
         }
     }
 
-    void ShowMarbleResult(Marble marble)
+    void ShowMarbleResult(HolenData marble)
     {
-    resultPanel.SetActive(true);
-    marbleNameText.text = marble.name;
-    marbleImage.sprite = marble.marbleSprite;
+        resultPanel.SetActive(true);
+        marbleNameText.text = marble.holenName; // ✅ use holenName
+        marbleImage.sprite = marble.holenIcon;  // ✅ use holenIcon
     }
-    
 
-    Marble GetRandomMarble()
+    HolenData GetRandomMarble()
     {
-        int totalWeight = marblePool.Sum(m => m.rarityWeight);
-        int random = Random.Range(0, totalWeight);
-        int current = 0;
-
-        foreach (Marble m in marblePool)
-        {
-            current += m.rarityWeight;
-            if (random < current)
-                return m;
-        }
-
-        return marblePool[0];
+        // ✅ If you want weights, you need to add "public int rarityWeight;" to HolenData.
+        // For now, pick random equally
+        int randomIndex = Random.Range(0, marblePool.Count);
+        return marblePool[randomIndex];
     }
 
     public void CloseResultPanel()
-{
-    resultPanel.SetActive(false);
-}
-
+    {
+        resultPanel.SetActive(false);
+    }
 }
