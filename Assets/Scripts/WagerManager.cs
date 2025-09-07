@@ -14,6 +14,55 @@ public class WagerManager : MonoBehaviour
     private List<GameObject> selectedItems = new List<GameObject>(); // To keep track of selected items
     private bool canClick = true; // To add buffer time before it can be reselected
 
+    // ===================== ADDED: persistent “match” memory of selected holens =====================
+    [System.Serializable]
+    public class SelectedHolenRecord
+    {
+        public string holenID;
+        public int quantity;
+
+        public SelectedHolenRecord(string id, int qty)
+        {
+            holenID = id;
+            quantity = qty;
+        }
+    }
+
+    [Header("Selected Holens (For Inspector)")]
+    [SerializeField] private List<SelectedHolenRecord> selectedHolens = new List<SelectedHolenRecord>();
+    public IReadOnlyList<SelectedHolenRecord> SelectedHolens => selectedHolens;
+
+    private void AddSelectedHolen(string holenID, int quantity)
+    {
+        var rec = selectedHolens.Find(r => r.holenID == holenID);
+        if (rec == null)
+        {
+            selectedHolens.Add(new SelectedHolenRecord(holenID, quantity));
+        }
+        else
+        {
+            // If you prefer “latest click wins”, update quantity;
+            // or comment this line to keep first quantity.
+            rec.quantity = quantity;
+        }
+    }
+
+    private void RemoveSelectedHolen(string holenID)
+    {
+        var rec = selectedHolens.Find(r => r.holenID == holenID);
+        if (rec != null) selectedHolens.Remove(rec);
+    }
+
+    // Call this in the next scene to get a safe copy
+    public List<SelectedHolenRecord> GetSelectedHolensCopy()
+    {
+        var copy = new List<SelectedHolenRecord>(selectedHolens.Count);
+        foreach (var r in selectedHolens)
+            copy.Add(new SelectedHolenRecord(r.holenID, r.quantity));
+        return copy;
+    }
+    // ===============================================================================================
+
     private void Awake()
     {
         // Singleton pattern to ensure only one instance exists
@@ -74,6 +123,10 @@ public class WagerManager : MonoBehaviour
             selectedItems.Remove(existingItem);
             Destroy(existingItem);
             Debug.Log($"{holenData.holenName} removed from wager view.");
+
+            // ===================== ADDED: remove from persistent list =====================
+            if (holenData != null) RemoveSelectedHolen(holenData.holenID);
+            // ==============================================================================
         }
         else
         {
@@ -87,6 +140,10 @@ public class WagerManager : MonoBehaviour
                     holenUISlot.SetSlot(holenData, quantity); // Set the slot data
                     selectedItems.Add(newSlot);
                     Debug.Log($"{holenData.holenName} added to wager view.");
+
+                    // ===================== ADDED: add/update persistent list =====================
+                    if (holenData != null) AddSelectedHolen(holenData.holenID, quantity);
+                    // ==============================================================================
                 }
                 else
                 {
