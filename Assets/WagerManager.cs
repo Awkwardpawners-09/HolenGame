@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class WagerManager : MonoBehaviour
 {
@@ -9,7 +12,6 @@ public class WagerManager : MonoBehaviour
     public static WagerManager Instance { get; private set; } // Singleton instance
 
     private List<GameObject> selectedItems = new List<GameObject>(); // To keep track of selected items
-
     private bool canClick = true; // To add buffer time before it can be reselected
 
     private void Awake()
@@ -29,6 +31,29 @@ public class WagerManager : MonoBehaviour
     void Start()
     {
         // Optional: Initialize with pre-selected items or do additional setup here
+
+        // --- Added: hook button if assigned ---
+        if (actionButton != null)
+            actionButton.onClick.AddListener(OnActionButtonPressed);
+
+        UpdateStateText();
+    }
+
+    void Update()
+    {
+        // --- Added: check READY state duration ---
+        if (isReady && readySince > 0f && (Time.time - readySince) >= readyHoldSeconds)
+        {
+            readySince = -1f; // prevent multiple triggers
+            if (!string.IsNullOrEmpty(sceneToLoad))
+            {
+                SceneManager.LoadScene(sceneToLoad);
+            }
+            else
+            {
+                Debug.LogWarning("Scene to load not set on WagerManager.");
+            }
+        }
     }
 
     public void HandleWagerItemClick(HolenData holenData, int quantity)
@@ -78,5 +103,39 @@ public class WagerManager : MonoBehaviour
     private void ResetClickCooldown()
     {
         canClick = true; // Allow the item to be clicked again
+    }
+
+    // ========================================================
+    // Added Button + TextMeshPro fields and logic
+    // ========================================================
+    [Header("Wager Action Button")]
+    public Button actionButton;             // assign in inspector
+    public TMP_Text stateText;              // assign in inspector
+    public string readyLabel = "READY";
+    public string cancelLabel = "CANCEL";
+    public string sceneToLoad;              // scene name to load
+
+    private bool isReady = false;
+    private float lastPressTime = -999f;
+    private float pressCooldown = 1f;       // 1 second cooldown
+    private float readySince = -1f;
+    private float readyHoldSeconds = 5f;    // must stay READY for 5s
+
+    private void OnActionButtonPressed()
+    {
+        if (Time.time - lastPressTime < pressCooldown)
+            return; // still cooling down
+
+        lastPressTime = Time.time;
+
+        isReady = !isReady; // toggle
+        readySince = isReady ? Time.time : -1f;
+        UpdateStateText();
+    }
+
+    private void UpdateStateText()
+    {
+        if (stateText != null)
+            stateText.text = isReady ? readyLabel : cancelLabel;
     }
 }

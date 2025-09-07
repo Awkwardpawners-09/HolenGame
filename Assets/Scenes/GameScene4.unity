@@ -1781,13 +1781,103 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5810349619710853884, guid: d0f237987e6f3cc45ab0b0a9e0963f29, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 896091177}
+    - targetCorrespondingSourceObject: {fileID: 4412141208945387633, guid: d0f237987e6f3cc45ab0b0a9e0963f29, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 896091176}
+    - targetCorrespondingSourceObject: {fileID: 2536948317909947983, guid: d0f237987e6f3cc45ab0b0a9e0963f29, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 896091175}
   m_SourcePrefab: {fileID: 100100000, guid: d0f237987e6f3cc45ab0b0a9e0963f29, type: 3}
 --- !u!4 &896091171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4553862472904337712, guid: d0f237987e6f3cc45ab0b0a9e0963f29, type: 3}
   m_PrefabInstance: {fileID: 896091170}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &896091172 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2536948317909947983, guid: d0f237987e6f3cc45ab0b0a9e0963f29, type: 3}
+  m_PrefabInstance: {fileID: 896091170}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &896091173 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4412141208945387633, guid: d0f237987e6f3cc45ab0b0a9e0963f29, type: 3}
+  m_PrefabInstance: {fileID: 896091170}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &896091174 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5810349619710853884, guid: d0f237987e6f3cc45ab0b0a9e0963f29, type: 3}
+  m_PrefabInstance: {fileID: 896091170}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &896091175
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896091172}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: eb44ab3cfafafcf45b18ec6a025d2e80, type: 2}
+--- !u!64 &896091176
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896091173}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: df01a592c0ef2c34daa5f45212b1f9d4, type: 2}
+--- !u!64 &896091177
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896091174}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 8bc5d5f1392dc6346ae28e7ca882a53c, type: 2}
 --- !u!1001 &901898110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1928,6 +2018,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 5
+  holenPlayerObject: {fileID: 0}
+  targetObject: {fileID: 0}
+  requiredCollisions: 3
+  collisionText: {fileID: 0}
+  currentCollisions: 0
+  enableObjectiveMode: 1
 --- !u!65 &927950461
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3883,6 +3979,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 5
+  holenPlayerObject: {fileID: 0}
+  targetObject: {fileID: 0}
+  requiredCollisions: 3
+  collisionText: {fileID: 0}
+  currentCollisions: 0
+  enableObjectiveMode: 1
 --- !u!4 &1604237005
 Transform:
   m_ObjectHideFlags: 0
