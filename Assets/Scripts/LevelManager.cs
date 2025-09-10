@@ -109,7 +109,7 @@ public class LevelManager : MonoBehaviour
     private void LoadNextScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex + 1);
+        SceneManager.LoadScene("Menu Scene");
     }
 
     private void UpdateCollisionText()
