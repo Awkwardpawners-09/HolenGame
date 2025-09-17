@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Smolderoo
   m_EditorClassIdentifier: 
   holenID: GH0004
+  rarity: Epic
   holenName: Smolderoo
   holenIcon: {fileID: 21300000, guid: 38b30506747a7d24fb51f34fc6b9f9a8, type: 2}
   holenPrefab: {fileID: 4543069569791729328, guid: d5da535c2a2989d4b9a0ac10d6fc492e, type: 3}

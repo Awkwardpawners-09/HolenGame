@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Toxicoo
   m_EditorClassIdentifier: 
   holenID: GH0005
+  rarity: Rare
   holenName: Toxicoo
   holenIcon: {fileID: 21300000, guid: 3d64b05455faca74d9ec95fe252961b9, type: 2}
   holenPrefab: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}

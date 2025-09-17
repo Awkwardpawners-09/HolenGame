@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Batik (Yellow)
   m_EditorClassIdentifier: 
   holenID: FH0002
-  rarity: 
+  rarity: Rare
   holenName: Batik (Yellow)
   holenIcon: {fileID: 21300000, guid: f58bcdf03c8947c4f86388863a1384c0, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: ebdfc86a7297e7546a70585cd7fa7677, type: 3}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Sunfall
   m_EditorClassIdentifier: 
   holenID: GH0002
+  rarity: Common
   holenName: Sunfall
   holenIcon: {fileID: 21300000, guid: c7f92a8fd1e043149a455df7649273eb, type: 2}
   holenPrefab: {fileID: 4543069569791729328, guid: 58c88af2d918c8746a403478f0794995, type: 3}

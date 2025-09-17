@@ -998,11 +998,26 @@ MonoBehaviour:
   wagerContent: {fileID: 847388230}
   holenUISlotPrefab: {fileID: 6632588764708560698, guid: c9f260fed35710c4c8fc489c1edbabae, type: 3}
   selectedHolens: []
+  maxTotalPoints: 10
+  minRequiredPoints: 10
+  maxUniqueChoices: 5
+  rarityPoints:
+  - rarity: Common
+    points: 1
+  - rarity: Rare
+    points: 2
+  - rarity: Epic
+    points: 3
+  - rarity: Mythical
+    points: 5
   actionButton: {fileID: 1447136766}
   stateText: {fileID: 2046400979}
   readyLabel: CANCEL
   cancelLabel: READY
   sceneToLoad: TestGameplay
+  countdownText: {fileID: 2111718542}
+  startSeconds: 60
+  player1PointsText: {fileID: 1939871968}
 --- !u!4 &512628728
 Transform:
   m_ObjectHideFlags: 0
