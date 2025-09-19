@@ -1,25 +1,38 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class MarbleGacha : MonoBehaviour
 {
-    public List<HolenData> marblePool; // now uses ScriptableObjects
-    public PlayerData playerData;
+    public List<HolenData> marblePool; // ScriptableObjects
+    private PlayerData playerData => PlayerDataManager.Instance.playerData;
 
-    // UI references
+    [Header("Inventory Reference")]
+    public HolenInventoryManager inventoryManager; // 🔗 Drag your InventoryManager here
+
+    [Header("UI References")]
     public GameObject resultPanel;
     public Image marbleImage;
     public TextMeshProUGUI marbleNameText;
+    public CoinUIManager coinUI; // 🔗 Drag your CoinUIManager here
 
     public void TryBuyMarbleBag()
     {
-        if (playerData.SpendCoins(100))
+        // Use coinUI if available so UI refreshes instantly
+        bool success = (coinUI != null) ? coinUI.SpendCoins(100) : playerData.SpendCoins(100);
+
+        if (success)
         {
             HolenData awardedMarble = GetRandomMarble();
+
+            // ✅ Add to Inventory & Save
+            inventoryManager.AddHolen(awardedMarble.holenID, 1);
+
+            // ✅ Show result panel
             ShowMarbleResult(awardedMarble);
+
+            Debug.Log($"🎉 Gacha awarded: {awardedMarble.holenName}");
         }
         else
         {
@@ -30,14 +43,12 @@ public class MarbleGacha : MonoBehaviour
     void ShowMarbleResult(HolenData marble)
     {
         resultPanel.SetActive(true);
-        marbleNameText.text = marble.holenName; // ✅ use holenName
-        marbleImage.sprite = marble.holenIcon;  // ✅ use holenIcon
+        marbleNameText.text = marble.holenName;
+        marbleImage.sprite = marble.holenIcon;
     }
 
     HolenData GetRandomMarble()
     {
-        // ✅ If you want weights, you need to add "public int rarityWeight;" to HolenData.
-        // For now, pick random equally
         int randomIndex = Random.Range(0, marblePool.Count);
         return marblePool[randomIndex];
     }

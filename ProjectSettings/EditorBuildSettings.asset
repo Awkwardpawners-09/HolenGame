@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestGameplay.unity
     guid: 2632e3de191a7414eb4b16931e9fe42e
+  - enabled: 1
+    path: Assets/Scenes/Gacha (VIN).unity
+    guid: 9603dfe2c433d414c8911cb374215871
   m_configObjects: {}

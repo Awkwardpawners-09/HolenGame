@@ -2,12 +2,10 @@
 using UnityEngine;
 using System.IO;
 
-
-
 public class HolenInventoryManager : MonoBehaviour
 {
     [Header("Holen Database")]
-    public List<HolenData> allHolens; // Assign manually or load at runtime
+    public List<HolenData> allHolens; // Assign in Inspector
 
     [SerializeField]
     public List<HolenInventoryEntry> inventory = new List<HolenInventoryEntry>();
@@ -16,16 +14,31 @@ public class HolenInventoryManager : MonoBehaviour
 
     public InventoryUIManager inventoryUI;
 
-    private void Start()
+    public static HolenInventoryManager Instance; // ✅ Singleton for easy access
+
+    private void Awake()
     {
-        DontDestroyOnLoad(gameObject); // Ensures the inventory manager persists across scenes
-        LoadInventory(); // Load the saved inventory data
-        if (inventory == null || inventory.Count == 0)
+        // ✅ Make this object persistent across scenes
+        if (Instance == null)
         {
-            AddHolen(GetRandomHolenID()); // Add random Holen if inventory is empty
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            LoadInventory(); // Always load on start
+        }
+        else
+        {
+            Destroy(gameObject); // Prevent duplicates
         }
     }
 
+    private void Start()
+    {
+        // If inventory is empty (first run), give a random Holen
+        if (inventory == null || inventory.Count == 0)
+        {
+            AddHolen(GetRandomHolenID());
+        }
+    }
 
     private string GetRandomHolenID()
     {
@@ -42,6 +55,12 @@ public class HolenInventoryManager : MonoBehaviour
     // 📦 Add a Holen by ID
     public void AddHolen(string holenID, int amount = 1)
     {
+        if (string.IsNullOrEmpty(holenID))
+        {
+            Debug.LogWarning("Tried to add null/empty Holen ID.");
+            return;
+        }
+
         var entry = inventory.Find(e => e.holenID == holenID);
         if (entry != null)
         {
@@ -53,9 +72,12 @@ public class HolenInventoryManager : MonoBehaviour
         }
 
         SaveInventory();
+
+        if (inventoryUI != null)
+            inventoryUI.RefreshUI(); // ✅ Auto update if UI is open
     }
 
-    public void RemoveHolen(string holenID, int amount = -1)
+    public void RemoveHolen(string holenID, int amount = 1)
     {
         var entry = inventory.Find(e => e.holenID == holenID);
         if (entry != null)
@@ -68,7 +90,9 @@ public class HolenInventoryManager : MonoBehaviour
             }
 
             SaveInventory();
-            inventoryUI.RefreshUI();
+
+            if (inventoryUI != null)
+                inventoryUI.RefreshUI();
         }
         else
         {
@@ -78,13 +102,33 @@ public class HolenInventoryManager : MonoBehaviour
 
     public void SaveInventory()
     {
-        InventorySaveSystem.Save(inventory);
+        InventorySaveSystem.Save(inventory); // ✅ Uses your existing save system
+        Debug.Log("✅ Inventory saved!");
     }
 
-    public void LoadInventory()
+public void LoadInventory()
+{
+    var loaded = InventorySaveSystem.Load();
+    if (loaded != null && loaded.Count > 0)
     {
-        inventory = InventorySaveSystem.Load();
+        // Merge instead of overwrite
+        foreach (var entry in loaded)
+        {
+            var existing = inventory.Find(e => e.holenID == entry.holenID);
+            if (existing != null)
+            {
+                existing.quantity = entry.quantity; // keep saved quantity
+            }
+            else
+            {
+                inventory.Add(new HolenInventoryEntry(entry.holenID, entry.quantity));
+            }
+        }
     }
+
+    Debug.Log("✅ Inventory merged from save!");
+}
+
 
     // 🔍 Get HolenData by ID (for UI or instantiation)
     public HolenData GetHolenData(string holenID)
@@ -92,10 +136,12 @@ public class HolenInventoryManager : MonoBehaviour
         return allHolens.Find(h => h.holenID == holenID);
     }
 
-    // ✅ Wrapper class for JSON compatibility
-    [System.Serializable]
-    private class InventoryWrapper
-    {
-        public List<HolenInventoryEntry> entries;
-    }
+    public void ResetInventory()
+{
+    inventory.Clear();
+    SaveInventory();
+    if (inventoryUI != null)
+        inventoryUI.RefreshUI();
+}
+
 }
