@@ -15,7 +15,7 @@ public class HolensLauncher : MonoBehaviour
     public float gaugeSpeed = 40f;
 
     private GameObject currentBall;
-    private bool isBusy = false;
+    private bool isBusy = false; // Track if the launcher is busy
     private bool isReady = false;
     private bool isGaugeIncreasing = true;
     private bool isGaugeActive = false;
@@ -23,8 +23,11 @@ public class HolensLauncher : MonoBehaviour
     private Transform defaultLookAtTarget;
     private bool hasLaunched = false;
 
+    public HolenChanger holenChanger;
+
     void Start()
     {
+        SpawnBall();
         if (cinemachineCamera != null)
             defaultLookAtTarget = cinemachineCamera.LookAt;
 
@@ -34,6 +37,10 @@ public class HolensLauncher : MonoBehaviour
             gaugeSlider.maxValue = gaugeMax;
             gaugeSlider.gameObject.SetActive(false);
         }
+
+        // Use the selected HolenData (from HolenChanger) as the starting prefab
+        HolenData startingHolenData = holenChanger.GetCurrentHolenData();
+        holensBallPrefab = startingHolenData.holenPrefab; // Set the initial prefab
 
         SpawnBall();
         PlayIdle();
@@ -65,20 +72,18 @@ public class HolensLauncher : MonoBehaviour
     {
         if (isBusy) return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!isReady)
-            {
-                isReady = true;
-                StartCoroutine(PlayReadyAnimation());
-            }
-            else
-            {
-                StartCoroutine(PlayShootAnimationAndLaunch());
-            }
-        }
+        // The buttons will now trigger specific actions
     }
 
+    void RotateLeft()
+    {
+        transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
+    }
+
+    void RotateRight()
+    {
+        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+    }
     void UpdateGauge()
     {
         float delta = gaugeSpeed * Time.deltaTime;
@@ -106,6 +111,34 @@ public class HolensLauncher : MonoBehaviour
             gaugeSlider.value = currentLaunchForce;
     }
 
+    // Separate method for readying the launcher (called by Ready button)
+    public void TriggerReadyAction()
+    {
+        if (!isReady)
+        {
+            StartCoroutine(PlayReadyAnimation()); // Ready the launcher
+        }
+    }
+
+    // Separate method for launching the ball (called by Launch button)
+    public void TriggerLaunchAction()
+    {
+        if (isReady)
+        {
+            StartCoroutine(PlayShootAnimationAndLaunch()); // Launch the ball
+        }
+    }
+
+    public void TriggerLeftRotation()
+    {
+        RotateLeft();
+    }
+
+    public void TriggerRightRotation()
+    {
+        RotateRight();
+    }
+
     System.Collections.IEnumerator PlayReadyAnimation()
     {
         isBusy = true;
@@ -122,6 +155,7 @@ public class HolensLauncher : MonoBehaviour
         }
 
         isBusy = false;
+        isReady = true; // Mark the launcher as ready
     }
 
     System.Collections.IEnumerator PlayShootAnimationAndLaunch()
@@ -138,9 +172,12 @@ public class HolensLauncher : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         isReady = false;
-        SpawnBall();
+        SpawnBall();  // Respawn with the current selected Holen
         isBusy = false;
         hasLaunched = false;
+
+        // Re-enable buttons after launch
+        holenChanger.EnableButtons();
     }
 
     void LaunchBall()
@@ -177,18 +214,41 @@ public class HolensLauncher : MonoBehaviour
         }
     }
 
-    void SpawnBall()
+    void SpawnBall(GameObject ballPrefab = null)
     {
+        if (ballPrefab == null)
+        {
+            ballPrefab = holensBallPrefab;  // Use the selected Holen ball prefab
+        }
+
         if (currentBall != null)
             Destroy(currentBall);
 
-        currentBall = Instantiate(holensBallPrefab, holensPosition.position, holensPosition.rotation);
+        currentBall = Instantiate(ballPrefab, holensPosition.position, holensPosition.rotation);
         currentBall.transform.parent = holensPosition;
         currentBall.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    public void ChangeBallPrefab(GameObject newPrefab)
+    {
+        // Destroy the current ball if it's there
+        if (currentBall != null)
+        {
+            Destroy(currentBall);
+        }
+
+        // Spawn the new ball with the updated prefab
+        SpawnBall(newPrefab);
     }
 
     void PlayIdle()
     {
         animator.Play("Idle");
+    }
+
+    // Create a public getter method for isBusy
+    public bool GetIsBusy()
+    {
+        return isBusy;
     }
 }
