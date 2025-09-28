@@ -15,8 +15,12 @@ public class LevelManager : MonoBehaviour
     public GameObject holenPlayerObject; // Set the "player" object (Holen) to detect collision
     public GameObject targetObject; // Set the target object where the collision will happen
     public int requiredCollisions = 3; // Set how many times the collision should happen
-    public TextMeshProUGUI collisionText; // TextMeshProUGUI for displaying the collision count
-    public int currentCollisions = 0; // To track the number of collisions (exposed to Inspector)
+    public TextMeshProUGUI livesText; // TextMeshProUGUI for displaying the number of lives
+    public int maxLives = 3; // Set the number of lives
+    private int currentLives; // Tracks current lives
+    private float lifeLossTimer = 0f;  // Timer to delay life reduction after collision
+    private bool isLifeReductionDelayed = false;  // Flag to track if we are waiting for the delay
+    public GameObject gameOverObject; // The object to be enabled when lives are less than 0
 
     // New checkbox for enabling/disabling objective mode
     public bool enableObjectiveMode = true; // Checkbox to enable/disable objective detection
@@ -28,98 +32,76 @@ public class LevelManager : MonoBehaviour
     private float sceneChangeDelay = 3f; // Delay time for scene change after the last collision
     private float sceneChangeTimer = 0f; // Timer to track the delay before loading the scene
 
-    private void Update()
+    void Start()
     {
-        // If objective mode is enabled, check for objectives in trigger
-        if (enableObjectiveMode)
-        {
-            // If there are no Objective-tagged objects in the trigger
-            if (objectivesInTrigger.Count == 0)
-            {
-                noObjectiveTimer += Time.deltaTime;
+        currentLives = maxLives; // Initialize lives to max lives
+        UpdateLivesText(); // Update the displayed lives text
+        gameOverObject.SetActive(false); // Ensure the game over object is initially disabled
+    }
 
-                if (noObjectiveTimer >= waitTime && !loadingNextScene)
-                {
-                    loadingNextScene = true;
-                    LoadNextScene();
-                }
-            }
-            else
-            {
-                // Reset timer if any objective is still inside
-                noObjectiveTimer = 0f;
-            }
-        }
-        else
+    void Update()
+    {
+        // Check if lives are 0 and enable the game over object immediately
+        if (currentLives <= 0)
         {
-            // Collision Mode: Handle collision counting
-            if (currentCollisions >= requiredCollisions && !loadingNextScene)
-            {
-                sceneChangeTimer += Time.deltaTime;
-
-                if (sceneChangeTimer >= sceneChangeDelay)
-                {
-                  
-                    LoadNextScene();
-                }
-            }
+            gameOverObject.SetActive(true);  // Enable the Game Over object immediately
+            return; // Exit the update method early since the game is over
         }
 
-        // Handle cooldown timer for collisions
-        if (!canCountCollision)
+        // If the life reduction is delayed, increase the timer
+        if (isLifeReductionDelayed)
         {
-            cooldownTimer += Time.deltaTime;
-            if (cooldownTimer >= cooldownTime)
+            lifeLossTimer += Time.deltaTime;
+
+            // If 6.5 seconds have passed, reduce life
+            if (lifeLossTimer >= 6.5f)
             {
-                canCountCollision = true; // Enable counting after cooldown
-                cooldownTimer = 0f; // Reset the cooldown timer
+                ReduceLife(); // Reduce life once the timer reaches 6.5 seconds
+                isLifeReductionDelayed = false; // Stop the timer
+                lifeLossTimer = 0f; // Reset the timer
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        // If not in objective mode, count collisions
-        if (!enableObjectiveMode && canCountCollision)
+        // Only handle lives reduction if the object is tagged "Ball"
+        if (other.CompareTag("Ball"))
         {
-            currentCollisions++;
-            UpdateCollisionText();
-           // canCountCollision = false; // Disable counting until cooldown is over
+            // Start the delay for life reduction
+            isLifeReductionDelayed = true;
 
-            // Reset the scene change timer after a valid collision
-            sceneChangeTimer = 0f;
-        }
-
-        // If in objective mode, check for "Objective" tag in the collider
-        if (enableObjectiveMode && other.CompareTag("Objective"))
-        {
-            objectivesInTrigger.Add(other.gameObject);
+            // Optionally, you can add some feedback (visual, audio) here to show that the player lost a life
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void ReduceLife()
     {
-        // Remove the "Objective" tagged object from the set (only if in objective mode)
-        if (enableObjectiveMode && other.CompareTag("Objective"))
+        // Reduce lives by 1
+        currentLives--;
+        UpdateLivesText(); // Update the UI text to reflect the new life count
+
+        if (currentLives >= 0)
         {
-            objectivesInTrigger.Remove(other.gameObject);
+            // Reset the timer when the player still has lives
+            lifeLossTimer = 0f;
+        }
+    }
+
+    private void UpdateLivesText()
+    {
+        // Safely update the lives text if it's assigned
+        if (livesText != null)
+        {
+            livesText.text = currentLives.ToString(); // Display the current number of lives
         }
     }
 
     private void LoadNextScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene("Menu Scene");
+        SceneManager.LoadScene("Demo Menu");
     }
 
-    private void UpdateCollisionText()
-    {
-        // Safely update the collision text if it's assigned
-        if (collisionText != null)
-        {
-            collisionText.text = currentCollisions.ToString(); // Display only the number of collisions\\
-
-            canCountCollision = true;
-        }
-    }
+    // Other gameplay-related methods, such as handling objectives, scene transitions, etc.
 }

@@ -4,8 +4,12 @@ using UnityEngine.UI;
 
 public class HolensLauncher : MonoBehaviour
 {
+
+    public GameObject bottomMenu;
+    
     public Transform holensPosition;
     public GameObject holensBallPrefab;
+
     public float rotationSpeed = 90f;
     public Animator animator;
     public CinemachineVirtualCamera cinemachineCamera;
@@ -24,6 +28,10 @@ public class HolensLauncher : MonoBehaviour
     private bool hasLaunched = false;
 
     public HolenChanger holenChanger;
+
+    // Flags for continuous rotation
+    private bool isRotatingLeft = false;
+    private bool isRotatingRight = false;
 
     void Start()
     {
@@ -48,7 +56,7 @@ public class HolensLauncher : MonoBehaviour
 
     void Update()
     {
-        HandleRotation();
+        HandleRotation(); // Handle rotation based on flags
         HandleInput();
 
         if (isGaugeActive)
@@ -57,15 +65,54 @@ public class HolensLauncher : MonoBehaviour
         }
     }
 
+    // This method will handle continuous rotation based on flags
     void HandleRotation()
     {
         if (hasLaunched) return;
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        if (horizontal != 0)
+        // For continuous rotation (button triggered)
+        if (isRotatingLeft)
         {
-            transform.Rotate(Vector3.up * horizontal * rotationSpeed * Time.deltaTime);
+            RotateLeft();
         }
+
+        if (isRotatingRight)
+        {
+            RotateRight();
+        }
+    }
+
+    // For button click press to trigger rotation
+    public void TriggerLeftRotationStart()
+    {
+        isRotatingLeft = true; // Start rotating left when button is pressed
+    }
+
+    public void TriggerLeftRotationStop()
+    {
+        isRotatingLeft = false; // Stop rotating left when button is released
+    }
+
+    public void TriggerRightRotationStart()
+    {
+        isRotatingRight = true; // Start rotating right when button is pressed
+    }
+
+    public void TriggerRightRotationStop()
+    {
+        isRotatingRight = false; // Stop rotating right when button is released
+    }
+
+    // Rotation logic for left
+    void RotateLeft()
+    {
+        transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
+    }
+
+    // Rotation logic for right
+    void RotateRight()
+    {
+        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
     }
 
     void HandleInput()
@@ -75,15 +122,6 @@ public class HolensLauncher : MonoBehaviour
         // The buttons will now trigger specific actions
     }
 
-    void RotateLeft()
-    {
-        transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
-    }
-
-    void RotateRight()
-    {
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-    }
     void UpdateGauge()
     {
         float delta = gaugeSpeed * Time.deltaTime;
@@ -127,16 +165,6 @@ public class HolensLauncher : MonoBehaviour
         {
             StartCoroutine(PlayShootAnimationAndLaunch()); // Launch the ball
         }
-    }
-
-    public void TriggerLeftRotation()
-    {
-        RotateLeft();
-    }
-
-    public void TriggerRightRotation()
-    {
-        RotateRight();
     }
 
     System.Collections.IEnumerator PlayReadyAnimation()
@@ -202,6 +230,7 @@ public class HolensLauncher : MonoBehaviour
         }
 
         hasLaunched = true;
+        bottomMenu.SetActive(false);
     }
 
     System.Collections.IEnumerator ResetCameraLookAfterSeconds(float delay)
@@ -226,6 +255,10 @@ public class HolensLauncher : MonoBehaviour
 
         currentBall = Instantiate(ballPrefab, holensPosition.position, holensPosition.rotation);
         currentBall.transform.parent = holensPosition;
+
+        // Set the tag of the spawned ball to "Ball"
+        currentBall.tag = "Ball";
+
         currentBall.GetComponent<Rigidbody>().isKinematic = true;
     }
 
@@ -244,6 +277,7 @@ public class HolensLauncher : MonoBehaviour
     void PlayIdle()
     {
         animator.Play("Idle");
+        bottomMenu.SetActive(true);
     }
 
     // Create a public getter method for isBusy
