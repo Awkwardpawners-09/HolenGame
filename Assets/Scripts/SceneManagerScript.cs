@@ -15,7 +15,7 @@ public class SceneManagerScript : MonoBehaviour
         }
 
         // Load the TestGame scene
-        SceneManager.LoadScene("Demo Game");
+        SceneManager.LoadScene("Demo Game 1");
     }
 
     // You can call this to go back to the Main Menu or load any other scene

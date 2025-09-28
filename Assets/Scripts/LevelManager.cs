@@ -6,9 +6,9 @@ using TMPro; // Import TextMeshPro namespace
 
 public class LevelManager : MonoBehaviour
 {
-    private HashSet<GameObject> objectivesInTrigger = new HashSet<GameObject>();
-    private float noObjectiveTimer = 0f;
-    public float waitTime = 5f;
+    private HashSet<GameObject> objectivesInTrigger = new HashSet<GameObject>();  // Keep track of objectives in the trigger area
+    private float noObjectiveTimer = 0f;  // Timer for when there are no objectives in the trigger
+    public float waitTime = 5f;  // Time to wait for no objectives in trigger (5 seconds)
     private bool loadingNextScene = false;
 
     // Inspector variables
@@ -41,11 +41,29 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        // Check if lives are 0 and enable the game over object immediately
+        // If the player has lost all lives, enable the game over object immediately
         if (currentLives <= 0)
         {
             gameOverObject.SetActive(true);  // Enable the Game Over object immediately
             return; // Exit the update method early since the game is over
+        }
+
+        // Check if no "Objective" tagged objects are in the trigger area for 5 seconds
+        if (objectivesInTrigger.Count == 0)
+        {
+            noObjectiveTimer += Time.deltaTime;  // Increment the timer when there are no objectives in the trigger
+
+            // If no objectives for 5 seconds, load the next scene
+            if (noObjectiveTimer >= waitTime && !loadingNextScene)
+            {
+                loadingNextScene = true; // Flag to prevent multiple scene loads
+                LoadNextScene();
+            }
+        }
+        else
+        {
+            // Reset the timer if objectives are inside the trigger area
+            noObjectiveTimer = 0f;
         }
 
         // If the life reduction is delayed, increase the timer
@@ -73,6 +91,21 @@ public class LevelManager : MonoBehaviour
 
             // Optionally, you can add some feedback (visual, audio) here to show that the player lost a life
         }
+
+        // If an "Objective" tagged object enters the trigger area, add it to the set
+        if (enableObjectiveMode && other.CompareTag("Objective"))
+        {
+            objectivesInTrigger.Add(other.gameObject);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        // If an "Objective" tagged object exits the trigger area, remove it from the set
+        if (enableObjectiveMode && other.CompareTag("Objective"))
+        {
+            objectivesInTrigger.Remove(other.gameObject);
+        }
     }
 
     private void ReduceLife()
@@ -99,9 +132,9 @@ public class LevelManager : MonoBehaviour
 
     private void LoadNextScene()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene("Demo Menu");
+        // Load the next scene after waiting for 5 seconds with no objectives in the trigger
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;  // Get current scene index
+        int nextSceneIndex = currentSceneIndex + 1; // Example: next scene is next in the build list
+        SceneManager.LoadScene(nextSceneIndex);
     }
-
-    // Other gameplay-related methods, such as handling objectives, scene transitions, etc.
 }
