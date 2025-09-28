@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameOverManager : MonoBehaviour
 {
     // Inspector variables
-    public string sceneToLoad = "Demo Menu"; // The scene to load after 6 seconds, changeable in the inspector
+    public string sceneToLoad = "Demo Menu (END)"; // The scene to load after 6 seconds, changeable in the inspector
     public float waitTime = 6f;  // Time to wait before changing the scene, adjustable in the inspector
 
     private bool isGameOver = false; // Flag to check if the game over screen is enabled
