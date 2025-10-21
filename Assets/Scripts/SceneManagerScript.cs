@@ -30,4 +30,9 @@ public class SceneManagerScript : MonoBehaviour
         findingOpponentPanel.SetActive(true); // Show the "Finding Opponent" panel
         // Add logic for matchmaking here
     }
+
+    public void GoToTestLobby()
+    {
+        SceneManager.LoadScene("TestGame");
+    }
 }

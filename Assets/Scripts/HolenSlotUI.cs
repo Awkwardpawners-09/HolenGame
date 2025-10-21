@@ -34,7 +34,7 @@ public class HolenSlotUI : MonoBehaviour
         holenData = data; // Store the HolenData for this slot
         iconImage.sprite = data.holenIcon;
         nameText.text = data.holenName;
-        quantityText.text = "x" + quantity.ToString();
+        quantityText.text = quantity.ToString();
     }
 
     // Button click logic

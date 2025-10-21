@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6415744276909471914}
   - component: {fileID: 1362044630694553475}
   - component: {fileID: 2285472717600120935}
+  - component: {fileID: 87015218629746236}
   m_Layer: 5
   m_Name: HolenSlotUI
   m_TagString: Untagged
@@ -121,6 +122,23 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &87015218629746236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130300564029074341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bb3bbf8b0acae40be8092429804b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconImage: {fileID: 5096069026557662013}
+  nameText: {fileID: 7096621786505425450}
+  quantityText: {fileID: 8069829494446534900}
+  contentPrefab: {fileID: 0}
+  inventoryView: {fileID: 0}
 --- !u!1 &4721546469252218931
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +362,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.6294118, y: 0.59400004}
   m_AnchorMax: {x: 0.88229424, y: 0.8647058}
-  m_AnchoredPosition: {x: -17.914684, y: -16.06467}
+  m_AnchoredPosition: {x: 15, y: 7}
   m_SizeDelta: {x: 152.28824, y: 151.07057}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8403345845379891863
