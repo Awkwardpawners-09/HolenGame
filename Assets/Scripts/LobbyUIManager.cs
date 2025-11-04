@@ -1,22 +1,21 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class LobbyUIManager : MonoBehaviour
 {
     [Header("UI Elements")]
-    public GameObject contentScrollView; // The Content GameObject in the Scroll View
-    public GameObject holenUISlotPrefab; // Reference to the HolenUISlot prefab
+    public GameObject contentScrollView;
+    public GameObject holenUISlotPrefab;
 
     private HolenInventoryManager inventoryManager;
-    public static LobbyUIManager Instance { get; private set; } // Singleton instance
+
     void Start()
     {
-        // Find the InventoryManager in the scene
         inventoryManager = FindObjectOfType<HolenInventoryManager>();
 
         if (inventoryManager != null)
         {
-            // Instantiate the inventory UI items
             InstantiateInventoryItems();
         }
         else
@@ -27,27 +26,55 @@ public class LobbyUIManager : MonoBehaviour
 
     void InstantiateInventoryItems()
     {
-        // Clear any existing items in the scroll view
+        // Clear any existing items
         foreach (Transform child in contentScrollView.transform)
         {
             Destroy(child.gameObject);
         }
 
+        // Get the wager manager for this player
+        WagerManager wagerManager = GetComponent<WagerManager>();
+        if (wagerManager == null)
+        {
+            wagerManager = transform.parent.GetComponentInChildren<WagerManager>();
+        }
+
         // Instantiate an item for each entry in the inventory
         foreach (var entry in inventoryManager.inventory)
         {
-            // Create a new slot for each item
             GameObject slot = Instantiate(holenUISlotPrefab, contentScrollView.transform);
-            // Set up the slot (for example, display the item name and quantity)
             var holenUISlot = slot.GetComponent<HolenSlotUI>();
+
             if (holenUISlot != null)
             {
-                holenUISlot.SetSlot(inventoryManager.GetHolenData(entry.holenID), entry.quantity);
+                HolenData data = inventoryManager.GetHolenData(entry.holenID);
+                holenUISlot.SetSlot(data, entry.quantity);
+
+                // Make the slot clickable to add to wager
+                Button slotButton = slot.GetComponent<Button>();
+                if (slotButton == null)
+                    slotButton = slot.AddComponent<Button>();
+
+                // Capture variables for closure
+                HolenData capturedData = data;
+                int capturedQty = entry.quantity;
+
+                slotButton.onClick.AddListener(() => {
+                    if (wagerManager != null)
+                    {
+                        wagerManager.HandleWagerItemClick(capturedData, capturedQty);
+                    }
+                });
             }
             else
             {
                 Debug.LogError("HolenSlotUI script missing on prefab.");
             }
         }
+    }
+
+    public void RefreshInventory()
+    {
+        InstantiateInventoryItems();
     }
 }

@@ -292,7 +292,7 @@ public class WagerManager : MonoBehaviour
     private float readySince = -1f;
     private float readyHoldSeconds = 5f;    // must stay READY for 5s
 
-    private void OnActionButtonPressed()
+    public void OnActionButtonPressed()
     {
         // Allow toggling READY once we have at least the threshold (>= 10)
         if (currentPoints < minRequiredPoints)
