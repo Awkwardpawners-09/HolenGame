@@ -9,10 +9,19 @@ public class LobbyUIManager : MonoBehaviour
     public GameObject holenUISlotPrefab;
 
     private HolenInventoryManager inventoryManager;
+    private WagerManager wagerManager; // Cache the wager manager reference
 
     void Start()
     {
+        // Find inventory manager
         inventoryManager = FindObjectOfType<HolenInventoryManager>();
+
+        // Get the wager manager for this player (sibling component)
+        wagerManager = GetComponent<WagerManager>();
+        if (wagerManager == null)
+        {
+            wagerManager = transform.parent.GetComponentInChildren<WagerManager>();
+        }
 
         if (inventoryManager != null)
         {
@@ -32,11 +41,10 @@ public class LobbyUIManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Get the wager manager for this player
-        WagerManager wagerManager = GetComponent<WagerManager>();
-        if (wagerManager == null)
+        if (inventoryManager == null || inventoryManager.inventory == null)
         {
-            wagerManager = transform.parent.GetComponentInChildren<WagerManager>();
+            Debug.LogWarning("Inventory is null or empty!");
+            return;
         }
 
         // Instantiate an item for each entry in the inventory
@@ -48,21 +56,31 @@ public class LobbyUIManager : MonoBehaviour
             if (holenUISlot != null)
             {
                 HolenData data = inventoryManager.GetHolenData(entry.holenID);
+
+                // Set the slot data (visual only, no button listener in HolenSlotUI)
                 holenUISlot.SetSlot(data, entry.quantity);
 
-                // Make the slot clickable to add to wager
+                // Add button component if it doesn't exist
                 Button slotButton = slot.GetComponent<Button>();
                 if (slotButton == null)
                     slotButton = slot.AddComponent<Button>();
+
+                // Clear any existing listeners from the prefab
+                slotButton.onClick.RemoveAllListeners();
 
                 // Capture variables for closure
                 HolenData capturedData = data;
                 int capturedQty = entry.quantity;
 
+                // Add click listener that connects to THIS player's wager manager
                 slotButton.onClick.AddListener(() => {
                     if (wagerManager != null)
                     {
                         wagerManager.HandleWagerItemClick(capturedData, capturedQty);
+                    }
+                    else
+                    {
+                        Debug.LogError("WagerManager not found for this player!");
                     }
                 });
             }
@@ -71,6 +89,8 @@ public class LobbyUIManager : MonoBehaviour
                 Debug.LogError("HolenSlotUI script missing on prefab.");
             }
         }
+
+        Debug.Log($"Loaded {inventoryManager.inventory.Count} items into inventory UI");
     }
 
     public void RefreshInventory()
