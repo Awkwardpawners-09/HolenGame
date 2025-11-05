@@ -126,9 +126,6 @@ NavMeshSettings:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -404,15 +401,12 @@ CanvasRenderer:
 --- !u!1001 &40044513
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 --- !u!1001 &18095773
 >>>>>>> parent of e835028 (Holen Update)
 =======
 --- !u!1001 &18095773
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -530,7 +524,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
   m_PrefabInstance: {fileID: 18095773}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -915,9 +908,6 @@ Transform:
 =======
 --- !u!1001 &43828602
 >>>>>>> parent of 54b98b3 (Trying to Recover)
-=======
---- !u!1001 &43828602
->>>>>>> parent of 54b98b3 (Trying to Recover)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -925,7 +915,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 571695115}
     m_Modifications:
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -950,8 +939,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 783673603}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -1042,7 +1029,6 @@ PrefabInstance:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
       value: HolenSlotUI (2)
 =======
       value: HolenSlotUI (15)
@@ -1063,9 +1049,6 @@ PrefabInstance:
 =======
       value: HolenSlotUI (2)
 >>>>>>> parent of 54b98b3 (Trying to Recover)
-=======
-      value: HolenSlotUI (2)
->>>>>>> parent of 54b98b3 (Trying to Recover)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1076,9 +1059,6 @@ PrefabInstance:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -3013,7 +2993,6 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
   stateText: {fileID: 0}
   readyLabel: CANCEL
@@ -3023,8 +3002,6 @@ MonoBehaviour:
 =======
   sceneToLoad: TestGameplay
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -3907,7 +3884,6 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3923,8 +3899,6 @@ RectTransform:
   player1SlotParent: {fileID: 0}
   slotPrefab: {fileID: 1130300564029074341, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
 >>>>>>> parent of e835028 (Holen Update)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -3945,7 +3919,6 @@ PrefabInstance:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4070,8 +4043,6 @@ RectTransform:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -4401,15 +4372,12 @@ RectTransform:
   - {fileID: 800405668}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
   - {fileID: 1527334391}
 >>>>>>> parent of e835028 (Holen Update)
 =======
   - {fileID: 662738873}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -5959,7 +5927,6 @@ CanvasRenderer:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 --- !u!1001 &937632714
 PrefabInstance:
@@ -6309,8 +6276,6 @@ RectTransform:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -6747,9 +6712,6 @@ Transform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -6877,15 +6839,12 @@ RectTransform:
 --- !u!1001 &1148672681
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 --- !u!1001 &1135213951
 >>>>>>> parent of e835028 (Holen Update)
 =======
 --- !u!1001 &1135213951
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -6897,7 +6856,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1920991464}
     m_Modifications:
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6917,8 +6875,6 @@ PrefabInstance:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -7009,7 +6965,6 @@ PrefabInstance:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
       value: HolenSlotUI (4)
 =======
 =======
@@ -7029,9 +6984,6 @@ PrefabInstance:
 =======
       value: HolenSlotUI (4)
 >>>>>>> parent of 54b98b3 (Trying to Recover)
-=======
-      value: HolenSlotUI (4)
->>>>>>> parent of 54b98b3 (Trying to Recover)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7042,9 +6994,6 @@ PrefabInstance:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -7059,7 +7008,6 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 <<<<<<< HEAD
 --- !u!1001 &1152782377
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -7077,14 +7025,11 @@ RectTransform:
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -7123,10 +7068,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 1781501896}
     m_Modifications:
 >>>>>>> parent of 54b98b3 (Trying to Recover)
-=======
-    m_TransformParent: {fileID: 1781501896}
-    m_Modifications:
->>>>>>> parent of 54b98b3 (Trying to Recover)
     - target: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7213,7 +7154,6 @@ PrefabInstance:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
       value: HolenSlotUI (8)
 =======
       value: HolenSlotUI (1)
@@ -7234,9 +7174,6 @@ PrefabInstance:
 =======
       value: HolenSlotUI (8)
 >>>>>>> parent of 54b98b3 (Trying to Recover)
-=======
-      value: HolenSlotUI (8)
->>>>>>> parent of 54b98b3 (Trying to Recover)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7247,9 +7184,6 @@ PrefabInstance:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -7451,7 +7385,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186624622}
   m_CullTransparentMesh: 1
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -7682,8 +7615,6 @@ RectTransform:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -8361,9 +8292,6 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -8372,7 +8300,6 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -8387,8 +8314,6 @@ RectTransform:
   m_AnchoredPosition: {x: 105.48486, y: 184.08447}
   m_SizeDelta: {x: 398.3983, y: 118.4272}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -9192,7 +9117,6 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
   m_Children:
   - {fileID: 740080695}
 =======
@@ -9201,10 +9125,6 @@ RectTransform:
 =======
   m_Children: []
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-  m_Children:
-  - {fileID: 740080695}
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
   m_Children:
   - {fileID: 740080695}
@@ -9221,7 +9141,6 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
   m_AnchoredPosition: {x: 7.387207, y: -0.41223145}
 =======
   m_AnchoredPosition: {x: 7.387207, y: -0.41220093}
@@ -9229,9 +9148,6 @@ RectTransform:
 =======
   m_AnchoredPosition: {x: 7.387207, y: -0.41220093}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-  m_AnchoredPosition: {x: 7.387207, y: -0.41223145}
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
   m_AnchoredPosition: {x: 7.387207, y: -0.41223145}
 >>>>>>> parent of 54b98b3 (Trying to Recover)
@@ -9278,7 +9194,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583941226}
   m_CullTransparentMesh: 1
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -9518,9 +9433,6 @@ RectTransform:
 =======
 --- !u!1001 &1604867368
 >>>>>>> parent of 318fcc2 (Progress)
-=======
---- !u!1001 &1689387355
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 --- !u!1001 &1689387355
 >>>>>>> parent of 54b98b3 (Trying to Recover)
@@ -10647,7 +10559,6 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
   - {fileID: 1456405525}
   - {fileID: 1583941227}
 =======
@@ -10659,10 +10570,6 @@ RectTransform:
   - {fileID: 1456405525}
   - {fileID: 740080695}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-  - {fileID: 1456405525}
-  - {fileID: 1583941227}
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
   - {fileID: 1456405525}
   - {fileID: 1583941227}
@@ -11342,9 +11249,6 @@ Transform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
@@ -11467,13 +11371,10 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 --- !u!1001 &2048363679
 PrefabInstance:
 >>>>>>> parent of e835028 (Holen Update)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
 >>>>>>> parent of 54b98b3 (Trying to Recover)
 =======
