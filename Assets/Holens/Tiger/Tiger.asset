@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tiger
   m_EditorClassIdentifier: 
   holenID: FH001
-  rarity: Common
+  rarity: Epic
   holenName: Tiger
   holenIcon: {fileID: 21300000, guid: f0a67c6ffdb97514c9c533ee4b1bc10f, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}

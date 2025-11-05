@@ -1859,6 +1859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 512628728}
   - component: {fileID: 512628727}
+  - component: {fileID: 512628729}
   m_Layer: 0
   m_Name: WagerManager
   m_TagString: Untagged
@@ -1914,6 +1915,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &512628729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512628726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fd4dcd662a9944e9e126fb2226dbef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Wager:
+    playerNumber: 0
+    selectedHolens: []
+  player2Wager:
+    playerNumber: 0
+    selectedHolens: []
 --- !u!1 &546844399
 GameObject:
   m_ObjectHideFlags: 0
@@ -6625,7 +6644,7 @@ MonoBehaviour:
   player2ActionButton: {fileID: 1131590213}
   player2CountdownText: {fileID: 2111718542}
   holenUISlotPrefab: {fileID: 1130300564029074341, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
-  gameSceneName: TestGameplay
+  gameSceneName: Demo Multiplayer
   waitingForPlayerPanel: {fileID: 0}
 --- !u!4 &1877692232
 Transform:
