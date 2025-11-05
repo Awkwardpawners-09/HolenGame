@@ -124,9 +124,6 @@ NavMeshSettings:
   m_NavMeshData: {fileID: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!1 &15120554
 =======
 --- !u!1001 &2091541
@@ -396,15 +393,12 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 <<<<<<< HEAD
 --- !u!1001 &40044513
-<<<<<<< HEAD
 =======
 --- !u!1001 &18095773
 >>>>>>> parent of e835028 (Holen Update)
 =======
 --- !u!1001 &18095773
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -518,7 +512,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
   m_PrefabInstance: {fileID: 18095773}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 --- !u!1001 &43828602
@@ -895,9 +888,6 @@ Transform:
 =======
 --- !u!1001 &39586138
 >>>>>>> parent of 318fcc2 (Progress)
-=======
---- !u!1001 &43828602
->>>>>>> parent of 54b98b3 (Trying to Recover)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -905,7 +895,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 571695115}
     m_Modifications:
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -928,8 +917,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 783673603}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
     - target: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1014,7 +1001,6 @@ PrefabInstance:
       propertyPath: m_Name
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
       value: HolenSlotUI (2)
 =======
       value: HolenSlotUI (15)
@@ -1029,9 +1015,6 @@ PrefabInstance:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-      value: HolenSlotUI (2)
->>>>>>> parent of 54b98b3 (Trying to Recover)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1040,9 +1023,6 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!224 &43828603 stripped
 =======
 --- !u!224 &39586139 stripped
@@ -2923,6 +2903,13 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510150221}
   m_CullTransparentMesh: 1
+=======
+--- !u!224 &339806158 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
+  m_PrefabInstance: {fileID: 339806157}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> parent of e835028 (Holen Update)
 --- !u!1 &512628726
 GameObject:
   m_ObjectHideFlags: 0
@@ -2967,10 +2954,10 @@ MonoBehaviour:
   - rarity: Mythical
     points: 5
   actionButton: {fileID: 1447136766}
+<<<<<<< HEAD
   stateText: {fileID: 806770075}
   readyLabel: READY!
   cancelLabel: PREPARING....
-<<<<<<< HEAD
 <<<<<<< HEAD
 =======
   stateText: {fileID: 0}
@@ -2981,10 +2968,8 @@ MonoBehaviour:
 =======
   sceneToLoad: TestGameplay
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
   countdownText: {fileID: 2111718542}
-  startSeconds: 150
+  startSeconds: 60
   player1PointsText: {fileID: 1939871968}
 --- !u!4 &512628728
 Transform:
@@ -3747,6 +3732,7 @@ Transform:
 --- !u!1001 &689225981
 PrefabInstance:
   m_ObjectHideFlags: 0
+<<<<<<< HEAD
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
@@ -3859,7 +3845,6 @@ RectTransform:
   m_PrefabInstance: {fileID: 689225981}
   m_PrefabAsset: {fileID: 0}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3875,8 +3860,6 @@ RectTransform:
   player1SlotParent: {fileID: 0}
   slotPrefab: {fileID: 1130300564029074341, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
 >>>>>>> parent of e835028 (Holen Update)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!1 &606516736
 GameObject:
 =======
@@ -3893,7 +3876,6 @@ PrefabInstance:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 --- !u!1001 &698186844
@@ -4016,8 +3998,6 @@ RectTransform:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!1 &724570810
 GameObject:
   m_ObjectHideFlags: 0
@@ -4336,21 +4316,20 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+<<<<<<< HEAD
   - {fileID: 946533773}
   - {fileID: 761724235}
   - {fileID: 1527334391}
 <<<<<<< HEAD
   - {fileID: 800405668}
-<<<<<<< HEAD
 =======
   - {fileID: 1527334391}
 >>>>>>> parent of e835028 (Holen Update)
 =======
   - {fileID: 662738873}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
   - {fileID: 1362745659}
+  - {fileID: 1456405525}
   - {fileID: 2111718541}
   - {fileID: 300430583}
   m_Father: {fileID: 0}
@@ -5710,7 +5689,145 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
   m_PrefabInstance: {fileID: 995212775}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1001 &1014207174
+=======
+--- !u!1 &806770073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806770074}
+  - component: {fileID: 806770076}
+  - component: {fileID: 806770075}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &806770074
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806770073}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1447136763}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &806770075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806770073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: READY
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
+  m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278255383
+  m_fontColor: {r: 0.08960724, g: 1, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 100
+  m_fontSizeBase: 100
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &806770076
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806770073}
+  m_CullTransparentMesh: 1
+--- !u!1001 &909464847
+>>>>>>> parent of e835028 (Holen Update)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -5812,6 +5929,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
   m_PrefabInstance: {fileID: 1014207174}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &1032460401
 GameObject:
   m_ObjectHideFlags: 0
@@ -5892,7 +6010,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960934144}
   m_CullTransparentMesh: 1
-<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 --- !u!1001 &937632714
@@ -6243,8 +6360,6 @@ RectTransform:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!1 &1033607987
 GameObject:
   m_ObjectHideFlags: 0
@@ -6675,9 +6790,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!1 &1131590212
 GameObject:
   m_ObjectHideFlags: 0
@@ -6799,15 +6911,12 @@ RectTransform:
   m_SizeDelta: {x: 568.2867, y: 290.4577}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1148672681
-<<<<<<< HEAD
 =======
 --- !u!1001 &1135213951
 >>>>>>> parent of e835028 (Holen Update)
 =======
 --- !u!1001 &1135213951
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -6815,7 +6924,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1920991464}
     m_Modifications:
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -6833,8 +6941,6 @@ PrefabInstance:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
     - target: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6919,7 +7025,6 @@ PrefabInstance:
       propertyPath: m_Name
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
       value: HolenSlotUI (4)
 =======
 =======
@@ -6933,9 +7038,6 @@ PrefabInstance:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-      value: HolenSlotUI (4)
->>>>>>> parent of 54b98b3 (Trying to Recover)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6944,9 +7046,6 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!224 &1148672682 stripped
 =======
 --- !u!224 &1135213952 stripped
@@ -6957,7 +7056,6 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 <<<<<<< HEAD
 --- !u!1001 &1152782377
-<<<<<<< HEAD
 =======
 --- !u!224 &1135213952 stripped
 RectTransform:
@@ -6969,14 +7067,11 @@ RectTransform:
 =======
 --- !u!1001 &1149996445
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     m_TransformParent: {fileID: 1781501896}
@@ -7005,10 +7100,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 783673603}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-    m_TransformParent: {fileID: 1781501896}
-    m_Modifications:
->>>>>>> parent of 54b98b3 (Trying to Recover)
     - target: {fileID: 771053774759706368, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7093,7 +7184,6 @@ PrefabInstance:
       propertyPath: m_Name
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
       value: HolenSlotUI (8)
 =======
       value: HolenSlotUI (1)
@@ -7108,9 +7198,6 @@ PrefabInstance:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-      value: HolenSlotUI (8)
->>>>>>> parent of 54b98b3 (Trying to Recover)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7119,9 +7206,6 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!224 &1152782378 stripped
 =======
 --- !u!224 &1149996446 stripped
@@ -7319,7 +7403,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186624622}
   m_CullTransparentMesh: 1
-<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -7548,8 +7631,6 @@ RectTransform:
 >>>>>>> parent of e835028 (Holen Update)
 =======
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!1 &1279947845
 GameObject:
   m_ObjectHideFlags: 0
@@ -7982,7 +8063,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.66411, y: 0.66411, z: 0.66411}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 806770074}
   m_Father: {fileID: 1945022469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -8003,7 +8085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8217,18 +8299,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1945022469}
+  m_Father: {fileID: 756872037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-<<<<<<< HEAD
 =======
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8241,8 +8319,6 @@ RectTransform:
   m_AnchoredPosition: {x: 105.48486, y: 184.08447}
   m_SizeDelta: {x: 398.3983, y: 118.4272}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1456405526
 MonoBehaviour:
@@ -8694,7 +8770,7 @@ GameObject:
   - component: {fileID: 1527334393}
   - component: {fileID: 1527334392}
   m_Layer: 5
-  m_Name: Player 1 UI
+  m_Name: Player1UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8727,7 +8803,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527334390}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
@@ -8885,6 +8961,7 @@ PrefabInstance:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 1562434154}
   - component: {fileID: 1562434155}
   - component: {fileID: 1562434156}
@@ -9017,6 +9094,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+=======
+>>>>>>> parent of e835028 (Holen Update)
   - component: {fileID: 1583941227}
   - component: {fileID: 1583941229}
   - component: {fileID: 1583941228}
@@ -9040,7 +9119,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
   m_Children:
   - {fileID: 740080695}
 =======
@@ -9049,17 +9127,12 @@ RectTransform:
 =======
   m_Children: []
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-  m_Children:
-  - {fileID: 740080695}
->>>>>>> parent of 54b98b3 (Trying to Recover)
   m_Father: {fileID: 1945022469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.34100002, y: 0.7587925}
   m_AnchorMax: {x: 1, y: 1}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
   m_AnchoredPosition: {x: 7.387207, y: -0.41223145}
 =======
   m_AnchoredPosition: {x: 7.387207, y: -0.41220093}
@@ -9067,9 +9140,6 @@ RectTransform:
 =======
   m_AnchoredPosition: {x: 7.387207, y: -0.41220093}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-  m_AnchoredPosition: {x: 7.387207, y: -0.41223145}
->>>>>>> parent of 54b98b3 (Trying to Recover)
   m_SizeDelta: {x: 14.455502, y: 0.82420003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1583941228
@@ -9110,7 +9180,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583941226}
   m_CullTransparentMesh: 1
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 --- !u!1001 &1689387355
@@ -9348,9 +9417,6 @@ RectTransform:
 =======
 --- !u!1001 &1604867368
 >>>>>>> parent of 318fcc2 (Progress)
-=======
---- !u!1001 &1689387355
->>>>>>> parent of 54b98b3 (Trying to Recover)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10449,7 +10515,7 @@ GameObject:
   - component: {fileID: 1945022471}
   - component: {fileID: 1945022470}
   m_Layer: 5
-  m_Name: PlayerSlot
+  m_Name: Player1Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10469,7 +10535,6 @@ RectTransform:
   m_Children:
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
   - {fileID: 1456405525}
   - {fileID: 1583941227}
 =======
@@ -10481,10 +10546,6 @@ RectTransform:
   - {fileID: 1456405525}
   - {fileID: 740080695}
 >>>>>>> parent of 318fcc2 (Progress)
-=======
-  - {fileID: 1456405525}
-  - {fileID: 1583941227}
->>>>>>> parent of 54b98b3 (Trying to Recover)
   - {fileID: 123915941}
   - {fileID: 1939871967}
   - {fileID: 168225947}
@@ -11154,9 +11215,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
 --- !u!1 &2030257493
 GameObject:
 =======
@@ -11273,13 +11331,10 @@ PrefabInstance:
 --- !u!224 &2037336725 stripped
 RectTransform:
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 --- !u!1001 &2048363679
 PrefabInstance:
 >>>>>>> parent of e835028 (Holen Update)
-=======
->>>>>>> parent of 54b98b3 (Trying to Recover)
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -11460,7 +11515,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 150
+  m_text: 60
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
