@@ -16,6 +16,9 @@ public class HolenInventoryManager : MonoBehaviour
 
     public static HolenInventoryManager Instance; // ✅ Singleton for easy access
 
+    // ✅ ADD THIS EVENT - Notifies shop items when inventory changes
+    public static event System.Action OnInventoryChanged;
+
     private void Awake()
     {
         // ✅ Make this object persistent across scenes
@@ -75,6 +78,9 @@ public class HolenInventoryManager : MonoBehaviour
 
         if (inventoryUI != null)
             inventoryUI.RefreshUI(); // ✅ Auto update if UI is open
+
+        // ✅ NOTIFY SHOP ITEMS
+        OnInventoryChanged?.Invoke();
     }
 
     public void RemoveHolen(string holenID, int amount = 1)
@@ -93,6 +99,9 @@ public class HolenInventoryManager : MonoBehaviour
 
             if (inventoryUI != null)
                 inventoryUI.RefreshUI();
+
+            // ✅ NOTIFY SHOP ITEMS
+            OnInventoryChanged?.Invoke();
         }
         else
         {
@@ -141,30 +150,26 @@ public class HolenInventoryManager : MonoBehaviour
         SaveInventory();
         if (inventoryUI != null)
             inventoryUI.RefreshUI();
+
+        // ✅ NOTIFY SHOP ITEMS
+        OnInventoryChanged?.Invoke();
     }
 
     // ====================================================================
     // 🧪 TESTING METHOD - Give all Holens with 99 quantity
     // ====================================================================
-    /// <summary>
-    /// FOR TESTING ONLY: Clears inventory and gives all Holens from the database with 99 quantity each.
-    /// Attach this to a button's OnClick event in the Inspector.
-    /// </summary>
     public void GiveAllHolensForTesting()
     {
         Debug.Log("🧪 [TESTING] Giving all Holens with 99 quantity...");
 
-        // Clear existing inventory
         inventory.Clear();
 
-        // Check if we have any Holens in the database
         if (allHolens == null || allHolens.Count == 0)
         {
             Debug.LogError("🧪 [TESTING] No Holens found in allHolens database! Assign HolenData assets in Inspector.");
             return;
         }
 
-        // Add all Holens with 99 quantity
         int addedCount = 0;
         foreach (HolenData holen in allHolens)
         {
@@ -180,15 +185,16 @@ public class HolenInventoryManager : MonoBehaviour
             }
         }
 
-        // Save the inventory
         SaveInventory();
 
-        // Refresh UI if available
         if (inventoryUI != null)
         {
             inventoryUI.RefreshUI();
             Debug.Log("🧪 [TESTING] Inventory UI refreshed");
         }
+
+        // ✅ NOTIFY SHOP ITEMS
+        OnInventoryChanged?.Invoke();
 
         Debug.Log($"🧪 [TESTING] Successfully added {addedCount} Holens with 99 quantity each!");
         Debug.Log($"🧪 [TESTING] Total inventory entries: {inventory.Count}");
@@ -197,10 +203,6 @@ public class HolenInventoryManager : MonoBehaviour
     // ====================================================================
     // 🧪 TESTING METHOD - Reset to empty inventory
     // ====================================================================
-    /// <summary>
-    /// FOR TESTING ONLY: Completely clears the inventory and saves.
-    /// Useful for testing the "empty inventory" state.
-    /// </summary>
     public void ClearInventoryForTesting()
     {
         Debug.Log("🧪 [TESTING] Clearing entire inventory...");
@@ -213,16 +215,15 @@ public class HolenInventoryManager : MonoBehaviour
             inventoryUI.RefreshUI();
         }
 
+        // ✅ NOTIFY SHOP ITEMS
+        OnInventoryChanged?.Invoke();
+
         Debug.Log("🧪 [TESTING] Inventory cleared and saved!");
     }
 
     // ====================================================================
     // 🧪 TESTING METHOD - Give random Holens for quick testing
     // ====================================================================
-    /// <summary>
-    /// FOR TESTING ONLY: Gives 5-10 random Holens with random quantities (1-20).
-    /// Good for testing variety without giving everything.
-    /// </summary>
     public void GiveRandomHolensForTesting()
     {
         Debug.Log("🧪 [TESTING] Giving random Holens...");
@@ -235,11 +236,9 @@ public class HolenInventoryManager : MonoBehaviour
 
         inventory.Clear();
 
-        // Give 5-10 random Holens
         int numToGive = Random.Range(5, Mathf.Min(11, allHolens.Count + 1));
         List<HolenData> shuffled = new List<HolenData>(allHolens);
 
-        // Shuffle the list
         for (int i = 0; i < shuffled.Count; i++)
         {
             HolenData temp = shuffled[i];
@@ -248,12 +247,11 @@ public class HolenInventoryManager : MonoBehaviour
             shuffled[randomIndex] = temp;
         }
 
-        // Add the first numToGive Holens
         for (int i = 0; i < numToGive; i++)
         {
             if (shuffled[i] != null && !string.IsNullOrEmpty(shuffled[i].holenID))
             {
-                int quantity = Random.Range(1, 21); // 1-20 quantity
+                int quantity = Random.Range(1, 21);
                 inventory.Add(new HolenInventoryEntry(shuffled[i].holenID, quantity));
                 Debug.Log($"🧪 [TESTING] Added {shuffled[i].holenName} x{quantity}");
             }
@@ -266,15 +264,15 @@ public class HolenInventoryManager : MonoBehaviour
             inventoryUI.RefreshUI();
         }
 
+        // ✅ NOTIFY SHOP ITEMS
+        OnInventoryChanged?.Invoke();
+
         Debug.Log($"🧪 [TESTING] Added {numToGive} random Holens!");
     }
 
     // ====================================================================
     // 🧪 TESTING METHOD - Print inventory to console
     // ====================================================================
-    /// <summary>
-    /// FOR TESTING ONLY: Prints current inventory to console for debugging.
-    /// </summary>
     public void PrintInventoryForTesting()
     {
         Debug.Log("🧪 [TESTING] ===== CURRENT INVENTORY =====");

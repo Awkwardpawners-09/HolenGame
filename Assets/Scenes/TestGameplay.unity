@@ -560,8 +560,9 @@ MonoBehaviour:
   holenPlayerObject: {fileID: 0}
   targetObject: {fileID: 0}
   requiredCollisions: 3
-  collisionText: {fileID: 0}
-  currentCollisions: 0
+  livesText: {fileID: 0}
+  maxLives: 3
+  gameOverObject: {fileID: 0}
   enableObjectiveMode: 1
 --- !u!1 &328815442
 GameObject:
@@ -3038,6 +3039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc284ad419d2b648919091591a1c034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bottomMenu: {fileID: 0}
   holensPosition: {fileID: 2092016475}
   holensBallPrefab: {fileID: 3847242689783958327, guid: 3e0957d9fec192d4bac1b75dab958376, type: 3}
   rotationSpeed: 90
@@ -3047,6 +3049,7 @@ MonoBehaviour:
   gaugeMin: 10
   gaugeMax: 70
   gaugeSpeed: 80
+  holenChanger: {fileID: 0}
 --- !u!95 &1637746029
 Animator:
   serializedVersion: 5
@@ -3076,6 +3079,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5860509663085356994, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4543069569791729328, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
       propertyPath: m_Name
       value: Oceanous
@@ -3571,8 +3578,9 @@ MonoBehaviour:
   holenPlayerObject: {fileID: 0}
   targetObject: {fileID: 0}
   requiredCollisions: 3
-  collisionText: {fileID: 0}
-  currentCollisions: 0
+  livesText: {fileID: 0}
+  maxLives: 3
+  gameOverObject: {fileID: 0}
   enableObjectiveMode: 1
 --- !u!65 &1918146935
 BoxCollider:

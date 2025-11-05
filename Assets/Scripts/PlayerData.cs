@@ -4,7 +4,7 @@ using System.IO;
 [System.Serializable]
 public class PlayerData
 {
-    public int coins = 500; // default value, only used if no save file exists
+    public int coins = 9999; // default value, only used if no save file exists
 
     private static string SavePath => Path.Combine(Application.persistentDataPath, "player_data.json");
 
@@ -46,7 +46,7 @@ public class PlayerData
     }
     public void ResetData()
 {
-    coins = 500; // or set back to 500 if you prefer a "default start"
+    coins = 9999; // or set back to 500 if you prefer a "default start"
     Save();
 }
 }

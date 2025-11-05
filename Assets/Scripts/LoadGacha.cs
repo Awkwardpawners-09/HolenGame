@@ -5,7 +5,7 @@ public class LoadGacha : MonoBehaviour
 {
     public void GoToShopScene()
     {
-        SceneManager.LoadScene("Menu Scene"); // replace with your shop scene name
+        SceneManager.LoadScene("Demo Menu"); // replace with your shop scene name
     }
 
     public void GoToGachaScene()
