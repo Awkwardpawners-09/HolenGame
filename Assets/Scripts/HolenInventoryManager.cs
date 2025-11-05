@@ -144,15 +144,6 @@ public class HolenInventoryManager : MonoBehaviour
         return allHolens.Find(h => h.holenID == holenID);
     }
 
-    /// <summary>
-    /// Gets all holens currently in the inventory
-    /// </summary>
-    /// <returns>A copy of the inventory list</returns>
-    public List<HolenInventoryEntry> GetAllHolens()
-    {
-        return new List<HolenInventoryEntry>(inventory);
-    }
-
     public void ResetInventory()
     {
         inventory.Clear();
