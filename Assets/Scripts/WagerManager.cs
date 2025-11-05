@@ -2,20 +2,31 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class WagerManager : MonoBehaviour
 {
+    // Singleton pattern
+    public static WagerManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        // Set up singleton
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     [Header("UI Elements")]
-    [Tooltip("The Content GameObject in the P1Wager Scroll View")]
+    [Tooltip("The Content GameObject in the Wager Scroll View")]
     public GameObject wagerContent;
 
     [Tooltip("Reference to the HolenUISlot prefab (same as in the inventory)")]
     public GameObject holenUISlotPrefab;
 
-    public static WagerManager Instance { get; private set; } // Singleton instance
-
-    // We store both the spawned UI slot and the data for each selected Holen (no reliance on HolenSlotUI.Data)
+    // We store both the spawned UI slot and the data for each selected Holen
     private class SelectedUIEntry
     {
         public GameObject go;
@@ -33,7 +44,7 @@ public class WagerManager : MonoBehaviour
     private readonly List<SelectedUIEntry> selectedEntries = new List<SelectedUIEntry>();
     private bool canClick = true; // small cooldown to avoid double-taps
 
-    // ===================== Persistent “match” memory of selected holens =====================
+    // ===================== Persistent "match" memory of selected holens =====================
     [System.Serializable]
     public class SelectedHolenRecord
     {
@@ -79,25 +90,8 @@ public class WagerManager : MonoBehaviour
     }
     // =========================================================================================
 
-    private void Awake()
-    {
-        // Singleton pattern
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-
     void Start()
     {
-        if (actionButton != null)
-            actionButton.onClick.AddListener(OnActionButtonPressed);
-
         // Countdown init
         remainingSeconds = Mathf.Max(0, Mathf.RoundToInt(startSeconds));
         UpdateCountdownText();
@@ -117,20 +111,6 @@ public class WagerManager : MonoBehaviour
                 countdownTickTimer = 0f;
                 remainingSeconds = Mathf.Max(remainingSeconds - 1, 0);
                 UpdateCountdownText();
-            }
-        }
-
-        // --- Check READY state duration for auto-load ---
-        if (isReady && readySince > 0f && (Time.time - readySince) >= readyHoldSeconds)
-        {
-            readySince = -1f; // prevent multiple triggers
-            if (!string.IsNullOrEmpty(sceneToLoad))
-            {
-                SceneManager.LoadScene(sceneToLoad);
-            }
-            else
-            {
-                Debug.LogWarning("Scene to load not set on WagerManager.");
             }
         }
 
@@ -176,6 +156,13 @@ public class WagerManager : MonoBehaviour
 
     private int currentPoints = 0;
 
+    // ===================== NETWORK SYNC CALLBACK =====================
+    /// <summary>
+    /// Callback invoked when points change. Used by LobbyNetworkManager for network sync.
+    /// </summary>
+    public System.Action<int> OnPointsChanged;
+    // =================================================================
+
     private void RecomputePointsAndUI()
     {
         int sum = 0;
@@ -189,13 +176,15 @@ public class WagerManager : MonoBehaviour
         currentPoints = sum;
         UpdatePointsText();
         UpdateButtonInteractable();
+
+        // Notify network manager of points change
+        OnPointsChanged?.Invoke(currentPoints);
     }
 
     private void UpdatePointsText()
     {
         if (player1PointsText != null)
         {
-            // If you want "Points: X", change to $"Points: {currentPoints}"
             player1PointsText.text = $"{currentPoints}";
         }
     }
@@ -204,7 +193,6 @@ public class WagerManager : MonoBehaviour
     {
         if (actionButton != null)
         {
-            // READY is allowed once total points are >= the threshold (since total can now be > 10)
             bool meetsThreshold = (currentPoints >= minRequiredPoints);
             actionButton.interactable = meetsThreshold;
         }
@@ -232,9 +220,7 @@ public class WagerManager : MonoBehaviour
         }
         else
         {
-            // Rule change:
-            // It's OK to EXCEED 10 when CROSSING the threshold,
-            // but once you are ALREADY >= 10, you cannot add more Holens.
+            // Check if already at threshold
             if (currentPoints >= minRequiredPoints)
             {
                 Debug.LogWarning($"Already at or above {minRequiredPoints} points. Remove a Holen before adding another.");
@@ -248,15 +234,12 @@ public class WagerManager : MonoBehaviour
                 return;
             }
 
-            // IMPORTANT: We DO NOT check (currentPoints + cost > minRequiredPoints) anymore.
-            // This allows a single add to push total beyond the threshold.
-
             // Add new selection (spawn UI slot + track data)
             GameObject newSlot = Instantiate(holenUISlotPrefab, wagerContent.transform);
             var holenUISlot = newSlot.GetComponent<HolenSlotUI>();
             if (holenUISlot != null)
             {
-                holenUISlot.SetSlot(holenData, quantity); // purely visual hookup
+                holenUISlot.SetSlot(holenData, quantity);
                 selectedEntries.Add(new SelectedUIEntry(newSlot, holenData, quantity));
                 Debug.Log($"{holenData.holenName} added to wager view.");
 
@@ -280,21 +263,22 @@ public class WagerManager : MonoBehaviour
     // READY / CANCEL Button + TextMeshPro fields and logic
     // ========================================================
     [Header("Wager Action Button")]
-    public Button actionButton;             // assign in Inspector
-    public TMP_Text stateText;              // assign in Inspector
+    public Button actionButton;
+    public TMP_Text stateText;
     public string readyLabel = "READY";
     public string cancelLabel = "CANCEL";
-    public string sceneToLoad;              // scene name to load after 5s READY
 
     private bool isReady = false;
-    private float lastPressTime = -999f;
-    private float pressCooldown = 1f;       // 1 second cooldown
-    private float readySince = -1f;
-    private float readyHoldSeconds = 5f;    // must stay READY for 5s
+    public bool IsReady => isReady; // Expose ready state for LobbyNetworkManager
 
+    private float lastPressTime = -999f;
+    private float pressCooldown = 1f;
+    private float readySince = -1f;
+
+    // Make this public so LobbyNetworkManager can call it
     public void OnActionButtonPressed()
     {
-        // Allow toggling READY once we have at least the threshold (>= 10)
+        // Allow toggling READY once we have at least the threshold
         if (currentPoints < minRequiredPoints)
         {
             Debug.LogWarning($"Cannot set READY. Need at least {minRequiredPoints} points.");
@@ -339,9 +323,9 @@ public class WagerManager : MonoBehaviour
     }
 
     // ========================================================
-    // Player 1 Points Text
+    // Player Points Text
     // ========================================================
-    [Header("Player 1 Points UI")]
-    [Tooltip("Assign a TMP Text that displays the current total selected points (e.g., 'Points: 7').")]
+    [Header("Player Points UI")]
+    [Tooltip("Assign a TMP Text that displays the current total selected points.")]
     public TMP_Text player1PointsText;
 }

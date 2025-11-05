@@ -8,6 +8,9 @@ public class LobbyUIManager : MonoBehaviour
     public GameObject contentScrollView;
     public GameObject holenUISlotPrefab;
 
+    [Header("Settings")]
+    public bool isInteractable = true; // Can this player click items?
+
     private HolenInventoryManager inventoryManager;
     private WagerManager wagerManager; // Cache the wager manager reference
 
