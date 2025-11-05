@@ -135,7 +135,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &-4807670623259188037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +170,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -3077389245889383231}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

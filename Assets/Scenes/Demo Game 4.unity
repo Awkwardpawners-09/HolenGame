@@ -947,6 +947,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 368360525}
     m_Modifications:
+    - target: {fileID: 1043480018715138294, guid: d5da535c2a2989d4b9a0ac10d6fc492e, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1779493644018710607, guid: d5da535c2a2989d4b9a0ac10d6fc492e, type: 3}
       propertyPath: m_AngularDrag
       value: 0.1
@@ -3383,6 +3387,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6455484492729372169, guid: 554362bfe38425b40a2322bdbb046b14, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3887,6 +3895,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 368360525}
     m_Modifications:
+    - target: {fileID: 2653656768822942468, guid: 4269b342f2d94774daf8247ad5388ddb, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4543069569791729328, guid: 4269b342f2d94774daf8247ad5388ddb, type: 3}
       propertyPath: m_Name
       value: BabyBlack
@@ -5677,6 +5689,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 368360525}
     m_Modifications:
+    - target: {fileID: -4368385192577021548, guid: ebdfc86a7297e7546a70585cd7fa7677, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1779493644018710607, guid: ebdfc86a7297e7546a70585cd7fa7677, type: 3}
       propertyPath: m_AngularDrag
       value: 0.1
@@ -8336,6 +8352,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 368360525}
     m_Modifications:
+    - target: {fileID: -275092049909924006, guid: 8b0f2b74dcd477c478c8ea30f9410671, type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1779493644018710607, guid: 8b0f2b74dcd477c478c8ea30f9410671, type: 3}
       propertyPath: m_AngularDrag
       value: 0.1
@@ -12077,6 +12097,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 368360525}
     m_Modifications:
+    - target: {fileID: -5860509663085356994, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1779493644018710607, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
       propertyPath: m_AngularDrag
       value: 0.1

@@ -458,6 +458,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4368385192577021548, guid: ebdfc86a7297e7546a70585cd7fa7677, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4543069569791729328, guid: ebdfc86a7297e7546a70585cd7fa7677, type: 3}
       propertyPath: m_Name
       value: Batik (Yellow)
@@ -6515,6 +6519,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7362074004669007912, guid: de59e1f24ed139a4ea19a0ab1a6df4e0, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4543069569791729328, guid: de59e1f24ed139a4ea19a0ab1a6df4e0, type: 3}
       propertyPath: m_Name
       value: Serpent
@@ -9113,6 +9121,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3209146980662762424, guid: c5294dad3af3c014faab5b7fa993be4c, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4543069569791729328, guid: c5294dad3af3c014faab5b7fa993be4c, type: 3}
       propertyPath: m_Name
       value: BabyWhite
@@ -10337,6 +10349,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6660900989741209424, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
       propertyPath: m_Name
       value: Tiger
@@ -12232,6 +12248,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1043480018715138294, guid: d5da535c2a2989d4b9a0ac10d6fc492e, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4543069569791729328, guid: d5da535c2a2989d4b9a0ac10d6fc492e, type: 3}
       propertyPath: m_Name
       value: Bumblebee

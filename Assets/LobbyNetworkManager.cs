@@ -1,9 +1,10 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using ExitGames.Client.Photon;
+using System.Collections.Generic;
 
 public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 {
@@ -48,6 +49,9 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private const byte READY_STATE_EVENT = 1;
     private const byte WAGER_UPDATE_EVENT = 2;
+    private const byte WAGER_SELECTION_EVENT = 3;
+    private const byte INVENTORY_SYNC_EVENT = 4;
+    private const byte REQUEST_INVENTORY_EVENT = 5;
 
     void Start()
     {
@@ -127,7 +131,61 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         // Set up opponent's UI (read-only)
         SetupOpponentUI();
 
+        // Send inventory to opponent and request theirs
+        Invoke(nameof(SyncInventories), 0.5f);
+
         Debug.Log($"[INIT] Lobby initialization complete for Player {localPlayerNumber}");
+    }
+
+    private void SyncInventories()
+    {
+        // Send our inventory to the opponent
+        SendInventoryToOpponent();
+
+        // Request opponent's inventory
+        RequestOpponentInventory();
+    }
+
+    private void SendInventoryToOpponent()
+    {
+        var inv = FindObjectOfType<HolenInventoryManager>();
+        if (inv == null)
+        {
+            Debug.LogError("[INVENTORY SYNC] HolenInventoryManager not found");
+            return;
+        }
+
+        // Get all holens from inventory
+        var allHolens = inv.GetAllHolens();
+
+        List<string> holenIDs = new List<string>();
+        List<int> quantities = new List<int>();
+
+        foreach (var holen in allHolens)
+        {
+            holenIDs.Add(holen.holenID);  // ✅ Fixed: Access holenID directly
+            quantities.Add(holen.quantity);
+        }
+
+        Debug.Log($"[INVENTORY SYNC] Sending {holenIDs.Count} holens to opponent");
+
+        // Send the inventory data
+        object[] content = new object[] { localPlayerNumber, holenIDs.ToArray(), quantities.ToArray() };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        SendOptions sendOptions = SendOptions.SendReliable;
+
+        PhotonNetwork.RaiseEvent(INVENTORY_SYNC_EVENT, content, raiseEventOptions, sendOptions);
+    }
+
+    private void RequestOpponentInventory()
+    {
+        Debug.Log($"[INVENTORY SYNC] Requesting opponent's inventory");
+
+        object[] content = new object[] { localPlayerNumber };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        SendOptions sendOptions = SendOptions.SendReliable;
+
+        PhotonNetwork.RaiseEvent(REQUEST_INVENTORY_EVENT, content, raiseEventOptions, sendOptions);
     }
 
     private void SetupLocalPlayerUI()
@@ -180,20 +238,41 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private void SetupOpponentUI()
     {
-        // Create read-only UI for opponent (no inventory, just wager display)
+        // Create read-only UI managers for opponent's display
         if (localPlayerNumber == 1)
         {
             Debug.Log("[SETUP] Setting up Player 2 (opponent) UI - read-only");
-            // Opponent is Player 2 - we don't create inventory UI for them
-            // Just create an empty wager manager for display purposes if needed
+
+            // Create inventory display for Player 2 (opponent)
+            player2LobbyUI = CreateLobbyUIManager(player2InventoryContent, false);
+
+            // Create wager display for Player 2 (opponent)
+            player2Wager = CreateWagerManager(
+                player2WagerContent,
+                player2ActionButton,
+                player2StateText,
+                player2CountdownText,
+                player2PointsText,
+                false // Not local, read-only
+            );
         }
         else if (localPlayerNumber == 2)
         {
             Debug.Log("[SETUP] Setting up Player 1 (opponent) UI - read-only");
-            // Opponent is Player 1 - we don't create inventory UI for them
-        }
 
-        // Note: Opponent's wager content can be synced via WAGER_UPDATE_EVENT if you want to show their selections
+            // Create inventory display for Player 1 (opponent)
+            player1LobbyUI = CreateLobbyUIManager(player1InventoryContent, false);
+
+            // Create wager display for Player 1 (opponent)
+            player1Wager = CreateWagerManager(
+                player1WagerContent,
+                player1ActionButton,
+                player1StateText,
+                player1CountdownText,
+                player1PointsText,
+                false // Not local, read-only
+            );
+        }
     }
 
     private LobbyUIManager CreateLobbyUIManager(GameObject contentScrollView, bool isLocal)
@@ -231,15 +310,77 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
         Debug.Log($"[CREATE] Created WagerManager for Player {localPlayerNumber} ({(isLocal ? "Local" : "Remote")})");
 
-        // If this is the local player's wager manager, hook up the button
+        // If this is the local player's wager manager, hook up the button and callbacks
         if (isLocal && actionButton != null)
         {
             actionButton.onClick.RemoveAllListeners(); // Clear any existing listeners
             actionButton.onClick.AddListener(() => OnLocalPlayerReady(manager));
             Debug.Log($"[BUTTON] Ready button connected for Player {localPlayerNumber}");
+
+            // Hook up points change callback for network sync
+            manager.OnPointsChanged = (points) => OnLocalPlayerPointsChanged(points);
+            Debug.Log($"[CALLBACK] Points change callback connected for Player {localPlayerNumber}");
         }
 
         return manager;
+    }
+
+    private void OnLocalPlayerPointsChanged(int newPoints)
+    {
+        Debug.Log($"[POINTS] Player {localPlayerNumber} points changed to: {newPoints}");
+
+        // Send points update to opponent
+        object[] content = new object[] { localPlayerNumber, newPoints };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        SendOptions sendOptions = SendOptions.SendReliable;
+
+        PhotonNetwork.RaiseEvent(WAGER_UPDATE_EVENT, content, raiseEventOptions, sendOptions);
+
+        // Also send the full wager selection data
+        SendWagerSelectionToOpponent();
+    }
+
+    private void SendWagerSelectionToOpponent()
+    {
+        WagerManager localWager = GetLocalWagerManager();
+        if (localWager == null) return;
+
+        // Get the selected holens
+        var selectedHolens = localWager.GetSelectedHolensCopy();
+
+        // Convert to serializable format
+        List<string> holenIDs = new List<string>();
+        List<int> quantities = new List<int>();
+
+        foreach (var record in selectedHolens)
+        {
+            holenIDs.Add(record.holenID);
+            quantities.Add(record.quantity);
+        }
+
+        Debug.Log($"[WAGER SYNC] Sending {holenIDs.Count} selected holens to opponent");
+
+        // Send the wager data
+        object[] content = new object[] { localPlayerNumber, holenIDs.ToArray(), quantities.ToArray() };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        SendOptions sendOptions = SendOptions.SendReliable;
+
+        PhotonNetwork.RaiseEvent(WAGER_SELECTION_EVENT, content, raiseEventOptions, sendOptions);
+    }
+
+    private WagerManager GetLocalWagerManager()
+    {
+        return localPlayerNumber == 1 ? player1Wager : player2Wager;
+    }
+
+    private WagerManager GetOpponentWagerManager()
+    {
+        return localPlayerNumber == 1 ? player2Wager : player1Wager;
+    }
+
+    private LobbyUIManager GetOpponentLobbyUIManager()
+    {
+        return localPlayerNumber == 1 ? player2LobbyUI : player1LobbyUI;
     }
 
     private void UpdatePlayerNames()
@@ -355,12 +496,172 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         }
         else if (eventCode == WAGER_UPDATE_EVENT)
         {
-            // Handle wager updates from opponent if needed
+            // Handle points updates from opponent
             object[] data = (object[])photonEvent.CustomData;
             int playerNum = (int)data[0];
-            Debug.Log($"[NETWORK] Player {playerNum} updated their wager");
+            int points = (int)data[1];
 
-            // TODO: Update opponent's wager display if you want to show their selections
+            Debug.Log($"[NETWORK] Player {playerNum} updated points to: {points}");
+
+            // Update opponent's points display
+            if (playerNum != localPlayerNumber)
+            {
+                TMP_Text opponentPointsText = (playerNum == 1) ? player1PointsText : player2PointsText;
+                if (opponentPointsText != null)
+                {
+                    opponentPointsText.text = $"{points}";
+                }
+            }
+        }
+        else if (eventCode == WAGER_SELECTION_EVENT)
+        {
+            // Handle wager selection updates from opponent
+            object[] data = (object[])photonEvent.CustomData;
+            int playerNum = (int)data[0];
+            string[] holenIDs = (string[])data[1];
+            int[] quantities = (int[])data[2];
+
+            Debug.Log($"[NETWORK] Received wager selection from Player {playerNum}: {holenIDs.Length} holens");
+
+            if (playerNum != localPlayerNumber)
+            {
+                UpdateOpponentWagerDisplay(playerNum, holenIDs, quantities);
+            }
+        }
+        else if (eventCode == INVENTORY_SYNC_EVENT)
+        {
+            // Handle inventory data from opponent
+            object[] data = (object[])photonEvent.CustomData;
+            int playerNum = (int)data[0];
+            string[] holenIDs = (string[])data[1];
+            int[] quantities = (int[])data[2];
+
+            Debug.Log($"[NETWORK] Received inventory from Player {playerNum}: {holenIDs.Length} holens");
+
+            if (playerNum != localPlayerNumber)
+            {
+                UpdateOpponentInventoryDisplay(playerNum, holenIDs, quantities);
+            }
+        }
+        else if (eventCode == REQUEST_INVENTORY_EVENT)
+        {
+            // Opponent is requesting our inventory
+            Debug.Log($"[NETWORK] Opponent requested our inventory, sending...");
+            SendInventoryToOpponent();
+        }
+    }
+
+    private void UpdateOpponentInventoryDisplay(int playerNum, string[] holenIDs, int[] quantities)
+    {
+        LobbyUIManager opponentLobbyUI = GetOpponentLobbyUIManager();
+        if (opponentLobbyUI == null)
+        {
+            Debug.LogWarning("[INVENTORY SYNC] Opponent lobby UI manager not found");
+            return;
+        }
+
+        // Get inventory manager to look up holen data
+        var inv = FindObjectOfType<HolenInventoryManager>();
+        if (inv == null)
+        {
+            Debug.LogError("[INVENTORY SYNC] HolenInventoryManager not found");
+            return;
+        }
+
+        // Clear existing inventory content for opponent
+        GameObject inventoryContent = opponentLobbyUI.contentScrollView;
+        if (inventoryContent != null)
+        {
+            foreach (Transform child in inventoryContent.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // Display each holen in opponent's inventory
+        for (int i = 0; i < holenIDs.Length; i++)
+        {
+            string holenID = holenIDs[i];
+            int quantity = quantities[i];
+
+            HolenData data = inv.GetHolenData(holenID);
+            if (data != null)
+            {
+                // Create UI slot for opponent's inventory item
+                GameObject newSlot = Instantiate(holenUISlotPrefab, inventoryContent.transform);
+                var holenUISlot = newSlot.GetComponent<HolenSlotUI>();
+                if (holenUISlot != null)
+                {
+                    holenUISlot.SetSlot(data, quantity);
+
+                    // Disable the button on opponent's slots (they can't select from their inventory)
+                    Button btn = newSlot.GetComponent<Button>();
+                    if (btn != null)
+                    {
+                        btn.interactable = false;
+                    }
+
+                    Debug.Log($"[INVENTORY SYNC] Displayed opponent's holen: {data.holenName} x{quantity}");
+                }
+            }
+        }
+
+        Debug.Log($"[INVENTORY SYNC] Successfully updated Player {playerNum}'s inventory display with {holenIDs.Length} items");
+    }
+
+    private void UpdateOpponentWagerDisplay(int playerNum, string[] holenIDs, int[] quantities)
+    {
+        WagerManager opponentWager = GetOpponentWagerManager();
+        if (opponentWager == null)
+        {
+            Debug.LogWarning("[WAGER SYNC] Opponent wager manager not found");
+            return;
+        }
+
+        // Get inventory manager to look up holen data
+        var inv = FindObjectOfType<HolenInventoryManager>();
+        if (inv == null)
+        {
+            Debug.LogError("[WAGER SYNC] HolenInventoryManager not found");
+            return;
+        }
+
+        // Clear existing wager content for opponent
+        GameObject wagerContent = opponentWager.wagerContent;
+        if (wagerContent != null)
+        {
+            foreach (Transform child in wagerContent.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // Display each selected holen
+        for (int i = 0; i < holenIDs.Length; i++)
+        {
+            string holenID = holenIDs[i];
+            int quantity = quantities[i];
+
+            HolenData data = inv.GetHolenData(holenID);
+            if (data != null)
+            {
+                // Create UI slot for opponent's selection
+                GameObject newSlot = Instantiate(holenUISlotPrefab, wagerContent.transform);
+                var holenUISlot = newSlot.GetComponent<HolenSlotUI>();
+                if (holenUISlot != null)
+                {
+                    holenUISlot.SetSlot(data, quantity);
+
+                    // Disable the button on opponent's slots
+                    Button btn = newSlot.GetComponent<Button>();
+                    if (btn != null)
+                    {
+                        btn.interactable = false;
+                    }
+
+                    Debug.Log($"[WAGER SYNC] Displayed opponent's holen: {data.holenName} x{quantity}");
+                }
+            }
         }
     }
 
