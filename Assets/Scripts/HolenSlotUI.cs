@@ -2,58 +2,59 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// UI component for displaying a holen slot.
+/// Click handling is now done by LobbyNetworkManager, not internally.
+/// </summary>
 public class HolenSlotUI : MonoBehaviour
 {
     public Image iconImage;
     public TMP_Text nameText;
     public TMP_Text quantityText;
 
-    private Button button; // Reference to the Button component
     private HolenData holenData; // Store the HolenData for this slot
 
     public GameObject contentPrefab; // Reference to Content prefab
     public Transform inventoryView; // Reference to the InventoryView to place the Content GameObject
 
-
-    void Start()
-    {
-        button = GetComponent<Button>();
-
-        if (button == null)
-        {
-            Debug.LogError("Button component not found on HolenSlotUI.");
-            return;
-        }
-
-        // Set the button's onClick listener
-        button.onClick.AddListener(OnClick);
-    }
-
+    /// <summary>
+    /// Sets up the slot display with holen data and quantity.
+    /// </summary>
     public void SetSlot(HolenData data, int quantity)
     {
-        holenData = data; // Store the HolenData for this slot
-        iconImage.sprite = data.holenIcon;
-        nameText.text = data.holenName;
-        quantityText.text = quantity.ToString();
+        holenData = data;
+
+        if (iconImage != null)
+            iconImage.sprite = data.holenIcon;
+
+        if (nameText != null)
+            nameText.text = data.holenName;
+
+        if (quantityText != null)
+            quantityText.text = quantity.ToString();
     }
 
-    // Button click logic
-    public void OnClick()
+    /// <summary>
+    /// Gets the holen data associated with this slot.
+    /// </summary>
+    public HolenData GetHolenData()
     {
-        // This will trigger the method to handle the click and pass the item data to the wager manager
-        if (WagerManager.Instance != null) // Check if WagerManager is accessible
-        {
-            WagerManager.Instance.HandleWagerItemClick(holenData, 1); // Pass the data to WagerManager
-        }
-        else
-        {
-            Debug.LogError("WagerManager not found in the scene!");
-        }
+        return holenData;
     }
 
-    // Add this helper function to check if clicked slot is the same
+    /// <summary>
+    /// Checks if this slot represents the same item.
+    /// </summary>
     public bool IsSameItem(HolenData data)
     {
-        return holenData.holenID == data.holenID; // Compare IDs
+        return holenData != null && data != null && holenData.holenID == data.holenID;
+    }
+
+    /// <summary>
+    /// Checks if this slot represents the same item by ID.
+    /// </summary>
+    public bool IsSameItem(string holenID)
+    {
+        return holenData != null && holenData.holenID == holenID;
     }
 }
