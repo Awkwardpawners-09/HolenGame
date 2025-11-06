@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holenID: AH004
   rarity: Uncommon
-  holenName: Batik (Blue)
+  holenName: BeachBall
   holenIcon: {fileID: 21300000, guid: ced0b6324671c974f82a7e657d921f00, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: ce17f7709c2647b42a26d54d3ed98014, type: 3}
   maxStack: 1
