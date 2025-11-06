@@ -2,11 +2,26 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Collections;
 
 public class MenuConnection : MonoBehaviourPunCallbacks
 {
     [Header("UI References")]
     public GameObject findingOpponentPanel;
+
+    [Header("Inventory Check UI")]
+    [Tooltip("Panel to show when inventory is empty (should be disabled by default)")]
+    public GameObject noHolensPanel;
+
+    [Tooltip("TextMeshPro component to display the 'no holens' message")]
+    public TextMeshProUGUI noHolensText;
+
+    [Tooltip("Message to display when inventory is empty")]
+    public string noHolensMessage = "You don't have any holens!";
+
+    [Tooltip("How long to show the no holens message (in seconds)")]
+    public float noHolensPanelDuration = 3f;
 
     [Header("Scene Settings")]
     [Tooltip("The Lobby scene where players wager their Holens")]
@@ -31,8 +46,24 @@ public class MenuConnection : MonoBehaviourPunCallbacks
     public void OnMultiplayerClicked()
     {
         if (isSearching) return;
-        isSearching = true;
 
+        // Check if player has any holens in inventory
+        if (HolenInventoryManager.Instance == null)
+        {
+            Debug.LogError("[MENU] HolenInventoryManager not found!");
+            return;
+        }
+
+        var inventory = HolenInventoryManager.Instance.GetAllHolens();
+        if (inventory == null || inventory.Count == 0)
+        {
+            // Show "no holens" message
+            ShowNoHolensMessage();
+            Debug.Log("[MENU] Cannot find opponent - inventory is empty!");
+            return;
+        }
+
+        isSearching = true;
         findingOpponentPanel.SetActive(true);
 
         // Check if already connected to Photon
@@ -47,6 +78,38 @@ public class MenuConnection : MonoBehaviourPunCallbacks
             // Not connected, connect first
             PhotonNetwork.ConnectUsingSettings();
             Debug.Log("[MENU] Connecting to Photon...");
+        }
+    }
+
+    // Show the "no holens" panel for a set duration
+    private void ShowNoHolensMessage()
+    {
+        if (noHolensPanel == null)
+        {
+            Debug.LogWarning("[MENU] No Holens Panel not assigned in Inspector!");
+            return;
+        }
+
+        // Set the text if text component is assigned
+        if (noHolensText != null)
+        {
+            noHolensText.text = noHolensMessage;
+        }
+
+        // Show the panel
+        noHolensPanel.SetActive(true);
+
+        // Start coroutine to hide it after duration
+        StartCoroutine(HideNoHolensPanelAfterDelay());
+    }
+
+    private IEnumerator HideNoHolensPanelAfterDelay()
+    {
+        yield return new WaitForSeconds(noHolensPanelDuration);
+
+        if (noHolensPanel != null)
+        {
+            noHolensPanel.SetActive(false);
         }
     }
 
