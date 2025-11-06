@@ -10,14 +10,31 @@ public class HolenInventoryManager : MonoBehaviour
     [SerializeField]
     public List<HolenInventoryEntry> inventory = new List<HolenInventoryEntry>();
 
+    [Header("Player Name")]
+    [SerializeField] private string playerName = "";
+    public string PlayerName => playerName; // Read-only access
+
+    [Header("Player Name Display UI")]
+    [Tooltip("TMP Text in menu where player name is displayed")]
+    [SerializeField] public TMPro.TMP_Text playerNameDisplayText;
+
+    /// <summary>
+    /// Manually refresh the player name display (call this if UI doesn't auto-update)
+    /// </summary>
+    public void RefreshPlayerNameDisplay()
+    {
+        UpdatePlayerNameDisplay();
+    }
+
     private string SavePath => Path.Combine(Application.persistentDataPath, "holen_inventory.json");
 
     public InventoryUIManager inventoryUI;
 
     public static HolenInventoryManager Instance; // ✅ Singleton for easy access
 
-    // ✅ ADD THIS EVENT - Notifies shop items when inventory changes
+    // ✅ Events
     public static event System.Action OnInventoryChanged;
+    public static event System.Action<string> OnPlayerNameChanged;
 
     private void Awake()
     {
@@ -26,7 +43,8 @@ public class HolenInventoryManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadInventory(); // Always load on start
+            LoadInventory(); // Load inventory
+            LoadPlayerData(); // Load player name
         }
         else
         {
@@ -41,7 +59,89 @@ public class HolenInventoryManager : MonoBehaviour
         {
             AddHolen(GetRandomHolenID());
         }
+
+        // Update player name display
+        UpdatePlayerNameDisplay();
     }
+
+    // ===================== PLAYER NAME METHODS =====================
+
+    /// <summary>
+    /// Sets the player name and saves it to disk
+    /// </summary>
+    public void SetPlayerName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            Debug.LogWarning("Cannot set empty player name");
+            return;
+        }
+
+        playerName = name;
+        SavePlayerData();
+        UpdatePlayerNameDisplay();
+
+        // Notify listeners (e.g., UI elements)
+        OnPlayerNameChanged?.Invoke(playerName);
+
+        Debug.Log($"✅ Player name set to: {playerName}");
+    }
+
+    /// <summary>
+    /// Checks if player has set their name
+    /// </summary>
+    public bool HasPlayerName()
+    {
+        return !string.IsNullOrEmpty(playerName);
+    }
+
+    /// <summary>
+    /// Updates the player name display text in menu
+    /// </summary>
+    private void UpdatePlayerNameDisplay()
+    {
+        if (playerNameDisplayText != null && !string.IsNullOrEmpty(playerName))
+        {
+            playerNameDisplayText.text = playerName;
+        }
+    }
+
+    /// <summary>
+    /// Saves player name to persistent storage (using PlayerData)
+    /// </summary>
+    private void SavePlayerData()
+    {
+        // Load existing player data (to preserve coins)
+        PlayerData data = PlayerData.Load();
+
+        // Update the player name
+        data.playerName = this.playerName;
+
+        // Save back to file
+        data.Save();
+
+        Debug.Log($"✅ Player name saved: {playerName}");
+    }
+
+    /// <summary>
+    /// Loads player name from persistent storage
+    /// </summary>
+    private void LoadPlayerData()
+    {
+        PlayerData data = PlayerData.Load();
+
+        if (!string.IsNullOrEmpty(data.playerName))
+        {
+            playerName = data.playerName;
+            Debug.Log($"✅ Loaded player name: {playerName}");
+        }
+        else
+        {
+            Debug.Log("No player name found (first launch)");
+        }
+    }
+
+    // ===================== HOLEN INVENTORY METHODS =====================
 
     private string GetRandomHolenID()
     {
@@ -77,9 +177,8 @@ public class HolenInventoryManager : MonoBehaviour
         SaveInventory();
 
         if (inventoryUI != null)
-            inventoryUI.RefreshUI(); // ✅ Auto update if UI is open
+            inventoryUI.RefreshUI();
 
-        // ✅ NOTIFY SHOP ITEMS
         OnInventoryChanged?.Invoke();
     }
 
@@ -100,7 +199,6 @@ public class HolenInventoryManager : MonoBehaviour
             if (inventoryUI != null)
                 inventoryUI.RefreshUI();
 
-            // ✅ NOTIFY SHOP ITEMS
             OnInventoryChanged?.Invoke();
         }
         else
@@ -111,7 +209,7 @@ public class HolenInventoryManager : MonoBehaviour
 
     public void SaveInventory()
     {
-        InventorySaveSystem.Save(inventory); // ✅ Uses your existing save system
+        InventorySaveSystem.Save(inventory);
         Debug.Log("✅ Inventory saved!");
     }
 
@@ -120,13 +218,12 @@ public class HolenInventoryManager : MonoBehaviour
         var loaded = InventorySaveSystem.Load();
         if (loaded != null && loaded.Count > 0)
         {
-            // Merge instead of overwrite
             foreach (var entry in loaded)
             {
                 var existing = inventory.Find(e => e.holenID == entry.holenID);
                 if (existing != null)
                 {
-                    existing.quantity = entry.quantity; // keep saved quantity
+                    existing.quantity = entry.quantity;
                 }
                 else
                 {
@@ -138,16 +235,11 @@ public class HolenInventoryManager : MonoBehaviour
         Debug.Log("✅ Inventory merged from save!");
     }
 
-    // 🔍 Get HolenData by ID (for UI or instantiation)
     public HolenData GetHolenData(string holenID)
     {
         return allHolens.Find(h => h.holenID == holenID);
     }
 
-    /// <summary>
-    /// Gets all holens currently in the inventory
-    /// </summary>
-    /// <returns>A copy of the inventory list</returns>
     public List<HolenInventoryEntry> GetAllHolens()
     {
         return new List<HolenInventoryEntry>(inventory);
@@ -160,13 +252,11 @@ public class HolenInventoryManager : MonoBehaviour
         if (inventoryUI != null)
             inventoryUI.RefreshUI();
 
-        // ✅ NOTIFY SHOP ITEMS
         OnInventoryChanged?.Invoke();
     }
 
-    // ====================================================================
-    // 🧪 TESTING METHOD - Give all Holens with 99 quantity
-    // ====================================================================
+    // ===================== TESTING METHODS =====================
+
     public void GiveAllHolensForTesting()
     {
         Debug.Log("🧪 [TESTING] Giving all Holens with 99 quantity...");
@@ -175,7 +265,7 @@ public class HolenInventoryManager : MonoBehaviour
 
         if (allHolens == null || allHolens.Count == 0)
         {
-            Debug.LogError("🧪 [TESTING] No Holens found in allHolens database! Assign HolenData assets in Inspector.");
+            Debug.LogError("🧪 [TESTING] No Holens found in allHolens database!");
             return;
         }
 
@@ -188,10 +278,6 @@ public class HolenInventoryManager : MonoBehaviour
                 addedCount++;
                 Debug.Log($"🧪 [TESTING] Added {holen.holenName} x99");
             }
-            else
-            {
-                Debug.LogWarning("🧪 [TESTING] Skipped null or invalid Holen in database");
-            }
         }
 
         SaveInventory();
@@ -199,19 +285,13 @@ public class HolenInventoryManager : MonoBehaviour
         if (inventoryUI != null)
         {
             inventoryUI.RefreshUI();
-            Debug.Log("🧪 [TESTING] Inventory UI refreshed");
         }
 
-        // ✅ NOTIFY SHOP ITEMS
         OnInventoryChanged?.Invoke();
 
         Debug.Log($"🧪 [TESTING] Successfully added {addedCount} Holens with 99 quantity each!");
-        Debug.Log($"🧪 [TESTING] Total inventory entries: {inventory.Count}");
     }
 
-    // ====================================================================
-    // 🧪 TESTING METHOD - Reset to empty inventory
-    // ====================================================================
     public void ClearInventoryForTesting()
     {
         Debug.Log("🧪 [TESTING] Clearing entire inventory...");
@@ -224,15 +304,11 @@ public class HolenInventoryManager : MonoBehaviour
             inventoryUI.RefreshUI();
         }
 
-        // ✅ NOTIFY SHOP ITEMS
         OnInventoryChanged?.Invoke();
 
         Debug.Log("🧪 [TESTING] Inventory cleared and saved!");
     }
 
-    // ====================================================================
-    // 🧪 TESTING METHOD - Give random Holens for quick testing
-    // ====================================================================
     public void GiveRandomHolensForTesting()
     {
         Debug.Log("🧪 [TESTING] Giving random Holens...");
@@ -273,18 +349,15 @@ public class HolenInventoryManager : MonoBehaviour
             inventoryUI.RefreshUI();
         }
 
-        // ✅ NOTIFY SHOP ITEMS
         OnInventoryChanged?.Invoke();
 
         Debug.Log($"🧪 [TESTING] Added {numToGive} random Holens!");
     }
 
-    // ====================================================================
-    // 🧪 TESTING METHOD - Print inventory to console
-    // ====================================================================
     public void PrintInventoryForTesting()
     {
         Debug.Log("🧪 [TESTING] ===== CURRENT INVENTORY =====");
+        Debug.Log($"🧪 [TESTING] Player Name: {(string.IsNullOrEmpty(playerName) ? "NOT SET" : playerName)}");
         Debug.Log($"🧪 [TESTING] Total entries: {inventory.Count}");
 
         if (inventory.Count == 0)

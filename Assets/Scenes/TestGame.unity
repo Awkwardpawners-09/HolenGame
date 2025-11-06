@@ -901,7 +901,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &341091298
 Transform:
   m_ObjectHideFlags: 0
@@ -4826,9 +4826,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1994274730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: 5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -285, y: 81}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1580389631
@@ -4868,8 +4868,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278255383
-  m_fontColor: {r: 0.08960724, g: 1, b: 0, a: 1}
+    rgba: 65303
+  m_fontColor: {r: 0.08960724, g: 1, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5247,9 +5247,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1721925180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 87, y: -8}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -410, y: 81}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1865584941
@@ -5289,8 +5289,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278201855
-  m_fontColor: {r: 1, g: 0.17609818, b: 0, a: 1}
+    rgba: 11775
+  m_fontColor: {r: 1, g: 0.17609818, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5391,8 +5391,8 @@ MonoBehaviour:
   player2WagerContent: {fileID: 1706184959}
   player2NameText: {fileID: 1562434156}
   player2PointsText: {fileID: 2030257496}
-  player2StateText: {fileID: 1865584942}
-  player2InventoryStateText: {fileID: 0}
+  player2StateText: {fileID: 446952986}
+  player2InventoryStateText: {fileID: 1865584942}
   player2ActionButton: {fileID: 1131590213}
   player2CountdownText: {fileID: 2111718542}
   holenUISlotPrefab: {fileID: 1130300564029074341, guid: 7e8728b9ddf31c34a91c2d07e7295721, type: 3}

@@ -33,13 +33,18 @@ public class MenuConnection : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        // Set a default nickname if not set
-        if (string.IsNullOrEmpty(PhotonNetwork.NickName))
+        // Get player name from HolenInventoryManager
+        if (HolenInventoryManager.Instance != null && HolenInventoryManager.Instance.HasPlayerName())
         {
-            PhotonNetwork.NickName = "Player_" + Random.Range(1000, 9999);
+            PhotonNetwork.NickName = HolenInventoryManager.Instance.PlayerName;
+            Debug.Log($"[MENU] Player nickname set from saved name: {PhotonNetwork.NickName}");
         }
-
-        Debug.Log($"[MENU] Player nickname: {PhotonNetwork.NickName}");
+        else
+        {
+            // Fallback to random name if no saved name exists
+            PhotonNetwork.NickName = "Player_" + Random.Range(1000, 9999);
+            Debug.Log($"[MENU] No saved name found, using random nickname: {PhotonNetwork.NickName}");
+        }
     }
 
     // Called when the "Find Opponent" button is clicked
