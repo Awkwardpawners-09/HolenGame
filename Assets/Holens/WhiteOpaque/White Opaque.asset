@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: White Opaque
   m_EditorClassIdentifier: 
   holenID: JH002
-  rarity: Common
+  rarity: Uncommon
   holenName: White Opaque
   holenIcon: {fileID: 21300000, guid: 12d506fcdb1c1d64aa5ff62b7927e268, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: 8b0f2b74dcd477c478c8ea30f9410671, type: 3}
