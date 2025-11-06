@@ -9,6 +9,9 @@ public class MarbleGachaAnimated : MonoBehaviour
     public List<HolenData> marblePool; // ScriptableObjects
     private PlayerData playerData => PlayerDataManager.Instance.playerData;
 
+    [Header("Visual Effects")]
+    public SunrayRevealEffect sunrayEffect;
+
     [Header("Inventory Reference")]
     public HolenInventoryManager inventoryManager;
 
@@ -98,30 +101,42 @@ public class MarbleGachaAnimated : MonoBehaviour
             pullParticles.Play();
 
         // Spinning animation
-        float elapsed = 0f;
-        while (elapsed < spinDuration)
-        {
-            elapsed += Time.deltaTime;
-            float progress = elapsed / spinDuration;
-            float curveValue = spinCurve.Evaluate(progress);
-            
-            if (spinningImage != null)
-            {
-                float angle = curveValue * spinSpeed * elapsed;
-                spinningImage.transform.rotation = Quaternion.Euler(0, 0, -angle);
-                
-                // Optional: Pulse scale
-                float scale = 1f + Mathf.Sin(elapsed * 10f) * 0.1f;
-                spinningImage.transform.localScale = Vector3.one * scale;
-            }
+// Shaking animation
+float elapsed = 0f;
+Vector3 originalPos = spinningImage != null ? spinningImage.transform.localPosition : Vector3.zero;
 
-            yield return null;
-        }
+while (elapsed < spinDuration)
+{
+    elapsed += Time.deltaTime;
+    float progress = elapsed / spinDuration;
+    
+    if (spinningImage != null)
+    {
+        // Shake intensity increases then decreases
+        float intensity = Mathf.Sin(progress * Mathf.PI) * 20f; // Peak at middle
+        float shakeSpeed = 30f; // How fast it shakes
+        
+        // Random shake direction
+        float x = Mathf.Sin(elapsed * shakeSpeed) * intensity;
+        float y = Mathf.Cos(elapsed * shakeSpeed * 1.3f) * intensity;
+        float rotation = Mathf.Sin(elapsed * shakeSpeed * 0.7f) * intensity * 0.5f;
+        
+        spinningImage.transform.localPosition = originalPos + new Vector3(x, y, 0);
+        spinningImage.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        
+        // Optional: Pulse scale slightly
+        float scale = 1f + Mathf.Sin(elapsed * 15f) * 0.05f;
+        spinningImage.transform.localScale = Vector3.one * scale;
+    }
 
-        // Stop pull particles
-        if (pullParticles != null)
-            pullParticles.Stop();
+    yield return null;
+}
 
+// Reset position
+if (spinningImage != null)
+{
+    spinningImage.transform.localPosition = originalPos;
+}
         // Get the awarded marble
         HolenData awardedMarble = GetRandomMarble();
 
@@ -166,29 +181,30 @@ public class MarbleGachaAnimated : MonoBehaviour
         Debug.Log($"🎉 Gacha awarded: {awardedMarble.holenName}");
     }
 
-    void ShowMarbleResult(HolenData marble)
+void ShowMarbleResult(HolenData marble)
+{
+    if (resultBackground != null)
+        resultBackground.SetActive(true);
+    
+    resultPanel.SetActive(true);
+    
+    marbleNameText.text = marble.holenName;
+    marbleImage.sprite = marble.holenIcon;
+    
+    if (rarityText != null)
     {
-        if (resultBackground != null)
-            resultBackground.SetActive(true);
-        
-        resultPanel.SetActive(true);
-        
-        marbleNameText.text = marble.holenName;
-        marbleImage.sprite = marble.holenIcon;
-        
-        // Optional: Show rarity
-        if (rarityText != null)
-        {
-            rarityText.text = marble.rarity;
-            rarityText.color = GetRarityColor(marble.rarity);
-        }
-
-        // Optional: Color the marble image border by rarity
-        //marbleImage.color = GetRarityColor(marble.rarity);
-
-        // Animate result panel entrance
-        StartCoroutine(AnimateResultPanel());
+        rarityText.text = marble.rarity;
+        rarityText.color = GetRarityColor(marble.rarity);
     }
+
+    // ✨ PLAY SUNRAY EFFECT
+    if (sunrayEffect != null)
+    {
+        sunrayEffect.PlayRevealEffect(marble.rarity);
+    }
+
+    StartCoroutine(AnimateResultPanel());
+}
 
     IEnumerator AnimateResultPanel()
     {
