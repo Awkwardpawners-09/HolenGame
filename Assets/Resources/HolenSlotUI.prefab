@@ -137,6 +137,7 @@ MonoBehaviour:
   iconImage: {fileID: 5096069026557662013}
   nameText: {fileID: 7096621786505425450}
   quantityText: {fileID: 8069829494446534900}
+  itemBorder: {fileID: 5434390785898463320}
   contentPrefab: {fileID: 0}
   inventoryView: {fileID: 0}
 --- !u!1 &4721546469252218931
@@ -243,7 +244,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7077c34429f1bc44890745a2229254fd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f936c45122bcad4f975e44ea5754856, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

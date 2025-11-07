@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: China
   m_EditorClassIdentifier: 
   holenID: AH005
-  rarity: Epic
+  rarity: Mythic
   holenName: China
   holenIcon: {fileID: 21300000, guid: cce5543d672c4fe4395cd289623fc0ab, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}

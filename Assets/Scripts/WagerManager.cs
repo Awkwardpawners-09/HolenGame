@@ -22,7 +22,7 @@ public class WagerManager : MonoBehaviour
 
     [Header("Points Rules")]
     [Tooltip("Target threshold for this game mode (e.g., 10).")]
-    public int minRequiredPoints = 5;
+    public int minRequiredPoints = 10;
 
     [Tooltip("Maximum distinct Holen choices (unique picks) allowed.")]
     public int maxUniqueChoices = 5;
@@ -31,8 +31,9 @@ public class WagerManager : MonoBehaviour
     public List<RarityPoint> rarityPoints = new List<RarityPoint>()
     {
         new RarityPoint(){rarity="Common",    points=1},
-        new RarityPoint(){rarity="Rare",      points=2},
-        new RarityPoint(){rarity="Epic",      points=3},
+        new RarityPoint(){rarity="Rare",      points=3},
+        new RarityPoint(){rarity="Epic",      points=4},
+        new RarityPoint(){rarity="Uncommon", points=2},
         new RarityPoint(){rarity="Legendary", points=5}
     };
 
@@ -68,10 +69,10 @@ public class WagerManager : MonoBehaviour
 
     [Header("Button Labels")]
     public string readyLabel = "READY";
-    public string cancelLabel = "CANCEL";
+    public string cancelLabel = "Preparing....";
 
     [Header("Countdown")]
-    public int startSeconds = 60;
+    public int startSeconds = 150;
     private int remainingSeconds = 0;
     private float countdownTickTimer = 0f;
 

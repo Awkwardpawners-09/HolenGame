@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +11,9 @@ public class HolenSlotUI : MonoBehaviour
     public Image iconImage;
     public TMP_Text nameText;
     public TMP_Text quantityText;
+
+    [Header("Rarity Border")]
+    public Image itemBorder; // ✅ Reference to the ItemBorder Image
 
     private HolenData holenData; // Store the HolenData for this slot
 
@@ -32,6 +35,43 @@ public class HolenSlotUI : MonoBehaviour
 
         if (quantityText != null)
             quantityText.text = quantity.ToString();
+
+        // ✅ Set border color based on rarity
+        if (itemBorder != null)
+        {
+            itemBorder.color = GetRarityColor(data.rarity);
+        }
+    }
+
+    /// <summary>
+    /// Returns a color based on the rarity string.
+    /// Customize these colors to match your game's theme!
+    /// </summary>
+    private Color GetRarityColor(string rarity)
+    {
+        switch (rarity.ToLower())
+        {
+            case "common":
+                return new Color(0.7f, 0.7f, 0.7f, 1f); // Gray
+
+            case "uncommon":
+                return new Color(0.2f, 1f, 0.2f, 1f); // Green
+
+            case "rare":
+                return new Color(0.3f, 0.5f, 1f, 1f); // Blue
+
+            case "epic":
+                return new Color(0.8f, 0.3f, 1f, 1f); // Purple
+
+            case "legendary":
+                return new Color(1f, 0.6f, 0f, 1f); // Orange/Gold
+
+            case "mythic":
+                return new Color(1f, 0.2f, 0.2f, 1f); // Red
+
+            default:
+                return Color.white; // Default if rarity is unknown
+        }
     }
 
     /// <summary>

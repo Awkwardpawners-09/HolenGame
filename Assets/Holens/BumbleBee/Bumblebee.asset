@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bumblebee
   m_EditorClassIdentifier: 
   holenID: JH010
-  rarity: Rare
+  rarity: Mythical
   holenName: Bumblebee
   holenIcon: {fileID: 21300000, guid: e5b431bfb1704bd41a1aa590098c21da, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: d5da535c2a2989d4b9a0ac10d6fc492e, type: 3}
