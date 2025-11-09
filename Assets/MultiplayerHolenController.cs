@@ -9,67 +9,72 @@ using UnityEngine.UI;
 public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 {
     [Header("References")]
-    public GameObject holenHandsPrefab;
     public GameObject holenBallPrefab;
-    public Transform spawnPoint;
     public Transform ballSpawnPoint;
-    public Slider powerGauge;
     public Camera mainCamera;
     public CinemachineVirtualCamera activePlayerCamera;
     public CinemachineVirtualCamera birdsEyeCamera;
     public TMP_Text playerLabelText;
     public TMP_Text turnDisplayText;
     public Transform cameraSpawnPoint;
-    public FixedJoystick joystick;
 
-    [Header("UI Button Parent")]
-    public GameObject uiButtonsParent;
+    [Header("UI")]
     public GameObject loadingUI;
+    public GameObject swipeIndicator; // Optional: Visual feedback during swipe
+    public LineRenderer trajectoryLine; // Optional: Show predicted trajectory
 
     [Header("Player Info")]
     public bool isPlayer1;
 
-    [Header("Power Gauge Settings")]
-    public float gaugeMin = 10f;
-    public float gaugeMax = 70f;
-    public float gaugeSpeed = 40f;
-
-    [Header("Rotation Settings")]
-    public float rotationSpeed = 50f;
+    [Header("Swipe Settings")]
+    public float minSwipeDistance = 50f;
+    public float maxSwipeDistance = 300f;
+    public float minLaunchForce = 10f;
+    public float maxLaunchForce = 70f;
+    public float swipeTimeWindow = 0.5f; // Max time for a valid swipe
+    public string ballLayerName = "HolenBall"; // Layer name for the ball
+    public bool requireTouchOnBall = false; // Set to false for easier swiping
+    public float swipeDeadZone = 20f; // Minimum distance before registering as swipe
+    private int ballLayer;
 
     [Header("Camera Settings")]
     public Vector3 cameraFollowOffset = new Vector3(0f, 8f, -6f);
     public float cameraAimScreenY = 0.80f;
 
-    private GameObject currentHolenHands;
     public GameObject currentHolenBall { get; private set; }
-    private PlayerController playerControlScript;
     private bool isReady = false;
     private bool isTurn = false;
     private string playerRole = "";
-    private bool isButtonPressed = false;
-
-    private bool isGaugeIncreasing = true;
-    private bool isGaugeActive = false;
-    private float currentLaunchForce;
     private Transform defaultLookAtTarget;
 
-
+    // Swipe detection variables
+    private Vector2 swipeStartPos;
+    private Vector2 swipeEndPos;
+    private float swipeStartTime;
+    private bool isSwiping = false;
+    private Vector3 swipeWorldStart;
+    private Vector3 swipeWorldEnd;
 
     void Start()
     {
+        // Get or create the ball layer
+        ballLayer = LayerMask.NameToLayer(ballLayerName);
+        if (ballLayer == -1)
+        {
+            Debug.LogWarning($"Layer '{ballLayerName}' not found. Ball detection may not work properly.");
+        }
+
         DisableControls();
         SetInitialCameraPosition();
 
         if (activePlayerCamera != null)
             defaultLookAtTarget = activePlayerCamera.LookAt;
 
-        if (powerGauge != null)
-        {
-            powerGauge.minValue = gaugeMin;
-            powerGauge.maxValue = gaugeMax;
-            powerGauge.gameObject.SetActive(false);
-        }
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(false);
+
+        if (trajectoryLine != null)
+            trajectoryLine.enabled = false;
 
         SetCameraView(false);
         StartCoroutine(GameStartSequence());
@@ -100,7 +105,7 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         {
             isTurn = true;
             EnableControls();
-            SpawnHolenHands();
+            SpawnHolenBall();
             UpdateTurnDisplayText();
             Debug.Log("Player 1's turn has started.");
         }
@@ -108,53 +113,236 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (isTurn && currentHolenHands != null)
+        if (isTurn && currentHolenBall != null && !isReady)
         {
-            float horizontalInput = joystick.Horizontal;
-            playerControlScript.HandleControls(horizontalInput, rotationSpeed);
-
-            if (isGaugeActive)
-            {
-                UpdateGauge();
-            }
-
-            if (isButtonPressed && !isReady)
-            {
-                ReadyHolen();
-            }
-            else if (isButtonPressed && isReady)
-            {
-                ShootHolen();
-                isButtonPressed = false;
-            }
+            HandleSwipeInput();
         }
     }
 
-    void UpdateGauge()
+    private void HandleSwipeInput()
     {
-        float delta = gaugeSpeed * Time.deltaTime;
-
-        if (isGaugeIncreasing)
+        // Touch input for mobile
+        if (Input.touchCount > 0)
         {
-            currentLaunchForce += delta;
-            if (currentLaunchForce >= gaugeMax)
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
             {
-                currentLaunchForce = gaugeMax;
-                isGaugeIncreasing = false;
+                // Check if touch started on/near the ball (or allow anywhere if requireTouchOnBall is false)
+                if (!requireTouchOnBall || IsTouchingBall(touch.position))
+                {
+                    StartSwipe(touch.position);
+                }
             }
+            else if (touch.phase == TouchPhase.Moved && isSwiping)
+            {
+                UpdateSwipe(touch.position);
+            }
+            else if (touch.phase == TouchPhase.Ended && isSwiping)
+            {
+                EndSwipe(touch.position);
+            }
+            else if (touch.phase == TouchPhase.Canceled && isSwiping)
+            {
+                CancelSwipe();
+            }
+        }
+        // Mouse input for testing in editor
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (!requireTouchOnBall || IsTouchingBall(Input.mousePosition))
+            {
+                StartSwipe(Input.mousePosition);
+            }
+        }
+        else if (Input.GetMouseButton(0) && isSwiping)
+        {
+            UpdateSwipe(Input.mousePosition);
+        }
+        else if (Input.GetMouseButtonUp(0) && isSwiping)
+        {
+            EndSwipe(Input.mousePosition);
+        }
+    }
+
+    private bool IsTouchingBall(Vector2 screenPosition)
+    {
+        if (currentHolenBall == null) return false;
+
+        Ray ray = mainCamera.ScreenPointToRay(screenPosition);
+        RaycastHit hit;
+
+        // First try direct raycast to ball
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
+            if (hit.collider.gameObject == currentHolenBall)
+            {
+                Debug.Log("Touch detected on ball!");
+                return true;
+            }
+        }
+
+        // Alternative: Check screen distance to ball
+        Vector3 ballScreenPos = mainCamera.WorldToScreenPoint(currentHolenBall.transform.position);
+        float screenDistance = Vector2.Distance(screenPosition, new Vector2(ballScreenPos.x, ballScreenPos.y));
+
+        // Allow touch within 100 pixels of the ball on screen
+        if (screenDistance < 100f)
+        {
+            Debug.Log("Touch detected near ball!");
+            return true;
+        }
+
+        return false;
+    }
+
+    private void StartSwipe(Vector2 screenPosition)
+    {
+        isSwiping = true;
+        swipeStartPos = screenPosition;
+        swipeStartTime = Time.time;
+
+        // Use ball's position as the starting point for direction calculation
+        swipeWorldStart = currentHolenBall.transform.position;
+
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(true);
+
+        Debug.Log($"Swipe started at screen pos: {screenPosition}");
+    }
+
+    private void UpdateSwipe(Vector2 screenPosition)
+    {
+        swipeEndPos = screenPosition;
+
+        // Calculate swipe direction in screen space first
+        Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+
+        // Only update if swipe is beyond dead zone
+        if (swipeDelta.magnitude < swipeDeadZone)
+            return;
+
+        // Convert swipe direction to world direction
+        // Project the swipe onto the ground plane from ball's position
+        Ray ray = mainCamera.ScreenPointToRay(screenPosition);
+        Plane groundPlane = new Plane(Vector3.up, currentHolenBall.transform.position);
+        float distance;
+
+        if (groundPlane.Raycast(ray, out distance))
+        {
+            swipeWorldEnd = ray.GetPoint(distance);
+        }
+
+        // Optional: Show trajectory preview
+        if (trajectoryLine != null)
+        {
+            ShowTrajectoryPreview();
+        }
+
+        Debug.Log($"Swiping... Delta: {swipeDelta.magnitude}");
+    }
+
+    private void ShowTrajectoryPreview()
+    {
+        // Calculate direction from ball position to swipe end point
+        Vector3 direction = (swipeWorldEnd - swipeWorldStart).normalized;
+
+        // Handle case where direction is invalid
+        if (direction.magnitude < 0.1f)
+            return;
+
+        float swipeDistance = Vector2.Distance(swipeStartPos, swipeEndPos);
+        float force = CalculateLaunchForce(swipeDistance);
+
+        trajectoryLine.enabled = true;
+        trajectoryLine.positionCount = 15;
+
+        Vector3 velocity = direction * force;
+        Vector3 currentPos = currentHolenBall.transform.position;
+
+        for (int i = 0; i < 15; i++)
+        {
+            float t = i * 0.1f;
+            Vector3 point = currentPos + velocity * t + 0.5f * Physics.gravity * t * t;
+            trajectoryLine.SetPosition(i, point);
+        }
+    }
+
+    private void EndSwipe(Vector2 screenPosition)
+    {
+        swipeEndPos = screenPosition;
+        float swipeTime = Time.time - swipeStartTime;
+        Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+        float swipeDistance = swipeDelta.magnitude;
+
+        isSwiping = false;
+
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(false);
+
+        if (trajectoryLine != null)
+            trajectoryLine.enabled = false;
+
+        Debug.Log($"Swipe ended: Distance={swipeDistance}, Time={swipeTime}, MinRequired={minSwipeDistance}");
+
+        // Validate swipe
+        if (swipeDistance >= minSwipeDistance && swipeTime <= swipeTimeWindow)
+        {
+            // Calculate launch direction in world space
+            Vector3 swipeDirection = (swipeWorldEnd - swipeWorldStart);
+            swipeDirection.y = 0; // Keep it on horizontal plane
+            swipeDirection.Normalize();
+
+            // Fallback: If world direction calculation failed, use screen direction
+            if (swipeDirection.magnitude < 0.1f)
+            {
+                // Convert screen swipe to world direction relative to camera
+                Vector3 cameraForward = mainCamera.transform.forward;
+                Vector3 cameraRight = mainCamera.transform.right;
+
+                cameraForward.y = 0;
+                cameraRight.y = 0;
+                cameraForward.Normalize();
+                cameraRight.Normalize();
+
+                swipeDirection = (cameraRight * swipeDelta.x + cameraForward * swipeDelta.y).normalized;
+            }
+
+            // Calculate force based on swipe speed and distance
+            float force = CalculateLaunchForce(swipeDistance);
+            float speed = swipeDistance / swipeTime;
+
+            // Optional: Factor in swipe speed for more dynamic force
+            force = Mathf.Lerp(force, maxLaunchForce, Mathf.Clamp01(speed / 1000f));
+            force = Mathf.Clamp(force, minLaunchForce, maxLaunchForce);
+
+            Debug.Log($"SHOOTING! Force={force}, Direction={swipeDirection}");
+            ShootHolen(swipeDirection, force);
         }
         else
         {
-            currentLaunchForce -= delta;
-            if (currentLaunchForce <= gaugeMin)
-            {
-                currentLaunchForce = gaugeMin;
-                isGaugeIncreasing = true;
-            }
+            Debug.Log($"Invalid swipe: Distance={swipeDistance} (min: {minSwipeDistance}), Time={swipeTime}");
         }
+    }
 
-        if (powerGauge != null)
-            powerGauge.value = currentLaunchForce;
+    private void CancelSwipe()
+    {
+        isSwiping = false;
+
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(false);
+
+        if (trajectoryLine != null)
+            trajectoryLine.enabled = false;
+
+        Debug.Log("Swipe cancelled");
+    }
+
+    private float CalculateLaunchForce(float swipeDistance)
+    {
+        // Normalize swipe distance to force range
+        float normalizedDistance = Mathf.InverseLerp(minSwipeDistance, maxSwipeDistance, swipeDistance);
+        return Mathf.Lerp(minLaunchForce, maxLaunchForce, normalizedDistance);
     }
 
     private void SetInitialCameraPosition()
@@ -164,34 +352,6 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
             mainCamera.transform.position = cameraSpawnPoint.position;
             mainCamera.transform.rotation = cameraSpawnPoint.rotation;
         }
-    }
-
-    public void SpawnHolenHands()
-    {
-        currentHolenHands = PhotonNetwork.Instantiate(holenHandsPrefab.name, spawnPoint.position, Quaternion.identity);
-
-        PhotonView handsPhotonView = currentHolenHands.GetComponent<PhotonView>();
-
-        photonView.RPC("RPC_PlayAnimation", RpcTarget.All, "Idle");
-
-        if (isTurn && activePlayerCamera != null)
-        {
-            activePlayerCamera.Follow = currentHolenHands.transform;
-            activePlayerCamera.LookAt = currentHolenBall?.transform;
-            AdjustCameraPosition();
-        }
-
-        playerControlScript = currentHolenHands.AddComponent<PlayerController>();
-        playerControlScript.InitializeControls(this, handsPhotonView);
-
-        SpawnHolenBall();
-
-        Debug.Log($"{playerRole} spawned Holen Hands and Ball");
-    }
-
-    public bool IsTurn()
-    {
-        return isTurn;
     }
 
     private void AdjustCameraPosition()
@@ -211,98 +371,58 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     private void SpawnHolenBall()
     {
         currentHolenBall = PhotonNetwork.Instantiate(holenBallPrefab.name, ballSpawnPoint.position, Quaternion.identity);
+
+        // Set the ball's layer for detection
+        if (ballLayer != -1)
+        {
+            currentHolenBall.layer = ballLayer;
+        }
+
         Rigidbody rb = currentHolenBall.GetComponent<Rigidbody>();
         rb.isKinematic = true;
 
         if (activePlayerCamera != null && currentHolenBall != null && isTurn)
         {
+            activePlayerCamera.Follow = currentHolenBall.transform;
             activePlayerCamera.LookAt = currentHolenBall.transform;
+            AdjustCameraPosition();
         }
+
+        Debug.Log($"{playerRole} spawned Holen Ball");
     }
 
-    public void ReadyHolen()
+    public bool IsTurn()
     {
-        if (isTurn && !isReady && currentHolenHands != null)
+        return isTurn;
+    }
+
+    public void ShootHolen(Vector3 direction, float force)
+    {
+        if (isTurn && !isReady && currentHolenBall != null)
         {
             isReady = true;
 
-            photonView.RPC("RPC_PlayAnimation", RpcTarget.All, "Ready");
-
-            if (powerGauge != null)
-            {
-                powerGauge.gameObject.SetActive(true);
-                powerGauge.interactable = true;
-                currentLaunchForce = gaugeMin;
-                isGaugeIncreasing = true;
-                isGaugeActive = true;
-            }
-
-            Debug.Log($"{playerRole} is now ready.");
-        }
-    }
-
-    public void SetButtonPressed(bool pressed)
-    {
-        isButtonPressed = pressed;
-    }
-
-    public void ShootHolen()
-    {
-        if (isTurn && isReady && currentHolenHands != null && currentHolenBall != null)
-        {
-            isReady = false;
-
-            float power = currentLaunchForce;
-
-            isGaugeActive = false;
-
-            photonView.RPC("RPC_ShootHolen", RpcTarget.All, power);
-
-            if (powerGauge != null)
-            {
-                powerGauge.gameObject.SetActive(false);
-                powerGauge.interactable = false;
-            }
+            photonView.RPC("RPC_ShootHolen", RpcTarget.All, direction, force);
 
             StartCoroutine(CompleteTurn());
-            Debug.Log($"{playerRole} launched Holen Ball with power: {power}");
+            Debug.Log($"{playerRole} launched Holen Ball with force: {force}, direction: {direction}");
         }
     }
 
     [PunRPC]
-    private void RPC_PlayAnimation(string triggerName)
+    private void RPC_ShootHolen(Vector3 direction, float force)
     {
-        if (currentHolenHands != null)
-        {
-            Animator animator = currentHolenHands.GetComponent<Animator>();
-            if (animator != null)
-            {
-                animator.SetTrigger(triggerName);
-            }
-        }
-    }
-
-    [PunRPC]
-    private void RPC_ShootHolen(float power)
-    {
-        if (currentHolenHands != null)
-        {
-            Animator animator = currentHolenHands.GetComponent<Animator>();
-            if (animator != null)
-            {
-                animator.SetTrigger("Shoot");
-            }
-        }
-
         if (currentHolenBall != null)
         {
             Rigidbody rb = currentHolenBall.GetComponent<Rigidbody>();
             rb.isKinematic = false;
 
-            rb.AddForce(currentHolenHands.transform.forward * power, ForceMode.Impulse);
+            rb.AddForce(direction * force, ForceMode.Impulse);
 
             if (activePlayerCamera != null && isTurn)
             {
+                // Stop following the ball, just look at it
+                activePlayerCamera.Follow = null;
                 activePlayerCamera.LookAt = currentHolenBall.transform;
             }
         }
@@ -332,43 +452,29 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
             }
         }
 
-        if (currentHolenHands != null)
-            PhotonNetwork.Destroy(currentHolenHands);
         if (currentHolenBall != null)
             PhotonNetwork.Destroy(currentHolenBall);
 
-        currentHolenHands = null;
         currentHolenBall = null;
-        playerControlScript = null;
-        isGaugeActive = false;
+        isReady = false;
+        isSwiping = false;
 
         EndTurn();
     }
 
     private void DisableControls()
     {
-        if (powerGauge != null)
-        {
-            powerGauge.gameObject.SetActive(false);
-            powerGauge.interactable = false;
-        }
-        isGaugeActive = false;
-        uiButtonsParent.SetActive(false);
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(false);
+
+        if (trajectoryLine != null)
+            trajectoryLine.enabled = false;
 
         SetCameraView(false);
     }
 
     private void EnableControls()
     {
-        if (powerGauge != null)
-        {
-            powerGauge.gameObject.SetActive(false);
-            powerGauge.interactable = false;
-        }
-        isGaugeActive = false;
-
-        uiButtonsParent.SetActive(true);
-
         SetCameraView(true);
     }
 
@@ -376,7 +482,7 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     {
         if (turnDisplayText != null)
         {
-            turnDisplayText.text = isTurn ? "Your Turn" : "Opponent's Turn";
+            turnDisplayText.text = isTurn ? "Your Turn - Swipe to Shoot!" : "Opponent's Turn";
         }
 
         if (playerLabelText != null)
@@ -389,8 +495,7 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     {
         isTurn = false;
         isReady = false;
-        isButtonPressed = false;
-        isGaugeActive = false;
+        isSwiping = false;
         DisableControls();
         UpdateTurnDisplayText();
 
@@ -427,12 +532,11 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     {
         isTurn = true;
         isReady = false;
-        isButtonPressed = false;
-        isGaugeActive = false;
+        isSwiping = false;
 
         EnableControls();
         UpdateTurnDisplayText();
-        SpawnHolenHands();
+        SpawnHolenBall();
 
         Debug.Log($"{playerRole}'s turn started");
     }
