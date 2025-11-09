@@ -19,6 +19,15 @@ public class WagerSpawnPlacer : MonoBehaviour
 
     void Start()
     {
+        // CRITICAL: Only Master Client spawns to avoid duplicates!
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("[WagerSpawnPlacer] Not Master Client - skipping spawn");
+            return;
+        }
+
+        Debug.Log("[WagerSpawnPlacer] Master Client - will spawn holens");
+
         // Wait a frame to ensure WagerDataManager has loaded
         Invoke(nameof(SpawnWagers), 0.5f);
     }
@@ -60,8 +69,8 @@ public class WagerSpawnPlacer : MonoBehaviour
 
         if (spawnForPlayer == 0)
         {
-            // Spawn both players' wagers
-            wagersToSpawn = wagerData.GetAllWageredHolens();
+            // Spawn both players' wagers (each selection spawned individually, duplicates allowed)
+            wagersToSpawn = wagerData.GetAllWageredHolensIndividual();
             Debug.Log("[WagerSpawnPlacer] Spawning wagers from BOTH players");
         }
         else if (spawnForPlayer == 1)
@@ -88,19 +97,22 @@ public class WagerSpawnPlacer : MonoBehaviour
             return;
         }
 
-        // Build list of HolenData to spawn (respecting quantity)
+        Debug.Log($"[WagerSpawnPlacer] Total wager records to process: {wagersToSpawn.Count}");
+        foreach (var rec in wagersToSpawn)
+        {
+            Debug.Log($"[WagerSpawnPlacer] - Wager record: HolenID={rec.holenID}, Quantity={rec.quantity}");
+        }
+
+        // Build list of HolenData to spawn (one instance per selection, even if duplicate holenIDs)
         var items = new List<HolenData>();
         foreach (var rec in wagersToSpawn)
         {
             var data = inv.GetHolenData(rec.holenID);
             if (data != null && data.holenPrefab != null)
             {
-                // Each wager entry can have a quantity > 1
-                int qty = Mathf.Max(1, rec.quantity);
-                for (int i = 0; i < qty; i++)
-                {
-                    items.Add(data);
-                }
+                // Add each selection as a separate spawn (duplicates allowed)
+                items.Add(data);
+                Debug.Log($"[WagerSpawnPlacer] Added {data.holenName} (ID: {rec.holenID}) to spawn list");
             }
             else
             {
@@ -112,6 +124,12 @@ public class WagerSpawnPlacer : MonoBehaviour
         {
             Debug.LogWarning("[WagerSpawnPlacer] No valid Holen prefabs found to spawn.");
             return;
+        }
+
+        // Check if we have enough slots
+        if (items.Count > slots.Count)
+        {
+            Debug.LogWarning($"[WagerSpawnPlacer] Not enough slots! Need {items.Count} but only have {slots.Count}. Some holens won't spawn.");
         }
 
         // Randomize if enabled

@@ -23,8 +23,8 @@ public class WagerDataManager : MonoBehaviour
     }
 
     [Header("Wager Data")]
-    public PlayerWagerData player1Wager;
-    public PlayerWagerData player2Wager;
+    [SerializeField] private PlayerWagerData player1Wager;
+    [SerializeField] private PlayerWagerData player2Wager;
 
     private void Awake()
     {
@@ -79,23 +79,34 @@ public class WagerDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets all holens from both players combined.
+    /// Gets all holens from both players as individual spawn entries.
+    /// Each player's selection is treated as a separate spawn, even if they selected the same holen.
     /// </summary>
-    public List<WagerManager.SelectedHolenRecord> GetAllWageredHolens()
+    public List<WagerManager.SelectedHolenRecord> GetAllWageredHolensIndividual()
     {
         List<WagerManager.SelectedHolenRecord> allHolens = new List<WagerManager.SelectedHolenRecord>();
 
+        // Add Player 1's wagers
         if (player1Wager != null && player1Wager.selectedHolens != null)
         {
-            allHolens.AddRange(player1Wager.selectedHolens);
+            foreach (var holen in player1Wager.selectedHolens)
+            {
+                allHolens.Add(new WagerManager.SelectedHolenRecord(holen.holenID, holen.quantity));
+            }
+            Debug.Log($"[WagerDataManager] Added {player1Wager.selectedHolens.Count} holens from Player 1");
         }
 
+        // Add Player 2's wagers
         if (player2Wager != null && player2Wager.selectedHolens != null)
         {
-            allHolens.AddRange(player2Wager.selectedHolens);
+            foreach (var holen in player2Wager.selectedHolens)
+            {
+                allHolens.Add(new WagerManager.SelectedHolenRecord(holen.holenID, holen.quantity));
+            }
+            Debug.Log($"[WagerDataManager] Added {player2Wager.selectedHolens.Count} holens from Player 2");
         }
 
-        Debug.Log($"[WagerDataManager] Retrieved all wagers: {allHolens.Count} total holens");
+        Debug.Log($"[WagerDataManager] Retrieved all wagers: {allHolens.Count} total holen selections (duplicates included)");
         return allHolens;
     }
 

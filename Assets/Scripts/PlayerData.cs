@@ -1,10 +1,10 @@
-using UnityEngine;
 using System.IO;
+using UnityEngine;
 
 [System.Serializable]
 public class PlayerData
 {
-    public int coins = 9999; // default coins
+    public int coins = 0; // default coins
     public string playerName = ""; // player name
 
     private static string SavePath => Path.Combine(Application.persistentDataPath, "player_data.json");

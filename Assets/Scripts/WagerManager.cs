@@ -34,7 +34,9 @@ public class WagerManager : MonoBehaviour
         new RarityPoint(){rarity="Rare",      points=3},
         new RarityPoint(){rarity="Epic",      points=4},
         new RarityPoint(){rarity="Uncommon", points=2},
-        new RarityPoint(){rarity="Legendary", points=5}
+        new RarityPoint(){rarity="Mythic", points=5},
+        new RarityPoint(){rarity="Legendary", points=6}
+
     };
 
     // ===================== DATA STORAGE =====================

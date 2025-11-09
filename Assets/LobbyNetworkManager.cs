@@ -17,7 +17,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     public TMP_Text player1NameText;
     public TMP_Text player1PointsText;
     public TMP_Text player1StateText;
-    public TMP_Text player1InventoryStateText; // "Your Holens" or "Opponent's Holens"
+    public TMP_Text player1InventoryStateText;
     public Button player1ActionButton;
     public TMP_Text player1CountdownText;
 
@@ -27,7 +27,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     public TMP_Text player2NameText;
     public TMP_Text player2PointsText;
     public TMP_Text player2StateText;
-    public TMP_Text player2InventoryStateText; // "Your Holens" or "Opponent's Holens"
+    public TMP_Text player2InventoryStateText;
     public Button player2ActionButton;
     public TMP_Text player2CountdownText;
 
@@ -51,6 +51,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     private const byte WAGER_UPDATE_EVENT = 2;
     private const byte WAGER_SELECTION_EVENT = 3;
     private const byte INVENTORY_SYNC_EVENT = 4;
+    private const byte SAVE_WAGER_EVENT = 5; // NEW: Event to save wager data
 
     void Start()
     {
@@ -114,7 +115,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         Debug.Log($"[INIT] Local player assigned as Player {localPlayerNumber}");
 
         UpdatePlayerNames();
-        UpdateInventoryStateLabels(); // NEW: Set "Your Holens" / "Opponent's Holens"
+        UpdateInventoryStateLabels();
         SetupLocalPlayerUI();
         SetupOpponentUI();
         SetupInventories();
@@ -126,7 +127,6 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private void UpdateInventoryStateLabels()
     {
-        // Set inventory state text based on which player is local
         if (localPlayerNumber == 1)
         {
             if (player1InventoryStateText != null)
@@ -472,13 +472,51 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         wagerManager.OnActionButtonPressed();
         SetPlayerReadyState(localPlayerNumber, newReadyState);
 
+        // Send ready state to opponent
         object[] content = new object[] { localPlayerNumber, newReadyState };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         SendOptions sendOptions = SendOptions.SendReliable;
-
         PhotonNetwork.RaiseEvent(READY_STATE_EVENT, content, raiseEventOptions, sendOptions);
 
+        // NEW: Save this player's wager data to WagerDataManager immediately
+        SaveLocalWagerToManager();
+
         CheckBothPlayersReady();
+    }
+
+    private void SaveLocalWagerToManager()
+    {
+        // Ensure WagerDataManager exists
+        if (WagerDataManager.Instance == null)
+        {
+            GameObject wagerDataObj = new GameObject("WagerDataManager");
+            wagerDataObj.AddComponent<WagerDataManager>();
+        }
+
+        WagerManager localWager = GetLocalWagerManager();
+        if (localWager != null)
+        {
+            var wagers = localWager.GetSelectedHolensCopy();
+            WagerDataManager.Instance.SetPlayerWager(localPlayerNumber, wagers);
+            Debug.Log($"[SAVE WAGER] 💾 Saved Player {localPlayerNumber} wager locally: {wagers.Count} holens");
+
+            // Send wager data to opponent so they can also save it
+            List<string> holenIDs = new List<string>();
+            List<int> quantities = new List<int>();
+
+            foreach (var record in wagers)
+            {
+                holenIDs.Add(record.holenID);
+                quantities.Add(record.quantity);
+            }
+
+            object[] content = new object[] { localPlayerNumber, holenIDs.ToArray(), quantities.ToArray() };
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+            SendOptions sendOptions = SendOptions.SendReliable;
+
+            PhotonNetwork.RaiseEvent(SAVE_WAGER_EVENT, content, raiseEventOptions, sendOptions);
+            Debug.Log($"[SAVE WAGER] 📤 Sent wager data to opponent for saving");
+        }
     }
 
     private bool GetPlayerReadyState(int playerNum)
@@ -515,24 +553,17 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         {
             Debug.Log($"[LOADING] Master client loading scene: {gameSceneName}");
 
-            if (WagerDataManager.Instance == null)
+            // Verify wager data is saved
+            if (WagerDataManager.Instance != null)
             {
-                GameObject wagerDataObj = new GameObject("WagerDataManager");
-                wagerDataObj.AddComponent<WagerDataManager>();
-            }
+                var p1Wagers = WagerDataManager.Instance.GetPlayerWager(1);
+                var p2Wagers = WagerDataManager.Instance.GetPlayerWager(2);
 
-            if (player1Wager != null)
-            {
-                var p1Wagers = player1Wager.GetSelectedHolensCopy();
-                WagerDataManager.Instance.SetPlayerWager(1, p1Wagers);
-                Debug.Log($"[LOADING] Saved Player 1 wager: {p1Wagers.Count} holens");
+                Debug.Log($"[LOADING] 🎯 Final wager check - P1: {p1Wagers.Count} holens, P2: {p2Wagers.Count} holens");
             }
-
-            if (player2Wager != null)
+            else
             {
-                var p2Wagers = player2Wager.GetSelectedHolensCopy();
-                WagerDataManager.Instance.SetPlayerWager(2, p2Wagers);
-                Debug.Log($"[LOADING] Saved Player 2 wager: {p2Wagers.Count} holens");
+                Debug.LogError("[LOADING] ❌ WagerDataManager not found!");
             }
 
             PhotonNetwork.LoadLevel(gameSceneName);
@@ -591,6 +622,34 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             {
                 UpdateOpponentInventoryDisplay(playerNum, holenIDs, quantities);
             }
+        }
+        else if (eventCode == SAVE_WAGER_EVENT)
+        {
+            // NEW: Receive opponent's wager data and save it to WagerDataManager
+            object[] data = (object[])photonEvent.CustomData;
+            int playerNum = (int)data[0];
+            string[] holenIDs = (string[])data[1];
+            int[] quantities = (int[])data[2];
+
+            Debug.Log($"[NETWORK] 💾 Received wager save request from Player {playerNum}: {holenIDs.Length} holens");
+
+            // Ensure WagerDataManager exists
+            if (WagerDataManager.Instance == null)
+            {
+                GameObject wagerDataObj = new GameObject("WagerDataManager");
+                wagerDataObj.AddComponent<WagerDataManager>();
+            }
+
+            // Convert to SelectedHolenRecord list
+            List<WagerManager.SelectedHolenRecord> wagers = new List<WagerManager.SelectedHolenRecord>();
+            for (int i = 0; i < holenIDs.Length; i++)
+            {
+                wagers.Add(new WagerManager.SelectedHolenRecord(holenIDs[i], quantities[i]));
+            }
+
+            // Save to WagerDataManager
+            WagerDataManager.Instance.SetPlayerWager(playerNum, wagers);
+            Debug.Log($"[NETWORK] ✅ Saved Player {playerNum}'s wager to WagerDataManager: {wagers.Count} holens");
         }
     }
 
