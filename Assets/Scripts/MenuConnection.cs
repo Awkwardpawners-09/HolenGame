@@ -23,6 +23,13 @@ public class MenuConnection : MonoBehaviourPunCallbacks
     [Tooltip("How long to show the no holens message (in seconds)")]
     public float noHolensPanelDuration = 3f;
 
+    [Header("Scene Transition")]
+    [Tooltip("GameObject to enable before switching scenes (transition effect)")]
+    public GameObject transitionObject;
+
+    [Tooltip("How long to show transition before loading scene (in seconds)")]
+    public float transitionDuration = 1f;
+
     [Header("Scene Settings")]
     [Tooltip("The Lobby scene where players wager their Holens")]
     public string lobbySceneName = "LobbyScene"; // CHANGED: Load Lobby first, not Game
@@ -44,6 +51,12 @@ public class MenuConnection : MonoBehaviourPunCallbacks
             // Fallback to random name if no saved name exists
             PhotonNetwork.NickName = "Player_" + Random.Range(1000, 9999);
             Debug.Log($"[MENU] No saved name found, using random nickname: {PhotonNetwork.NickName}");
+        }
+
+        // Ensure transition object is disabled at start
+        if (transitionObject != null)
+        {
+            transitionObject.SetActive(false);
         }
     }
 
@@ -220,11 +233,31 @@ public class MenuConnection : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        Debug.Log("[MENU] Both players connected. Loading Lobby scene...");
+        Debug.Log("[MENU] Both players connected. Starting transition...");
         Debug.Log($"[MENU] Player 1 (ActorNumber 1): {GetPlayerByActorNumber(1)?.NickName ?? "Not found"}");
         Debug.Log($"[MENU] Player 2 (ActorNumber 2): {GetPlayerByActorNumber(2)?.NickName ?? "Not found"}");
 
+        // Start transition coroutine
+        StartCoroutine(TransitionToLobby());
+    }
+
+    /// <summary>
+    /// Shows transition effect before loading the lobby scene
+    /// </summary>
+    private IEnumerator TransitionToLobby()
+    {
+        // Enable transition object
+        if (transitionObject != null)
+        {
+            transitionObject.SetActive(true);
+            Debug.Log("[MENU] Transition object enabled");
+        }
+
+        // Wait for transition duration
+        yield return new WaitForSeconds(transitionDuration);
+
         // Load the LOBBY scene (wager selection happens there)
+        Debug.Log("[MENU] Loading Lobby scene...");
         PhotonNetwork.LoadLevel(lobbySceneName);
     }
 

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3209146980662762424}
   - component: {fileID: -3077389245889383231}
   - component: {fileID: 2179966970939093982}
+  - component: {fileID: 3053515690523254786}
   m_Layer: 0
   m_Name: BabyWhite
   m_TagString: Objective
@@ -209,3 +210,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &3053515690523254786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d15e008992dbd844a42f9174caa0fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holenData: {fileID: 11400000, guid: a6dfe7b3c88ea7a43b1e33ab61bd07c7, type: 2}

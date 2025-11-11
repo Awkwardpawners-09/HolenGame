@@ -1,0 +1,352 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
+using Photon.Pun;
+
+/// <summary>
+/// Displays the PVP results by populating grid layouts with knocked out holens.
+/// Attach this to a GameObject in the PVPResult scene.
+/// </summary>
+public class PVPResultDisplay : MonoBehaviour
+{
+    [Header("Grid Layout References")]
+    public Transform player1CollectedGrid; // Grid for Player 1's collected holens
+    public Transform player2CollectedGrid; // Grid for Player 2's collected holens
+
+    [Header("Holen Slot Prefab")]
+    public GameObject holenSlotPrefab; // Prefab to display each holen (should have Image, Text components)
+
+    [Header("Optional: Player Names")]
+    public TMP_Text player1NameText;
+    public TMP_Text player2NameText;
+
+    [Header("Exit Button")]
+    public GameObject exitButton; // Button to return to menu
+
+    [Header("Scene Settings")]
+    public string menuSceneName = "Demo Menu"; // Scene to load when exiting
+
+    private bool hasAwardedHolens = false; // Ensure holens are only awarded once
+
+    void Start()
+    {
+        Debug.Log("[PVPResultDisplay] Start called");
+        PopulateResults();
+
+        // Setup exit button
+        if (exitButton != null)
+        {
+            Debug.Log("[PVPResultDisplay] Exit button GameObject found!");
+            UnityEngine.UI.Button btnComponent = exitButton.GetComponent<UnityEngine.UI.Button>();
+            if (btnComponent != null)
+            {
+                Debug.Log("[PVPResultDisplay] Button component found! Adding listener...");
+                btnComponent.onClick.AddListener(OnExitButtonPressed);
+                Debug.Log($"[PVPResultDisplay] Button interactable: {btnComponent.interactable}");
+            }
+            else
+            {
+                Debug.LogError("[PVPResultDisplay] Exit button does not have a Button component!");
+            }
+        }
+        else
+        {
+            Debug.LogError("[PVPResultDisplay] Exit button GameObject is not assigned in the inspector!");
+        }
+    }
+
+    private void PopulateResults()
+    {
+        Debug.Log("[PVPResultDisplay] PopulateResults called");
+
+        // Check if we have match data from the static holder
+        if (!PVPDataHolder.HasMatchData())
+        {
+            Debug.LogError("[PVPResultDisplay] No match data found! Make sure PVPScore stores data before scene transition.");
+            Debug.LogError($"[PVPResultDisplay] HasMatchData={PVPDataHolder.HasMatchData()}, LocalPlayerNumber={PVPDataHolder.GetLocalPlayerNumber()}");
+            return;
+        }
+
+        // Get knocked out holens for each player from static holder
+        List<PVPDataHolder.KnockedOutHolen> player1Holens = PVPDataHolder.GetPlayerKnockedOutHolens(1);
+        List<PVPDataHolder.KnockedOutHolen> player2Holens = PVPDataHolder.GetPlayerKnockedOutHolens(2);
+
+        Debug.Log($"[PVPResultDisplay] Player 1 collected {player1Holens.Count} holens");
+        Debug.Log($"[PVPResultDisplay] Player 2 collected {player2Holens.Count} holens");
+
+        // Populate Player 1's grid
+        PopulateGrid(player1CollectedGrid, player1Holens);
+
+        // Populate Player 2's grid
+        PopulateGrid(player2CollectedGrid, player2Holens);
+
+        // Optional: Update player names
+        if (player1NameText != null)
+        {
+            player1NameText.text = $"Player 1 ({player1Holens.Count})";
+        }
+
+        if (player2NameText != null)
+        {
+            player2NameText.text = $"Player 2 ({player2Holens.Count})";
+        }
+    }
+
+    private void PopulateGrid(Transform gridParent, List<PVPDataHolder.KnockedOutHolen> holens)
+    {
+        Debug.Log($"[PVPResultDisplay] PopulateGrid called with {holens.Count} holens");
+
+        if (gridParent == null)
+        {
+            Debug.LogWarning("[PVPResultDisplay] Grid parent is null!");
+            return;
+        }
+
+        if (holenSlotPrefab == null)
+        {
+            Debug.LogError("[PVPResultDisplay] Holen slot prefab is not assigned!");
+            return;
+        }
+
+        // Clear existing children
+        foreach (Transform child in gridParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Create a slot for each knocked out holen
+        foreach (var holen in holens)
+        {
+            Debug.Log($"[PVPResultDisplay] Creating slot for holen: {holen.holenName} (ID: {holen.holenID})");
+
+            // Load HolenData by ID
+            HolenData holenData = LoadHolenDataByID(holen.holenID);
+
+            if (holenData != null)
+            {
+                // Instantiate slot prefab
+                GameObject slotObj = Instantiate(holenSlotPrefab, gridParent);
+                Debug.Log($"[PVPResultDisplay] Instantiated slot for {holenData.holenName}");
+
+                // Setup the slot with holen data
+                SetupHolenSlot(slotObj, holenData);
+            }
+            else
+            {
+                Debug.LogWarning($"[PVPResultDisplay] Could not load HolenData for ID: {holen.holenID}");
+            }
+        }
+    }
+
+    private void SetupHolenSlot(GameObject slotObj, HolenData holenData)
+    {
+        // Try to use HolenSlotUI if it exists
+        HolenSlotUI slotUI = slotObj.GetComponent<HolenSlotUI>();
+        if (slotUI != null)
+        {
+            slotUI.SetSlot(holenData, 1); // Quantity is 1 for each knocked out holen
+            return;
+        }
+
+        // Fallback: Manual setup if HolenSlotUI is not available
+        // Assumes slot has Image component for icon and TMP_Text for name
+        Image iconImage = slotObj.GetComponentInChildren<Image>();
+        TMP_Text nameText = slotObj.GetComponentInChildren<TMP_Text>();
+
+        if (iconImage != null && holenData.holenIcon != null)
+        {
+            iconImage.sprite = holenData.holenIcon;
+        }
+
+        if (nameText != null)
+        {
+            nameText.text = holenData.holenName;
+        }
+    }
+
+    /// <summary>
+    /// Helper method to load HolenData by ID.
+    /// Uses HolenInventoryManager's database.
+    /// </summary>
+    private HolenData LoadHolenDataByID(string holenID)
+    {
+        // Use HolenInventoryManager's GetHolenData method
+        if (HolenInventoryManager.Instance != null)
+        {
+            HolenData data = HolenInventoryManager.Instance.GetHolenData(holenID);
+            if (data != null)
+            {
+                return data;
+            }
+            else
+            {
+                Debug.LogWarning($"[PVPResultDisplay] Could not find HolenData with ID: {holenID} in HolenInventoryManager database");
+            }
+        }
+        else
+        {
+            Debug.LogError("[PVPResultDisplay] HolenInventoryManager.Instance is null!");
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Called when exit button is pressed. Awards holens, disconnects from Photon, and returns to menu.
+    /// </summary>
+    public void OnExitButtonPressed()
+    {
+        Debug.Log("[PVPResultDisplay] Exit button pressed. Awarding holens to inventory...");
+
+        // Award holens to player's inventory before leaving
+        AwardHolensToInventory();
+
+        // Clean up PVPScore data
+        OnExitResults();
+
+        // Disconnect from Photon room and return to menu
+        StartCoroutine(DisconnectAndReturnToMenu());
+    }
+
+    /// <summary>
+    /// Awards the knocked out holens to the LOCAL player's inventory.
+    /// Only awards holens that the LOCAL player knocked out.
+    /// </summary>
+    private void AwardHolensToInventory()
+    {
+        if (hasAwardedHolens)
+        {
+            Debug.Log("[PVPResultDisplay] Holens already awarded. Skipping.");
+            return;
+        }
+
+        if (!PVPDataHolder.HasMatchData())
+        {
+            Debug.LogWarning("[PVPResultDisplay] No match data found! Cannot award holens.");
+            return;
+        }
+
+        if (HolenInventoryManager.Instance == null)
+        {
+            Debug.LogWarning("[PVPResultDisplay] HolenInventoryManager not found! Cannot award holens.");
+            return;
+        }
+
+        // Get the local player's number from static holder
+        int localPlayerNumber = PVPDataHolder.GetLocalPlayerNumber();
+
+        if (localPlayerNumber == 0)
+        {
+            Debug.LogWarning("[PVPResultDisplay] Could not determine local player number!");
+            return;
+        }
+
+        // Get holens knocked out by the local player
+        List<PVPDataHolder.KnockedOutHolen> localPlayerHolens = PVPDataHolder.GetPlayerKnockedOutHolens(localPlayerNumber);
+
+        Debug.Log($"[PVPResultDisplay] Awarding {localPlayerHolens.Count} holens to Player {localPlayerNumber}'s inventory");
+
+        // Add each holen to inventory
+        foreach (var holen in localPlayerHolens)
+        {
+            HolenInventoryManager.Instance.AddHolen(holen.holenID, 1);
+            Debug.Log($"[PVPResultDisplay] Added {holen.holenName} to inventory");
+        }
+
+        // Save inventory
+        HolenInventoryManager.Instance.SaveInventory();
+
+        hasAwardedHolens = true;
+
+        Debug.Log($"[PVPResultDisplay] Successfully awarded {localPlayerHolens.Count} holens to inventory!");
+    }
+
+    /// <summary>
+    /// Disconnects from Photon and returns to main menu.
+    /// </summary>
+    private IEnumerator DisconnectAndReturnToMenu()
+    {
+        float timeout = 5f; // Maximum time to wait for disconnect
+        float elapsed = 0f;
+
+        // Leave the current room
+        if (PhotonNetwork.InRoom)
+        {
+            Debug.Log("[PVPResultDisplay] Leaving Photon room...");
+            PhotonNetwork.LeaveRoom();
+
+            // Wait until we've left the room (with timeout)
+            while (PhotonNetwork.InRoom && elapsed < timeout)
+            {
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            if (PhotonNetwork.InRoom)
+            {
+                Debug.LogWarning("[PVPResultDisplay] Timeout waiting to leave room. Forcing disconnect...");
+            }
+        }
+
+        // Reset timeout
+        elapsed = 0f;
+
+        // Disconnect from Photon
+        if (PhotonNetwork.IsConnected)
+        {
+            Debug.Log("[PVPResultDisplay] Disconnecting from Photon...");
+            PhotonNetwork.Disconnect();
+
+            // Wait until disconnected (with timeout)
+            while (PhotonNetwork.IsConnected && elapsed < timeout)
+            {
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            if (PhotonNetwork.IsConnected)
+            {
+                Debug.LogWarning("[PVPResultDisplay] Timeout waiting to disconnect. Proceeding to load scene anyway...");
+            }
+        }
+
+        Debug.Log("[PVPResultDisplay] Disconnected. Loading menu scene...");
+
+        // Load menu scene
+        SceneManager.LoadScene(menuSceneName);
+    }
+
+    /// <summary>
+    /// Call this when leaving the result scene to clean up.
+    /// </summary>
+    public void OnExitResults()
+    {
+        // Clear the static data holder
+        PVPDataHolder.ClearData();
+
+        // Also clear PVPScore if it still exists
+        if (PVPScore.Instance != null)
+        {
+            PVPScore.Instance.ClearData();
+
+            // Destroy the PVPScore singleton instance
+            Destroy(PVPScore.Instance.gameObject);
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Remove button listener
+        if (exitButton != null)
+        {
+            UnityEngine.UI.Button btnComponent = exitButton.GetComponent<UnityEngine.UI.Button>();
+            if (btnComponent != null)
+            {
+                btnComponent.onClick.RemoveListener(OnExitButtonPressed);
+            }
+        }
+    }
+}

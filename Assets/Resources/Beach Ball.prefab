@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 448636375602239861}
   - component: {fileID: -6089166263733020259}
   - component: {fileID: -3742811425394113114}
+  - component: {fileID: 1482185943599062180}
   m_Layer: 0
   m_Name: Beach Ball
   m_TagString: Objective
@@ -209,3 +210,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &1482185943599062180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d15e008992dbd844a42f9174caa0fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holenData: {fileID: 11400000, guid: 83001ff2dc7057f46afa0451209cf705, type: 2}

@@ -28,13 +28,16 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
     [Header("Swipe Settings")]
     public float minSwipeDistance = 50f;
-    public float maxSwipeDistance = 300f;
-    public float minLaunchForce = 10f;
-    public float maxLaunchForce = 70f;
-    public float swipeTimeWindow = 0.5f; // Max time for a valid swipe
+    public float maxSwipeDistance = 500f;
+    public float minLaunchForce = 5f;
+    public float maxLaunchForce = 100f;
+    public float swipeTimeWindow = 1f; // Max time for a valid swipe
     public string ballLayerName = "HolenBall"; // Layer name for the ball
     public bool requireTouchOnBall = false; // Set to false for easier swiping
     public float swipeDeadZone = 20f; // Minimum distance before registering as swipe
+    [Header("Force Calculation")]
+    public float speedMultiplier = 0.05f; // How much swipe speed affects force
+    public bool useSpeedForce = true; // Use speed-based calculation
     private int ballLayer;
 
     [Header("Camera Settings")]
@@ -308,15 +311,31 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
                 swipeDirection = (cameraRight * swipeDelta.x + cameraForward * swipeDelta.y).normalized;
             }
 
-            // Calculate force based on swipe speed and distance
-            float force = CalculateLaunchForce(swipeDistance);
-            float speed = swipeDistance / swipeTime;
+            // Calculate force based on BOTH distance and speed
+            float force;
 
-            // Optional: Factor in swipe speed for more dynamic force
-            force = Mathf.Lerp(force, maxLaunchForce, Mathf.Clamp01(speed / 1000f));
-            force = Mathf.Clamp(force, minLaunchForce, maxLaunchForce);
+            if (useSpeedForce)
+            {
+                // Speed-based calculation (pixels per second)
+                float swipeSpeed = swipeDistance / swipeTime;
+                force = swipeSpeed * speedMultiplier;
+                force = Mathf.Clamp(force, minLaunchForce, maxLaunchForce);
 
-            Debug.Log($"SHOOTING! Force={force}, Direction={swipeDirection}");
+                Debug.Log($"SHOOTING! Speed={swipeSpeed:F2} px/s, Force={force:F2}, Direction={swipeDirection}");
+            }
+            else
+            {
+                // Distance-based calculation
+                force = CalculateLaunchForce(swipeDistance);
+
+                // Add speed bonus
+                float speed = swipeDistance / swipeTime;
+                float speedBonus = Mathf.Clamp01(speed / 2000f); // Normalize speed
+                force = Mathf.Lerp(force, maxLaunchForce, speedBonus);
+
+                Debug.Log($"SHOOTING! Distance={swipeDistance:F2}, Speed={speed:F2}, Force={force:F2}, Direction={swipeDirection}");
+            }
+
             ShootHolen(swipeDirection, force);
         }
         else

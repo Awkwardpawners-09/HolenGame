@@ -4,243 +4,426 @@ using UnityEngine.UI;
 
 public class HolensLauncher : MonoBehaviour
 {
-
-    public GameObject bottomMenu;
-    
+    [Header("References")]
     public Transform holensPosition;
     public GameObject holensBallPrefab;
-
-    public float rotationSpeed = 90f;
-    public Animator animator;
     public CinemachineVirtualCamera cinemachineCamera;
-    public Slider gaugeSlider;
-    public float gaugeMin = 10f;
-    public float gaugeMax = 70f;
-    public float gaugeSpeed = 40f;
+    public Camera mainCamera;
+    public Transform cameraSpawnPoint;
 
-    private GameObject currentBall;
-    private bool isBusy = false; // Track if the launcher is busy
-    private bool isReady = false;
-    private bool isGaugeIncreasing = true;
-    private bool isGaugeActive = false;
-    private float currentLaunchForce;
-    private Transform defaultLookAtTarget;
-    private bool hasLaunched = false;
+    [Header("UI")]
+    public GameObject swipeIndicator; // Optional: Visual feedback during swipe
+    public LineRenderer trajectoryLine; // Optional: Show predicted trajectory
 
+    [Header("Swipe Settings")]
+    public float minSwipeDistance = 50f;
+    public float maxSwipeDistance = 500f;
+    public float minLaunchForce = 5f;
+    public float maxLaunchForce = 100f;
+    public float swipeTimeWindow = 1f;
+    public bool requireTouchOnBall = false;
+    public float swipeDeadZone = 20f;
+    public string ballLayerName = "HolenBall";
+    [Header("Force Calculation")]
+    public float speedMultiplier = 0.05f; // How much swipe speed affects force
+    public bool useSpeedForce = true; // Use speed-based calculation
+    private int ballLayer;
+
+    [Header("Camera Settings")]
+    public Vector3 cameraFollowOffset = new Vector3(0f, 8f, -6f);
+    public float cameraAimScreenY = 0.80f;
+
+    [Header("Holen System")]
     public HolenChanger holenChanger;
 
-    // Flags for continuous rotation
-    private bool isRotatingLeft = false;
-    private bool isRotatingRight = false;
+    private GameObject currentBall;
+    private bool isBusy = false;
+    private bool hasLaunched = false;
+    private Transform defaultLookAtTarget;
+
+    // Swipe detection variables
+    private Vector2 swipeStartPos;
+    private Vector2 swipeEndPos;
+    private float swipeStartTime;
+    private bool isSwiping = false;
+    private Vector3 swipeWorldStart;
+    private Vector3 swipeWorldEnd;
 
     void Start()
     {
-        SpawnBall();
+        // Get or create the ball layer
+        ballLayer = LayerMask.NameToLayer(ballLayerName);
+        if (ballLayer == -1)
+        {
+            Debug.LogWarning($"Layer '{ballLayerName}' not found. Ball detection may not work properly.");
+        }
+
+        // Setup main camera if not assigned
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
+
+        SetInitialCameraPosition();
+
         if (cinemachineCamera != null)
             defaultLookAtTarget = cinemachineCamera.LookAt;
 
-        if (gaugeSlider != null)
-        {
-            gaugeSlider.minValue = gaugeMin;
-            gaugeSlider.maxValue = gaugeMax;
-            gaugeSlider.gameObject.SetActive(false);
-        }
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(false);
+
+        if (trajectoryLine != null)
+            trajectoryLine.enabled = false;
 
         // Use the selected HolenData (from HolenChanger) as the starting prefab
-        HolenData startingHolenData = holenChanger.GetCurrentHolenData();
-        holensBallPrefab = startingHolenData.holenPrefab; // Set the initial prefab
+        if (holenChanger != null)
+        {
+            HolenData startingHolenData = holenChanger.GetCurrentHolenData();
+            holensBallPrefab = startingHolenData.holenPrefab;
+        }
 
         SpawnBall();
-        PlayIdle();
     }
 
     void Update()
     {
-        HandleRotation(); // Handle rotation based on flags
-        HandleInput();
-
-        if (isGaugeActive)
+        if (!isBusy && !hasLaunched && currentBall != null)
         {
-            UpdateGauge();
+            HandleSwipeInput();
         }
     }
 
-    // This method will handle continuous rotation based on flags
-    void HandleRotation()
+    private void SetInitialCameraPosition()
     {
-        if (hasLaunched) return;
-
-        // For continuous rotation (button triggered)
-        if (isRotatingLeft)
+        if (cameraSpawnPoint != null)
         {
-            RotateLeft();
-        }
-
-        if (isRotatingRight)
-        {
-            RotateRight();
+            mainCamera.transform.position = cameraSpawnPoint.position;
+            mainCamera.transform.rotation = cameraSpawnPoint.rotation;
         }
     }
 
-    // For button click press to trigger rotation
-    public void TriggerLeftRotationStart()
+    private void AdjustCameraPosition()
     {
-        isRotatingLeft = true; // Start rotating left when button is pressed
-    }
-
-    public void TriggerLeftRotationStop()
-    {
-        isRotatingLeft = false; // Stop rotating left when button is released
-    }
-
-    public void TriggerRightRotationStart()
-    {
-        isRotatingRight = true; // Start rotating right when button is pressed
-    }
-
-    public void TriggerRightRotationStop()
-    {
-        isRotatingRight = false; // Stop rotating right when button is released
-    }
-
-    // Rotation logic for left
-    void RotateLeft()
-    {
-        transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
-    }
-
-    // Rotation logic for right
-    void RotateRight()
-    {
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-    }
-
-    void HandleInput()
-    {
-        if (isBusy) return;
-
-        // The buttons will now trigger specific actions
-    }
-
-    void UpdateGauge()
-    {
-        float delta = gaugeSpeed * Time.deltaTime;
-
-        if (isGaugeIncreasing)
+        if (cinemachineCamera != null)
         {
-            currentLaunchForce += delta;
-            if (currentLaunchForce >= gaugeMax)
+            CinemachineTransposer transposer = cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();
+            CinemachineComposer composer = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();
+            if (transposer != null && composer != null)
             {
-                currentLaunchForce = gaugeMax;
-                isGaugeIncreasing = false;
+                transposer.m_FollowOffset = cameraFollowOffset;
+                composer.m_ScreenY = cameraAimScreenY;
             }
+        }
+    }
+
+    private void HandleSwipeInput()
+    {
+        // Touch input for mobile
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (!requireTouchOnBall || IsTouchingBall(touch.position))
+                {
+                    StartSwipe(touch.position);
+                }
+            }
+            else if (touch.phase == TouchPhase.Moved && isSwiping)
+            {
+                UpdateSwipe(touch.position);
+            }
+            else if (touch.phase == TouchPhase.Ended && isSwiping)
+            {
+                EndSwipe(touch.position);
+            }
+            else if (touch.phase == TouchPhase.Canceled && isSwiping)
+            {
+                CancelSwipe();
+            }
+        }
+        // Mouse input for testing in editor
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (!requireTouchOnBall || IsTouchingBall(Input.mousePosition))
+            {
+                StartSwipe(Input.mousePosition);
+            }
+        }
+        else if (Input.GetMouseButton(0) && isSwiping)
+        {
+            UpdateSwipe(Input.mousePosition);
+        }
+        else if (Input.GetMouseButtonUp(0) && isSwiping)
+        {
+            EndSwipe(Input.mousePosition);
+        }
+    }
+
+    private bool IsTouchingBall(Vector2 screenPosition)
+    {
+        if (currentBall == null) return false;
+
+        Ray ray = mainCamera.ScreenPointToRay(screenPosition);
+        RaycastHit hit;
+
+        // First try direct raycast to ball
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
+            if (hit.collider.gameObject == currentBall)
+            {
+                Debug.Log("Touch detected on ball!");
+                return true;
+            }
+        }
+
+        // Alternative: Check screen distance to ball
+        Vector3 ballScreenPos = mainCamera.WorldToScreenPoint(currentBall.transform.position);
+        float screenDistance = Vector2.Distance(screenPosition, new Vector2(ballScreenPos.x, ballScreenPos.y));
+
+        // Allow touch within 100 pixels of the ball on screen
+        if (screenDistance < 100f)
+        {
+            Debug.Log("Touch detected near ball!");
+            return true;
+        }
+
+        return false;
+    }
+
+    private void StartSwipe(Vector2 screenPosition)
+    {
+        isSwiping = true;
+        swipeStartPos = screenPosition;
+        swipeStartTime = Time.time;
+
+        // Use ball's position as the starting point for direction calculation
+        swipeWorldStart = currentBall.transform.position;
+
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(true);
+
+        Debug.Log($"Swipe started at screen pos: {screenPosition}");
+    }
+
+    private void UpdateSwipe(Vector2 screenPosition)
+    {
+        swipeEndPos = screenPosition;
+
+        // Calculate swipe direction in screen space first
+        Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+
+        // Only update if swipe is beyond dead zone
+        if (swipeDelta.magnitude < swipeDeadZone)
+            return;
+
+        // Convert swipe direction to world direction
+        Ray ray = mainCamera.ScreenPointToRay(screenPosition);
+        Plane groundPlane = new Plane(Vector3.up, currentBall.transform.position);
+        float distance;
+
+        if (groundPlane.Raycast(ray, out distance))
+        {
+            swipeWorldEnd = ray.GetPoint(distance);
+        }
+
+        // Optional: Show trajectory preview
+        if (trajectoryLine != null)
+        {
+            ShowTrajectoryPreview();
+        }
+
+        Debug.Log($"Swiping... Delta: {swipeDelta.magnitude}");
+    }
+
+    private void ShowTrajectoryPreview()
+    {
+        // Calculate direction from ball position to swipe end point
+        Vector3 direction = (swipeWorldEnd - swipeWorldStart).normalized;
+
+        // Handle case where direction is invalid
+        if (direction.magnitude < 0.1f)
+            return;
+
+        float swipeDistance = Vector2.Distance(swipeStartPos, swipeEndPos);
+        float force = CalculateLaunchForce(swipeDistance);
+
+        trajectoryLine.enabled = true;
+        trajectoryLine.positionCount = 15;
+
+        Vector3 velocity = direction * force;
+        Vector3 currentPos = currentBall.transform.position;
+
+        for (int i = 0; i < 15; i++)
+        {
+            float t = i * 0.1f;
+            Vector3 point = currentPos + velocity * t + 0.5f * Physics.gravity * t * t;
+            trajectoryLine.SetPosition(i, point);
+        }
+    }
+
+    private void EndSwipe(Vector2 screenPosition)
+    {
+        swipeEndPos = screenPosition;
+        float swipeTime = Time.time - swipeStartTime;
+        Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+        float swipeDistance = swipeDelta.magnitude;
+
+        isSwiping = false;
+
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(false);
+
+        if (trajectoryLine != null)
+            trajectoryLine.enabled = false;
+
+        Debug.Log($"Swipe ended: Distance={swipeDistance}, Time={swipeTime}, MinRequired={minSwipeDistance}");
+
+        // Validate swipe
+        if (swipeDistance >= minSwipeDistance && swipeTime <= swipeTimeWindow)
+        {
+            // Calculate launch direction in world space
+            Vector3 swipeDirection = (swipeWorldEnd - swipeWorldStart);
+            swipeDirection.y = 0; // Keep it on horizontal plane
+            swipeDirection.Normalize();
+
+            // Fallback: If world direction calculation failed, use screen direction
+            if (swipeDirection.magnitude < 0.1f)
+            {
+                // Convert screen swipe to world direction relative to camera
+                Vector3 cameraForward = mainCamera.transform.forward;
+                Vector3 cameraRight = mainCamera.transform.right;
+
+                cameraForward.y = 0;
+                cameraRight.y = 0;
+                cameraForward.Normalize();
+                cameraRight.Normalize();
+
+                swipeDirection = (cameraRight * swipeDelta.x + cameraForward * swipeDelta.y).normalized;
+            }
+
+            // Calculate force based on BOTH distance and speed
+            float force;
+
+            if (useSpeedForce)
+            {
+                // Speed-based calculation (pixels per second)
+                float swipeSpeed = swipeDistance / swipeTime;
+                force = swipeSpeed * speedMultiplier;
+                force = Mathf.Clamp(force, minLaunchForce, maxLaunchForce);
+
+                Debug.Log($"SHOOTING! Speed={swipeSpeed:F2} px/s, Force={force:F2}, Direction={swipeDirection}");
+            }
+            else
+            {
+                // Distance-based calculation
+                force = CalculateLaunchForce(swipeDistance);
+
+                // Add speed bonus
+                float speed = swipeDistance / swipeTime;
+                float speedBonus = Mathf.Clamp01(speed / 2000f); // Normalize speed
+                force = Mathf.Lerp(force, maxLaunchForce, speedBonus);
+
+                Debug.Log($"SHOOTING! Distance={swipeDistance:F2}, Speed={speed:F2}, Force={force:F2}, Direction={swipeDirection}");
+            }
+
+            StartCoroutine(LaunchSequence(swipeDirection, force));
         }
         else
         {
-            currentLaunchForce -= delta;
-            if (currentLaunchForce <= gaugeMin)
-            {
-                currentLaunchForce = gaugeMin;
-                isGaugeIncreasing = true;
-            }
+            Debug.Log($"Invalid swipe: Distance={swipeDistance} (min: {minSwipeDistance}), Time={swipeTime}");
         }
-
-        if (gaugeSlider != null)
-            gaugeSlider.value = currentLaunchForce;
     }
 
-    // Separate method for readying the launcher (called by Ready button)
-    public void TriggerReadyAction()
+    private void CancelSwipe()
     {
-        if (!isReady)
-        {
-            StartCoroutine(PlayReadyAnimation()); // Ready the launcher
-        }
+        isSwiping = false;
+
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(false);
+
+        if (trajectoryLine != null)
+            trajectoryLine.enabled = false;
+
+        Debug.Log("Swipe cancelled");
     }
 
-    // Separate method for launching the ball (called by Launch button)
-    public void TriggerLaunchAction()
+    private float CalculateLaunchForce(float swipeDistance)
     {
-        if (isReady)
-        {
-            StartCoroutine(PlayShootAnimationAndLaunch()); // Launch the ball
-        }
+        // Normalize swipe distance to force range
+        float normalizedDistance = Mathf.InverseLerp(minSwipeDistance, maxSwipeDistance, swipeDistance);
+        return Mathf.Lerp(minLaunchForce, maxLaunchForce, normalizedDistance);
     }
 
-    System.Collections.IEnumerator PlayReadyAnimation()
+    System.Collections.IEnumerator LaunchSequence(Vector3 direction, float force)
     {
         isBusy = true;
-        animator.Play("Ready");
+        hasLaunched = true;
 
-        yield return new WaitForSeconds(0.5f);
-
-        if (gaugeSlider != null)
-        {
-            gaugeSlider.gameObject.SetActive(true);
-            currentLaunchForce = gaugeMin;
-            isGaugeIncreasing = true;
-            isGaugeActive = true;
-        }
-
-        isBusy = false;
-        isReady = true; // Mark the launcher as ready
-    }
-
-    System.Collections.IEnumerator PlayShootAnimationAndLaunch()
-    {
-        isBusy = true;
-        animator.Play("Shoot");
-
-        yield return new WaitForSeconds(0.1f);
-        LaunchBall();
+        LaunchBall(direction, force);
 
         yield return new WaitForSeconds(7f);
 
-        PlayIdle();
-        yield return new WaitForSeconds(0.5f);
+        // Reset camera position and look target
+        if (cinemachineCamera != null)
+        {
+            cinemachineCamera.Follow = null;
 
-        isReady = false;
-        SpawnBall();  // Respawn with the current selected Holen
+            if (defaultLookAtTarget != null)
+            {
+                cinemachineCamera.LookAt = defaultLookAtTarget;
+            }
+            else
+            {
+                cinemachineCamera.LookAt = null;
+            }
+
+            if (cameraSpawnPoint != null)
+            {
+                mainCamera.transform.position = cameraSpawnPoint.position;
+                mainCamera.transform.rotation = cameraSpawnPoint.rotation;
+            }
+        }
+
+        // Destroy the old ball
+        if (currentBall != null)
+        {
+            Destroy(currentBall);
+            currentBall = null;
+        }
+
         isBusy = false;
         hasLaunched = false;
+        isSwiping = false;
 
-        // Re-enable buttons after launch
-        holenChanger.EnableButtons();
+        // Re-enable holen changer buttons if available
+        if (holenChanger != null)
+        {
+            holenChanger.EnableButtons();
+        }
+
+        // Spawn new ball for next turn
+        SpawnBall();
     }
 
-    void LaunchBall()
+    void LaunchBall(Vector3 direction, float force)
     {
         if (currentBall == null) return;
 
         Rigidbody rb = currentBall.GetComponent<Rigidbody>();
         currentBall.transform.parent = null;
         rb.isKinematic = false;
-        rb.AddForce(transform.forward * currentLaunchForce, ForceMode.Impulse);
+        rb.AddForce(direction * force, ForceMode.Impulse);
 
         if (cinemachineCamera != null)
         {
+            // Stop following, just look at the ball (same as multiplayer)
+            cinemachineCamera.Follow = null;
             cinemachineCamera.LookAt = currentBall.transform;
-            StartCoroutine(ResetCameraLookAfterSeconds(6f));
         }
 
-        if (gaugeSlider != null)
-        {
-            gaugeSlider.gameObject.SetActive(false);
-            isGaugeActive = false;
-        }
-
-        hasLaunched = true;
-        bottomMenu.SetActive(false);
-    }
-
-    System.Collections.IEnumerator ResetCameraLookAfterSeconds(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (cinemachineCamera != null)
-        {
-            cinemachineCamera.LookAt = defaultLookAtTarget;
-        }
+        Debug.Log($"Ball launched with force: {force}, direction: {direction}");
     }
 
     void SpawnBall(GameObject ballPrefab = null)
@@ -256,10 +439,26 @@ public class HolensLauncher : MonoBehaviour
         currentBall = Instantiate(ballPrefab, holensPosition.position, holensPosition.rotation);
         currentBall.transform.parent = holensPosition;
 
-        // Set the tag of the spawned ball to "Ball"
+        // Set the tag and layer of the spawned ball
         currentBall.tag = "Ball";
 
-        currentBall.GetComponent<Rigidbody>().isKinematic = true;
+        if (ballLayer != -1)
+        {
+            currentBall.layer = ballLayer;
+        }
+
+        Rigidbody rb = currentBall.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        // Setup camera to follow and look at the ball
+        if (cinemachineCamera != null && currentBall != null)
+        {
+            cinemachineCamera.Follow = currentBall.transform;
+            cinemachineCamera.LookAt = currentBall.transform;
+            AdjustCameraPosition();
+        }
+
+        Debug.Log("New ball spawned and ready");
     }
 
     public void ChangeBallPrefab(GameObject newPrefab)
@@ -272,12 +471,6 @@ public class HolensLauncher : MonoBehaviour
 
         // Spawn the new ball with the updated prefab
         SpawnBall(newPrefab);
-    }
-
-    void PlayIdle()
-    {
-        animator.Play("Idle");
-        bottomMenu.SetActive(true);
     }
 
     // Create a public getter method for isBusy

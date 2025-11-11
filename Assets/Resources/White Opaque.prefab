@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 489457883166870360}
   - component: {fileID: -4402457000066182389}
   - component: {fileID: 477615190711541994}
+  - component: {fileID: 4263065401589831733}
   m_Layer: 0
   m_Name: White Opaque
   m_TagString: Objective
@@ -97,7 +98,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4543069569791729328}
-  m_Material: {fileID: 13400000, guid: 698992dfcfc18d248b35984b5147a603, type: 2}
+  m_Material: {fileID: 13400000, guid: cd58e520146487d4b8dd40fa696fa644, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -119,7 +120,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4543069569791729328}
   serializedVersion: 4
-  m_Mass: 0.6
+  m_Mass: 0.4
   m_Drag: 1
   m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -323,3 +324,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &4263065401589831733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d15e008992dbd844a42f9174caa0fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holenData: {fileID: 11400000, guid: 9caab3fc2eba62946bd515bb19b67cc0, type: 2}

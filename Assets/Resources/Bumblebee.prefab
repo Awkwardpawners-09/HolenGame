@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1043480018715138294}
   - component: {fileID: 4621233835874447433}
   - component: {fileID: -6749018469763821579}
+  - component: {fileID: -6044213324164557437}
   m_Layer: 0
   m_Name: Bumblebee
   m_TagString: Objective
@@ -209,3 +210,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-6044213324164557437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d15e008992dbd844a42f9174caa0fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holenData: {fileID: 11400000, guid: 6888456db34ce3745b7fcdba91aa48a4, type: 2}

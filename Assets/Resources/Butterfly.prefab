@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4892816789247732941}
   - component: {fileID: 217677602768749637}
   - component: {fileID: 1430849556827744439}
+  - component: {fileID: 7138798167837092686}
   m_Layer: 0
   m_Name: Butterfly
   m_TagString: Objective
@@ -209,3 +210,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &7138798167837092686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d15e008992dbd844a42f9174caa0fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holenData: {fileID: 11400000, guid: b94f6180685a43543bbd23fcae86734d, type: 2}
