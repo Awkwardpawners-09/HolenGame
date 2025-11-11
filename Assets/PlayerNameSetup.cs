@@ -30,21 +30,37 @@ public class PlayerNameSetup : MonoBehaviour
     [Tooltip("Text to personalize welcome message (optional)")]
     public TMP_Text welcomeText;
 
+    private bool isChecking = false;
+
     private void Start()
     {
-        // Check if player already has a name
+        // Start checking for inventory manager
+        CheckInventoryManager();
+    }
+
+    private void CheckInventoryManager()
+    {
+        if (isChecking) return;
+        isChecking = true;
+
+        // Try to find inventory manager
         var inventoryManager = HolenInventoryManager.Instance;
 
         if (inventoryManager == null)
         {
-            Debug.LogError("[PlayerNameSetup] HolenInventoryManager not found!");
+            Debug.LogWarning("[PlayerNameSetup] HolenInventoryManager not ready yet, retrying...");
+            // Retry after a short delay
+            Invoke(nameof(RetryCheck), 0.1f);
             return;
         }
 
-        if (inventoryManager.HasPlayerName())
+        // Check player name directly from saved data (more reliable)
+        PlayerData data = PlayerData.Load();
+
+        if (!string.IsNullOrEmpty(data.playerName))
         {
             // Player already has a name - hide this UI permanently
-            Debug.Log($"[PlayerNameSetup] Player already has name: {inventoryManager.PlayerName}");
+            Debug.Log($"[PlayerNameSetup] Player already has name: {data.playerName}");
             gameObject.SetActive(false);
             return;
         }
@@ -52,6 +68,12 @@ public class PlayerNameSetup : MonoBehaviour
         // First time setup - show the UI
         Debug.Log("[PlayerNameSetup] First launch detected - showing name setup");
         SetupUI();
+    }
+
+    private void RetryCheck()
+    {
+        isChecking = false;
+        CheckInventoryManager();
     }
 
     private void SetupUI()
@@ -76,6 +98,7 @@ public class PlayerNameSetup : MonoBehaviour
         // Setup confirm button
         if (confirmButton != null)
         {
+            confirmButton.onClick.RemoveAllListeners();
             confirmButton.onClick.AddListener(OnConfirmButtonClicked);
 
             // Disable button initially until valid name is entered
@@ -188,18 +211,19 @@ public class PlayerNameSetup : MonoBehaviour
 
     private void SavePlayerName(string playerName)
     {
-        var inventoryManager = HolenInventoryManager.Instance;
-
-        if (inventoryManager == null)
-        {
-            Debug.LogError("[PlayerNameSetup] HolenInventoryManager not found!");
-            return;
-        }
-
         Debug.Log($"[PlayerNameSetup] Saving player name: {playerName}");
 
-        // Save the name to inventory manager
-        inventoryManager.SetPlayerName(playerName);
+        // Save directly to PlayerData first
+        PlayerData data = PlayerData.Load();
+        data.playerName = playerName;
+        data.Save();
+
+        // Also update inventory manager if available
+        var inventoryManager = HolenInventoryManager.Instance;
+        if (inventoryManager != null)
+        {
+            inventoryManager.SetPlayerName(playerName);
+        }
 
         // Optional: Show welcome message
         if (welcomeText != null)
@@ -236,16 +260,22 @@ public class PlayerNameSetup : MonoBehaviour
     /// </summary>
     public void ResetPlayerNameForTesting()
     {
+        // Clear from PlayerData
+        PlayerData data = PlayerData.Load();
+        data.playerName = "";
+        data.Save();
+
+        // Also clear from inventory manager
         var inventoryManager = HolenInventoryManager.Instance;
         if (inventoryManager != null)
         {
-            // Clear the player name
-            inventoryManager.SetPlayerName("");
-
-            // Show the setup UI again
-            SetupUI();
-
-            Debug.Log("🧪 [TESTING] Player name reset - setup UI will show on next launch");
+            // Note: We can't set empty string, so we need to modify HolenInventoryManager
+            // to allow this, or just delete the save file
         }
+
+        // Show the setup UI again
+        SetupUI();
+
+        Debug.Log("🧪 [TESTING] Player name reset - setup UI will show on next launch");
     }
 }

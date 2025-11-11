@@ -608,9 +608,59 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
                 Debug.LogError("[LOADING] ❌ WagerDataManager not found!");
             }
 
+            // Deduct wagered holens from local player's inventory
+            DeductWageredHolensFromInventory();
+
             PhotonNetwork.LoadLevel(gameSceneName);
         }
     }
+
+    /// <summary>
+    /// Deducts the wagered holens from the local player's inventory.
+    /// Called only by MasterClient before scene transition.
+    /// </summary>
+    private void DeductWageredHolensFromInventory()
+    {
+        var inventoryManager = HolenInventoryManager.Instance;
+        if (inventoryManager == null)
+        {
+            Debug.LogError("[DEDUCT] ❌ HolenInventoryManager not found!");
+            return;
+        }
+
+        WagerManager localWager = GetLocalWagerManager();
+        if (localWager == null)
+        {
+            Debug.LogError("[DEDUCT] ❌ Local WagerManager not found!");
+            return;
+        }
+
+        var wageredHolens = localWager.GetSelectedHolensCopy();
+        if (wageredHolens == null || wageredHolens.Count == 0)
+        {
+            Debug.LogWarning("[DEDUCT] ⚠️ No holens wagered by local player");
+            return;
+        }
+
+        Debug.Log($"[DEDUCT] 💰 Starting to deduct {wageredHolens.Count} wagered holens from Player {localPlayerNumber}'s inventory");
+
+        foreach (var wager in wageredHolens)
+        {
+            // Deduct 1 of each wagered holen from inventory
+            inventoryManager.RemoveHolen(wager.holenID, 1);
+
+            HolenData data = inventoryManager.GetHolenData(wager.holenID);
+            string holenName = data != null ? data.holenName : wager.holenID;
+
+            Debug.Log($"[DEDUCT] ✅ Removed 1x {holenName} from inventory");
+        }
+
+        // Save the updated inventory
+        inventoryManager.SaveInventory();
+
+        Debug.Log($"[DEDUCT] 💾 Player {localPlayerNumber}'s inventory updated and saved");
+    }
+
 
     private void OnEvent(EventData photonEvent)
     {

@@ -6799,6 +6799,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 188027050}
+  prefix: 
+  suffix: 
+  useThousandsSeparator: 0
 --- !u!1 &194021291
 GameObject:
   m_ObjectHideFlags: 0
@@ -18024,7 +18027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 199.54999}
+  m_AnchoredPosition: {x: 0, y: 199.55005}
   m_SizeDelta: {x: 1080, y: 399.09998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &655673398
@@ -34460,6 +34463,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 1681676511}
+  prefix: 
+  suffix: 
+  useThousandsSeparator: 0
 --- !u!114 &1681676511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40187,6 +40193,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 2060212175}
+  prefix: 
+  suffix: 
+  useThousandsSeparator: 0
 --- !u!114 &2060212175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41581,7 +41590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -166.94}
+  m_AnchoredPosition: {x: 0, y: -166.93994}
   m_SizeDelta: {x: 704.81, y: 761.649}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107374238
