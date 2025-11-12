@@ -8,20 +8,21 @@ using Photon.Pun;
 
 /// <summary>
 /// Displays the PVP results by populating grid layouts with knocked out holens.
+/// Local player is always displayed on bottom, opponent on top.
 /// Attach this to a GameObject in the PVPResult scene.
 /// </summary>
 public class PVPResultDisplay : MonoBehaviour
 {
     [Header("Grid Layout References")]
-    public Transform player1CollectedGrid; // Grid for Player 1's collected holens
-    public Transform player2CollectedGrid; // Grid for Player 2's collected holens
+    public Transform opponentCollectedGrid; // Grid for opponent's collected holens (top)
+    public Transform localPlayerCollectedGrid; // Grid for local player's collected holens (bottom)
 
     [Header("Holen Slot Prefab")]
     public GameObject holenSlotPrefab; // Prefab to display each holen (should have Image, Text components)
 
     [Header("Optional: Player Names")]
-    public TMP_Text player1NameText;
-    public TMP_Text player2NameText;
+    public TMP_Text opponentNameText; // Top player name (opponent)
+    public TMP_Text localPlayerNameText; // Bottom player name (local)
 
     [Header("Exit Button")]
     public GameObject exitButton; // Button to return to menu
@@ -30,10 +31,16 @@ public class PVPResultDisplay : MonoBehaviour
     public string menuSceneName = "Demo Menu"; // Scene to load when exiting
 
     private bool hasAwardedHolens = false; // Ensure holens are only awarded once
+    private int localPlayerNumber = 0;
+    private int opponentPlayerNumber = 0;
 
     void Start()
     {
         Debug.Log("[PVPResultDisplay] Start called");
+
+        // Determine local and opponent player numbers
+        DeterminePlayerNumbers();
+
         PopulateResults();
 
         // Setup exit button
@@ -58,6 +65,17 @@ public class PVPResultDisplay : MonoBehaviour
         }
     }
 
+    private void DeterminePlayerNumbers()
+    {
+        // Get local player number from static holder
+        localPlayerNumber = PVPDataHolder.GetLocalPlayerNumber();
+
+        // Opponent is the other player
+        opponentPlayerNumber = localPlayerNumber == 1 ? 2 : 1;
+
+        Debug.Log($"[PVPResultDisplay] Local Player: {localPlayerNumber}, Opponent: {opponentPlayerNumber}");
+    }
+
     private void PopulateResults()
     {
         Debug.Log("[PVPResultDisplay] PopulateResults called");
@@ -70,38 +88,38 @@ public class PVPResultDisplay : MonoBehaviour
             return;
         }
 
-        // Get knocked out holens for each player from static holder
-        List<PVPDataHolder.KnockedOutHolen> player1Holens = PVPDataHolder.GetPlayerKnockedOutHolens(1);
-        List<PVPDataHolder.KnockedOutHolen> player2Holens = PVPDataHolder.GetPlayerKnockedOutHolens(2);
+        // Get knocked out holens for local player and opponent
+        List<PVPDataHolder.KnockedOutHolen> localPlayerHolens = PVPDataHolder.GetPlayerKnockedOutHolens(localPlayerNumber);
+        List<PVPDataHolder.KnockedOutHolen> opponentHolens = PVPDataHolder.GetPlayerKnockedOutHolens(opponentPlayerNumber);
 
-        Debug.Log($"[PVPResultDisplay] Player 1 collected {player1Holens.Count} holens");
-        Debug.Log($"[PVPResultDisplay] Player 2 collected {player2Holens.Count} holens");
+        Debug.Log($"[PVPResultDisplay] Local Player (P{localPlayerNumber}) collected {localPlayerHolens.Count} holens");
+        Debug.Log($"[PVPResultDisplay] Opponent (P{opponentPlayerNumber}) collected {opponentHolens.Count} holens");
 
-        // Populate Player 1's grid
-        PopulateGrid(player1CollectedGrid, player1Holens);
+        // Populate Opponent's grid (top)
+        PopulateGrid(opponentCollectedGrid, opponentHolens, $"Opponent (Player {opponentPlayerNumber})");
 
-        // Populate Player 2's grid
-        PopulateGrid(player2CollectedGrid, player2Holens);
+        // Populate Local Player's grid (bottom)
+        PopulateGrid(localPlayerCollectedGrid, localPlayerHolens, $"You (Player {localPlayerNumber})");
 
         // Optional: Update player names
-        if (player1NameText != null)
+        if (opponentNameText != null)
         {
-            player1NameText.text = $"Player 1 ({player1Holens.Count})";
+            opponentNameText.text = $"Opponent ({opponentHolens.Count})";
         }
 
-        if (player2NameText != null)
+        if (localPlayerNameText != null)
         {
-            player2NameText.text = $"Player 2 ({player2Holens.Count})";
+            localPlayerNameText.text = $"You ({localPlayerHolens.Count})";
         }
     }
 
-    private void PopulateGrid(Transform gridParent, List<PVPDataHolder.KnockedOutHolen> holens)
+    private void PopulateGrid(Transform gridParent, List<PVPDataHolder.KnockedOutHolen> holens, string playerLabel)
     {
-        Debug.Log($"[PVPResultDisplay] PopulateGrid called with {holens.Count} holens");
+        Debug.Log($"[PVPResultDisplay] PopulateGrid called for {playerLabel} with {holens.Count} holens");
 
         if (gridParent == null)
         {
-            Debug.LogWarning("[PVPResultDisplay] Grid parent is null!");
+            Debug.LogWarning($"[PVPResultDisplay] Grid parent for {playerLabel} is null!");
             return;
         }
 
@@ -120,7 +138,7 @@ public class PVPResultDisplay : MonoBehaviour
         // Create a slot for each knocked out holen
         foreach (var holen in holens)
         {
-            Debug.Log($"[PVPResultDisplay] Creating slot for holen: {holen.holenName} (ID: {holen.holenID})");
+            Debug.Log($"[PVPResultDisplay] Creating slot for {playerLabel}: {holen.holenName} (ID: {holen.holenID})");
 
             // Load HolenData by ID
             HolenData holenData = LoadHolenDataByID(holen.holenID);
@@ -234,9 +252,6 @@ public class PVPResultDisplay : MonoBehaviour
             Debug.LogWarning("[PVPResultDisplay] HolenInventoryManager not found! Cannot award holens.");
             return;
         }
-
-        // Get the local player's number from static holder
-        int localPlayerNumber = PVPDataHolder.GetLocalPlayerNumber();
 
         if (localPlayerNumber == 0)
         {

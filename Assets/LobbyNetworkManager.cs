@@ -11,23 +11,23 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     [Header("Player Assignment")]
     public int localPlayerNumber = 0;
 
-    [Header("Player 1 UI References")]
-    public GameObject player1InventoryContent;
-    public GameObject player1WagerContent;
-    public TMP_Text player1NameText;
-    public TMP_Text player1PointsText;
-    public TMP_Text player1StateText;
-    public TMP_Text player1InventoryStateText;
-    public TMP_Text player1CountdownText;
+    [Header("Top Player UI References (Opponent)")]
+    public GameObject topPlayerInventoryContent;
+    public GameObject topPlayerWagerContent;
+    public TMP_Text topPlayerNameText;
+    public TMP_Text topPlayerPointsText;
+    public TMP_Text topPlayerStateText;
+    public TMP_Text topPlayerInventoryStateText;
+    public TMP_Text topPlayerCountdownText;
 
-    [Header("Player 2 UI References")]
-    public GameObject player2InventoryContent;
-    public GameObject player2WagerContent;
-    public TMP_Text player2NameText;
-    public TMP_Text player2PointsText;
-    public TMP_Text player2StateText;
-    public TMP_Text player2InventoryStateText;
-    public TMP_Text player2CountdownText;
+    [Header("Bottom Player UI References (Local Player)")]
+    public GameObject bottomPlayerInventoryContent;
+    public GameObject bottomPlayerWagerContent;
+    public TMP_Text bottomPlayerNameText;
+    public TMP_Text bottomPlayerPointsText;
+    public TMP_Text bottomPlayerStateText;
+    public TMP_Text bottomPlayerInventoryStateText;
+    public TMP_Text bottomPlayerCountdownText;
 
     [Header("Shared UI References")]
     public Button sharedReadyButton; // Single ready button for local player
@@ -42,8 +42,8 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     [Header("Waiting UI (Optional)")]
     public GameObject waitingForPlayerPanel;
 
-    private WagerManager player1Wager;
-    private WagerManager player2Wager;
+    private WagerManager localWager;
+    private WagerManager opponentWager;
 
     private bool isPlayer1Ready = false;
     private bool isPlayer2Ready = false;
@@ -121,7 +121,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         SetupLocalPlayerUI();
         SetupOpponentUI();
         SetupInventories();
-        SetupSharedReadyButton(); // NEW: Setup the single ready button
+        SetupSharedReadyButton();
 
         Debug.Log($"[INIT] Lobby initialization complete for Player {localPlayerNumber}");
 
@@ -144,7 +144,6 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private void OnSharedReadyButtonPressed()
     {
-        WagerManager localWager = GetLocalWagerManager();
         if (localWager == null) return;
 
         bool currentReadyState = GetPlayerReadyState(localPlayerNumber);
@@ -159,7 +158,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         // Update button appearance
         UpdateSharedReadyButtonText(newReadyState);
 
-        // Update local player's state text
+        // Update local player's state text (always bottom)
         UpdateLocalPlayerStateText(newReadyState);
 
         // Send ready state to opponent
@@ -195,104 +194,62 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     {
         string stateLabel = isReady ? "READY" : "CANCEL";
 
-        if (localPlayerNumber == 1 && player1StateText != null)
+        // Local player is always on bottom
+        if (bottomPlayerStateText != null)
         {
-            player1StateText.text = stateLabel;
-        }
-        else if (localPlayerNumber == 2 && player2StateText != null)
-        {
-            player2StateText.text = stateLabel;
+            bottomPlayerStateText.text = stateLabel;
         }
     }
 
     private void UpdateInventoryStateLabels()
     {
-        if (localPlayerNumber == 1)
-        {
-            if (player1InventoryStateText != null)
-                player1InventoryStateText.text = "Your Holens";
+        // Bottom is always local player
+        if (bottomPlayerInventoryStateText != null)
+            bottomPlayerInventoryStateText.text = "Your Holens";
 
-            if (player2InventoryStateText != null)
-                player2InventoryStateText.text = "Opponent's Holens";
-        }
-        else if (localPlayerNumber == 2)
-        {
-            if (player1InventoryStateText != null)
-                player1InventoryStateText.text = "Opponent's Holens";
+        // Top is always opponent
+        if (topPlayerInventoryStateText != null)
+            topPlayerInventoryStateText.text = "Opponent's Holens";
 
-            if (player2InventoryStateText != null)
-                player2InventoryStateText.text = "Your Holens";
-        }
-
-        Debug.Log($"[LABELS] Updated inventory state labels for Player {localPlayerNumber}");
+        Debug.Log($"[LABELS] Updated inventory state labels (Local always on bottom)");
     }
 
     private void SetupLocalPlayerUI()
     {
-        if (localPlayerNumber == 1)
-        {
-            Debug.Log("[SETUP] Setting up Player 1 (local) UI");
+        Debug.Log("[SETUP] Setting up Local Player UI (Bottom)");
 
-            player1Wager = CreateWagerManager(
-                player1WagerContent,
-                null, // No individual action button
-                player1StateText,
-                player1CountdownText,
-                player1PointsText,
-                true
-            );
-        }
-        else if (localPlayerNumber == 2)
-        {
-            Debug.Log("[SETUP] Setting up Player 2 (local) UI");
-
-            player2Wager = CreateWagerManager(
-                player2WagerContent,
-                null, // No individual action button
-                player2StateText,
-                player2CountdownText,
-                player2PointsText,
-                true
-            );
-        }
+        // Local player is always displayed on bottom UI
+        localWager = CreateWagerManager(
+            bottomPlayerWagerContent,
+            null, // No individual action button
+            bottomPlayerStateText,
+            bottomPlayerCountdownText,
+            bottomPlayerPointsText,
+            true
+        );
     }
 
     private void SetupOpponentUI()
     {
-        if (localPlayerNumber == 1)
-        {
-            Debug.Log("[SETUP] Setting up Player 2 (opponent) UI - read-only");
+        Debug.Log("[SETUP] Setting up Opponent UI (Top) - read-only");
 
-            player2Wager = CreateWagerManager(
-                player2WagerContent,
-                null, // No individual action button
-                player2StateText,
-                player2CountdownText,
-                player2PointsText,
-                false
-            );
-        }
-        else if (localPlayerNumber == 2)
-        {
-            Debug.Log("[SETUP] Setting up Player 1 (opponent) UI - read-only");
-
-            player1Wager = CreateWagerManager(
-                player1WagerContent,
-                null, // No individual action button
-                player1StateText,
-                player1CountdownText,
-                player1PointsText,
-                false
-            );
-        }
+        // Opponent is always displayed on top UI
+        opponentWager = CreateWagerManager(
+            topPlayerWagerContent,
+            null, // No individual action button
+            topPlayerStateText,
+            topPlayerCountdownText,
+            topPlayerPointsText,
+            false
+        );
     }
 
     private void SetupInventories()
     {
-        GameObject localInventoryContent = localPlayerNumber == 1 ? player1InventoryContent : player2InventoryContent;
+        // Local player inventory always goes to bottom
         var inv = FindObjectOfType<HolenInventoryManager>();
 
-        if (inv == null || localInventoryContent == null) return;
+        if (inv == null || bottomPlayerInventoryContent == null) return;
 
         var allHolens = inv.GetAllHolens();
 
@@ -305,7 +262,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
                 continue;
             }
 
-            GameObject newSlot = Instantiate(holenUISlotPrefab, localInventoryContent.transform);
+            GameObject newSlot = Instantiate(holenUISlotPrefab, bottomPlayerInventoryContent.transform);
             var holenUISlot = newSlot.GetComponent<HolenSlotUI>();
 
             if (holenUISlot != null)
@@ -324,12 +281,11 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
-        Debug.Log($"[INVENTORY] Setup {allHolens.Count} holens for local player");
+        Debug.Log($"[INVENTORY] Setup {allHolens.Count} holens for local player (bottom)");
     }
 
     private void OnLocalInventoryItemClicked(HolenData holenData, int quantity)
     {
-        WagerManager localWager = GetLocalWagerManager();
         if (localWager == null) return;
 
         bool isSelected = localWager.IsHolenSelected(holenData.holenID);
@@ -354,12 +310,10 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private void RefreshLocalWagerDisplay()
     {
-        WagerManager localWager = GetLocalWagerManager();
-        GameObject wagerContent = localPlayerNumber == 1 ? player1WagerContent : player2WagerContent;
+        // Local player wager is always on bottom
+        if (localWager == null || bottomPlayerWagerContent == null) return;
 
-        if (localWager == null || wagerContent == null) return;
-
-        foreach (Transform child in wagerContent.transform)
+        foreach (Transform child in bottomPlayerWagerContent.transform)
         {
             Destroy(child.gameObject);
         }
@@ -373,7 +327,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             HolenData data = inv.GetHolenData(record.holenID);
             if (data != null)
             {
-                GameObject newSlot = Instantiate(holenUISlotPrefab, wagerContent.transform);
+                GameObject newSlot = Instantiate(holenUISlotPrefab, bottomPlayerWagerContent.transform);
                 var holenUISlot = newSlot.GetComponent<HolenSlotUI>();
 
                 if (holenUISlot != null)
@@ -394,7 +348,6 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private void OnWagerItemClicked(string holenID)
     {
-        WagerManager localWager = GetLocalWagerManager();
         if (localWager == null) return;
 
         if (localWager.RemoveHolen(holenID))
@@ -474,7 +427,6 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private void SendWagerSelectionToOpponent()
     {
-        WagerManager localWager = GetLocalWagerManager();
         if (localWager == null) return;
 
         var selectedHolens = localWager.GetSelectedHolensCopy();
@@ -497,35 +449,27 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.RaiseEvent(WAGER_SELECTION_EVENT, content, raiseEventOptions, sendOptions);
     }
 
-    private WagerManager GetLocalWagerManager()
-    {
-        return localPlayerNumber == 1 ? player1Wager : player2Wager;
-    }
-
-    private WagerManager GetOpponentWagerManager()
-    {
-        return localPlayerNumber == 1 ? player2Wager : player1Wager;
-    }
-
     private void UpdatePlayerNames()
     {
         Player[] players = PhotonNetwork.PlayerList;
 
-        Player p1 = System.Array.Find(players, p => p.ActorNumber == 1);
-        Player p2 = System.Array.Find(players, p => p.ActorNumber == 2);
+        Player localPlayer = PhotonNetwork.LocalPlayer;
+        Player opponentPlayer = System.Array.Find(players, p => p.ActorNumber != localPlayerNumber);
 
-        if (p1 != null && player1NameText != null)
+        // Local player name always on bottom
+        if (localPlayer != null && bottomPlayerNameText != null)
         {
-            string displayName = string.IsNullOrEmpty(p1.NickName) ? $"Player {p1.ActorNumber}" : p1.NickName;
-            player1NameText.text = displayName;
-            Debug.Log($"[NAMES] Player 1 name set to: {displayName}");
+            string displayName = string.IsNullOrEmpty(localPlayer.NickName) ? $"Player {localPlayer.ActorNumber}" : localPlayer.NickName;
+            bottomPlayerNameText.text = displayName;
+            Debug.Log($"[NAMES] Local player (bottom) name set to: {displayName}");
         }
 
-        if (p2 != null && player2NameText != null)
+        // Opponent name always on top
+        if (opponentPlayer != null && topPlayerNameText != null)
         {
-            string displayName = string.IsNullOrEmpty(p2.NickName) ? $"Player {p2.ActorNumber}" : p2.NickName;
-            player2NameText.text = displayName;
-            Debug.Log($"[NAMES] Player 2 name set to: {displayName}");
+            string displayName = string.IsNullOrEmpty(opponentPlayer.NickName) ? $"Player {opponentPlayer.ActorNumber}" : opponentPlayer.NickName;
+            topPlayerNameText.text = displayName;
+            Debug.Log($"[NAMES] Opponent (top) name set to: {displayName}");
         }
     }
 
@@ -537,7 +481,6 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             wagerDataObj.AddComponent<WagerDataManager>();
         }
 
-        WagerManager localWager = GetLocalWagerManager();
         if (localWager != null)
         {
             var wagers = localWager.GetSelectedHolensCopy();
@@ -628,7 +571,6 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        WagerManager localWager = GetLocalWagerManager();
         if (localWager == null)
         {
             Debug.LogError("[DEDUCT] ❌ Local WagerManager not found!");
@@ -661,7 +603,6 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         Debug.Log($"[DEDUCT] 💾 Player {localPlayerNumber}'s inventory updated and saved");
     }
 
-
     private void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
@@ -675,7 +616,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             Debug.Log($"[NETWORK] Received ready state - Player {playerNum}: {readyState}");
 
             SetPlayerReadyState(playerNum, readyState);
-            UpdateOpponentStateText(playerNum, readyState);
+            UpdateOpponentStateText(readyState);
             CheckBothPlayersReady();
         }
         else if (eventCode == WAGER_UPDATE_EVENT)
@@ -685,7 +626,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             int points = (int)data[1];
 
             Debug.Log($"[NETWORK] Player {playerNum} updated points to: {points}");
-            UpdateOpponentPoints(playerNum, points);
+            UpdateOpponentPoints(points);
         }
         else if (eventCode == WAGER_SELECTION_EVENT)
         {
@@ -698,7 +639,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
             if (playerNum != localPlayerNumber)
             {
-                UpdateOpponentWagerDisplay(playerNum, holenIDs, quantities);
+                UpdateOpponentWagerDisplay(holenIDs, quantities);
             }
         }
         else if (eventCode == INVENTORY_SYNC_EVENT)
@@ -712,7 +653,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
             if (playerNum != localPlayerNumber)
             {
-                UpdateOpponentInventoryDisplay(playerNum, holenIDs, quantities);
+                UpdateOpponentInventoryDisplay(holenIDs, quantities);
             }
         }
         else if (eventCode == SAVE_WAGER_EVENT)
@@ -741,16 +682,15 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdateOpponentInventoryDisplay(int playerNum, string[] holenIDs, int[] quantities)
+    private void UpdateOpponentInventoryDisplay(string[] holenIDs, int[] quantities)
     {
-        GameObject inventoryContent = playerNum == 1 ? player1InventoryContent : player2InventoryContent;
-
-        if (inventoryContent == null) return;
+        // Opponent inventory always goes to top
+        if (topPlayerInventoryContent == null) return;
 
         var inv = FindObjectOfType<HolenInventoryManager>();
         if (inv == null) return;
 
-        foreach (Transform child in inventoryContent.transform)
+        foreach (Transform child in topPlayerInventoryContent.transform)
         {
             Destroy(child.gameObject);
         }
@@ -760,7 +700,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             HolenData data = inv.GetHolenData(holenIDs[i]);
             if (data != null)
             {
-                GameObject newSlot = Instantiate(holenUISlotPrefab, inventoryContent.transform);
+                GameObject newSlot = Instantiate(holenUISlotPrefab, topPlayerInventoryContent.transform);
                 var holenUISlot = newSlot.GetComponent<HolenSlotUI>();
 
                 if (holenUISlot != null)
@@ -776,57 +716,50 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
-        Debug.Log($"[INVENTORY SYNC] ✅ Updated Player {playerNum}'s inventory with {holenIDs.Length} items");
+        Debug.Log($"[INVENTORY SYNC] ✅ Updated opponent's inventory (top) with {holenIDs.Length} items");
     }
 
-    private void UpdateOpponentStateText(int playerNum, bool isReady)
+    private void UpdateOpponentStateText(bool isReady)
     {
         string stateLabel = isReady ? "READY" : "CANCEL";
 
-        if (playerNum == 1 && player1StateText != null)
+        // Opponent state always on top
+        if (topPlayerStateText != null)
         {
-            player1StateText.text = stateLabel;
-        }
-        else if (playerNum == 2 && player2StateText != null)
-        {
-            player2StateText.text = stateLabel;
+            topPlayerStateText.text = stateLabel;
         }
     }
 
-    private void UpdateOpponentPoints(int playerNum, int points)
+    private void UpdateOpponentPoints(int points)
     {
-        if (playerNum == 1 && player1PointsText != null)
+        // Opponent points always on top
+        if (topPlayerPointsText != null)
         {
-            player1PointsText.text = $"{points}";
-        }
-        else if (playerNum == 2 && player2PointsText != null)
-        {
-            player2PointsText.text = $"{points}";
+            topPlayerPointsText.text = $"{points}";
         }
     }
 
-    private void UpdateOpponentWagerDisplay(int playerNum, string[] holenIDs, int[] quantities)
+    private void UpdateOpponentWagerDisplay(string[] holenIDs, int[] quantities)
     {
-        GameObject wagerContent = playerNum == 1 ? player1WagerContent : player2WagerContent;
-
-        if (wagerContent == null) return;
+        // Opponent wager always on top
+        if (topPlayerWagerContent == null) return;
 
         var inv = FindObjectOfType<HolenInventoryManager>();
         if (inv == null) return;
 
-        foreach (Transform child in wagerContent.transform)
+        foreach (Transform child in topPlayerWagerContent.transform)
         {
             Destroy(child.gameObject);
         }
 
-        Debug.Log($"[WAGER SYNC] Displaying {holenIDs.Length} holens for Player {playerNum}");
+        Debug.Log($"[WAGER SYNC] Displaying {holenIDs.Length} holens for opponent (top)");
 
         for (int i = 0; i < holenIDs.Length; i++)
         {
             HolenData data = inv.GetHolenData(holenIDs[i]);
             if (data != null)
             {
-                GameObject newSlot = Instantiate(holenUISlotPrefab, wagerContent.transform);
+                GameObject newSlot = Instantiate(holenUISlotPrefab, topPlayerWagerContent.transform);
                 var holenUISlot = newSlot.GetComponent<HolenSlotUI>();
 
                 if (holenUISlot != null)
@@ -842,7 +775,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
-        Debug.Log($"[WAGER SYNC] ✅ Updated Player {playerNum}'s wager with {holenIDs.Length} items");
+        Debug.Log($"[WAGER SYNC] ✅ Updated opponent's wager (top) with {holenIDs.Length} items");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

@@ -99,13 +99,13 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 5
+    value: 6
   threshold:
     overrideState: 1
     value: 1
   softKnee:
     overrideState: 0
-    value: 0.488
+    value: 0
   clamp:
     overrideState: 0
     value: 65472
@@ -149,7 +149,7 @@ MonoBehaviour:
     value: 200
   sampleCount:
     overrideState: 1
-    value: 10
+    value: 5
 --- !u!114 &-6130098590245203192
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -168,10 +168,10 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 10
+    value: 4.5
   aperture:
     overrideState: 1
-    value: 4.9
+    value: 3.8
   focalLength:
     overrideState: 1
     value: 44
@@ -1557,7 +1557,7 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 0.52
+    value: 1.58
   color:
     overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
