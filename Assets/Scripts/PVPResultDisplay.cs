@@ -350,6 +350,11 @@ public class PVPResultDisplay : MonoBehaviour
             // Destroy the PVPScore singleton instance
             Destroy(PVPScore.Instance.gameObject);
         }
+
+        // Clean up WagerDataManager
+        WagerDataManager.DestroyInstance();
+
+        Debug.Log("[PVPResultDisplay] All game data cleaned up");
     }
 
     void OnDestroy()

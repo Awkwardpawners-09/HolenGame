@@ -231,13 +231,22 @@ public class MenuConnection : MonoBehaviourPunCallbacks
     // Start the lobby when both players are ready
     private void StartLobby()
     {
+        Debug.Log("[MENU] Both players connected. Starting transition...");
+
+        // Enable transition for THIS player immediately (both players do this)
+        if (transitionObject != null)
+        {
+            transitionObject.SetActive(true);
+            Debug.Log("[MENU] Transition object enabled");
+        }
+
+        // Only Master Client handles scene loading
         if (!PhotonNetwork.IsMasterClient) return;
 
-        Debug.Log("[MENU] Both players connected. Starting transition...");
         Debug.Log($"[MENU] Player 1 (ActorNumber 1): {GetPlayerByActorNumber(1)?.NickName ?? "Not found"}");
         Debug.Log($"[MENU] Player 2 (ActorNumber 2): {GetPlayerByActorNumber(2)?.NickName ?? "Not found"}");
 
-        // Start transition coroutine
+        // Start transition coroutine (Master Client only)
         StartCoroutine(TransitionToLobby());
     }
 
@@ -246,13 +255,6 @@ public class MenuConnection : MonoBehaviourPunCallbacks
     /// </summary>
     private IEnumerator TransitionToLobby()
     {
-        // Enable transition object
-        if (transitionObject != null)
-        {
-            transitionObject.SetActive(true);
-            Debug.Log("[MENU] Transition object enabled");
-        }
-
         // Wait for transition duration
         yield return new WaitForSeconds(transitionDuration);
 

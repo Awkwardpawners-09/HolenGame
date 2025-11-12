@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Persists wager selections between Lobby and Game scenes.
 /// Created by LobbyNetworkManager before loading the game scene.
+/// Automatically cleaned up when returning to menu.
 /// </summary>
 public class WagerDataManager : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class WagerDataManager : MonoBehaviour
         // Singleton pattern with DontDestroyOnLoad
         if (Instance != null && Instance != this)
         {
+            Debug.Log("[WagerDataManager] Instance already exists, destroying duplicate");
             Destroy(gameObject);
             return;
         }
@@ -120,11 +122,25 @@ public class WagerDataManager : MonoBehaviour
         Debug.Log("[WagerDataManager] Cleared all wager data");
     }
 
+    /// <summary>
+    /// Destroys this singleton instance. Call before returning to menu.
+    /// </summary>
+    public static void DestroyInstance()
+    {
+        if (Instance != null)
+        {
+            Debug.Log("[WagerDataManager] Destroying singleton instance");
+            Destroy(Instance.gameObject);
+            Instance = null;
+        }
+    }
+
     private void OnDestroy()
     {
         if (Instance == this)
         {
             Instance = null;
+            Debug.Log("[WagerDataManager] Instance destroyed");
         }
     }
 }

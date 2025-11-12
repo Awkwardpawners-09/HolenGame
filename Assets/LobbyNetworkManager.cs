@@ -535,6 +535,9 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private void LoadGameScene()
     {
+        // IMPORTANT: Deduct holens BEFORE scene transition for ALL players
+        DeductWageredHolensFromInventory();
+
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.Log($"[LOADING] Master client loading scene: {gameSceneName}");
@@ -551,16 +554,13 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
                 Debug.LogError("[LOADING] ❌ WagerDataManager not found!");
             }
 
-            // Deduct wagered holens from local player's inventory
-            DeductWageredHolensFromInventory();
-
             PhotonNetwork.LoadLevel(gameSceneName);
         }
     }
 
     /// <summary>
     /// Deducts the wagered holens from the local player's inventory.
-    /// Called only by MasterClient before scene transition.
+    /// Called by BOTH players before scene transition.
     /// </summary>
     private void DeductWageredHolensFromInventory()
     {
@@ -787,12 +787,32 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("[DISCONNECT] Left room, returning to menu...");
+
+        // Clean up WagerDataManager before returning to menu
+        CleanupWagerDataManager();
+
         UnityEngine.SceneManagement.SceneManager.LoadScene("MenuScene");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogError($"[DISCONNECT] Disconnected from Photon: {cause}");
+
+        // Clean up WagerDataManager before returning to menu
+        CleanupWagerDataManager();
+
         UnityEngine.SceneManagement.SceneManager.LoadScene("MenuScene");
+    }
+
+    /// <summary>
+    /// Cleans up the WagerDataManager singleton to prevent it from persisting
+    /// </summary>
+    private void CleanupWagerDataManager()
+    {
+        if (WagerDataManager.Instance != null)
+        {
+            Debug.Log("[CLEANUP] Destroying WagerDataManager instance");
+            Destroy(WagerDataManager.Instance.gameObject);
+        }
     }
 }
