@@ -1841,7 +1841,7 @@ MonoBehaviour:
   maxSwipeDistance: 60
   minLaunchForce: 5
   maxLaunchForce: 50
-  swipeTimeWindow: 1
+  swipeTimeWindow: 0.7
   ballLayerName: ballLayerMask
   requireTouchOnBall: 1
   swipeDeadZone: 20
@@ -11909,6 +11909,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 18237d03bbaee6d4989246c389f868a0, type: 3}
       propertyPath: m_Name
       value: Intramuros
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 18237d03bbaee6d4989246c389f868a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1341056751160186723, guid: 18237d03bbaee6d4989246c389f868a0, type: 3}
       propertyPath: m_LocalPosition.y
