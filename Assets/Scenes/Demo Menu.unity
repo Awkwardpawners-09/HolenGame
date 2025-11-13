@@ -17825,6 +17825,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b94f6180685a43543bbd23fcae86734d, type: 2}
   - {fileID: 11400000, guid: c6f0a23a051a5bb44a1f3395e8b497d0, type: 2}
   - {fileID: 11400000, guid: 611688fa0957840418cb10292891dd9e, type: 2}
+  - {fileID: 11400000, guid: 82cfab0a78144964c887874408cea060, type: 2}
+  - {fileID: 11400000, guid: 97ae2378633557c48a609fd609716fc4, type: 2}
+  - {fileID: 11400000, guid: 21e644e7a25678f4eb427346789d283b, type: 2}
+  - {fileID: 11400000, guid: b11f8cb6b33f1954f90ef6ddbe5f5b57, type: 2}
+  - {fileID: 11400000, guid: 08452a38b0ab1064ea1e2c2313988ebc, type: 2}
+  - {fileID: 11400000, guid: 18a049fcbeba3c34682474b6f6b72c93, type: 2}
   inventory: []
   playerName: 
   playerNameDisplayText: {fileID: 0}
@@ -27701,7 +27707,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -5.7374268}
+  m_AnchoredPosition: {x: 0.00012207031, y: -5.7374268}
   m_SizeDelta: {x: -1162.6, y: -2157.94}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1166526844

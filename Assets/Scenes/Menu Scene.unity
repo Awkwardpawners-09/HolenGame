@@ -2107,6 +2107,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5d2ef6d3cf217404ebb35403b1e0906c, type: 2}
   - {fileID: 11400000, guid: 4b49251ae8bef0246aafe0df5aaf699b, type: 2}
   inventory: []
+  playerName: 
+  playerNameDisplayText: {fileID: 0}
   inventoryUI: {fileID: 0}
 --- !u!4 &585619857
 Transform:
@@ -5780,6 +5782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData:
     coins: 500
+    playerName: 
 --- !u!1 &1878133440
 GameObject:
   m_ObjectHideFlags: 0
