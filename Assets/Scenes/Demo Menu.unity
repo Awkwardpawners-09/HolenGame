@@ -17824,6 +17824,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83001ff2dc7057f46afa0451209cf705, type: 2}
   - {fileID: 11400000, guid: b94f6180685a43543bbd23fcae86734d, type: 2}
   - {fileID: 11400000, guid: c6f0a23a051a5bb44a1f3395e8b497d0, type: 2}
+  - {fileID: 11400000, guid: 611688fa0957840418cb10292891dd9e, type: 2}
   inventory: []
   playerName: 
   playerNameDisplayText: {fileID: 0}

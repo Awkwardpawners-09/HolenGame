@@ -1908,14 +1908,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 5
-  holenPlayerObject: {fileID: 0}
-  targetObject: {fileID: 0}
-  requiredCollisions: 3
-  livesText: {fileID: 0}
-  maxLives: 3
-  gameOverObject: {fileID: 0}
   enableObjectiveMode: 1
+  waitTime: 5
+  maxLives: 3
+  livesText: {fileID: 0}
+  gameOverObject: {fileID: 0}
+  gameOverDelay: 3
+  gameOverSceneName: GameOver
+  transitionObject: {fileID: 0}
+  transitionDuration: 2
 --- !u!4 &312863715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 006e93355555c744a8b13f3c21adb4ff, type: 3}
@@ -3846,6 +3847,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623931981}
   m_CullTransparentMesh: 1
+--- !u!1001 &628874680
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4543069569791729328, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_Name
+      value: Batik Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.2037635
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9750828
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 16.921108
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
 --- !u!4 &642651548 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7fa4831363be5fe4bbe3d47ab7389d52, type: 3}
@@ -10871,16 +10929,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc284ad419d2b648919091591a1c034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bottomMenu: {fileID: 1105050939}
   holensPosition: {fileID: 2092016475}
   holensBallPrefab: {fileID: 4543069569791729328, guid: 8b0f2b74dcd477c478c8ea30f9410671, type: 3}
-  rotationSpeed: 80
-  animator: {fileID: 1637746029}
   cinemachineCamera: {fileID: 369355204}
-  gaugeSlider: {fileID: 162573883}
-  gaugeMin: 5
-  gaugeMax: 100
-  gaugeSpeed: 100
+  mainCamera: {fileID: 0}
+  cameraSpawnPoint: {fileID: 0}
+  swipeIndicator: {fileID: 0}
+  trajectoryLine: {fileID: 0}
+  minSwipeDistance: 50
+  maxSwipeDistance: 500
+  minLaunchForce: 5
+  maxLaunchForce: 100
+  swipeTimeWindow: 1
+  requireTouchOnBall: 0
+  swipeDeadZone: 20
+  ballLayerName: HolenBall
+  speedMultiplier: 0.05
+  useSpeedForce: 1
+  cameraFollowOffset: {x: 0, y: 8, z: -6}
+  cameraAimScreenY: 0.8
   holenChanger: {fileID: 1928430660}
 --- !u!95 &1637746029
 Animator:
@@ -12507,14 +12574,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 5
-  holenPlayerObject: {fileID: 0}
-  targetObject: {fileID: 0}
-  requiredCollisions: 3
-  livesText: {fileID: 397147109}
-  maxLives: 9
-  gameOverObject: {fileID: 1912863803}
   enableObjectiveMode: 1
+  waitTime: 5
+  maxLives: 9
+  livesText: {fileID: 397147109}
+  gameOverObject: {fileID: 1912863803}
+  gameOverDelay: 3
+  gameOverSceneName: GameOver
+  transitionObject: {fileID: 0}
+  transitionDuration: 2
 --- !u!65 &1918146935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13361,3 +13429,4 @@ SceneRoots:
   - {fileID: 368360525}
   - {fileID: 1007934579}
   - {fileID: 1005936886}
+  - {fileID: 628874680}
