@@ -36,8 +36,7 @@ public class ArcadeModeManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-            Debug.Log("[ArcadeMode] Manager created and persisting across scenes");
+
         }
         else
         {
@@ -148,11 +147,4 @@ public class ArcadeModeManager : MonoBehaviour
         StartCoroutine(LoadSceneWithTransition(currentScene));
     }
 
-    private void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
-        }
-    }
 }

@@ -17,15 +17,15 @@ public class GameStartManager : MonoBehaviour
     {
         // Initial setup: Display the "3" after 2 seconds
         yield return new WaitForSeconds(2f);
-        countdownText.text = "3"; // Change text to "3"
+        countdownText.text = "Ready?"; // Change text to "3"
 
         // After 2.5 seconds, change text to "2"
         yield return new WaitForSeconds(0.5f);
-        countdownText.text = "2";
+        countdownText.text = "Ready?";
 
         // After 3 seconds, change text to "1"
         yield return new WaitForSeconds(0.5f);
-        countdownText.text = "1";
+        countdownText.text = "Ready?";
 
         // After 3.5 seconds, change text to "HOLENS!"
         yield return new WaitForSeconds(0.5f);
