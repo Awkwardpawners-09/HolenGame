@@ -2224,14 +2224,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 5
-  holenPlayerObject: {fileID: 0}
-  targetObject: {fileID: 0}
-  requiredCollisions: 3
-  livesText: {fileID: 0}
-  maxLives: 3
-  gameOverObject: {fileID: 0}
   enableObjectiveMode: 1
+  waitTime: 5
+  maxLives: 3
+  livesText: {fileID: 0}
+  gameOverObject: {fileID: 0}
+  gameOverDelay: 3
+  gameOverSceneName: GameOver
+  transitionObject: {fileID: 0}
+  transitionDuration: 2
 --- !u!120 &310227658
 LineRenderer:
   serializedVersion: 2
@@ -2367,7 +2368,7 @@ MonoBehaviour:
   useSpeedForce: 1
   cameraFollowOffset: {x: 0, y: 8, z: -6}
   cameraAimScreenY: 0.8
-  holenChanger: {fileID: 0}
+  holenChanger: {fileID: 1928430660}
 --- !u!4 &312863715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 006e93355555c744a8b13f3c21adb4ff, type: 3}
@@ -9348,6 +9349,103 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 520218122}
   m_SourcePrefab: {fileID: 100100000, guid: dff5a0936b56e3249ac1371528772ae1, type: 3}
+--- !u!1 &1221077272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1221077273}
+  - component: {fileID: 1221077276}
+  - component: {fileID: 1221077275}
+  - component: {fileID: 1221077274}
+  m_Layer: 5
+  m_Name: TransitionGate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1221077273
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221077272}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000213, y: 1.0000213, z: 1.0000213}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1776412993}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1221077274
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221077272}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 476621d9c9e5fba4ca6e4023c28c1367, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1221077275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221077272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9d8a07d6074fb864481beff7691a0594, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1221077276
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221077272}
+  m_CullTransparentMesh: 1
 --- !u!1 &1226419784 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7fa4831363be5fe4bbe3d47ab7389d52, type: 3}
@@ -12692,6 +12790,7 @@ RectTransform:
   - {fileID: 1912863804}
   - {fileID: 1785076400}
   - {fileID: 1898469316}
+  - {fileID: 1221077273}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -13305,7 +13404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996fed6c81a5eb2429a3f655589a95ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Demo Menu (END)
+  sceneToLoad: Demo Menu
   waitTime: 6
 --- !u!1 &1918146932
 GameObject:
@@ -13354,14 +13453,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 5
-  holenPlayerObject: {fileID: 0}
-  targetObject: {fileID: 0}
-  requiredCollisions: 3
-  livesText: {fileID: 397147109}
-  maxLives: 9
-  gameOverObject: {fileID: 1912863803}
   enableObjectiveMode: 1
+  waitTime: 5
+  maxLives: 9
+  livesText: {fileID: 397147109}
+  gameOverObject: {fileID: 1912863803}
+  gameOverDelay: 3
+  gameOverSceneName: Demo Menu
+  transitionObject: {fileID: 0}
+  transitionDuration: 5
 --- !u!65 &1918146935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13595,7 +13695,7 @@ MonoBehaviour:
   holen3Data: {fileID: 11400000, guid: af4b6ce19fdc71a4c98bb50b24f09950, type: 2}
   chosenHolenImage: {fileID: 656463754}
   chosenHolenPrefab: {fileID: 0}
-  holensLauncher: {fileID: 1637746028}
+  holensLauncher: {fileID: 310227659}
   holen1Button: {fileID: 487662687}
   holen2Button: {fileID: 1540625383}
   holen3Button: {fileID: 1169681361}

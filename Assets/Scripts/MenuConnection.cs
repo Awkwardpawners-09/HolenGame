@@ -32,7 +32,7 @@ public class MenuConnection : MonoBehaviourPunCallbacks
 
     [Header("Scene Settings")]
     [Tooltip("The Lobby scene where players wager their Holens")]
-    public string lobbySceneName = "LobbyScene"; // CHANGED: Load Lobby first, not Game
+    public string lobbySceneName = "LobbyScene";
 
     private bool isSearching = false;
 
@@ -198,7 +198,14 @@ public class MenuConnection : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
-            StartLobby();
+            // BOTH players enable transition immediately
+            EnableTransition();
+
+            // Only Master Client loads the scene
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(LoadLobbyAfterDelay());
+            }
         }
     }
 
@@ -210,7 +217,14 @@ public class MenuConnection : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && isSearching)
         {
-            StartLobby();
+            // BOTH players enable transition immediately
+            EnableTransition();
+
+            // Only Master Client loads the scene
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(LoadLobbyAfterDelay());
+            }
         }
     }
 
@@ -228,38 +242,34 @@ public class MenuConnection : MonoBehaviourPunCallbacks
         findingOpponentPanel.SetActive(false);
     }
 
-    // Start the lobby when both players are ready
-    private void StartLobby()
+    /// <summary>
+    /// Enables the transition object for this player
+    /// </summary>
+    private void EnableTransition()
     {
-        Debug.Log("[MENU] Both players connected. Starting transition...");
-
-        // Enable transition for THIS player immediately (both players do this)
         if (transitionObject != null)
         {
             transitionObject.SetActive(true);
-            Debug.Log("[MENU] Transition object enabled");
+            Debug.Log($"[MENU] Transition enabled for {PhotonNetwork.NickName}");
         }
-
-        // Only Master Client handles scene loading
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        Debug.Log($"[MENU] Player 1 (ActorNumber 1): {GetPlayerByActorNumber(1)?.NickName ?? "Not found"}");
-        Debug.Log($"[MENU] Player 2 (ActorNumber 2): {GetPlayerByActorNumber(2)?.NickName ?? "Not found"}");
-
-        // Start transition coroutine (Master Client only)
-        StartCoroutine(TransitionToLobby());
+        else
+        {
+            Debug.LogWarning("[MENU] Transition object not assigned!");
+        }
     }
 
     /// <summary>
-    /// Shows transition effect before loading the lobby scene
+    /// Coroutine to load lobby after transition delay (Master Client only)
     /// </summary>
-    private IEnumerator TransitionToLobby()
+    private IEnumerator LoadLobbyAfterDelay()
     {
-        // Wait for transition duration
+        Debug.Log($"[MENU] Master Client waiting {transitionDuration} seconds before loading scene...");
+        Debug.Log($"[MENU] Player 1 (ActorNumber 1): {GetPlayerByActorNumber(1)?.NickName ?? "Not found"}");
+        Debug.Log($"[MENU] Player 2 (ActorNumber 2): {GetPlayerByActorNumber(2)?.NickName ?? "Not found"}");
+
         yield return new WaitForSeconds(transitionDuration);
 
-        // Load the LOBBY scene (wager selection happens there)
-        Debug.Log("[MENU] Loading Lobby scene...");
+        Debug.Log("[MENU] Loading Lobby scene for both players...");
         PhotonNetwork.LoadLevel(lobbySceneName);
     }
 

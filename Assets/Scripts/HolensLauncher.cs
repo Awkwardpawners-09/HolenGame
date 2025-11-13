@@ -75,13 +75,18 @@ public class HolensLauncher : MonoBehaviour
         if (trajectoryLine != null)
             trajectoryLine.enabled = false;
 
-        // Use the selected HolenData (from HolenChanger) as the starting prefab
+        // If HolenChanger exists, sync the initial prefab with it
         if (holenChanger != null)
         {
             HolenData startingHolenData = holenChanger.GetCurrentHolenData();
-            holensBallPrefab = startingHolenData.holenPrefab;
+            if (startingHolenData != null && startingHolenData.holenPrefab != null)
+            {
+                holensBallPrefab = startingHolenData.holenPrefab;
+                Debug.Log($"Using HolenChanger's default: {startingHolenData.holenName}");
+            }
         }
 
+        // Spawn the initial ball (uses holensBallPrefab from Inspector or HolenChanger)
         SpawnBall();
     }
 
@@ -361,6 +366,12 @@ public class HolensLauncher : MonoBehaviour
         isBusy = true;
         hasLaunched = true;
 
+        // Disable holen changer buttons during launch
+        if (holenChanger != null)
+        {
+            holenChanger.DisableButtons();
+        }
+
         LaunchBall(direction, force);
 
         yield return new WaitForSeconds(7f);
@@ -397,14 +408,22 @@ public class HolensLauncher : MonoBehaviour
         hasLaunched = false;
         isSwiping = false;
 
-        // Re-enable holen changer buttons if available
+        // Update to use the currently selected holen from HolenChanger
+        if (holenChanger != null)
+        {
+            HolenData currentHolenData = holenChanger.GetCurrentHolenData();
+            holensBallPrefab = currentHolenData.holenPrefab;
+            Debug.Log($"Next spawn will use: {currentHolenData.holenName}");
+        }
+
+        // Spawn new ball for next turn (uses updated holensBallPrefab)
+        SpawnBall();
+
+        // Re-enable holen changer buttons after spawn
         if (holenChanger != null)
         {
             holenChanger.EnableButtons();
         }
-
-        // Spawn new ball for next turn
-        SpawnBall();
     }
 
     void LaunchBall(Vector3 direction, float force)

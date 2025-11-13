@@ -1805,14 +1805,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 5
-  holenPlayerObject: {fileID: 0}
-  targetObject: {fileID: 0}
-  requiredCollisions: 3
-  livesText: {fileID: 0}
-  maxLives: 3
-  gameOverObject: {fileID: 0}
   enableObjectiveMode: 1
+  waitTime: 5
+  maxLives: 3
+  livesText: {fileID: 0}
+  gameOverObject: {fileID: 0}
+  gameOverDelay: 3
+  gameOverSceneName: GameOver
+  transitionObject: {fileID: 0}
+  transitionDuration: 2
 --- !u!114 &310227658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,7 +1842,7 @@ MonoBehaviour:
   maxSwipeDistance: 60
   minLaunchForce: 5
   maxLaunchForce: 50
-  swipeTimeWindow: 0.7
+  swipeTimeWindow: 1
   ballLayerName: ballLayerMask
   requireTouchOnBall: 1
   swipeDeadZone: 20
@@ -14777,14 +14778,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 5
-  holenPlayerObject: {fileID: 0}
-  targetObject: {fileID: 0}
-  requiredCollisions: 3
-  livesText: {fileID: 397147109}
-  maxLives: 9
-  gameOverObject: {fileID: 1912863803}
   enableObjectiveMode: 1
+  waitTime: 5
+  maxLives: 9
+  livesText: {fileID: 397147109}
+  gameOverObject: {fileID: 1912863803}
+  gameOverDelay: 3
+  gameOverSceneName: GameOver
+  transitionObject: {fileID: 0}
+  transitionDuration: 2
 --- !u!65 &1918146935
 BoxCollider:
   m_ObjectHideFlags: 0

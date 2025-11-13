@@ -2,62 +2,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro; // Import TextMeshPro namespace
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
-    private HashSet<GameObject> objectivesInTrigger = new HashSet<GameObject>();  // Keep track of objectives in the trigger area
-    private float noObjectiveTimer = 0f;  // Timer for when there are no objectives in the trigger
-    public float waitTime = 5f;  // Time to wait for no objectives in trigger (5 seconds)
-    private bool loadingNextScene = false;
+    [Header("Objective Detection")]
+    [Tooltip("Enable objective mode to detect holens in play field")]
+    public bool enableObjectiveMode = true;
 
-    // Inspector variables
-    public GameObject holenPlayerObject; // Set the "player" object (Holen) to detect collision
-    public GameObject targetObject; // Set the target object where the collision will happen
-    public int requiredCollisions = 3; // Set how many times the collision should happen
-    public TextMeshProUGUI livesText; // TextMeshProUGUI for displaying the number of lives
-    public int maxLives = 3; // Set the number of lives
-    private int currentLives; // Tracks current lives
-    private float lifeLossTimer = 0f;  // Timer to delay life reduction after collision
-    private bool isLifeReductionDelayed = false;  // Flag to track if we are waiting for the delay
-    public GameObject gameOverObject; // The object to be enabled when lives are less than 0
+    [Tooltip("Time to wait when no objectives in trigger before game over (seconds)")]
+    public float waitTime = 5f;
 
-    // New checkbox for enabling/disabling objective mode
-    public bool enableObjectiveMode = true; // Checkbox to enable/disable objective detection
+    private HashSet<GameObject> objectivesInTrigger = new HashSet<GameObject>();
+    private float noObjectiveTimer = 0f;
+    private bool gameOverTriggered = false;
 
-    private bool canCountCollision = true; // To track if the collision count is allowed (cooldown mechanism)
-    private float cooldownTime = 2f; // Cooldown duration in seconds
-    private float cooldownTimer = 0f; // Timer to manage the cooldown
+    [Header("Lives System")]
+    [Tooltip("Maximum number of lives")]
+    public int maxLives = 3;
 
-    private float sceneChangeDelay = 3f; // Delay time for scene change after the last collision
-    private float sceneChangeTimer = 0f; // Timer to track the delay before loading the scene
+    [Tooltip("TextMeshPro for displaying current lives")]
+    public TextMeshProUGUI livesText;
+
+    private int currentLives;
+    private float lifeLossTimer = 0f;
+    private bool isLifeReductionDelayed = false;
+
+    [Header("Game Over")]
+    [Tooltip("GameObject to enable when game over (no lives or no holens)")]
+    public GameObject gameOverObject;
+
+    [Tooltip("Time to wait before loading game over scene (seconds)")]
+    public float gameOverDelay = 3f;
+
+    [Header("Scene Management")]
+    [Tooltip("Scene to load after game over or when lives reach 0")]
+    public string gameOverSceneName = "GameOver";
+
+    [Tooltip("Enable transition effect before scene change")]
+    public GameObject transitionObject;
+
+    [Tooltip("Transition duration before loading scene (seconds)")]
+    public float transitionDuration = 2f;
 
     void Start()
     {
-        currentLives = maxLives; // Initialize lives to max lives
-        UpdateLivesText(); // Update the displayed lives text
-        gameOverObject.SetActive(false); // Ensure the game over object is initially disabled
+        currentLives = maxLives;
+        UpdateLivesText();
+
+        if (gameOverObject != null)
+            gameOverObject.SetActive(false);
+
+        if (transitionObject != null)
+            transitionObject.SetActive(false);
     }
 
     void Update()
     {
-        // If the player has lost all lives, enable the game over object immediately
+        // If game over already triggered, don't check anything
+        if (gameOverTriggered)
+            return;
+
+        // Check if player has lost all lives
         if (currentLives <= 0)
         {
-            gameOverObject.SetActive(true);  // Enable the Game Over object immediately
-            return; // Exit the update method early since the game is over
+            TriggerGameOver();
+            return;
         }
 
-        // Check if no "Objective" tagged objects are in the trigger area for 5 seconds
-        if (objectivesInTrigger.Count == 0)
+        // Check if no "Objective" tagged objects are in the trigger area
+        if (enableObjectiveMode && objectivesInTrigger.Count == 0)
         {
-            noObjectiveTimer += Time.deltaTime;  // Increment the timer when there are no objectives in the trigger
+            noObjectiveTimer += Time.deltaTime;
 
-            // If no objectives for 5 seconds, load the next scene
-            if (noObjectiveTimer >= waitTime && !loadingNextScene)
+            // If no objectives for specified wait time, trigger game over
+            if (noObjectiveTimer >= waitTime)
             {
-                loadingNextScene = true; // Flag to prevent multiple scene loads
-                LoadNextScene();
+                Debug.Log("[LevelManager] No holens in play field for " + waitTime + " seconds. Game Over!");
+                TriggerGameOver();
             }
         }
         else
@@ -66,75 +88,140 @@ public class LevelManager : MonoBehaviour
             noObjectiveTimer = 0f;
         }
 
-        // If the life reduction is delayed, increase the timer
+        // Handle delayed life reduction
         if (isLifeReductionDelayed)
         {
             lifeLossTimer += Time.deltaTime;
 
-            // If 6.5 seconds have passed, reduce life
             if (lifeLossTimer >= 6.5f)
             {
-                ReduceLife(); // Reduce life once the timer reaches 6.5 seconds
-                isLifeReductionDelayed = false; // Stop the timer
-                lifeLossTimer = 0f; // Reset the timer
+                ReduceLife();
+                isLifeReductionDelayed = false;
+                lifeLossTimer = 0f;
             }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // Only handle lives reduction if the object is tagged "Ball"
+        // Handle ball collision for lives reduction
         if (other.CompareTag("Ball"))
         {
-            // Start the delay for life reduction
             isLifeReductionDelayed = true;
-
-            // Optionally, you can add some feedback (visual, audio) here to show that the player lost a life
+            Debug.Log("[LevelManager] Ball entered trigger. Life will be reduced in 6.5 seconds.");
         }
 
-        // If an "Objective" tagged object enters the trigger area, add it to the set
+        // Track objectives in trigger area
         if (enableObjectiveMode && other.CompareTag("Objective"))
         {
             objectivesInTrigger.Add(other.gameObject);
+            Debug.Log("[LevelManager] Objective entered: " + other.name + ". Total in area: " + objectivesInTrigger.Count);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        // If an "Objective" tagged object exits the trigger area, remove it from the set
+        // Remove objectives that exit the trigger area
         if (enableObjectiveMode && other.CompareTag("Objective"))
         {
             objectivesInTrigger.Remove(other.gameObject);
+            Debug.Log("[LevelManager] Objective exited: " + other.name + ". Total in area: " + objectivesInTrigger.Count);
         }
     }
 
+    /// <summary>
+    /// Reduces player lives by 1
+    /// </summary>
     private void ReduceLife()
     {
-        // Reduce lives by 1
         currentLives--;
-        UpdateLivesText(); // Update the UI text to reflect the new life count
+        UpdateLivesText();
+        Debug.Log("[LevelManager] Life reduced. Current lives: " + currentLives);
 
-        if (currentLives >= 0)
+        if (currentLives <= 0)
         {
-            // Reset the timer when the player still has lives
-            lifeLossTimer = 0f;
+            TriggerGameOver();
         }
     }
 
+    /// <summary>
+    /// Updates the lives display text
+    /// </summary>
     private void UpdateLivesText()
     {
-        // Safely update the lives text if it's assigned
         if (livesText != null)
         {
-            livesText.text = currentLives.ToString(); // Display the current number of lives
+            livesText.text = currentLives.ToString();
         }
     }
 
-    private void LoadNextScene()
+    /// <summary>
+    /// Triggers the game over sequence
+    /// </summary>
+    private void TriggerGameOver()
     {
-        // Load the next scene after waiting for 5 seconds with no objectives in the trigger
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;  // Get current scene index
-        int nextSceneIndex = currentSceneIndex + 1; // Example: next scene is next in the build list
-        SceneManager.LoadScene(nextSceneIndex);
+        if (gameOverTriggered)
+            return;
+
+        gameOverTriggered = true;
+        Debug.Log("[LevelManager] Game Over triggered!");
+
+        // Enable game over object
+        if (gameOverObject != null)
+        {
+            gameOverObject.SetActive(true);
+        }
+
+        // Start coroutine to load game over scene
+        StartCoroutine(LoadGameOverScene());
+    }
+
+    /// <summary>
+    /// Loads the game over scene with transition
+    /// </summary>
+    private IEnumerator LoadGameOverScene()
+    {
+        // Wait for game over delay
+        yield return new WaitForSeconds(gameOverDelay);
+
+        // Enable transition if assigned
+        if (transitionObject != null)
+        {
+            transitionObject.SetActive(true);
+            Debug.Log("[LevelManager] Transition enabled");
+        }
+
+        // Wait for transition duration
+        yield return new WaitForSeconds(transitionDuration);
+
+        // Load game over scene
+        Debug.Log("[LevelManager] Loading scene: " + gameOverSceneName);
+        SceneManager.LoadScene(gameOverSceneName);
+    }
+
+    /// <summary>
+    /// Public method to manually trigger game over (for external calls)
+    /// </summary>
+    public void ManualGameOver()
+    {
+        TriggerGameOver();
+    }
+
+    /// <summary>
+    /// Public method to add lives (for power-ups, etc.)
+    /// </summary>
+    public void AddLife(int amount = 1)
+    {
+        currentLives += amount;
+        UpdateLivesText();
+        Debug.Log("[LevelManager] Lives added. Current lives: " + currentLives);
+    }
+
+    /// <summary>
+    /// Public method to get current lives
+    /// </summary>
+    public int GetCurrentLives()
+    {
+        return currentLives;
     }
 }
