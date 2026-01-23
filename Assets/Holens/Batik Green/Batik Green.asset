@@ -15,6 +15,6 @@ MonoBehaviour:
   holenID: FH002
   rarity: Rare
   holenName: Batik Green
-  holenIcon: {fileID: 21300000, guid: 677afc871367a3049a490a11f6429765, type: 3}
+  holenIcon: {fileID: 21300000, guid: b8581df72abab5e4d8350787c8fff671, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: 4c78eb985b825304e8f282f9b1a267fe, type: 3}
   maxStack: 1

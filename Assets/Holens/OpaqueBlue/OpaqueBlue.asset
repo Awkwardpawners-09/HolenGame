@@ -15,6 +15,6 @@ MonoBehaviour:
   holenID: JH004
   rarity: Common
   holenName: OpaqueBlue
-  holenIcon: {fileID: 21300000, guid: 1d96ac81937e2b748b1abccbe7f8501c, type: 3}
+  holenIcon: {fileID: 21300000, guid: 6d8affb44d41b764a87ea42e6a1df7b6, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
   maxStack: 1

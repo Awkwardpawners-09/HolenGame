@@ -15,6 +15,6 @@ MonoBehaviour:
   holenID: JH005
   rarity: Common
   holenName: Serpent
-  holenIcon: {fileID: 21300000, guid: c4d070f8bd00a5046976fbbe894f049a, type: 3}
+  holenIcon: {fileID: 21300000, guid: 36e441ecf8792db48af0d97b659f0566, type: 3}
   holenPrefab: {fileID: 919132149155446097, guid: be95ecf1234675f4da13fb522bed85d4, type: 3}
   maxStack: 9

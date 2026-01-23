@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcf30ea56afba3f448eaab1016cc464c, type: 3}
-  m_Name: White Opaque
+  m_Name: Red Devil
   m_EditorClassIdentifier: 
-  holenID: FH0003
-  rarity: Mythical
-  holenName: Batik (Blue)
-  holenIcon: {fileID: 21300000, guid: 58ea11ce60ee21643822a251d30d3408, type: 3}
-  holenPrefab: {fileID: 4543069569791729328, guid: 554362bfe38425b40a2322bdbb046b14, type: 3}
+  holenID: AH007
+  rarity: Epic
+  holenName: Red Devil
+  holenIcon: {fileID: 21300000, guid: f59ba188a7abe85439da1d9a71b1ae3b, type: 3}
+  holenPrefab: {fileID: 6270700704145172046, guid: 5613141e9f4b72947a5d0f7549dda6fa, type: 3}
   maxStack: 1

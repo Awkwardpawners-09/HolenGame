@@ -15,6 +15,6 @@ MonoBehaviour:
   holenID: FH007
   rarity: Common
   holenName: Baby Green
-  holenIcon: {fileID: 21300000, guid: a955f915f23ef1c44a143d8af9a96646, type: 3}
+  holenIcon: {fileID: 21300000, guid: 54ec0cc9e24565d46a9d2cd71c938b8d, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: a1e9cd31bcb7f0e4d89ac2fe9285d33d, type: 3}
   maxStack: 1

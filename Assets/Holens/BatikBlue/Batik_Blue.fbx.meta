@@ -5,10 +5,15 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: batikblue
+    second: {fileID: 2100000, guid: 8f0d08ff7e035b744832f12266f279cd, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Batik_blue
-    second: {fileID: 2800000, guid: 1e1bdfa1485c1584fa4522e61a1b1565, type: 3}
+    second: {fileID: 2800000, guid: 1dd72d90a2ec4824284dc25858756b07, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

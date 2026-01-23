@@ -15,6 +15,6 @@ MonoBehaviour:
   holenID: FH004
   rarity: Rare
   holenName: Batik Red
-  holenIcon: {fileID: 21300000, guid: 9979f94f2f87de14e88d3c1b57314561, type: 3}
+  holenIcon: {fileID: 21300000, guid: 7063bcba662bafa46a84f338ad2f1764, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: 3e16756a8368e8e48aa601f1a1cbe279, type: 3}
   maxStack: 1

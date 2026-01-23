@@ -15,6 +15,6 @@ MonoBehaviour:
   holenID: JH003
   rarity: Common
   holenName: Opaque Green
-  holenIcon: {fileID: 21300000, guid: 1b0a53f690685ef498726bbe7ca8f145, type: 3}
+  holenIcon: {fileID: 21300000, guid: 5e51ad7b1e8406c4d9ddbedf375ca931, type: 3}
   holenPrefab: {fileID: 4543069569791729328, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
   maxStack: 1
