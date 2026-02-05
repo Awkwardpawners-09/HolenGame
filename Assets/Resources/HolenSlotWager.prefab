@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1362044630694553475}
   - component: {fileID: 2285472717600120935}
   - component: {fileID: 87015218629746236}
+  - component: {fileID: 710483702280776417}
   m_Layer: 5
   m_Name: HolenSlotWager
   m_TagString: Untagged
@@ -137,8 +138,21 @@ MonoBehaviour:
   iconImage: {fileID: 5096069026557662013}
   nameText: {fileID: 7096621786505425450}
   quantityText: {fileID: 8069829494446534900}
+  itemBorder: {fileID: 0}
   contentPrefab: {fileID: 0}
   inventoryView: {fileID: 0}
+--- !u!114 &710483702280776417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130300564029074341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3915cfd5ccad2b49ad466816b42252c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4721546469252218931
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,8 +552,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

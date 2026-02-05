@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -4402457000066182389}
   - component: {fileID: 477615190711541994}
   - component: {fileID: 4263065401589831733}
+  - component: {fileID: 1288478093937177343}
   m_Layer: 0
   m_Name: White Opaque
   m_TagString: Objective
@@ -337,3 +338,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holenData: {fileID: 11400000, guid: 9caab3fc2eba62946bd515bb19b67cc0, type: 2}
+--- !u!114 &1288478093937177343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93179106ec47f34da826319d2f044bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionLerpSpeed: 0.15
+  rotationLerpSpeed: 0.15
+  minVelocityThreshold: 0.01
+  masterClientAuthority: 1
+  syncCollisionForces: 1
+  minForceMagnitude: 0.1

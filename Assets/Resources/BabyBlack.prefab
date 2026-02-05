@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3587203705956714095}
   - component: {fileID: 6818780654641814561}
   - component: {fileID: 174715349749746958}
+  - component: {fileID: 3490344764777313504}
   m_Layer: 0
   m_Name: BabyBlack
   m_TagString: Objective
@@ -223,3 +224,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holenData: {fileID: 11400000, guid: af4b6ce19fdc71a4c98bb50b24f09950, type: 2}
+--- !u!114 &3490344764777313504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93179106ec47f34da826319d2f044bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionLerpSpeed: 0.15
+  rotationLerpSpeed: 0.15
+  minVelocityThreshold: 0.01
+  masterClientAuthority: 1
+  syncCollisionForces: 1
+  minForceMagnitude: 0.1

@@ -1,4 +1,4 @@
-using Cinemachine;
+﻿using Cinemachine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -20,8 +20,20 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
     [Header("UI")]
     public GameObject loadingUI;
-    public GameObject swipeIndicator; // Optional: Visual feedback during swipe
-    public LineRenderer trajectoryLine; // Optional: Show predicted trajectory
+    public GameObject swipeIndicator;
+    public LineRenderer trajectoryLine;
+
+    [Header("Holen Change UI")]
+    [Tooltip("The button that toggles the inventory panel open/closed")]
+    public Button changeHolenButton;
+    [Tooltip("The GameObject containing HolenChangeInventory's panel — toggled by the button")]
+    public GameObject inventoryPanel;
+    [Tooltip("Text visible to BOTH players showing whose turn it is and what they are doing")]
+    public TMP_Text statusText;
+
+    [Header("Holen Change Settings")]
+    [Tooltip("Cooldown in seconds before another holen can be selected")]
+    public float changeHolenCooldown = 1f;
 
     [Header("Player Info")]
     public bool isPlayer1;
@@ -31,13 +43,14 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     public float maxSwipeDistance = 500f;
     public float minLaunchForce = 5f;
     public float maxLaunchForce = 100f;
-    public float swipeTimeWindow = 1f; // Max time for a valid swipe
-    public string ballLayerName = "HolenBall"; // Layer name for the ball
-    public bool requireTouchOnBall = false; // Set to false for easier swiping
-    public float swipeDeadZone = 20f; // Minimum distance before registering as swipe
+    public float swipeTimeWindow = 1f;
+    public string ballLayerName = "HolenBall";
+    public bool requireTouchOnBall = false;
+    public float swipeDeadZone = 20f;
+
     [Header("Force Calculation")]
-    public float speedMultiplier = 0.05f; // How much swipe speed affects force
-    public bool useSpeedForce = true; // Use speed-based calculation
+    public float speedMultiplier = 0.05f;
+    public bool useSpeedForce = true;
     private int ballLayer;
 
     [Header("Camera Settings")]
@@ -58,9 +71,13 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     private Vector3 swipeWorldStart;
     private Vector3 swipeWorldEnd;
 
+    // --- Holen Change state ---
+    private bool isInventoryOpen = false;
+    private bool isHolenLaunched = false;
+    private bool isOnChangeCooldown = false;
+
     void Start()
     {
-        // Get or create the ball layer
         ballLayer = LayerMask.NameToLayer(ballLayerName);
         if (ballLayer == -1)
         {
@@ -78,6 +95,16 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
         if (trajectoryLine != null)
             trajectoryLine.enabled = false;
+
+        // --- Holen Change init ---
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(false);
+
+        if (changeHolenButton != null)
+            changeHolenButton.onClick.AddListener(OnChangeHolenButtonPressed);
+
+        SetChangeHolenButtonInteractable(false);
+        // ---
 
         SetCameraView(false);
         StartCoroutine(GameStartSequence());
@@ -102,21 +129,166 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         Debug.Log($"Local player assigned as {playerRole}");
 
         loadingUI.SetActive(false);
-        UpdateTurnDisplayText();
 
         if (isPlayer1)
         {
             isTurn = true;
             EnableControls();
+            SetChangeHolenButtonInteractable(true);       // can change holen before launch
             SpawnHolenBall();
-            UpdateTurnDisplayText();
+            UpdateStatusText("idle");                     // synced to both clients
             Debug.Log("Player 1's turn has started.");
+        }
+        else
+        {
+            // Player 2 waits — status text will be set when Player 1's RPC arrives
+            UpdateLocalStatusText("idle", "Player 1");
         }
     }
 
+    // ─────────────────────────────────────────────
+    // HOLEN CHANGE LOGIC
+    // ─────────────────────────────────────────────
+
+    /// <summary>
+    /// Toggles the inventory panel open or closed.
+    /// Only works before the holen is launched.
+    /// </summary>
+    private void OnChangeHolenButtonPressed()
+    {
+        if (isHolenLaunched || !isTurn) return;
+
+        if (isInventoryOpen)
+        {
+            CloseInventory();
+            UpdateStatusText("idle");
+        }
+        else
+        {
+            OpenInventory();
+            UpdateStatusText("changing");
+        }
+    }
+
+    private void OpenInventory()
+    {
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(true);
+
+        isInventoryOpen = true;
+        Debug.Log($"{playerRole} opened the Holen inventory.");
+    }
+
+    private void CloseInventory()
+    {
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(false);
+
+        isInventoryOpen = false;
+        Debug.Log($"{playerRole} closed the Holen inventory.");
+    }
+
+    /// <summary>
+    /// Call this from HolenSlotUI (or wherever a slot tap is handled)
+    /// when the player taps a Holen in the inventory panel.
+    /// It swaps holenBallPrefab and respawns the ball with a cooldown guard.
+    /// </summary>
+    public void OnHolenSelectedFromInventory(GameObject newHolenPrefab)
+    {
+        if (isHolenLaunched || !isTurn || isOnChangeCooldown) return;
+        if (newHolenPrefab == null) return;
+
+        // Start cooldown — blocks further taps for 1 second
+        StartCoroutine(ChangeCooldown());
+
+        // Destroy the current ball (network-safe: only the owner destroys)
+        if (currentHolenBall != null)
+        {
+            PhotonNetwork.Destroy(currentHolenBall);
+            currentHolenBall = null;
+        }
+
+        // Swap the prefab and respawn
+        holenBallPrefab = newHolenPrefab;
+        SpawnHolenBall();
+
+        Debug.Log($"{playerRole} changed Holen to: {newHolenPrefab.name}");
+    }
+
+    private IEnumerator ChangeCooldown()
+    {
+        isOnChangeCooldown = true;
+        yield return new WaitForSeconds(changeHolenCooldown);
+        isOnChangeCooldown = false;
+    }
+
+    /// <summary>
+    /// Enable or disable the change-holen button's interactability.
+    /// </summary>
+    private void SetChangeHolenButtonInteractable(bool value)
+    {
+        if (changeHolenButton != null)
+            changeHolenButton.interactable = value;
+    }
+
+    // ─────────────────────────────────────────────
+    // STATUS TEXT (visible to both players via RPC)
+    // ─────────────────────────────────────────────
+
+    /// <summary>
+    /// Sends the current status to ALL clients so both players see it.
+    /// <param name="state">One of: "idle", "changing", "launched"</param>
+    /// </summary>
+    private void UpdateStatusText(string state)
+    {
+        // Determine which player name to show (the one whose turn it is)
+        string activeName = isTurn ? playerRole : GetOpponentName();
+        photonView.RPC("RPC_UpdateStatusText", RpcTarget.All, state, activeName);
+    }
+
+    /// <summary>
+    /// Updates the local status text without an RPC (used during init before RPC is reliable).
+    /// </summary>
+    private void UpdateLocalStatusText(string state, string activeName)
+    {
+        if (statusText == null) return;
+        statusText.text = BuildStatusString(state, activeName);
+    }
+
+    [PunRPC]
+    private void RPC_UpdateStatusText(string state, string activeName)
+    {
+        UpdateLocalStatusText(state, activeName);
+    }
+
+    private string BuildStatusString(string state, string activeName)
+    {
+        switch (state)
+        {
+            case "idle":
+                return $"{activeName} Turn";
+            case "changing":
+                return $"{activeName} is changing their pamato";
+            case "launched":
+                return $"{activeName} Attacks!";
+            default:
+                return $"{activeName} Turn";
+        }
+    }
+
+    private string GetOpponentName()
+    {
+        return isPlayer1 ? "Player 2" : "Player 1";
+    }
+
+    // ─────────────────────────────────────────────
+    // INPUT
+    // ─────────────────────────────────────────────
+
     void Update()
     {
-        if (isTurn && currentHolenBall != null && !isReady)
+        // Block swipe input while inventory is open or holen already launched
+        if (isTurn && currentHolenBall != null && !isReady && !isInventoryOpen && !isHolenLaunched)
         {
             HandleSwipeInput();
         }
@@ -124,14 +296,12 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
     private void HandleSwipeInput()
     {
-        // Touch input for mobile
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
             if (touch.phase == TouchPhase.Began)
             {
-                // Check if touch started on/near the ball (or allow anywhere if requireTouchOnBall is false)
                 if (!requireTouchOnBall || IsTouchingBall(touch.position))
                 {
                     StartSwipe(touch.position);
@@ -150,7 +320,6 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
                 CancelSwipe();
             }
         }
-        // Mouse input for testing in editor
         else if (Input.GetMouseButtonDown(0))
         {
             if (!requireTouchOnBall || IsTouchingBall(Input.mousePosition))
@@ -175,7 +344,6 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         Ray ray = mainCamera.ScreenPointToRay(screenPosition);
         RaycastHit hit;
 
-        // First try direct raycast to ball
         if (Physics.Raycast(ray, out hit, 100f))
         {
             if (hit.collider.gameObject == currentHolenBall)
@@ -185,11 +353,9 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
             }
         }
 
-        // Alternative: Check screen distance to ball
         Vector3 ballScreenPos = mainCamera.WorldToScreenPoint(currentHolenBall.transform.position);
         float screenDistance = Vector2.Distance(screenPosition, new Vector2(ballScreenPos.x, ballScreenPos.y));
 
-        // Allow touch within 100 pixels of the ball on screen
         if (screenDistance < 100f)
         {
             Debug.Log("Touch detected near ball!");
@@ -205,7 +371,6 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         swipeStartPos = screenPosition;
         swipeStartTime = Time.time;
 
-        // Use ball's position as the starting point for direction calculation
         swipeWorldStart = currentHolenBall.transform.position;
 
         if (swipeIndicator != null)
@@ -218,15 +383,11 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     {
         swipeEndPos = screenPosition;
 
-        // Calculate swipe direction in screen space first
         Vector2 swipeDelta = swipeEndPos - swipeStartPos;
 
-        // Only update if swipe is beyond dead zone
         if (swipeDelta.magnitude < swipeDeadZone)
             return;
 
-        // Convert swipe direction to world direction
-        // Project the swipe onto the ground plane from ball's position
         Ray ray = mainCamera.ScreenPointToRay(screenPosition);
         Plane groundPlane = new Plane(Vector3.up, currentHolenBall.transform.position);
         float distance;
@@ -236,7 +397,6 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
             swipeWorldEnd = ray.GetPoint(distance);
         }
 
-        // Optional: Show trajectory preview
         if (trajectoryLine != null)
         {
             ShowTrajectoryPreview();
@@ -247,10 +407,8 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
     private void ShowTrajectoryPreview()
     {
-        // Calculate direction from ball position to swipe end point
         Vector3 direction = (swipeWorldEnd - swipeWorldStart).normalized;
 
-        // Handle case where direction is invalid
         if (direction.magnitude < 0.1f)
             return;
 
@@ -288,18 +446,14 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
         Debug.Log($"Swipe ended: Distance={swipeDistance}, Time={swipeTime}, MinRequired={minSwipeDistance}");
 
-        // Validate swipe
         if (swipeDistance >= minSwipeDistance && swipeTime <= swipeTimeWindow)
         {
-            // Calculate launch direction in world space
             Vector3 swipeDirection = (swipeWorldEnd - swipeWorldStart);
-            swipeDirection.y = 0; // Keep it on horizontal plane
+            swipeDirection.y = 0;
             swipeDirection.Normalize();
 
-            // Fallback: If world direction calculation failed, use screen direction
             if (swipeDirection.magnitude < 0.1f)
             {
-                // Convert screen swipe to world direction relative to camera
                 Vector3 cameraForward = mainCamera.transform.forward;
                 Vector3 cameraRight = mainCamera.transform.right;
 
@@ -311,12 +465,10 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
                 swipeDirection = (cameraRight * swipeDelta.x + cameraForward * swipeDelta.y).normalized;
             }
 
-            // Calculate force based on BOTH distance and speed
             float force;
 
             if (useSpeedForce)
             {
-                // Speed-based calculation (pixels per second)
                 float swipeSpeed = swipeDistance / swipeTime;
                 force = swipeSpeed * speedMultiplier;
                 force = Mathf.Clamp(force, minLaunchForce, maxLaunchForce);
@@ -325,12 +477,10 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
             }
             else
             {
-                // Distance-based calculation
                 force = CalculateLaunchForce(swipeDistance);
 
-                // Add speed bonus
                 float speed = swipeDistance / swipeTime;
-                float speedBonus = Mathf.Clamp01(speed / 2000f); // Normalize speed
+                float speedBonus = Mathf.Clamp01(speed / 2000f);
                 force = Mathf.Lerp(force, maxLaunchForce, speedBonus);
 
                 Debug.Log($"SHOOTING! Distance={swipeDistance:F2}, Speed={speed:F2}, Force={force:F2}, Direction={swipeDirection}");
@@ -359,10 +509,13 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
     private float CalculateLaunchForce(float swipeDistance)
     {
-        // Normalize swipe distance to force range
         float normalizedDistance = Mathf.InverseLerp(minSwipeDistance, maxSwipeDistance, swipeDistance);
         return Mathf.Lerp(minLaunchForce, maxLaunchForce, normalizedDistance);
     }
+
+    // ─────────────────────────────────────────────
+    // CAMERA
+    // ─────────────────────────────────────────────
 
     private void SetInitialCameraPosition()
     {
@@ -387,11 +540,31 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         }
     }
 
+    private void SetCameraView(bool isActiveTurn)
+    {
+        if (activePlayerCamera != null && birdsEyeCamera != null)
+        {
+            if (isActiveTurn)
+            {
+                activePlayerCamera.Priority = 20;
+                birdsEyeCamera.Priority = 10;
+            }
+            else
+            {
+                activePlayerCamera.Priority = 10;
+                birdsEyeCamera.Priority = 20;
+            }
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // HOLEN BALL SPAWN / SHOOT / TURN
+    // ─────────────────────────────────────────────
+
     private void SpawnHolenBall()
     {
         currentHolenBall = PhotonNetwork.Instantiate(holenBallPrefab.name, ballSpawnPoint.position, Quaternion.identity);
 
-        // Set the ball's layer for detection
         if (ballLayer != -1)
         {
             currentHolenBall.layer = ballLayer;
@@ -407,7 +580,7 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
             AdjustCameraPosition();
         }
 
-        Debug.Log($"{playerRole} spawned Holen Ball");
+        Debug.Log($"{playerRole} spawned Holen Ball: {holenBallPrefab.name}");
     }
 
     public bool IsTurn()
@@ -420,30 +593,67 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         if (isTurn && !isReady && currentHolenBall != null)
         {
             isReady = true;
+            isHolenLaunched = true;
+
+            // Lock out the change-holen button the moment we launch
+            SetChangeHolenButtonInteractable(false);
+            CloseInventory();
 
             photonView.RPC("RPC_ShootHolen", RpcTarget.All, direction, force);
+
+            // Broadcast "Attacks!" status to both players
+            UpdateStatusText("launched");
 
             StartCoroutine(CompleteTurn());
             Debug.Log($"{playerRole} launched Holen Ball with force: {force}, direction: {direction}");
         }
     }
 
+    /// <summary>
+    /// IMPROVED: This ensures the Rigidbody state is properly synced before applying force
+    /// </summary>
     [PunRPC]
     private void RPC_ShootHolen(Vector3 direction, float force)
     {
         if (currentHolenBall != null)
         {
             Rigidbody rb = currentHolenBall.GetComponent<Rigidbody>();
+
+            // CRITICAL FIX: Set kinematic to false on ALL clients before applying force
             rb.isKinematic = false;
 
-            rb.AddForce(direction * force, ForceMode.Impulse);
+            // Give physics engine one frame to register the change
+            StartCoroutine(ApplyForceNextFrame(rb, direction, force));
 
             if (activePlayerCamera != null && isTurn)
             {
-                // Stop following the ball, just look at it
                 activePlayerCamera.Follow = null;
                 activePlayerCamera.LookAt = currentHolenBall.transform;
             }
+        }
+    }
+
+    /// <summary>
+    /// NEW: Apply force on the next frame to ensure Rigidbody is fully initialized
+    /// </summary>
+    private IEnumerator ApplyForceNextFrame(Rigidbody rb, Vector3 direction, float force)
+    {
+        // Wait for physics update
+        yield return new WaitForFixedUpdate();
+
+        if (rb != null)
+        {
+            // Apply force
+            rb.AddForce(direction * force, ForceMode.Impulse);
+
+            // Notify the physics sync component (if present)
+            HolenPhysicsSync physicsSync = rb.GetComponent<HolenPhysicsSync>();
+            if (physicsSync != null)
+            {
+                physicsSync.OnForceApplied();
+            }
+
+            Debug.Log($"[MultiplayerHolenController] Force applied: {force} in direction {direction}");
         }
     }
 
@@ -497,26 +707,20 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         SetCameraView(true);
     }
 
-    private void UpdateTurnDisplayText()
-    {
-        if (turnDisplayText != null)
-        {
-            turnDisplayText.text = isTurn ? "Your Turn - Swipe to Shoot!" : "Opponent's Turn";
-        }
-
-        if (playerLabelText != null)
-        {
-            playerLabelText.text = isPlayer1 ? "Player 1" : "Player 2";
-        }
-    }
-
     private void EndTurn()
     {
         isTurn = false;
         isReady = false;
         isSwiping = false;
+        isHolenLaunched = false;
+        isInventoryOpen = false;
+        isOnChangeCooldown = false;
+
+        // Close & disable inventory for this client
+        CloseInventory();
+        SetChangeHolenButtonInteractable(false);
+
         DisableControls();
-        UpdateTurnDisplayText();
 
         Debug.Log($"{playerRole} ended their turn. Switching to other player.");
 
@@ -529,33 +733,20 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         photonView.RPC("SwitchTurn", RpcTarget.Others);
     }
 
-    private void SetCameraView(bool isActiveTurn)
-    {
-        if (activePlayerCamera != null && birdsEyeCamera != null)
-        {
-            if (isActiveTurn)
-            {
-                activePlayerCamera.Priority = 20;
-                birdsEyeCamera.Priority = 10;
-            }
-            else
-            {
-                activePlayerCamera.Priority = 10;
-                birdsEyeCamera.Priority = 20;
-            }
-        }
-    }
-
     [PunRPC]
     private void SwitchTurn()
     {
         isTurn = true;
         isReady = false;
         isSwiping = false;
+        isHolenLaunched = false;
+        isInventoryOpen = false;
+        isOnChangeCooldown = false;
 
         EnableControls();
-        UpdateTurnDisplayText();
+        SetChangeHolenButtonInteractable(true);         // new turn — can change holen again
         SpawnHolenBall();
+        UpdateStatusText("idle");                       // synced to both clients
 
         Debug.Log($"{playerRole}'s turn started");
     }

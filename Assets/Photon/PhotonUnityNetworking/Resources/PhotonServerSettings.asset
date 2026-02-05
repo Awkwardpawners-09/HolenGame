@@ -54,6 +54,12 @@ MonoBehaviour:
   - RPC_PlayAnimation
   - RPC_RecordKnockout
   - RPC_TriggerGameOver
+  - RPC_UpdateStatusText
+  - RPC_ApplyCollisionForce
+  - RPC_ForcePosition
+  - RPC_RequestLaunch
+  - RPC_WakeUp
+  - RPC_SyncTransform
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

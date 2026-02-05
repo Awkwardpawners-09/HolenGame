@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 217677602768749637}
   - component: {fileID: 1430849556827744439}
   - component: {fileID: 7138798167837092686}
+  - component: {fileID: -5896718291256752212}
   m_Layer: 0
   m_Name: Butterfly
   m_TagString: Objective
@@ -223,3 +224,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holenData: {fileID: 11400000, guid: b94f6180685a43543bbd23fcae86734d, type: 2}
+--- !u!114 &-5896718291256752212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93179106ec47f34da826319d2f044bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionLerpSpeed: 0.15
+  rotationLerpSpeed: 0.15
+  minVelocityThreshold: 0.01
+  masterClientAuthority: 1
+  syncCollisionForces: 1
+  minForceMagnitude: 0.1

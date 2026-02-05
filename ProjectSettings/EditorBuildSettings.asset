@@ -17,10 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Demo Game 3.unity
     guid: 12e9e6ebe0f392f45987e806c77cc616
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Demo Game 4.unity
     guid: 7dcd17f5683dbaf4ab278bb4c0c43458
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Demo Game 5.unity
     guid: 5643c721307152f43a7aa081a154b651
   - enabled: 1

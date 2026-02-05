@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -7257832481487391681}
   - component: {fileID: -8205856443721076150}
   - component: {fileID: -6667783316721425076}
+  - component: {fileID: 2564006040118229491}
   m_Layer: 0
   m_Name: Batik Green
   m_TagString: Objective
@@ -184,7 +185,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -6667783316721425076}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -204,3 +206,21 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &2564006040118229491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543069569791729328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93179106ec47f34da826319d2f044bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionLerpSpeed: 0.15
+  rotationLerpSpeed: 0.15
+  minVelocityThreshold: 0.01
+  masterClientAuthority: 1
+  syncCollisionForces: 1
+  minForceMagnitude: 0.1

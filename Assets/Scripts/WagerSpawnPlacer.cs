@@ -160,6 +160,17 @@ public class WagerSpawnPlacer : MonoBehaviour
             go.transform.SetParent(transform);
             spawnedHolens.Add(go);
 
+            // Initialize HolenIdentifier with data reference
+            var identifier = go.GetComponent<HolenIdentifier>();
+            if (identifier != null)
+            {
+                identifier.SetHolenData(data);
+            }
+            else
+            {
+                Debug.LogWarning($"[WagerSpawnPlacer] {data.holenName} is missing HolenIdentifier component!");
+            }
+
             Debug.Log($"[WagerSpawnPlacer] Spawned {data.holenName} at {slot.name}");
 
             if (destroySlotAfterSpawn)
