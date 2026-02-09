@@ -2,8 +2,8 @@ using UnityEngine;
 using Photon.Pun;
 
 /// <summary>
-/// Improved physics synchronization with automatic ownership transfer on collision.
-/// This ensures physics reactions are always simulated by the correct client.
+/// Improved physics synchronization with automatic ownership transfer and billiards-style physics.
+/// Ensures physics reactions are always simulated by the correct client.
 /// </summary>
 [RequireComponent(typeof(PhotonView))]
 [RequireComponent(typeof(Rigidbody))]
@@ -12,18 +12,18 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
     [Header("Sync Settings")]
     [Tooltip("How smoothly to interpolate to network position")]
     [Range(0.05f, 0.5f)]
-    public float positionLerpFactor = 0.2f;
+    public float positionLerpFactor = 0.3f;
 
     [Tooltip("How smoothly to interpolate rotation")]
     [Range(0.05f, 0.5f)]
-    public float rotationLerpFactor = 0.2f;
+    public float rotationLerpFactor = 0.3f;
 
     [Header("Ownership Transfer")]
     [Tooltip("Automatically transfer ownership when hit by another player's holen")]
     public bool autoTransferOwnership = true;
 
     [Tooltip("Minimum impact force required to transfer ownership")]
-    public float ownershipTransferThreshold = 2f;
+    public float ownershipTransferThreshold = 1f;
 
     [Header("Optimization")]
     [Tooltip("Stop syncing when velocity is below this")]
@@ -52,6 +52,7 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
     private bool isSleeping = false;
     private float lagDistance = 0f;
     private float timeSinceLastImpact = 0f;
+    private bool isInitialized = false;
 
     void Awake()
     {
@@ -67,12 +68,8 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
 
     void Start()
     {
-        // CRITICAL: All holens must be able to simulate physics
-        rb.isKinematic = false;
-
-        // Set reasonable physics properties for better sync
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        InitializePhysics();
+        isInitialized = true;
 
         if (showDebugInfo)
         {
@@ -81,8 +78,39 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
         }
     }
 
+    /// <summary>
+    /// Initialize physics properties for billiards-style gameplay
+    /// </summary>
+    private void InitializePhysics()
+    {
+        // CRITICAL: All holens must be able to simulate physics
+        rb.isKinematic = false;
+
+        // Set reasonable physics properties for better sync
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        // For billiards-style gameplay: freeze Y position and X/Z rotations
+        // This keeps holens sliding on a plane like real marbles
+        rb.constraints = RigidbodyConstraints.FreezePositionY |
+                        RigidbodyConstraints.FreezeRotationX |
+                        RigidbodyConstraints.FreezeRotationZ;
+
+        // Set physics material properties (you should create a PhysicMaterial for this)
+        // Adjust these values for more realistic marble physics
+        rb.drag = 0.5f;  // Simulates friction/air resistance
+        rb.angularDrag = 0.5f;  // Simulates rotational friction
+        rb.mass = 1f;
+
+        // Start at rest
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+
     void FixedUpdate()
     {
+        if (!isInitialized) return;
+
         timeSinceLastImpact += Time.fixedDeltaTime;
 
         if (!pv.IsMine)
@@ -119,14 +147,17 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
             return;
         }
 
-        // Smoothly interpolate position
+        // Smoothly interpolate position (preserve Y position)
+        Vector3 targetPos = networkPosition;
+        targetPos.y = transform.position.y; // Keep Y frozen for billiards gameplay
+
         transform.position = Vector3.Lerp(
             transform.position,
-            networkPosition,
+            targetPos,
             positionLerpFactor
         );
 
-        // Smoothly interpolate rotation
+        // Smoothly interpolate rotation (only Y-axis rotation for billiards)
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             networkRotation,
@@ -203,6 +234,7 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
             {
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
+                isSleeping = true;
             }
         }
     }
@@ -233,19 +265,38 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
                 RequestOwnership();
             }
         }
+
+        if (showDebugInfo)
+        {
+            Debug.Log($"[HolenPhysicsSync] {gameObject.name} collision with {collision.gameObject.name} (impulse: {collision.impulse.magnitude:F2})");
+        }
     }
 
     /// <summary>
     /// Request ownership transfer from Photon
     /// </summary>
-    private void RequestOwnership()
+    public void RequestOwnership()
     {
-        if (!pv.IsMine && pv.Owner != null)
+        if (!pv.IsMine)
         {
-            pv.TransferOwnership(PhotonNetwork.LocalPlayer);
+            pv.RequestOwnership();
 
             if (showDebugInfo)
-                Debug.Log($"[HolenPhysicsSync] {gameObject.name} ownership transferred to {PhotonNetwork.LocalPlayer.NickName}");
+                Debug.Log($"[HolenPhysicsSync] {gameObject.name} ownership requested by {PhotonNetwork.LocalPlayer.NickName}");
+        }
+    }
+
+    /// <summary>
+    /// Transfer ownership immediately (use before launching)
+    /// </summary>
+    public void TransferOwnership(Photon.Realtime.Player newOwner)
+    {
+        if (pv.Owner != newOwner)
+        {
+            pv.TransferOwnership(newOwner);
+
+            if (showDebugInfo)
+                Debug.Log($"[HolenPhysicsSync] {gameObject.name} ownership transferred to {newOwner.NickName}");
         }
     }
 
@@ -263,17 +314,87 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
     }
 
     /// <summary>
-    /// Call this when applying force to ensure proper sync
+    /// Call this BEFORE applying force to ensure proper sync and ownership
     /// </summary>
-    public void OnForceApplied()
+    public bool PrepareForLaunch()
     {
-        WakeUp();
-
         // Ensure we own this object before applying force
         if (!pv.IsMine)
         {
-            Debug.LogWarning($"[HolenPhysicsSync] Tried to apply force to {gameObject.name} but we don't own it!");
+            Debug.LogWarning($"[HolenPhysicsSync] Cannot launch {gameObject.name} - we don't own it! Requesting ownership...");
+            RequestOwnership();
+            return false;
         }
+
+        WakeUp();
+        return true;
+    }
+
+    /// <summary>
+    /// Apply force to the holen (handles ownership and wake-up automatically)
+    /// </summary>
+    public void ApplyForce(Vector3 force, ForceMode forceMode = ForceMode.Impulse)
+    {
+        if (!PrepareForLaunch())
+        {
+            Debug.LogError($"[HolenPhysicsSync] Failed to launch {gameObject.name} - ownership issue");
+            return;
+        }
+
+        rb.AddForce(force, forceMode);
+
+        if (showDebugInfo)
+            Debug.Log($"[HolenPhysicsSync] {gameObject.name} force applied: {force} ({forceMode})");
+    }
+
+    /// <summary>
+    /// Set velocity directly (handles ownership and wake-up automatically)
+    /// </summary>
+    public void SetVelocity(Vector3 velocity)
+    {
+        if (!PrepareForLaunch())
+        {
+            Debug.LogError($"[HolenPhysicsSync] Failed to set velocity on {gameObject.name} - ownership issue");
+            return;
+        }
+
+        rb.velocity = velocity;
+
+        if (showDebugInfo)
+            Debug.Log($"[HolenPhysicsSync] {gameObject.name} velocity set: {velocity}");
+    }
+
+    /// <summary>
+    /// Check if all holens on the field have stopped moving
+    /// </summary>
+    public static bool AreAllHolensStopped()
+    {
+        HolenPhysicsSync[] allHolens = FindObjectsOfType<HolenPhysicsSync>();
+
+        foreach (var holen in allHolens)
+        {
+            if (!holen.isSleeping)
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Get all holens that are currently moving
+    /// </summary>
+    public static HolenPhysicsSync[] GetMovingHolens()
+    {
+        HolenPhysicsSync[] allHolens = FindObjectsOfType<HolenPhysicsSync>();
+        return System.Array.FindAll(allHolens, h => !h.isSleeping);
+    }
+
+    /// <summary>
+    /// Check if this specific holen is stopped
+    /// </summary>
+    public bool IsStopped()
+    {
+        return isSleeping;
     }
 
     /// <summary>
@@ -287,6 +408,14 @@ public class HolenPhysicsSync : MonoBehaviourPun, IPunObservable
             isSleeping = false;
             timeSinceLastImpact = 0f;
         }
+    }
+
+    /// <summary>
+    /// Get the current owner's name (for debugging)
+    /// </summary>
+    public string GetOwnerName()
+    {
+        return pv.Owner != null ? pv.Owner.NickName : "None";
     }
 
 #if UNITY_EDITOR

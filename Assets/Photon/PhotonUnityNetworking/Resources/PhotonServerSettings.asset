@@ -60,6 +60,12 @@ MonoBehaviour:
   - RPC_RequestLaunch
   - RPC_WakeUp
   - RPC_SyncTransform
+  - RPC_GameEnded
+  - RPC_GameOver
+  - RPC_GameStarted
+  - RPC_HolenKnockedOut
+  - RPC_TurnStarted
+  - StartGame
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

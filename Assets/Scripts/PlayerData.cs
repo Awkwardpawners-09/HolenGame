@@ -1,23 +1,36 @@
-using System.IO;
 using UnityEngine;
+using System;
 
-[System.Serializable]
+/// <summary>
+/// Serializable player data class.
+/// Handles saving/loading player information to/from PlayerPrefs.
+/// </summary>
+[Serializable]
 public class PlayerData
 {
-    public int coins = 0; // default coins
-    public string playerName = ""; // player name
+    public string playerName = "PlayerName";
+    public int coins = 0;
+    public int energy = 100; // Default starting energy
 
-    [Header("Holen Loadout")]
-    public string loadoutSlot1 = ""; // HolenID for slot 1
-    public string loadoutSlot2 = ""; // HolenID for slot 2
-    public string loadoutSlot3 = ""; // HolenID for slot 3
+    // PlayerPrefs keys
+    private const string KEY_PLAYER_NAME = "PlayerName";
+    private const string KEY_COINS = "Coins";
+    private const string KEY_ENERGY = "Energy";
 
-    private static string SavePath => Path.Combine(Application.persistentDataPath, "player_data.json");
+    // ===================== COIN METHODS =====================
 
-    // ✅ Spend coins safely
+    public void AddCoins(int amount)
+    {
+        if (amount > 0)
+        {
+            coins += amount;
+            Save();
+        }
+    }
+
     public bool SpendCoins(int amount)
     {
-        if (coins >= amount)
+        if (amount > 0 && coins >= amount)
         {
             coins -= amount;
             Save();
@@ -26,69 +39,62 @@ public class PlayerData
         return false;
     }
 
-    // ✅ Add coins (e.g., rewards)
-    public void AddCoins(int amount)
+    // ===================== ENERGY METHODS =====================
+
+    public void AddEnergy(int amount)
     {
-        coins += amount;
-        Save();
+        if (amount > 0)
+        {
+            energy += amount;
+            Save();
+        }
     }
 
-    // ✅ Set player name
-    public void SetPlayerName(string name)
+    public bool SpendEnergy(int amount)
     {
-        playerName = name;
-        Save();
+        if (amount > 0 && energy >= amount)
+        {
+            energy -= amount;
+            Save();
+            return true;
+        }
+        return false;
     }
 
-    // ✅ Save loadout (3 Holen IDs)
-    public void SaveLoadout(string slot1ID, string slot2ID, string slot3ID)
-    {
-        loadoutSlot1 = slot1ID ?? "";
-        loadoutSlot2 = slot2ID ?? "";
-        loadoutSlot3 = slot3ID ?? "";
-        Save();
-        Debug.Log($"✅ Loadout saved: [{loadoutSlot1}, {loadoutSlot2}, {loadoutSlot3}]");
-    }
+    // ===================== SAVE/LOAD METHODS =====================
 
-    // ✅ Check if player has a saved loadout
-    public bool HasSavedLoadout()
-    {
-        return !string.IsNullOrEmpty(loadoutSlot1) ||
-               !string.IsNullOrEmpty(loadoutSlot2) ||
-               !string.IsNullOrEmpty(loadoutSlot3);
-    }
-
-    // ✅ Get loadout as array of IDs
-    public string[] GetLoadout()
-    {
-        return new string[] { loadoutSlot1, loadoutSlot2, loadoutSlot3 };
-    }
-
-    // ✅ Save to file
+    /// <summary>
+    /// Save all player data to PlayerPrefs
+    /// </summary>
     public void Save()
     {
-        string json = JsonUtility.ToJson(this, true);
-        File.WriteAllText(SavePath, json);
+        PlayerPrefs.SetString(KEY_PLAYER_NAME, playerName);
+        PlayerPrefs.SetInt(KEY_COINS, coins);
+        PlayerPrefs.SetInt(KEY_ENERGY, energy);
+        PlayerPrefs.Save();
     }
 
-    // ✅ Load from file
+    /// <summary>
+    /// Load player data from PlayerPrefs
+    /// </summary>
     public static PlayerData Load()
     {
-        if (File.Exists(SavePath))
-        {
-            string json = File.ReadAllText(SavePath);
-            return JsonUtility.FromJson<PlayerData>(json);
-        }
-        return new PlayerData(); // default values
+        PlayerData data = new PlayerData();
+        data.playerName = PlayerPrefs.GetString(KEY_PLAYER_NAME, "");
+        data.coins = PlayerPrefs.GetInt(KEY_COINS, 0);
+        data.energy = PlayerPrefs.GetInt(KEY_ENERGY, 100); // Default to 100 if not set
+        return data;
     }
 
-    public void ResetData()
+    /// <summary>
+    /// Delete all saved player data (for testing or reset)
+    /// </summary>
+    public static void DeleteAll()
     {
-        coins = 9999;
-        playerName = "";
-        loadoutSlot1 = "";
-        loadoutSlot2 = "";
-        loadoutSlot3 = "";
-        Save();
+        PlayerPrefs.DeleteKey(KEY_PLAYER_NAME);
+        PlayerPrefs.DeleteKey(KEY_COINS);
+        PlayerPrefs.DeleteKey(KEY_ENERGY);
+        PlayerPrefs.Save();
+        Debug.Log("[PlayerData] All player data deleted");
     }
 }

@@ -5,6 +5,7 @@ using TMPro;
 /// <summary>
 /// Handles the first-time player name setup UI.
 /// Shows only once on first launch, then stays disabled forever.
+/// Now fully integrated with PlayerDataManager.
 /// </summary>
 public class PlayerNameSetup : MonoBehaviour
 {
@@ -34,33 +35,29 @@ public class PlayerNameSetup : MonoBehaviour
 
     private void Start()
     {
-        // Start checking for inventory manager
-        CheckInventoryManager();
+        // Start checking for PlayerDataManager
+        CheckPlayerDataManager();
     }
 
-    private void CheckInventoryManager()
+    private void CheckPlayerDataManager()
     {
         if (isChecking) return;
         isChecking = true;
 
-        // Try to find inventory manager
-        var inventoryManager = HolenInventoryManager.Instance;
-
-        if (inventoryManager == null)
+        // Try to find PlayerDataManager (required)
+        if (PlayerDataManager.Instance == null)
         {
-            Debug.LogWarning("[PlayerNameSetup] HolenInventoryManager not ready yet, retrying...");
+            Debug.LogWarning("[PlayerNameSetup] PlayerDataManager not ready yet, retrying...");
             // Retry after a short delay
             Invoke(nameof(RetryCheck), 0.1f);
             return;
         }
 
-        // Check player name directly from saved data (more reliable)
-        PlayerData data = PlayerData.Load();
-
-        if (!string.IsNullOrEmpty(data.playerName))
+        // Check if player already has a name
+        if (PlayerDataManager.Instance.HasPlayerName())
         {
             // Player already has a name - hide this UI permanently
-            Debug.Log($"[PlayerNameSetup] Player already has name: {data.playerName}");
+            Debug.Log($"[PlayerNameSetup] Player already has name: {PlayerDataManager.Instance.GetPlayerName()}");
             gameObject.SetActive(false);
             return;
         }
@@ -73,7 +70,7 @@ public class PlayerNameSetup : MonoBehaviour
     private void RetryCheck()
     {
         isChecking = false;
-        CheckInventoryManager();
+        CheckPlayerDataManager();
     }
 
     private void SetupUI()
@@ -213,12 +210,18 @@ public class PlayerNameSetup : MonoBehaviour
     {
         Debug.Log($"[PlayerNameSetup] Saving player name: {playerName}");
 
-        // Save directly to PlayerData first
-        PlayerData data = PlayerData.Load();
-        data.playerName = playerName;
-        data.Save();
+        // ✅ Use PlayerDataManager to save the name (this is the correct way!)
+        if (PlayerDataManager.Instance != null)
+        {
+            PlayerDataManager.Instance.SetPlayerName(playerName);
+        }
+        else
+        {
+            Debug.LogError("[PlayerNameSetup] PlayerDataManager not found! Cannot save name.");
+            return;
+        }
 
-        // Also update inventory manager if available
+        // Also update HolenInventoryManager if it exists (optional compatibility)
         var inventoryManager = HolenInventoryManager.Instance;
         if (inventoryManager != null)
         {
@@ -260,22 +263,13 @@ public class PlayerNameSetup : MonoBehaviour
     /// </summary>
     public void ResetPlayerNameForTesting()
     {
-        // Clear from PlayerData
-        PlayerData data = PlayerData.Load();
-        data.playerName = "";
-        data.Save();
-
-        // Also clear from inventory manager
-        var inventoryManager = HolenInventoryManager.Instance;
-        if (inventoryManager != null)
+        if (PlayerDataManager.Instance != null)
         {
-            // Note: We can't set empty string, so we need to modify HolenInventoryManager
-            // to allow this, or just delete the save file
+            PlayerDataManager.Instance.SetPlayerName("");
+            Debug.Log("🧪 [TESTING] Player name reset via PlayerDataManager - setup UI will show on next launch");
         }
 
         // Show the setup UI again
         SetupUI();
-
-        Debug.Log("🧪 [TESTING] Player name reset - setup UI will show on next launch");
     }
 }

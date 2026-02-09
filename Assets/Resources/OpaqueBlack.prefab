@@ -18,8 +18,7 @@ GameObject:
   - component: {fileID: -1128822790662917089}
   - component: {fileID: -6028854773190937066}
   - component: {fileID: -2569595623188439332}
-  - component: {fileID: -8932474927123620859}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: OpaqueBlack
   m_TagString: Objective
   m_Icon: {fileID: 0}
@@ -189,6 +188,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: -6028854773190937066}
   - {fileID: -2569595623188439332}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -224,21 +224,3 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &-8932474927123620859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4543069569791729328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d93179106ec47f34da826319d2f044bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  positionLerpSpeed: 0.15
-  rotationLerpSpeed: 0.15
-  minVelocityThreshold: 0.01
-  masterClientAuthority: 1
-  syncCollisionForces: 1
-  minForceMagnitude: 0.1

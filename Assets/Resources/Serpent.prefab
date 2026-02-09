@@ -18,8 +18,7 @@ GameObject:
   - component: {fileID: -1739796419278401540}
   - component: {fileID: 7561914380358336415}
   - component: {fileID: -4485338741877576292}
-  - component: {fileID: 4790927295791387357}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Serpent
   m_TagString: Objective
   m_Icon: {fileID: 0}
@@ -176,6 +175,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: -1739796419278401540}
   - {fileID: 7561914380358336415}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -224,21 +224,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holenData: {fileID: 11400000, guid: c6f0a23a051a5bb44a1f3395e8b497d0, type: 2}
---- !u!114 &4790927295791387357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4543069569791729328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d93179106ec47f34da826319d2f044bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  positionLerpSpeed: 0.15
-  rotationLerpSpeed: 0.15
-  minVelocityThreshold: 0.01
-  masterClientAuthority: 1
-  syncCollisionForces: 1
-  minForceMagnitude: 0.1
