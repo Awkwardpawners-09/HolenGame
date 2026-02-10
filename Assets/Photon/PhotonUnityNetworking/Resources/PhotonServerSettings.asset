@@ -66,6 +66,9 @@ MonoBehaviour:
   - RPC_HolenKnockedOut
   - RPC_TurnStarted
   - StartGame
+  - RPC_RequestForceApplication
+  - RPC_SwitchTurn
+  - RPC_RequestShootHolen
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

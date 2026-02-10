@@ -6791,7 +6791,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 160041225}
   m_OnClick:
     m_PersistentCalls:
@@ -6911,7 +6911,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 167433117}
   m_OnClick:
     m_PersistentCalls:
@@ -7318,6 +7318,7 @@ GameObject:
   - component: {fileID: 188027051}
   - component: {fileID: 188027050}
   - component: {fileID: 188027052}
+  - component: {fileID: 188027053}
   m_Layer: 0
   m_Name: Value
   m_TagString: Untagged
@@ -7459,6 +7460,19 @@ MonoBehaviour:
   prefix: 
   suffix: 
   useThousandsSeparator: 0
+--- !u!114 &188027053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188027048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121468e860c44f449a24def662def8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataType: 1
 --- !u!1 &194021291
 GameObject:
   m_ObjectHideFlags: 0
@@ -7830,7 +7844,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 212245772}
   m_OnClick:
     m_PersistentCalls:
@@ -8950,7 +8964,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 261331614}
   m_OnClick:
     m_PersistentCalls:
@@ -10294,7 +10308,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 341411145}
   m_OnClick:
     m_PersistentCalls:
@@ -19357,6 +19371,7 @@ GameObject:
   - component: {fileID: 608941521}
   - component: {fileID: 608941520}
   - component: {fileID: 608941519}
+  - component: {fileID: 608941522}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -19500,6 +19515,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608941517}
   m_CullTransparentMesh: 1
+--- !u!114 &608941522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608941517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121468e860c44f449a24def662def8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataType: 0
 --- !u!1 &611185915
 GameObject:
   m_ObjectHideFlags: 0
@@ -23483,7 +23511,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2079675825}
+      - m_Target: {fileID: 1692068537}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -27374,6 +27402,7 @@ GameObject:
   - component: {fileID: 1042840022}
   - component: {fileID: 1042840024}
   - component: {fileID: 1042840023}
+  - component: {fileID: 1042840025}
   m_Layer: 0
   m_Name: Value
   m_TagString: Untagged
@@ -27497,6 +27526,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1042840021}
   m_CullTransparentMesh: 1
+--- !u!114 &1042840025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042840021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121468e860c44f449a24def662def8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataType: 2
 --- !u!1 &1049112891
 GameObject:
   m_ObjectHideFlags: 0
@@ -31458,7 +31500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d96074eb3f0104c9e5ae932b33bc25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Arcade: {fileID: 2079675825}
+  Arcade: {fileID: 1692068537}
 --- !u!1 &1244321772
 GameObject:
   m_ObjectHideFlags: 0
@@ -31536,7 +31578,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1244321775}
   m_OnClick:
     m_PersistentCalls:
@@ -31920,6 +31962,7 @@ GameObject:
   - component: {fileID: 1258216201}
   - component: {fileID: 1258216203}
   - component: {fileID: 1258216202}
+  - component: {fileID: 1258216204}
   m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
@@ -32045,6 +32088,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258216200}
   m_CullTransparentMesh: 1
+--- !u!114 &1258216204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258216200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121468e860c44f449a24def662def8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataType: 0
 --- !u!1 &1259477286
 GameObject:
   m_ObjectHideFlags: 0
@@ -35301,7 +35357,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1397211403}
   m_OnClick:
     m_PersistentCalls:
@@ -36214,7 +36270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -37347,7 +37403,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1512757103}
   m_OnClick:
     m_PersistentCalls:
@@ -44483,6 +44539,7 @@ GameObject:
   - component: {fileID: 1852603776}
   - component: {fileID: 1852603775}
   - component: {fileID: 1852603774}
+  - component: {fileID: 1852603777}
   m_Layer: 5
   m_Name: Stage 1
   m_TagString: Untagged
@@ -44552,7 +44609,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1852603775}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1852603775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44591,6 +44660,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852603772}
   m_CullTransparentMesh: 1
+--- !u!114 &1852603777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852603772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aee2c7e66137cf40bceee0a2cb001f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelNumber: 1
+  sceneName: Demo Game 1
+  lockedIcon: {fileID: 0}
+  unlockedIcon: {fileID: 0}
+  lockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  unlockedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1858726535
 GameObject:
   m_ObjectHideFlags: 0
@@ -44837,6 +44924,7 @@ MonoBehaviour:
     playerName: 
     coins: 500
     energy: 100
+    highestLevelUnlocked: 1
   playerNameUIElements:
   - {fileID: 1258216202}
   coinUIElements:
@@ -46816,10 +46904,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionObject: {fileID: 1322775149}
   transitionDuration: 3
-  stage1SceneName: Demo Game 1
-  stage2SceneName: Demo Game 1
-  stage3SceneName: Demo Game 1
+  stageScenes:
+  - KalyeStage1
+  - KalyeStage2
+  - Demo Game 1
+  - BanaueStage2
+  - IntramurosStage1
+  - IntramurosStage2
   mainMenuSceneName: Demo Menu
+  disconnectTimeout: 5
 --- !u!1 &1943374237
 GameObject:
   m_ObjectHideFlags: 0
@@ -48695,7 +48788,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2065343304}
   m_OnClick:
     m_PersistentCalls:

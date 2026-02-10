@@ -89,7 +89,7 @@ public class SceneManagerScript : MonoBehaviour
     // You can call this to go back to the Main Menu or load any other scene
     public void GoToMainMenuScene()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Demo Menu");
     }
 
     // Optionally, use this method to trigger the "finding opponent" process

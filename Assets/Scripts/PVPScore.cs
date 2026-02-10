@@ -50,6 +50,9 @@ public class PVPScore : MonoBehaviourPunCallbacks
     private MultiplayerHolenController holenController;
     private List<GameObject> holensToDestroy = new List<GameObject>();
 
+    // Track which holens have already been processed to avoid duplicates
+    private HashSet<int> processedHolenViewIDs = new HashSet<int>();
+
     void Awake()
     {
         // Singleton pattern with DontDestroyOnLoad
@@ -79,6 +82,13 @@ public class PVPScore : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        // Only Master Client checks for game over condition
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            UpdateTurnDisplay();
+            return;
+        }
+
         GameObject[] allHolens = GameObject.FindGameObjectsWithTag("Objective");
         int holensInside = 0;
 
@@ -216,6 +226,9 @@ public class PVPScore : MonoBehaviourPunCallbacks
 
     void OnTriggerExit(Collider other)
     {
+        // CRITICAL: Only Master Client detects knockouts to prevent duplicates
+        if (!PhotonNetwork.IsMasterClient) return;
+
         if (other.CompareTag("Objective"))
         {
             // Don't count the current player's own ball
@@ -227,12 +240,26 @@ public class PVPScore : MonoBehaviourPunCallbacks
                 }
             }
 
+            // Check if we've already processed this holen
+            PhotonView pv = other.GetComponent<PhotonView>();
+            if (pv != null && processedHolenViewIDs.Contains(pv.ViewID))
+            {
+                Debug.Log($"[PVPScore] Holen {other.gameObject.name} already processed, skipping");
+                return;
+            }
+
             // Try to get HolenData from the knocked out holen
             HolenData holenData = GetHolenDataFromGameObject(other.gameObject);
 
             if (holenData != null)
             {
                 RecordKnockedOutHolen(holenData);
+
+                // Mark as processed
+                if (pv != null)
+                {
+                    processedHolenViewIDs.Add(pv.ViewID);
+                }
             }
             else
             {
@@ -303,30 +330,11 @@ public class PVPScore : MonoBehaviourPunCallbacks
 
         int currentPlayer = holenController.isPlayer1 ? 1 : 2;
 
+        // Only record during the current player's turn
         if (holenController.IsTurn())
         {
-            KnockedOutHolen knockedOut = new KnockedOutHolen(
-                holenData.holenID,
-                holenData.holenName,
-                currentPlayer
-            );
-
-            if (currentPlayer == 1)
-            {
-                player1KnockedOut.Add(knockedOut);
-                Debug.Log($"Player 1 knocked out: {holenData.holenName} (ID: {holenData.holenID})");
-
-                // Sync to other player
-                photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 1);
-            }
-            else
-            {
-                player2KnockedOut.Add(knockedOut);
-                Debug.Log($"Player 2 knocked out: {holenData.holenName} (ID: {holenData.holenID})");
-
-                // Sync to other player
-                photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 2);
-            }
+            // Master Client records and broadcasts to all
+            photonView.RPC("RPC_RecordKnockout", RpcTarget.All, holenData.holenID, holenData.holenName, currentPlayer);
         }
     }
 
@@ -338,18 +346,22 @@ public class PVPScore : MonoBehaviourPunCallbacks
         if (playerNumber == 1)
         {
             player1KnockedOut.Add(knockedOut);
+            Debug.Log($"[PVPScore] Player 1 knocked out: {holenName} (ID: {holenID})");
         }
         else if (playerNumber == 2)
         {
             player2KnockedOut.Add(knockedOut);
+            Debug.Log($"[PVPScore] Player 2 knocked out: {holenName} (ID: {holenID})");
         }
-
-        Debug.Log($"Received sync: Player {playerNumber} knocked out {holenName}");
     }
 
     public void OnTurnEnd()
     {
-        StartCoroutine(DestroyQueuedHolens());
+        // Only Master Client destroys objects
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(DestroyQueuedHolens());
+        }
     }
 
     private IEnumerator DestroyQueuedHolens()
@@ -358,11 +370,12 @@ public class PVPScore : MonoBehaviourPunCallbacks
 
         foreach (GameObject holen in holensToDestroy)
         {
-            if (holen != null && PhotonNetwork.IsMasterClient)
+            if (holen != null)
             {
                 PhotonView pv = holen.GetComponent<PhotonView>();
                 if (pv != null)
                 {
+                    Debug.Log($"[PVPScore] Master Client destroying holen: {holen.name}");
                     PhotonNetwork.Destroy(holen);
                 }
                 else
@@ -433,6 +446,7 @@ public class PVPScore : MonoBehaviourPunCallbacks
         player2KnockedOut.Clear();
         gameOverTriggered = false;
         noHolensTimer = 0f;
+        processedHolenViewIDs.Clear();
         Debug.Log("[PVPScore] Data cleared");
     }
 

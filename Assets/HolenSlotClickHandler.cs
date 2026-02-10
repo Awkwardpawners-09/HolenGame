@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 /// <summary>
-/// UPDATED: Attach this to each HolenSlotUI prefab in the inventory panel.
+/// UPDATED FOR MASTER CLIENT AUTHORITY:
+/// Attach this to each HolenSlotUI prefab in the inventory panel.
 /// Handles player taps/clicks on inventory slots and forwards the selection
 /// to MultiplayerHolenController for spawning the selected holen.
+/// 
+/// NEW: Works with Master Client authority - selection works regardless of which client is Master.
 /// 
 /// Setup:
 /// 1. Add a Button component to the slot's root GameObject
@@ -24,6 +28,9 @@ public class HolenSlotClickHandler : MonoBehaviour
     [Tooltip("Color for selection highlight")]
     public Color highlightColor = new Color(1f, 1f, 0f, 0.5f);
 
+    [Tooltip("Color when slot is disabled (not your turn)")]
+    public Color disabledColor = new Color(0.5f, 0.5f, 0.5f, 0.3f);
+
     [Header("Holen Data")]
     [Tooltip("The networked prefab that will be spawned when this slot is tapped. Must be in Resources folder.")]
     public GameObject holenPrefab;
@@ -31,16 +38,29 @@ public class HolenSlotClickHandler : MonoBehaviour
     [Tooltip("Reference to HolenData for this slot (optional, for additional info)")]
     public HolenData holenData;
 
+    [Header("Turn-Based Interaction")]
+    [Tooltip("If true, slots are only interactable during the player's turn")]
+    public bool requirePlayerTurn = true;
+
+    [Tooltip("Update interval for checking turn state (seconds)")]
+    public float turnCheckInterval = 0.5f;
+
     [Header("Debug")]
     public bool showDebugInfo = false;
 
     private MultiplayerHolenController controller;
     private bool isSelected = false;
+    private float lastTurnCheck = 0f;
 
     private void Start()
     {
         // Find the controller in the scene
         controller = FindObjectOfType<MultiplayerHolenController>();
+
+        if (controller == null)
+        {
+            Debug.LogWarning("[HolenSlotClickHandler] MultiplayerHolenController not found in scene at Start. Will search again on interaction.");
+        }
 
         // Setup button listener
         if (slotButton != null)
@@ -56,6 +76,51 @@ public class HolenSlotClickHandler : MonoBehaviour
         if (selectionHighlight != null)
         {
             selectionHighlight.enabled = false;
+        }
+
+        // Initial interactability update
+        UpdateInteractability();
+    }
+
+    private void Update()
+    {
+        // Periodically check if it's the player's turn and update button interactability
+        if (requirePlayerTurn && Time.time - lastTurnCheck > turnCheckInterval)
+        {
+            UpdateInteractability();
+            lastTurnCheck = Time.time;
+        }
+    }
+
+    /// <summary>
+    /// Updates the button's interactability based on whether it's the player's turn
+    /// </summary>
+    private void UpdateInteractability()
+    {
+        if (!requirePlayerTurn)
+        {
+            // Always interactable if turn checking is disabled
+            SetInteractable(true);
+            return;
+        }
+
+        // Find controller if not already cached
+        if (controller == null)
+        {
+            controller = FindObjectOfType<MultiplayerHolenController>();
+        }
+
+        // Check if it's the player's turn
+        bool isPlayerTurn = controller != null && controller.IsTurn();
+
+        // Update button interactability
+        SetInteractable(isPlayerTurn);
+
+        // Visual feedback for disabled state
+        if (!isPlayerTurn && selectionHighlight != null && !isSelected)
+        {
+            // Show a subtle indicator that it's not your turn (optional)
+            // You can customize this behavior
         }
     }
 
@@ -105,11 +170,14 @@ public class HolenSlotClickHandler : MonoBehaviour
             }
         }
 
-        // Check if it's the player's turn
-        if (!controller.IsTurn())
+        // Check if it's the player's turn (if required)
+        if (requirePlayerTurn && !controller.IsTurn())
         {
             if (showDebugInfo)
                 Debug.Log("[HolenSlotClickHandler] Not your turn - cannot select holen");
+
+            // Optional: Show feedback to user
+            ShowNotYourTurnFeedback();
             return;
         }
 
@@ -117,6 +185,13 @@ public class HolenSlotClickHandler : MonoBehaviour
         if (holenPrefab == null)
         {
             Debug.LogWarning("[HolenSlotClickHandler] No holenPrefab assigned to this slot!");
+            return;
+        }
+
+        // IMPORTANT: Verify the prefab exists in Resources folder for PhotonNetwork.Instantiate
+        if (!VerifyPrefabInResources())
+        {
+            Debug.LogError($"[HolenSlotClickHandler] Prefab '{holenPrefab.name}' must be in a Resources folder for multiplayer spawning!");
             return;
         }
 
@@ -132,10 +207,46 @@ public class HolenSlotClickHandler : MonoBehaviour
         }
 
         // Notify controller of selection
+        // The controller will handle spawning with proper Master Client authority
         controller.OnHolenSelectedFromInventory(holenPrefab);
 
         if (showDebugInfo)
             Debug.Log($"[HolenSlotClickHandler] Selected: {holenPrefab.name}");
+    }
+
+    /// <summary>
+    /// Verifies that the holen prefab is in a Resources folder (required for PhotonNetwork.Instantiate)
+    /// </summary>
+    private bool VerifyPrefabInResources()
+    {
+        if (holenPrefab == null) return false;
+
+        // Try to load the prefab from Resources
+        GameObject testLoad = Resources.Load<GameObject>(holenPrefab.name);
+
+        if (testLoad == null)
+        {
+            Debug.LogWarning($"[HolenSlotClickHandler] Prefab '{holenPrefab.name}' not found in Resources folder! " +
+                           $"For multiplayer, all spawnable prefabs must be in a Resources folder.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Show visual/audio feedback when player tries to select during opponent's turn
+    /// </summary>
+    private void ShowNotYourTurnFeedback()
+    {
+        // Optional: Add visual feedback here
+        // Examples:
+        // - Flash the slot briefly
+        // - Show a "Not your turn" message
+        // - Play a sound effect
+
+        if (showDebugInfo)
+            Debug.Log("[HolenSlotClickHandler] Player attempted to select during opponent's turn");
     }
 
     /// <summary>
@@ -185,6 +296,12 @@ public class HolenSlotClickHandler : MonoBehaviour
         {
             slotButton.interactable = interactable;
         }
+
+        // Optional: Visual feedback for disabled state
+        if (!interactable && selectionHighlight != null && !isSelected)
+        {
+            // Could show a dimmed overlay or change color
+        }
     }
 
     /// <summary>
@@ -201,6 +318,15 @@ public class HolenSlotClickHandler : MonoBehaviour
     public HolenData GetHolenData()
     {
         return holenData;
+    }
+
+    /// <summary>
+    /// Force refresh the controller reference (useful after scene changes)
+    /// </summary>
+    public void RefreshController()
+    {
+        controller = FindObjectOfType<MultiplayerHolenController>();
+        UpdateInteractability();
     }
 
     private void OnDestroy()

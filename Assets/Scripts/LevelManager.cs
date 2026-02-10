@@ -6,17 +6,6 @@ using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
-    [Header("Objective Detection")]
-    [Tooltip("Enable objective mode to detect holens in play field")]
-    public bool enableObjectiveMode = true;
-
-    [Tooltip("Time to wait when no objectives in trigger before game over (seconds)")]
-    public float waitTime = 5f;
-
-    private HashSet<GameObject> objectivesInTrigger = new HashSet<GameObject>();
-    private float noObjectiveTimer = 0f;
-    private bool gameOverTriggered = false;
-
     [Header("Lives System")]
     [Tooltip("Maximum number of lives")]
     public int maxLives = 3;
@@ -24,20 +13,48 @@ public class LevelManager : MonoBehaviour
     [Tooltip("TextMeshPro for displaying current lives")]
     public TextMeshProUGUI livesText;
 
+    [Tooltip("Sound effect to play when a life is lost")]
+    public AudioClip lifeLostSound;
+
+    [Tooltip("AudioSource to play sounds (optional - will use/create one if null)")]
+    public AudioSource audioSource;
+
     private int currentLives;
     private float lifeLossTimer = 0f;
     private bool isLifeReductionDelayed = false;
 
-    [Header("Game Over")]
-    [Tooltip("GameObject to enable when game over (no lives or no holens)")]
-    public GameObject gameOverObject;
+    [Header("Objective Settings")]
+    [Tooltip("Check objectives you want to monitor")]
+    public bool checkNoHolensInField = true;
 
-    [Tooltip("Time to wait before loading game over scene (seconds)")]
+    [Tooltip("Time to wait when no holens in play field before triggering (seconds)")]
+    public float waitTime = 5f;
+
+    private HashSet<GameObject> holensInTrigger = new HashSet<GameObject>();
+    private float noHolenTimer = 0f;
+    private bool levelCompleted = false;
+    private bool gameOverTriggered = false;
+
+    [Header("Level Complete (All Holens Cleared)")]
+    [Tooltip("GameObjects to enable when all holens are cleared")]
+    public GameObject[] levelCompleteObjects;
+
+    [Tooltip("Delay before enabling level complete objects (seconds)")]
+    public float levelCompleteDelay = 3f;
+
+    [Header("Game Over (No Lives Remaining)")]
+    [Tooltip("GameObjects to enable when player loses all lives")]
+    public GameObject[] gameOverObjects;
+
+    [Tooltip("Delay before enabling game over objects (seconds)")]
     public float gameOverDelay = 3f;
 
-    [Header("Scene Management")]
-    [Tooltip("Scene to load after game over or when lives reach 0")]
-    public string gameOverSceneName = "GameOver";
+    [Header("Scene Management (Optional)")]
+    [Tooltip("Load a scene after level complete? Leave empty to disable")]
+    public string levelCompleteSceneName = "";
+
+    [Tooltip("Load a scene after game over? Leave empty to disable")]
+    public string gameOverSceneName = "";
 
     [Tooltip("Enable transition effect before scene change")]
     public GameObject transitionObject;
@@ -50,8 +67,34 @@ public class LevelManager : MonoBehaviour
         currentLives = maxLives;
         UpdateLivesText();
 
-        if (gameOverObject != null)
-            gameOverObject.SetActive(false);
+        // Setup audio source
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
+        // Disable all completion/game over objects at start
+        if (levelCompleteObjects != null)
+        {
+            foreach (GameObject obj in levelCompleteObjects)
+            {
+                if (obj != null)
+                    obj.SetActive(false);
+            }
+        }
+
+        if (gameOverObjects != null)
+        {
+            foreach (GameObject obj in gameOverObjects)
+            {
+                if (obj != null)
+                    obj.SetActive(false);
+            }
+        }
 
         if (transitionObject != null)
             transitionObject.SetActive(false);
@@ -59,8 +102,8 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        // If game over already triggered, don't check anything
-        if (gameOverTriggered)
+        // If game over or level complete already triggered, don't check anything
+        if (gameOverTriggered || levelCompleted)
             return;
 
         // Check if player has lost all lives
@@ -70,22 +113,22 @@ public class LevelManager : MonoBehaviour
             return;
         }
 
-        // Check if no "Objective" tagged objects are in the trigger area
-        if (enableObjectiveMode && objectivesInTrigger.Count == 0)
+        // Check "No holens in field" objective
+        if (checkNoHolensInField && holensInTrigger.Count == 0)
         {
-            noObjectiveTimer += Time.deltaTime;
+            noHolenTimer += Time.deltaTime;
 
-            // If no objectives for specified wait time, trigger game over
-            if (noObjectiveTimer >= waitTime)
+            // If no holens for specified wait time, level complete!
+            if (noHolenTimer >= waitTime)
             {
-                Debug.Log("[LevelManager] No holens in play field for " + waitTime + " seconds. Game Over!");
-                TriggerGameOver();
+                Debug.Log("[LevelManager] No holens in play field for " + waitTime + " seconds. Level Complete!");
+                TriggerLevelComplete();
             }
         }
         else
         {
-            // Reset the timer if objectives are inside the trigger area
-            noObjectiveTimer = 0f;
+            // Reset the timer if holens are inside the trigger area
+            noHolenTimer = 0f;
         }
 
         // Handle delayed life reduction
@@ -111,32 +154,39 @@ public class LevelManager : MonoBehaviour
             Debug.Log("[LevelManager] Ball entered trigger. Life will be reduced in 6.5 seconds.");
         }
 
-        // Track objectives in trigger area
-        if (enableObjectiveMode && other.CompareTag("Objective"))
+        // Track holens (objectives) in trigger area
+        if (checkNoHolensInField && other.CompareTag("Objective"))
         {
-            objectivesInTrigger.Add(other.gameObject);
-            Debug.Log("[LevelManager] Objective entered: " + other.name + ". Total in area: " + objectivesInTrigger.Count);
+            holensInTrigger.Add(other.gameObject);
+            Debug.Log("[LevelManager] Holen entered: " + other.name + ". Total in area: " + holensInTrigger.Count);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        // Remove objectives that exit the trigger area
-        if (enableObjectiveMode && other.CompareTag("Objective"))
+        // Remove holens that exit the trigger area
+        if (checkNoHolensInField && other.CompareTag("Objective"))
         {
-            objectivesInTrigger.Remove(other.gameObject);
-            Debug.Log("[LevelManager] Objective exited: " + other.name + ". Total in area: " + objectivesInTrigger.Count);
+            holensInTrigger.Remove(other.gameObject);
+            Debug.Log("[LevelManager] Holen exited: " + other.name + ". Total in area: " + holensInTrigger.Count);
         }
     }
 
     /// <summary>
-    /// Reduces player lives by 1
+    /// Reduces player lives by 1 and plays sound effect
     /// </summary>
     private void ReduceLife()
     {
         currentLives--;
         UpdateLivesText();
         Debug.Log("[LevelManager] Life reduced. Current lives: " + currentLives);
+
+        // Play life lost sound effect
+        if (lifeLostSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(lifeLostSound);
+            Debug.Log("[LevelManager] Playing life lost sound effect");
+        }
 
         if (currentLives <= 0)
         {
@@ -156,47 +206,121 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Triggers the game over sequence
+    /// Triggers the level complete sequence (all holens cleared)
+    /// </summary>
+    private void TriggerLevelComplete()
+    {
+        if (levelCompleted || gameOverTriggered)
+            return;
+
+        levelCompleted = true;
+        Debug.Log("[LevelManager] Level Complete triggered!");
+
+        // Start coroutine to handle level complete
+        StartCoroutine(HandleLevelComplete());
+    }
+
+    /// <summary>
+    /// Triggers the game over sequence (no lives remaining)
     /// </summary>
     private void TriggerGameOver()
     {
-        if (gameOverTriggered)
+        if (gameOverTriggered || levelCompleted)
             return;
 
         gameOverTriggered = true;
         Debug.Log("[LevelManager] Game Over triggered!");
 
-        // Enable game over object
-        if (gameOverObject != null)
-        {
-            gameOverObject.SetActive(true);
-        }
-
-        // Start coroutine to load game over scene
-        StartCoroutine(LoadGameOverScene());
+        // Start coroutine to handle game over
+        StartCoroutine(HandleGameOver());
     }
 
     /// <summary>
-    /// Loads the game over scene with transition
+    /// Handles level complete sequence with delay
     /// </summary>
-    private IEnumerator LoadGameOverScene()
+    private IEnumerator HandleLevelComplete()
+    {
+        // Wait for level complete delay
+        yield return new WaitForSeconds(levelCompleteDelay);
+
+        // Enable all level complete objects
+        if (levelCompleteObjects != null)
+        {
+            foreach (GameObject obj in levelCompleteObjects)
+            {
+                if (obj != null)
+                {
+                    obj.SetActive(true);
+                    Debug.Log("[LevelManager] Enabled level complete object: " + obj.name);
+                }
+            }
+        }
+
+        // Load scene if specified
+        if (!string.IsNullOrEmpty(levelCompleteSceneName))
+        {
+            // Enable transition if assigned
+            if (transitionObject != null)
+            {
+                transitionObject.SetActive(true);
+                Debug.Log("[LevelManager] Transition enabled");
+            }
+
+            // Wait for transition duration
+            yield return new WaitForSeconds(transitionDuration);
+
+            // Load scene
+            Debug.Log("[LevelManager] Loading level complete scene: " + levelCompleteSceneName);
+            SceneManager.LoadScene(levelCompleteSceneName);
+        }
+    }
+
+    /// <summary>
+    /// Handles game over sequence with delay
+    /// </summary>
+    private IEnumerator HandleGameOver()
     {
         // Wait for game over delay
         yield return new WaitForSeconds(gameOverDelay);
 
-        // Enable transition if assigned
-        if (transitionObject != null)
+        // Enable all game over objects
+        if (gameOverObjects != null)
         {
-            transitionObject.SetActive(true);
-            Debug.Log("[LevelManager] Transition enabled");
+            foreach (GameObject obj in gameOverObjects)
+            {
+                if (obj != null)
+                {
+                    obj.SetActive(true);
+                    Debug.Log("[LevelManager] Enabled game over object: " + obj.name);
+                }
+            }
         }
 
-        // Wait for transition duration
-        yield return new WaitForSeconds(transitionDuration);
+        // Load scene if specified
+        if (!string.IsNullOrEmpty(gameOverSceneName))
+        {
+            // Enable transition if assigned
+            if (transitionObject != null)
+            {
+                transitionObject.SetActive(true);
+                Debug.Log("[LevelManager] Transition enabled");
+            }
 
-        // Load game over scene
-        Debug.Log("[LevelManager] Loading scene: " + gameOverSceneName);
-        SceneManager.LoadScene(gameOverSceneName);
+            // Wait for transition duration
+            yield return new WaitForSeconds(transitionDuration);
+
+            // Load scene
+            Debug.Log("[LevelManager] Loading game over scene: " + gameOverSceneName);
+            SceneManager.LoadScene(gameOverSceneName);
+        }
+    }
+
+    /// <summary>
+    /// Public method to manually trigger level complete (for external calls)
+    /// </summary>
+    public void ManualLevelComplete()
+    {
+        TriggerLevelComplete();
     }
 
     /// <summary>

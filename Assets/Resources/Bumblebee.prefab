@@ -120,9 +120,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4543069569791729328}
   serializedVersion: 4
-  m_Mass: 0.8
-  m_Drag: 0.5
-  m_AngularDrag: 0.1
+  m_Mass: 0.3
+  m_Drag: 0.1
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -154,7 +154,7 @@ MonoBehaviour:
   particleEffectPrefab: {fileID: 4927711562988715638, guid: fc626deb7228f1f4792180c7d8ad123a, type: 3}
   soundEffect: {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   backgroundMusic: {fileID: 0}
-  hitSoundVolume: 1
+  hitSoundVolume: 20
 --- !u!114 &1043480018715138294
 MonoBehaviour:
   m_ObjectHideFlags: 0
