@@ -14,10 +14,6 @@ public class WagerSpawnPlacer : MonoBehaviour
     [Tooltip("Which player's wager to spawn? (1 or 2). Leave 0 to spawn ALL players' wagers.")]
     public int spawnForPlayer = 0; // 0 = both, 1 = player 1 only, 2 = player 2 only
 
-    [Header("Physics Authority")]
-    [Tooltip("If true, spawned holens will have physics authority set up (only Master Client simulates)")]
-    public bool setupPhysicsAuthority = true;
-
     [Header("Debug")]
     [SerializeField] private List<GameObject> spawnedHolens = new List<GameObject>();
 
@@ -164,19 +160,6 @@ public class WagerSpawnPlacer : MonoBehaviour
             go.transform.SetParent(transform);
             spawnedHolens.Add(go);
 
-            // CRITICAL FIX: Set up physics authority for this holen
-            if (setupPhysicsAuthority)
-            {
-                SetupHolenPhysicsAuthority(go);
-            }
-
-            // Notify the controller about the new holen (if needed)
-            MultiplayerHolenController controller = FindObjectOfType<MultiplayerHolenController>();
-            if (controller != null)
-            {
-                controller.RegisterNewHolen(go);
-            }
-
             Debug.Log($"[WagerSpawnPlacer] Spawned {data.holenName} at {slot.name}");
 
             if (destroySlotAfterSpawn)
@@ -184,59 +167,6 @@ public class WagerSpawnPlacer : MonoBehaviour
         }
 
         Debug.Log($"[WagerSpawnPlacer] ✅ Successfully spawned {spawnCount} holens");
-    }
-
-    private void SetupHolenPhysicsAuthority(GameObject holen)
-    {
-        // CRITICAL: Only apply physics authority in multiplayer mode
-        if (!PhotonNetwork.IsConnected)
-        {
-            Debug.Log($"[WagerSpawnPlacer] Not connected to Photon - skipping physics authority setup for {holen.name} (single-player mode)");
-            return;
-        }
-
-        // CRITICAL FIX 1: Get PhotonView first and set up ownership
-        PhotonView pv = holen.GetComponent<PhotonView>();
-        if (pv == null)
-        {
-            Debug.LogWarning($"[WagerSpawnPlacer] {holen.name} has no PhotonView! It won't sync properly in multiplayer.");
-            return;
-        }
-
-        // CRITICAL FIX 2: Transfer ownership to Master Client explicitly
-        // This ensures the Master Client has full control over this object
-        if (!pv.IsMine && PhotonNetwork.IsMasterClient)
-        {
-            pv.TransferOwnership(PhotonNetwork.MasterClient);
-            Debug.Log($"[WagerSpawnPlacer] Transferred ownership of {holen.name} to Master Client");
-        }
-
-        // CRITICAL FIX 3: Set up rigidbody physics authority
-        Rigidbody rb = holen.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            // Only Master Client simulates physics, others just display
-            rb.isKinematic = !PhotonNetwork.IsMasterClient;
-
-            Debug.Log($"[WagerSpawnPlacer] Set physics authority for {holen.name} - isKinematic: {rb.isKinematic} (IsMasterClient: {PhotonNetwork.IsMasterClient})");
-        }
-        else
-        {
-            Debug.LogWarning($"[WagerSpawnPlacer] No Rigidbody found on {holen.name} - cannot set physics authority");
-        }
-
-        // Verify sync components are present
-        PhotonTransformView transformView = holen.GetComponent<PhotonTransformView>();
-        PhotonRigidbodyView rigidbodyView = holen.GetComponent<PhotonRigidbodyView>();
-
-        if (transformView == null && rigidbodyView == null)
-        {
-            Debug.LogWarning($"[WagerSpawnPlacer] {holen.name} has PhotonView but no PhotonTransformView or PhotonRigidbodyView! Add one for proper sync.");
-        }
-        else
-        {
-            Debug.Log($"[WagerSpawnPlacer] {holen.name} has proper sync components: TransformView={transformView != null}, RigidbodyView={rigidbodyView != null}");
-        }
     }
 
     private void Shuffle<T>(List<T> list)

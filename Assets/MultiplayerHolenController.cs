@@ -17,6 +17,7 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     public TMP_Text playerLabelText;
     public TMP_Text turnDisplayText;
     public Transform cameraSpawnPoint;
+    
 
     [Header("UI")]
     public GameObject loadingUI;
@@ -56,10 +57,6 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     [Header("Camera Settings")]
     public Vector3 cameraFollowOffset = new Vector3(0f, 8f, -6f);
     public float cameraAimScreenY = 0.80f;
-
-    [Header("Physics Authority")]
-    [Tooltip("If true, only Master Client simulates physics. Other clients just display results.")]
-    public bool useMasterClientAuthority = true;
 
     public GameObject currentHolenBall { get; private set; }
     private bool isReady = false;
@@ -262,8 +259,7 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_UpdateStatusText(string state, string activeName)
     {
-        if (statusText == null) return;
-        statusText.text = BuildStatusString(state, activeName);
+        UpdateLocalStatusText(state, activeName);
     }
 
     private string BuildStatusString(string state, string activeName)
@@ -271,13 +267,13 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         switch (state)
         {
             case "idle":
-                return $"{activeName}: Choosing...";
+                return $"{activeName} Turn";
             case "changing":
-                return $"{activeName}: Changing holen...";
+                return $"{activeName} is changing their pamato";
             case "launched":
-                return $"{activeName}: Attacks!";
+                return $"{activeName} Attacks!";
             default:
-                return $"{activeName}: ...";
+                return $"{activeName} Turn";
         }
     }
 
@@ -287,178 +283,188 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
     }
 
     // ─────────────────────────────────────────────
-    // INPUT & SWIPE
+    // INPUT
     // ─────────────────────────────────────────────
 
     void Update()
     {
-        if (!isTurn || isReady || currentHolenBall == null)
-            return;
-
-        HandleSwipeInput();
+        // Block swipe input while inventory is open or holen already launched
+        if (isTurn && currentHolenBall != null && !isReady && !isInventoryOpen && !isHolenLaunched)
+        {
+            HandleSwipeInput();
+        }
     }
 
     private void HandleSwipeInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.touchCount > 0)
         {
-            Vector2 touchPos = Input.mousePosition;
+            Touch touch = Input.GetTouch(0);
 
-            if (requireTouchOnBall && !IsTouchOnBall(touchPos))
+            if (touch.phase == TouchPhase.Began)
             {
-                Debug.Log("Touch not on ball, ignoring");
-                return;
-            }
-
-            swipeStartPos = touchPos;
-            swipeStartTime = Time.time;
-            isSwiping = true;
-
-            Ray ray = mainCamera.ScreenPointToRay(touchPos);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100f))
-            {
-                swipeWorldStart = hit.point;
-            }
-            else
-            {
-                Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-                float enter;
-                if (groundPlane.Raycast(ray, out enter))
+                if (!requireTouchOnBall || IsTouchingBall(touch.position))
                 {
-                    swipeWorldStart = ray.GetPoint(enter);
+                    StartSwipe(touch.position);
                 }
             }
-
-            if (swipeIndicator != null)
-                swipeIndicator.SetActive(true);
-
-            Debug.Log($"Swipe started at: {swipeStartPos}");
-        }
-
-        if (isSwiping && Input.GetMouseButton(0))
-        {
-            swipeEndPos = Input.mousePosition;
-
-            Ray ray = mainCamera.ScreenPointToRay(swipeEndPos);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100f))
+            else if (touch.phase == TouchPhase.Moved && isSwiping)
             {
-                swipeWorldEnd = hit.point;
+                UpdateSwipe(touch.position);
             }
-            else
+            else if (touch.phase == TouchPhase.Ended && isSwiping)
             {
-                Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-                float enter;
-                if (groundPlane.Raycast(ray, out enter))
-                {
-                    swipeWorldEnd = ray.GetPoint(enter);
-                }
+                EndSwipe(touch.position);
             }
-
-            UpdateTrajectoryLine();
-        }
-
-        if (Input.GetMouseButtonUp(0) && isSwiping)
-        {
-            swipeEndPos = Input.mousePosition;
-            float swipeTime = Time.time - swipeStartTime;
-
-            if (swipeTime > swipeTimeWindow)
+            else if (touch.phase == TouchPhase.Canceled && isSwiping)
             {
                 CancelSwipe();
-                return;
             }
-
-            ProcessSwipe(swipeTime);
-            isSwiping = false;
-
-            if (swipeIndicator != null)
-                swipeIndicator.SetActive(false);
-
-            if (trajectoryLine != null)
-                trajectoryLine.enabled = false;
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (!requireTouchOnBall || IsTouchingBall(Input.mousePosition))
+            {
+                StartSwipe(Input.mousePosition);
+            }
+        }
+        else if (Input.GetMouseButton(0) && isSwiping)
+        {
+            UpdateSwipe(Input.mousePosition);
+        }
+        else if (Input.GetMouseButtonUp(0) && isSwiping)
+        {
+            EndSwipe(Input.mousePosition);
         }
     }
 
-    private bool IsTouchOnBall(Vector2 touchPos)
+    private bool IsTouchingBall(Vector2 screenPosition)
     {
         if (currentHolenBall == null) return false;
 
-        Ray ray = mainCamera.ScreenPointToRay(touchPos);
+        Ray ray = mainCamera.ScreenPointToRay(screenPosition);
         RaycastHit hit;
-        int layerMask = 1 << ballLayer;
 
-        if (Physics.Raycast(ray, out hit, 100f, layerMask))
+        if (Physics.Raycast(ray, out hit, 100f))
         {
             if (hit.collider.gameObject == currentHolenBall)
             {
-                Debug.Log("Touch detected on ball");
+                Debug.Log("Touch detected on ball!");
                 return true;
             }
+        }
+
+        Vector3 ballScreenPos = mainCamera.WorldToScreenPoint(currentHolenBall.transform.position);
+        float screenDistance = Vector2.Distance(screenPosition, new Vector2(ballScreenPos.x, ballScreenPos.y));
+
+        if (screenDistance < 100f)
+        {
+            Debug.Log("Touch detected near ball!");
+            return true;
         }
 
         return false;
     }
 
-    private void UpdateTrajectoryLine()
+    private void StartSwipe(Vector2 screenPosition)
     {
-        if (trajectoryLine == null || currentHolenBall == null)
+        isSwiping = true;
+        swipeStartPos = screenPosition;
+        swipeStartTime = Time.time;
+
+        swipeWorldStart = currentHolenBall.transform.position;
+
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(true);
+
+        Debug.Log($"Swipe started at screen pos: {screenPosition}");
+    }
+
+    private void UpdateSwipe(Vector2 screenPosition)
+    {
+        swipeEndPos = screenPosition;
+
+        Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+
+        if (swipeDelta.magnitude < swipeDeadZone)
             return;
 
-        Vector3 swipeWorldDir = (swipeWorldEnd - swipeWorldStart).normalized;
-        float swipeDistance = Vector2.Distance(swipeStartPos, swipeEndPos);
+        Ray ray = mainCamera.ScreenPointToRay(screenPosition);
+        Plane groundPlane = new Plane(Vector3.up, currentHolenBall.transform.position);
+        float distance;
 
-        float force;
-        if (useSpeedForce)
+        if (groundPlane.Raycast(ray, out distance))
         {
-            float swipeTime = Time.time - swipeStartTime;
-            if (swipeTime <= 0) swipeTime = 0.01f;
-            float swipeSpeed = swipeDistance / swipeTime;
-            force = swipeSpeed * speedMultiplier;
-            force = Mathf.Clamp(force, minLaunchForce, maxLaunchForce);
+            swipeWorldEnd = ray.GetPoint(distance);
         }
-        else
+
+        if (trajectoryLine != null)
         {
-            force = CalculateLaunchForce(swipeDistance);
+            ShowTrajectoryPreview();
         }
+
+        Debug.Log($"Swiping... Delta: {swipeDelta.magnitude}");
+    }
+
+    private void ShowTrajectoryPreview()
+    {
+        Vector3 direction = (swipeWorldEnd - swipeWorldStart).normalized;
+
+        if (direction.magnitude < 0.1f)
+            return;
+
+        float swipeDistance = Vector2.Distance(swipeStartPos, swipeEndPos);
+        float force = CalculateLaunchForce(swipeDistance);
 
         trajectoryLine.enabled = true;
-        trajectoryLine.positionCount = 20;
+        trajectoryLine.positionCount = 15;
 
-        Vector3 velocity = swipeWorldDir * force;
-        Vector3 position = currentHolenBall.transform.position;
+        Vector3 velocity = direction * force;
+        Vector3 currentPos = currentHolenBall.transform.position;
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 15; i++)
         {
             float t = i * 0.1f;
-            Vector3 point = position + velocity * t + 0.5f * Physics.gravity * t * t;
+            Vector3 point = currentPos + velocity * t + 0.5f * Physics.gravity * t * t;
             trajectoryLine.SetPosition(i, point);
         }
     }
 
-    private void ProcessSwipe(float swipeTime)
+    private void EndSwipe(Vector2 screenPosition)
     {
-        float swipeDistance = Vector2.Distance(swipeStartPos, swipeEndPos);
+        swipeEndPos = screenPosition;
+        float swipeTime = Time.time - swipeStartTime;
+        Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+        float swipeDistance = swipeDelta.magnitude;
 
-        if (swipeDistance < swipeDeadZone)
-        {
-            Debug.Log($"Swipe too small: {swipeDistance} < {swipeDeadZone}");
-            return;
-        }
+        isSwiping = false;
 
-        if (swipeDistance >= minSwipeDistance)
+        if (swipeIndicator != null)
+            swipeIndicator.SetActive(false);
+
+        if (trajectoryLine != null)
+            trajectoryLine.enabled = false;
+
+        Debug.Log($"Swipe ended: Distance={swipeDistance}, Time={swipeTime}, MinRequired={minSwipeDistance}");
+
+        if (swipeDistance >= minSwipeDistance && swipeTime <= swipeTimeWindow)
         {
-            Vector3 swipeDirection = (swipeWorldEnd - swipeWorldStart).normalized;
+            Vector3 swipeDirection = (swipeWorldEnd - swipeWorldStart);
             swipeDirection.y = 0;
+            swipeDirection.Normalize();
 
             if (swipeDirection.magnitude < 0.1f)
             {
-                Debug.Log("Invalid swipe direction (too vertical or zero)");
-                return;
-            }
+                Vector3 cameraForward = mainCamera.transform.forward;
+                Vector3 cameraRight = mainCamera.transform.right;
 
-            swipeDirection = swipeDirection.normalized;
+                cameraForward.y = 0;
+                cameraRight.y = 0;
+                cameraForward.Normalize();
+                cameraRight.Normalize();
+
+                swipeDirection = (cameraRight * swipeDelta.x + cameraForward * swipeDelta.y).normalized;
+            }
 
             float force;
 
@@ -565,24 +571,8 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
             currentHolenBall.layer = ballLayer;
         }
 
-        // CRITICAL FIX: Request ownership of the ball we just spawned
-        PhotonView pv = currentHolenBall.GetComponent<PhotonView>();
-        if (pv != null && !pv.IsMine)
-        {
-            pv.RequestOwnership();
-            Debug.Log($"{playerRole} requested ownership of shooting ball: {holenBallPrefab.name}");
-        }
-
         Rigidbody rb = currentHolenBall.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-            Debug.Log($"{playerRole} spawned ball as kinematic: {holenBallPrefab.name}");
-        }
-
-        // NOTE: Player's shooting ball does NOT use Master Client authority
-        // It needs normal physics on both clients since it's owned by the player
-        // Only objective holens (spawned by WagerSpawnPlacer) use Master Client authority
+        rb.isKinematic = true;
 
         if (activePlayerCamera != null && currentHolenBall != null && isTurn)
         {
@@ -610,16 +600,6 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
             SetChangeHolenButtonInteractable(false);
             CloseInventory();
 
-            // CRITICAL FIX: Ensure we have ownership before shooting
-            PhotonView pv = currentHolenBall.GetComponent<PhotonView>();
-            if (pv != null && !pv.IsMine)
-            {
-                pv.RequestOwnership();
-                Debug.Log($"{playerRole} ensuring ownership before launch");
-            }
-
-            // Player's ball uses standard RPC - both clients apply physics
-            // (Master Client authority only applies to objective holens on the field)
             photonView.RPC("RPC_ShootHolen", RpcTarget.All, direction, force);
 
             // Broadcast "Attacks!" status to both players
@@ -636,16 +616,9 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         if (currentHolenBall != null)
         {
             Rigidbody rb = currentHolenBall.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
 
-            if (rb != null)
-            {
-                // Player's shooting ball uses normal physics on all clients
-                // (Master Client authority only applies to objective holens on the field)
-                rb.isKinematic = false;
-                rb.AddForce(direction * force, ForceMode.Impulse);
-
-                Debug.Log($"[{playerRole}] Applied force to ball: {force}, isKinematic: {rb.isKinematic}");
-            }
+            rb.AddForce(direction * force, ForceMode.Impulse);
 
             if (activePlayerCamera != null && isTurn)
             {
@@ -720,6 +693,7 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
 
         DisableControls();
 
+
         Debug.Log($"{playerRole} ended their turn. Switching to other player.");
 
         PVPScore scoreManager = FindObjectOfType<PVPScore>();
@@ -747,32 +721,5 @@ public class MultiplayerHolenController : MonoBehaviourPunCallbacks
         UpdateStatusText("idle");                       // synced to both clients
 
         Debug.Log($"{playerRole}'s turn started");
-    }
-
-    // ─────────────────────────────────────────────
-    // PHYSICS AUTHORITY (for spawned holens)
-    // ─────────────────────────────────────────────
-
-    /// <summary>
-    /// Call this when a new holen is spawned to set up physics authority
-    /// </summary>
-    public void RegisterNewHolen(GameObject holen)
-    {
-        if (!useMasterClientAuthority) return;
-
-        // CRITICAL: Only apply physics authority in multiplayer mode
-        if (!PhotonNetwork.IsConnected)
-        {
-            Debug.Log("[MultiplayerHolenController] Not connected to Photon - skipping physics authority for new holen (single-player mode)");
-            return;
-        }
-
-        Rigidbody rb = holen.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            // Note: For the player's ball, it starts kinematic and becomes non-kinematic when launched
-            // Physics authority is applied at launch time in RPC_ShootHolen
-            Debug.Log($"[MultiplayerHolenController] Registered new holen {holen.name}");
-        }
     }
 }

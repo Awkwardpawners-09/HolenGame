@@ -153,6 +153,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3915cfd5ccad2b49ad466816b42252c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotButton: {fileID: 2285472717600120935}
+  selectionHighlight: {fileID: 0}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.5}
+  disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.3}
+  holenPrefab: {fileID: 0}
+  holenData: {fileID: 0}
+  requirePlayerTurn: 1
+  turnCheckInterval: 0.5
+  showDebugInfo: 0
 --- !u!1 &4721546469252218931
 GameObject:
   m_ObjectHideFlags: 0

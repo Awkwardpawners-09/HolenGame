@@ -1806,7 +1806,6 @@ GameObject:
   - component: {fileID: 310227658}
   - component: {fileID: 310227659}
   - component: {fileID: 310227661}
-  - component: {fileID: 310227662}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1896,7 +1895,6 @@ MonoBehaviour:
   useSpeedForce: 1
   cameraFollowOffset: {x: 0, y: 8, z: -6}
   cameraAimScreenY: 0.8
-  useMasterClientAuthority: 1
 --- !u!114 &310227659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2023,23 +2021,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &310227662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310227655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b88f9ddd3777b479f10a47f5cc7c4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnTimeLimit: 60
-  autoStart: 1
-  turnInfoText: {fileID: 0}
-  timerText: {fileID: 0}
-  showDebugInfo: 1
 --- !u!4 &312863715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 006e93355555c744a8b13f3c21adb4ff, type: 3}
@@ -5100,7 +5081,6 @@ MonoBehaviour:
   destroySlotAfterSpawn: 1
   alignToSlotRotation: 1
   spawnForPlayer: 0
-  setupPhysicsAuthority: 1
   spawnedHolens: []
 --- !u!4 &833140225
 Transform:
@@ -15474,7 +15454,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 80
+  field of view: 90
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -15534,8 +15514,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5537097794346856951}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.27872723, y: 0.23103367, z: -0.06927291, w: -0.9295891}
-  m_LocalPosition: {x: 17.41, y: 23.4, z: -27.16}
+  m_LocalRotation: {x: 0.21011417, y: -0.0024580373, z: -0.0005286548, w: 0.97767365}
+  m_LocalPosition: {x: 0.8, y: 14.8, z: -14.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
