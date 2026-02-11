@@ -13566,8 +13566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aee2c7e66137cf40bceee0a2cb001f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelNumber: 2
-  sceneName: Intramuros Stage 1
+  levelNumber: 1
+  sceneName: IntramurosStage1
   lockedIcon: {fileID: 0}
   unlockedIcon: {fileID: 0}
   lockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -51281,8 +51281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aee2c7e66137cf40bceee0a2cb001f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelNumber: 3
-  sceneName: Kalye Stage 1
+  levelNumber: 1
+  sceneName: KalyeStage1
   lockedIcon: {fileID: 0}
   unlockedIcon: {fileID: 0}
   lockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -55051,7 +55051,10 @@ MonoBehaviour:
   matchFound: {fileID: 921190782}
   noHolensText: {fileID: 1071420918}
   noHolensMessage: You don't have any holens!
+  notEnoughKindsMessage: You need at least 5 different kinds of holens!
   noHolensPanelDuration: 3
+  matchFoundDuration: 3
+  requiredHolenKinds: 5
   transitionObject: {fileID: 1322775149}
   transitionDuration: 3
   lobbySceneName: TestGame
@@ -55071,7 +55074,7 @@ MonoBehaviour:
   transitionDuration: 3
   stageScenes:
   - KalyeStage1
-  - KalyeStage2
+  - ' '
   - Demo Game 1
   - BanaueStage2
   - IntramurosStage1

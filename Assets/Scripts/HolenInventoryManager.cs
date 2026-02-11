@@ -245,6 +245,24 @@ public class HolenInventoryManager : MonoBehaviour
         return new List<HolenInventoryEntry>(inventory);
     }
 
+    /// <summary>
+    /// Returns the inventory as a dictionary (holenID -> quantity) for network sync
+    /// </summary>
+    public Dictionary<string, int> GetInventory()
+    {
+        Dictionary<string, int> inventoryDict = new Dictionary<string, int>();
+
+        foreach (var entry in inventory)
+        {
+            if (!string.IsNullOrEmpty(entry.holenID))
+            {
+                inventoryDict[entry.holenID] = entry.quantity;
+            }
+        }
+
+        return inventoryDict;
+    }
+
     public void ResetInventory()
     {
         inventory.Clear();

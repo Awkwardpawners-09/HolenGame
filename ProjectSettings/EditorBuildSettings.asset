@@ -45,6 +45,12 @@ EditorBuildSettings:
     path: Assets/Scenes/GameSceneHole-in1.unity
     guid: 7e06b56f13def4947be764ec0894403f
   - enabled: 1
+    path: Assets/Scenes/IntramurosStage1.unity
+    guid: aec186f7e1007d54598ff3d2a149813e
+  - enabled: 1
+    path: Assets/Scenes/KalyeStage1.unity
+    guid: e5858b94c14a57148b993c1082ecdde2
+  - enabled: 1
     path: Assets/Scenes/TestGameplay.unity
     guid: 2632e3de191a7414eb4b16931e9fe42e
   - enabled: 1
