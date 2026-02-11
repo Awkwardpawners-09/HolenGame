@@ -6,6 +6,7 @@ using TMPro;
 /// Handles the first-time player name setup UI.
 /// Shows only once on first launch, then stays disabled forever.
 /// Now fully integrated with PlayerDataManager.
+/// ALSO handles name changes when player wants to update their name.
 /// </summary>
 public class PlayerNameSetup : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public class PlayerNameSetup : MonoBehaviour
     [Header("Optional: Welcome Message")]
     [Tooltip("Text to personalize welcome message (optional)")]
     public TMP_Text welcomeText;
+
+    [Header("Name Change Mode")]
+    [Tooltip("Is this UI being used for changing existing name? (Set via code)")]
+    private bool isNameChangeMode = false;
+    private string originalName = "";
 
     private bool isChecking = false;
 
@@ -81,10 +87,20 @@ public class PlayerNameSetup : MonoBehaviour
         // Clear any default text in input field
         if (nameInputField != null)
         {
-            nameInputField.text = "";
+            // If in name change mode, show current name
+            if (isNameChangeMode && !string.IsNullOrEmpty(originalName))
+            {
+                nameInputField.text = originalName;
+            }
+            else
+            {
+                nameInputField.text = "";
+            }
+
             nameInputField.characterLimit = maxNameLength;
 
             // Add listener for input changes (for real-time validation)
+            nameInputField.onValueChanged.RemoveAllListeners();
             nameInputField.onValueChanged.AddListener(OnNameInputChanged);
 
             // Focus the input field so player can start typing immediately
@@ -98,7 +114,8 @@ public class PlayerNameSetup : MonoBehaviour
             confirmButton.onClick.RemoveAllListeners();
             confirmButton.onClick.AddListener(OnConfirmButtonClicked);
 
-            // Disable button initially until valid name is entered
+            // In name change mode, button is disabled until name changes
+            // In first-time setup, button is disabled until valid name is entered
             confirmButton.interactable = false;
         }
 
@@ -114,10 +131,20 @@ public class PlayerNameSetup : MonoBehaviour
         // Real-time validation as player types
         bool isValid = ValidateName(newName, out string errorMessage);
 
+        // Check if name has changed (for name change mode)
+        bool hasChanged = true;
+        if (isNameChangeMode)
+        {
+            hasChanged = newName.Trim() != originalName;
+        }
+
         // Update button interactability
         if (confirmButton != null)
         {
-            confirmButton.interactable = isValid;
+            // Button is enabled only if:
+            // 1. Name is valid
+            // 2. In name change mode: name must be different from original
+            confirmButton.interactable = isValid && hasChanged;
         }
 
         // Show/hide error message
@@ -126,6 +153,11 @@ public class PlayerNameSetup : MonoBehaviour
             if (!isValid && !string.IsNullOrEmpty(newName))
             {
                 errorMessageText.text = errorMessage;
+                errorMessageText.gameObject.SetActive(true);
+            }
+            else if (isNameChangeMode && !hasChanged && !string.IsNullOrEmpty(newName))
+            {
+                errorMessageText.text = "Name is the same as before";
                 errorMessageText.gameObject.SetActive(true);
             }
             else
@@ -157,6 +189,17 @@ public class PlayerNameSetup : MonoBehaviour
                 errorMessageText.gameObject.SetActive(true);
             }
             Debug.LogWarning($"[PlayerNameSetup] Invalid name: {errorMessage}");
+            return;
+        }
+
+        // Check if name actually changed (for name change mode)
+        if (isNameChangeMode && playerName == originalName)
+        {
+            if (errorMessageText != null)
+            {
+                errorMessageText.text = "Name is the same as before";
+                errorMessageText.gameObject.SetActive(true);
+            }
             return;
         }
 
@@ -228,33 +271,82 @@ public class PlayerNameSetup : MonoBehaviour
             inventoryManager.SetPlayerName(playerName);
         }
 
-        // Optional: Show welcome message
+        // Optional: Show welcome/confirmation message
         if (welcomeText != null)
         {
-            welcomeText.text = $"Welcome, {playerName}!";
+            if (isNameChangeMode)
+            {
+                welcomeText.text = $"Name changed to {playerName}!";
+            }
+            else
+            {
+                welcomeText.text = $"Welcome, {playerName}!";
+            }
             welcomeText.gameObject.SetActive(true);
         }
 
-        // Hide this UI after a short delay (to show welcome message)
+        // Hide this UI after a short delay (to show message)
         Invoke(nameof(HideUI), 1.5f);
     }
 
     private void HideUI()
     {
-        Debug.Log("[PlayerNameSetup] Name saved - hiding UI permanently");
+        if (isNameChangeMode)
+        {
+            Debug.Log("[PlayerNameSetup] Name changed - hiding UI");
+        }
+        else
+        {
+            Debug.Log("[PlayerNameSetup] Name saved - hiding UI permanently");
+        }
 
-        // Disable this GameObject permanently
-        // Since player name is saved, this UI will never show again
+        // Reset name change mode
+        isNameChangeMode = false;
+        originalName = "";
+
+        // Disable this GameObject
         gameObject.SetActive(false);
     }
 
-    // ===================== PUBLIC METHODS (Optional) =====================
+    // ===================== PUBLIC METHODS =====================
 
     /// <summary>
     /// Manually trigger the name setup (for testing or if you want a "change name" button)
     /// </summary>
     public void ShowNameSetup()
     {
+        isNameChangeMode = false;
+        originalName = "";
+        SetupUI();
+    }
+
+    /// <summary>
+    /// Show UI for changing existing player name.
+    /// Call this method when player taps the input field to change their name.
+    /// The confirm button will only be enabled when the name is different from current name.
+    /// </summary>
+    public void ShowNameChange()
+    {
+        if (PlayerDataManager.Instance == null)
+        {
+            Debug.LogError("[PlayerNameSetup] PlayerDataManager not found!");
+            return;
+        }
+
+        // Get current name
+        originalName = PlayerDataManager.Instance.GetPlayerName();
+
+        if (string.IsNullOrEmpty(originalName))
+        {
+            Debug.LogWarning("[PlayerNameSetup] No existing name found. Using first-time setup mode.");
+            isNameChangeMode = false;
+        }
+        else
+        {
+            Debug.Log($"[PlayerNameSetup] Showing name change UI (current name: {originalName})");
+            isNameChangeMode = true;
+        }
+
         SetupUI();
     }
 
@@ -270,6 +362,8 @@ public class PlayerNameSetup : MonoBehaviour
         }
 
         // Show the setup UI again
+        isNameChangeMode = false;
+        originalName = "";
         SetupUI();
     }
 }

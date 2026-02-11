@@ -14,6 +14,11 @@ public class PlayerDataManager : MonoBehaviour
     [Header("Player Data")]
     public PlayerData playerData;
 
+    [Header("Energy Regeneration")]
+    [Tooltip("How often to check for energy regeneration (in seconds)")]
+    public float energyCheckInterval = 1f;
+    private float energyCheckTimer = 0f;
+
     [Header("UI Element Lists - Add UI components here")]
     [Tooltip("Add all UI elements that should display player name")]
     public List<TMPro.TextMeshProUGUI> playerNameUIElements = new List<TMPro.TextMeshProUGUI>();
@@ -40,7 +45,7 @@ public class PlayerDataManager : MonoBehaviour
             // Load player data from disk
             playerData = PlayerData.Load();
 
-            Debug.Log($"[PlayerDataManager] Loaded - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}");
+            Debug.Log($"[PlayerDataManager] Loaded - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}/{PlayerData.MAX_ENERGY}");
 
             // Notify all UI elements of initial values after a short delay
             // This ensures all UI elements are ready
@@ -50,6 +55,30 @@ public class PlayerDataManager : MonoBehaviour
         {
             // Destroy duplicate instances
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        // Check for energy regeneration periodically
+        energyCheckTimer += Time.deltaTime;
+        if (energyCheckTimer >= energyCheckInterval)
+        {
+            energyCheckTimer = 0f;
+            CheckEnergyRegeneration();
+        }
+    }
+
+    private void CheckEnergyRegeneration()
+    {
+        int oldEnergy = playerData.energy;
+        playerData.RegenerateEnergy();
+
+        // If energy changed, update UI
+        if (oldEnergy != playerData.energy)
+        {
+            UpdateEnergyUI();
+            OnEnergyChanged?.Invoke(playerData.energy);
         }
     }
 
@@ -122,12 +151,12 @@ public class PlayerDataManager : MonoBehaviour
         // Remove any null references
         energyUIElements.RemoveAll(item => item == null);
 
-        // Update each UI element
+        // Update each UI element with "X/10" format
         foreach (var uiElement in energyUIElements)
         {
             if (uiElement != null)
             {
-                uiElement.text = playerData.energy.ToString();
+                uiElement.text = $"{playerData.energy}/{PlayerData.MAX_ENERGY}";
             }
         }
     }
@@ -168,7 +197,7 @@ public class PlayerDataManager : MonoBehaviour
         if (uiElement != null && !energyUIElements.Contains(uiElement))
         {
             energyUIElements.Add(uiElement);
-            uiElement.text = playerData.energy.ToString(); // Update immediately
+            uiElement.text = $"{playerData.energy}/{PlayerData.MAX_ENERGY}"; // Update immediately with format
             Debug.Log($"[PlayerDataManager] Registered energy UI element: {uiElement.gameObject.name}");
         }
     }
@@ -313,11 +342,17 @@ public class PlayerDataManager : MonoBehaviour
             amount = 0;
         }
 
+        if (amount > PlayerData.MAX_ENERGY)
+        {
+            Debug.LogWarning($"[PlayerDataManager] Attempted to set energy above max ({amount}), capping at {PlayerData.MAX_ENERGY}");
+            amount = PlayerData.MAX_ENERGY;
+        }
+
         int oldAmount = playerData.energy;
         playerData.energy = amount;
         playerData.Save();
 
-        Debug.Log($"[PlayerDataManager] Set energy to {amount} (was {oldAmount})");
+        Debug.Log($"[PlayerDataManager] Set energy to {amount}/{PlayerData.MAX_ENERGY} (was {oldAmount})");
 
         // Update UI
         UpdateEnergyUI();
@@ -327,6 +362,22 @@ public class PlayerDataManager : MonoBehaviour
     public int GetEnergy()
     {
         return playerData.energy;
+    }
+
+    /// <summary>
+    /// Get seconds until next energy point regenerates
+    /// </summary>
+    public int GetSecondsUntilNextEnergy()
+    {
+        return playerData.GetSecondsUntilNextEnergy();
+    }
+
+    /// <summary>
+    /// Check if player has enough energy
+    /// </summary>
+    public bool HasEnergy(int amount)
+    {
+        return playerData.energy >= amount;
     }
 
     // ===================== PLAYER NAME METHODS =====================

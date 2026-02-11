@@ -159,7 +159,7 @@ MonoBehaviour:
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.3}
   holenPrefab: {fileID: 0}
   holenData: {fileID: 0}
-  requirePlayerTurn: 1
+  requirePlayerTurn: 0
   turnCheckInterval: 0.5
   showDebugInfo: 0
 --- !u!1 &4721546469252218931
