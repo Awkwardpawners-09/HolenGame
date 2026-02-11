@@ -1,7 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class StageRandomizer : MonoBehaviour
+public class StageRandomizer : MonoBehaviourPunCallbacks
 {
     [Header("Stage Options")]
     [Tooltip("Add all possible stage GameObjects here. One will be randomly chosen.")]
@@ -12,13 +15,20 @@ public class StageRandomizer : MonoBehaviour
     [SerializeField] private bool useSeed = false;
     [SerializeField] private int seed = 0;
 
+    private const string STAGE_INDEX_KEY = "SelectedStageIndex";
+    private bool hasInitialized = false;
+
     private void Awake()
     {
-        RandomizeStage();
+        // Players are already in room when this scene loads
+        InitializeStage();
     }
 
-    private void RandomizeStage()
+    private void InitializeStage()
     {
+        if (hasInitialized)
+            return;
+
         // Validate that we have stage options
         if (stageOptions == null || stageOptions.Count == 0)
         {
@@ -35,6 +45,25 @@ public class StageRandomizer : MonoBehaviour
             return;
         }
 
+        // Check if stage has already been selected
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(STAGE_INDEX_KEY))
+        {
+            // Stage already selected, apply it
+            int selectedIndex = (int)PhotonNetwork.CurrentRoom.CustomProperties[STAGE_INDEX_KEY];
+            ApplyStageSelection(selectedIndex);
+        }
+        else if (PhotonNetwork.IsMasterClient)
+        {
+            // Master Client selects the stage
+            SelectAndSyncStage();
+        }
+        // Non-master clients will receive the selection via OnRoomPropertiesUpdate
+
+        hasInitialized = true;
+    }
+
+    private void SelectAndSyncStage()
+    {
         // Set seed if enabled
         if (useSeed)
         {
@@ -43,16 +72,52 @@ public class StageRandomizer : MonoBehaviour
 
         // Randomly select one stage
         int randomIndex = Random.Range(0, stageOptions.Count);
-        GameObject chosenStage = stageOptions[randomIndex];
 
-        Debug.Log($"StageRandomizer: Selected stage {randomIndex + 1}/{stageOptions.Count}: {chosenStage.name}");
+        Debug.Log($"StageRandomizer [Master]: Selected stage {randomIndex + 1}/{stageOptions.Count}: {stageOptions[randomIndex].name}");
+
+        // Sync to all players via Room Custom Properties
+        Hashtable properties = new Hashtable();
+        properties[STAGE_INDEX_KEY] = randomIndex;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(properties);
+
+        // Apply it locally immediately
+        ApplyStageSelection(randomIndex);
+    }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        base.OnRoomPropertiesUpdate(propertiesThatChanged);
+
+        // Check if the stage selection was updated
+        if (propertiesThatChanged.ContainsKey(STAGE_INDEX_KEY))
+        {
+            int selectedIndex = (int)propertiesThatChanged[STAGE_INDEX_KEY];
+
+            // Don't apply if we're master client (already applied)
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                ApplyStageSelection(selectedIndex);
+            }
+        }
+    }
+
+    private void ApplyStageSelection(int selectedIndex)
+    {
+        if (selectedIndex < 0 || selectedIndex >= stageOptions.Count)
+        {
+            Debug.LogError($"StageRandomizer: Invalid stage index {selectedIndex}! Max index is {stageOptions.Count - 1}");
+            return;
+        }
+
+        GameObject chosenStage = stageOptions[selectedIndex];
+        Debug.Log($"StageRandomizer: Applying stage {selectedIndex + 1}/{stageOptions.Count}: {chosenStage.name}");
 
         // Process all stages
         for (int i = 0; i < stageOptions.Count; i++)
         {
             GameObject stage = stageOptions[i];
 
-            if (i == randomIndex)
+            if (i == selectedIndex)
             {
                 // This is the chosen stage - make sure it's enabled
                 stage.SetActive(true);
@@ -66,10 +131,18 @@ public class StageRandomizer : MonoBehaviour
         }
     }
 
-    // Optional: Method to manually trigger randomization (useful for testing)
-    [ContextMenu("Randomize Stage Now")]
+    // Optional: Method to manually trigger randomization (useful for testing in editor)
+    [ContextMenu("Randomize Stage Now (Master Only)")]
     public void RandomizeStageManually()
     {
-        RandomizeStage();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            hasInitialized = false;
+            SelectAndSyncStage();
+        }
+        else
+        {
+            Debug.LogWarning("Only Master Client can manually randomize the stage!");
+        }
     }
 }

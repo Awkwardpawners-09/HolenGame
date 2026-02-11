@@ -311,8 +311,10 @@ public class PVPScore : MonoBehaviourPunCallbacks
     {
         if (holenController == null) return;
 
+        // Determine which player (1 or 2) knocked out this holen
         int currentPlayer = holenController.isPlayer1 ? 1 : 2;
 
+        // Only record if it's actually that player's turn
         if (holenController.IsTurn())
         {
             KnockedOutHolen knockedOut = new KnockedOutHolen(
@@ -326,8 +328,8 @@ public class PVPScore : MonoBehaviourPunCallbacks
                 player1KnockedOut.Add(knockedOut);
                 Debug.Log($"Player 1 knocked out: {holenData.holenName} (ID: {holenData.holenID})");
 
-                // Display visual feedback
-                DisplayKnockedOutHolen(holenData, 1);
+                // Display visual feedback (local player always shows as Player 1)
+                DisplayKnockedOutHolen(holenData, true); // true = local player
 
                 // Sync to other player
                 photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 1);
@@ -337,8 +339,8 @@ public class PVPScore : MonoBehaviourPunCallbacks
                 player2KnockedOut.Add(knockedOut);
                 Debug.Log($"Player 2 knocked out: {holenData.holenName} (ID: {holenData.holenID})");
 
-                // Display visual feedback
-                DisplayKnockedOutHolen(holenData, 2);
+                // Display visual feedback (local player always shows as Player 1)
+                DisplayKnockedOutHolen(holenData, true); // true = local player
 
                 // Sync to other player
                 photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 2);
@@ -366,7 +368,8 @@ public class PVPScore : MonoBehaviourPunCallbacks
         HolenData data = LoadHolenDataByID(holenID);
         if (data != null)
         {
-            DisplayKnockedOutHolen(data, playerNumber);
+            // Opponent's knockouts always display as Player 2 (false = opponent)
+            DisplayKnockedOutHolen(data, false);
         }
         else
         {
@@ -377,8 +380,11 @@ public class PVPScore : MonoBehaviourPunCallbacks
     /// <summary>
     /// Displays a knocked out holen in the appropriate player's panel.
     /// Instantiates a HolenSlotUI prefab and populates it with the holen's data.
+    /// Local player is always shown as Player 1, opponent as Player 2.
     /// </summary>
-    private void DisplayKnockedOutHolen(HolenData holenData, int playerNumber)
+    /// <param name="holenData">The HolenData of the knocked out holen</param>
+    /// <param name="isLocalPlayer">True if local player knocked it out, false if opponent did</param>
+    private void DisplayKnockedOutHolen(HolenData holenData, bool isLocalPlayer)
     {
         // Validate prefab
         if (holenSlotUIPrefab == null)
@@ -387,12 +393,13 @@ public class PVPScore : MonoBehaviourPunCallbacks
             return;
         }
 
-        // Determine which panel to use
-        Transform targetPanel = playerNumber == 1 ? player1KnockedOutPanel : player2KnockedOutPanel;
+        // Local player always displays in Player 1 panel, opponent in Player 2 panel
+        Transform targetPanel = isLocalPlayer ? player1KnockedOutPanel : player2KnockedOutPanel;
 
         if (targetPanel == null)
         {
-            Debug.LogWarning($"[PVPScore] Player {playerNumber} knocked out panel not assigned. Cannot display knocked out holen.");
+            string panelName = isLocalPlayer ? "Player 1 (Local)" : "Player 2 (Opponent)";
+            Debug.LogWarning($"[PVPScore] {panelName} knocked out panel not assigned. Cannot display knocked out holen.");
             return;
         }
 
@@ -412,7 +419,8 @@ public class PVPScore : MonoBehaviourPunCallbacks
         // Set the slot data (quantity = 1 for a single knocked out holen)
         slotUI.SetSlot(holenData, 1);
 
-        Debug.Log($"[PVPScore] Displayed knocked out holen '{holenData.holenName}' in Player {playerNumber}'s panel");
+        string playerLabel = isLocalPlayer ? "Local Player" : "Opponent";
+        Debug.Log($"[PVPScore] Displayed knocked out holen '{holenData.holenName}' in {playerLabel}'s panel");
     }
 
     public void OnTurnEnd()

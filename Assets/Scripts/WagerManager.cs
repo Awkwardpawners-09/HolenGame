@@ -22,7 +22,7 @@ public class WagerManager : MonoBehaviour
 
     [Header("Points Rules")]
     [Tooltip("Target threshold for this game mode (e.g., 10).")]
-    public int minRequiredPoints = 5;
+    public int minRequiredPoints = 10;
 
     [Tooltip("Maximum distinct Holen choices (unique picks) allowed.")]
     public int maxUniqueChoices = 5;

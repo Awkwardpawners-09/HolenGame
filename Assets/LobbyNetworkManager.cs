@@ -531,7 +531,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.IsMasterClient)
             {
-                transitionObject.SetActive(true);
+                //transitionObject.SetActive(true);
                 Invoke(nameof(LoadGameScene), 2f);
             }
         }
