@@ -12,6 +12,16 @@ public class PVPScore : MonoBehaviourPunCallbacks
     [Header("UI References")]
     public TMP_Text turnDisplayText; // Shows whose turn it is
 
+    [Header("Knocked Out Holens Display")]
+    [Tooltip("Prefab containing the HolenSlotUI component")]
+    public GameObject holenSlotUIPrefab;
+
+    [Tooltip("Panel where Player 1's knocked out holens will be displayed")]
+    public Transform player1KnockedOutPanel;
+
+    [Tooltip("Panel where Player 2's knocked out holens will be displayed")]
+    public Transform player2KnockedOutPanel;
+
     [Header("Game Over UI")]
     public GameObject firstUIObject;  // Enable after no holens detected
     public GameObject secondUIObject; // Enable after first UI
@@ -316,6 +326,9 @@ public class PVPScore : MonoBehaviourPunCallbacks
                 player1KnockedOut.Add(knockedOut);
                 Debug.Log($"Player 1 knocked out: {holenData.holenName} (ID: {holenData.holenID})");
 
+                // Display visual feedback
+                DisplayKnockedOutHolen(holenData, 1);
+
                 // Sync to other player
                 photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 1);
             }
@@ -323,6 +336,9 @@ public class PVPScore : MonoBehaviourPunCallbacks
             {
                 player2KnockedOut.Add(knockedOut);
                 Debug.Log($"Player 2 knocked out: {holenData.holenName} (ID: {holenData.holenID})");
+
+                // Display visual feedback
+                DisplayKnockedOutHolen(holenData, 2);
 
                 // Sync to other player
                 photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 2);
@@ -345,6 +361,58 @@ public class PVPScore : MonoBehaviourPunCallbacks
         }
 
         Debug.Log($"Received sync: Player {playerNumber} knocked out {holenName}");
+
+        // Load the HolenData and display visual feedback
+        HolenData data = LoadHolenDataByID(holenID);
+        if (data != null)
+        {
+            DisplayKnockedOutHolen(data, playerNumber);
+        }
+        else
+        {
+            Debug.LogWarning($"[PVPScore] Could not load HolenData for synced knockout. ID: {holenID}");
+        }
+    }
+
+    /// <summary>
+    /// Displays a knocked out holen in the appropriate player's panel.
+    /// Instantiates a HolenSlotUI prefab and populates it with the holen's data.
+    /// </summary>
+    private void DisplayKnockedOutHolen(HolenData holenData, int playerNumber)
+    {
+        // Validate prefab
+        if (holenSlotUIPrefab == null)
+        {
+            Debug.LogWarning("[PVPScore] HolenSlotUI Prefab not assigned. Cannot display knocked out holen.");
+            return;
+        }
+
+        // Determine which panel to use
+        Transform targetPanel = playerNumber == 1 ? player1KnockedOutPanel : player2KnockedOutPanel;
+
+        if (targetPanel == null)
+        {
+            Debug.LogWarning($"[PVPScore] Player {playerNumber} knocked out panel not assigned. Cannot display knocked out holen.");
+            return;
+        }
+
+        // Instantiate the HolenSlotUI prefab as a child of the target panel
+        GameObject slotInstance = Instantiate(holenSlotUIPrefab, targetPanel);
+
+        // Get the HolenSlotUI component
+        HolenSlotUI slotUI = slotInstance.GetComponent<HolenSlotUI>();
+
+        if (slotUI == null)
+        {
+            Debug.LogError("[PVPScore] HolenSlotUI component not found on prefab!");
+            Destroy(slotInstance);
+            return;
+        }
+
+        // Set the slot data (quantity = 1 for a single knocked out holen)
+        slotUI.SetSlot(holenData, 1);
+
+        Debug.Log($"[PVPScore] Displayed knocked out holen '{holenData.holenName}' in Player {playerNumber}'s panel");
     }
 
     public void OnTurnEnd()
@@ -427,12 +495,37 @@ public class PVPScore : MonoBehaviourPunCallbacks
         return allKnockedOut;
     }
 
+    /// <summary>
+    /// Clears the visual display panels of knocked out holens.
+    /// </summary>
+    private void ClearKnockedOutPanels()
+    {
+        if (player1KnockedOutPanel != null)
+        {
+            foreach (Transform child in player1KnockedOutPanel)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        if (player2KnockedOutPanel != null)
+        {
+            foreach (Transform child in player2KnockedOutPanel)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        Debug.Log("[PVPScore] Knocked out panels cleared");
+    }
+
     public void ClearData()
     {
         player1KnockedOut.Clear();
         player2KnockedOut.Clear();
         gameOverTriggered = false;
         noHolensTimer = 0f;
+        ClearKnockedOutPanels();
         Debug.Log("[PVPScore] Data cleared");
     }
 

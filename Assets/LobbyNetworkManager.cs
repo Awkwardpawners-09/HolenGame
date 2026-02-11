@@ -42,6 +42,9 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     [Header("Waiting UI (Optional)")]
     public GameObject waitingForPlayerPanel;
 
+    [Header("Transition object")]
+    public GameObject transitionObject;
+
     private WagerManager localWager;
     private WagerManager opponentWager;
 
@@ -528,6 +531,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.IsMasterClient)
             {
+                transitionObject.SetActive(true);
                 Invoke(nameof(LoadGameScene), 2f);
             }
         }
