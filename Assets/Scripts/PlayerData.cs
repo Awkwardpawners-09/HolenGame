@@ -10,6 +10,33 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerData
 {
+    // Add with other fields (around line 11)
+    public bool isSoundEnabled = true; // Default: sound ON
+
+    // Add to PlayerPrefs keys section (around line 20)
+    private const string KEY_SOUND_ENABLED = "SoundEnabled";
+
+    // ===================== SETTINGS METHODS =====================
+
+    /// <summary>
+    /// Toggle sound on/off and save
+    /// </summary>
+    public void ToggleSound()
+    {
+        isSoundEnabled = !isSoundEnabled;
+        Save();
+        Debug.Log($"[PlayerData] Sound {(isSoundEnabled ? "enabled" : "disabled")}");
+    }
+
+    /// <summary>
+    /// Set sound state directly
+    /// </summary>
+    public void SetSound(bool enabled)
+    {
+        isSoundEnabled = enabled;
+        Save();
+    }
+
     // Energy system constants
     public const int MAX_ENERGY = 10;
     public const int ENERGY_REGEN_MINUTES = 10; // Regenerate 1 energy every 10 minutes
@@ -206,6 +233,7 @@ public class PlayerData
         PlayerPrefs.SetInt(KEY_ENERGY, energy);
         PlayerPrefs.SetInt(KEY_HIGHEST_LEVEL, highestLevelUnlocked);
         PlayerPrefs.SetString(KEY_LAST_ENERGY_UPDATE, lastEnergyUpdateTime);
+        PlayerPrefs.SetInt(KEY_SOUND_ENABLED, isSoundEnabled ? 1 : 0);
         PlayerPrefs.Save();
     }
 
@@ -220,6 +248,8 @@ public class PlayerData
         data.energy = PlayerPrefs.GetInt(KEY_ENERGY, 10); // Start with max energy
         data.highestLevelUnlocked = PlayerPrefs.GetInt(KEY_HIGHEST_LEVEL, 1); // Default to level 1 unlocked
         data.lastEnergyUpdateTime = PlayerPrefs.GetString(KEY_LAST_ENERGY_UPDATE, DateTime.Now.ToString("o"));
+        data.isSoundEnabled = PlayerPrefs.GetInt(KEY_SOUND_ENABLED, 1) == 1; // Default ON
+
 
         // Regenerate energy based on time passed
         data.RegenerateEnergy();

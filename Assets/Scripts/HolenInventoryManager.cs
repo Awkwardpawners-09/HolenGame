@@ -10,6 +10,8 @@ public class HolenInventoryManager : MonoBehaviour
     [SerializeField]
     public List<HolenInventoryEntry> inventory = new List<HolenInventoryEntry>();
 
+
+
     [Header("Player Name")]
     [SerializeField] private string playerName = "";
     public string PlayerName => playerName; // Read-only access
@@ -17,6 +19,12 @@ public class HolenInventoryManager : MonoBehaviour
     [Header("Player Name Display UI")]
     [Tooltip("TMP Text in menu where player name is displayed")]
     [SerializeField] public TMPro.TMP_Text playerNameDisplayText;
+
+    // Add after the playerName field
+    [Header("Player Settings")]
+    private PlayerData playerData;
+
+
 
     /// <summary>
     /// Manually refresh the player name display (call this if UI doesn't auto-update)
@@ -36,19 +44,24 @@ public class HolenInventoryManager : MonoBehaviour
     public static event System.Action OnInventoryChanged;
     public static event System.Action<string> OnPlayerNameChanged;
 
+
+
     private void Awake()
     {
-        // ✅ Make this object persistent across scenes
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadInventory(); // Load inventory
-            LoadPlayerData(); // Load player name
+            LoadInventory();
+            LoadPlayerData();
+
+            // ✅ NEW: Load settings
+            playerData = PlayerData.Load();
+            ApplySoundSettings();
         }
         else
         {
-            Destroy(gameObject); // Prevent duplicates
+            Destroy(gameObject);
         }
     }
 
@@ -140,6 +153,8 @@ public class HolenInventoryManager : MonoBehaviour
             Debug.Log("No player name found (first launch)");
         }
     }
+
+
 
     // ===================== HOLEN INVENTORY METHODS =====================
 
@@ -394,5 +409,33 @@ public class HolenInventoryManager : MonoBehaviour
         }
 
         Debug.Log("🧪 [TESTING] ==============================");
+    }
+
+    // ===================== SETTINGS METHODS =====================
+
+    /// <summary>
+    /// Toggle sound on/off
+    /// </summary>
+    public void ToggleSound()
+    {
+        playerData.ToggleSound();
+        ApplySoundSettings();
+    }
+
+    /// <summary>
+    /// Get current sound state
+    /// </summary>
+    public bool IsSoundEnabled()
+    {
+        return playerData.isSoundEnabled;
+    }
+
+    /// <summary>
+    /// Apply sound settings to the game
+    /// </summary>
+    public void ApplySoundSettings()
+    {
+        AudioListener.volume = playerData.isSoundEnabled ? 1f : 0f;
+        Debug.Log($"🔊 Sound {(playerData.isSoundEnabled ? "enabled" : "disabled")}");
     }
 }
