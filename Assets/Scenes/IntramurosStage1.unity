@@ -2866,6 +2866,7 @@ MonoBehaviour:
   cameraFollowOffset: {x: 0, y: 8, z: -6}
   cameraAimScreenY: 0.8
   holenChanger: {fileID: 1928430660}
+  lifeDeductionDelay: 6.5
 --- !u!1 &311279512
 GameObject:
   m_ObjectHideFlags: 0
@@ -5142,6 +5143,7 @@ GameObject:
   - component: {fileID: 578806775}
   - component: {fileID: 578806777}
   - component: {fileID: 578806776}
+  - component: {fileID: 578806778}
   m_Layer: 0
   m_Name: Cube.015 (1)
   m_TagString: Untagged
@@ -5216,6 +5218,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578806774}
   m_Mesh: {fileID: -3537709356157935800, guid: 18237d03bbaee6d4989246c389f868a0, type: 3}
+--- !u!114 &578806778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578806774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: de0e27c27d41a2743a566336bc2d6f35, type: 2}
 --- !u!1001 &585113715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15174,6 +15193,7 @@ MonoBehaviour:
   cameraFollowOffset: {x: 0, y: 8, z: -6}
   cameraAimScreenY: 0.8
   holenChanger: {fileID: 1928430660}
+  lifeDeductionDelay: 6.5
 --- !u!95 &1637746029
 Animator:
   serializedVersion: 5
