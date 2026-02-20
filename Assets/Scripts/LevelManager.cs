@@ -20,8 +20,6 @@ public class LevelManager : MonoBehaviour
     public AudioSource audioSource;
 
     private int currentLives;
-    private float lifeLossTimer = 0f;
-    private bool isLifeReductionDelayed = false;
 
     [Header("Objective Settings")]
     [Tooltip("Check objectives you want to monitor")]
@@ -130,30 +128,10 @@ public class LevelManager : MonoBehaviour
             // Reset the timer if holens are inside the trigger area
             noHolenTimer = 0f;
         }
-
-        // Handle delayed life reduction
-        if (isLifeReductionDelayed)
-        {
-            lifeLossTimer += Time.deltaTime;
-
-            if (lifeLossTimer >= 6.5f)
-            {
-                ReduceLife();
-                isLifeReductionDelayed = false;
-                lifeLossTimer = 0f;
-            }
-        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // Handle ball collision for lives reduction
-        if (other.CompareTag("Ball"))
-        {
-            isLifeReductionDelayed = true;
-            Debug.Log("[LevelManager] Ball entered trigger. Life will be reduced in 6.5 seconds.");
-        }
-
         // Track holens (objectives) in trigger area
         if (checkNoHolensInField && other.CompareTag("Objective"))
         {
@@ -347,5 +325,17 @@ public class LevelManager : MonoBehaviour
     public int GetCurrentLives()
     {
         return currentLives;
+    }
+
+    /// <summary>
+    /// Called when a Holen respawns/turn ends to deduct a life
+    /// </summary>
+    public void OnHolenRespawn()
+    {
+        if (gameOverTriggered || levelCompleted)
+            return;
+
+        ReduceLife();
+        Debug.Log("[LevelManager] Life deducted due to turn end");
     }
 }

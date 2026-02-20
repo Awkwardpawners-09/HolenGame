@@ -83,32 +83,35 @@ public class WagerDataManager : MonoBehaviour
     /// <summary>
     /// Gets all holens from both players as individual spawn entries.
     /// Each player's selection is treated as a separate spawn, even if they selected the same holen.
+    /// Each selection spawns ONCE - quantity represents inventory amount, not wager amount.
     /// </summary>
     public List<WagerManager.SelectedHolenRecord> GetAllWageredHolensIndividual()
     {
         List<WagerManager.SelectedHolenRecord> allHolens = new List<WagerManager.SelectedHolenRecord>();
 
-        // Add Player 1's wagers
+        // Add Player 1's wagers (one spawn per selection)
         if (player1Wager != null && player1Wager.selectedHolens != null)
         {
             foreach (var holen in player1Wager.selectedHolens)
             {
-                allHolens.Add(new WagerManager.SelectedHolenRecord(holen.holenID, holen.quantity));
+                // Add each selection once - quantity is just inventory info, not spawn count
+                allHolens.Add(new WagerManager.SelectedHolenRecord(holen.holenID, 1));
             }
             Debug.Log($"[WagerDataManager] Added {player1Wager.selectedHolens.Count} holens from Player 1");
         }
 
-        // Add Player 2's wagers
+        // Add Player 2's wagers (one spawn per selection)
         if (player2Wager != null && player2Wager.selectedHolens != null)
         {
             foreach (var holen in player2Wager.selectedHolens)
             {
-                allHolens.Add(new WagerManager.SelectedHolenRecord(holen.holenID, holen.quantity));
+                // Add each selection once - quantity is just inventory info, not spawn count
+                allHolens.Add(new WagerManager.SelectedHolenRecord(holen.holenID, 1));
             }
             Debug.Log($"[WagerDataManager] Added {player2Wager.selectedHolens.Count} holens from Player 2");
         }
 
-        Debug.Log($"[WagerDataManager] Retrieved all wagers: {allHolens.Count} total holen selections (duplicates included)");
+        Debug.Log($"[WagerDataManager] Retrieved all wagers: {allHolens.Count} total holens to spawn (1 per selection, duplicates allowed if both players chose same holen)");
         return allHolens;
     }
 

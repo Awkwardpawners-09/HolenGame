@@ -36,6 +36,10 @@ public class HolensLauncher : MonoBehaviour
     [Header("Holen System")]
     public HolenChanger holenChanger;
 
+    [Header("Life System")]
+    [Tooltip("Time to wait before deducting life after launch (seconds)")]
+    public float lifeDeductionDelay = 6.5f;
+
     private GameObject currentBall;
     private bool isBusy = false;
     private bool hasLaunched = false;
@@ -245,13 +249,11 @@ public class HolensLauncher : MonoBehaviour
     private void ShowTrajectoryPreview()
     {
         // Calculate direction from ball position to swipe end point
-        Vector3 direction = (swipeWorldEnd - swipeWorldStart).normalized;
+        Vector3 direction = (swipeWorldEnd - swipeWorldStart);
+        direction.y = 0;
+        direction.Normalize();
 
-        // Handle case where direction is invalid
-        if (direction.magnitude < 0.1f)
-            return;
-
-        float swipeDistance = Vector2.Distance(swipeStartPos, swipeEndPos);
+        float swipeDistance = (swipeEndPos - swipeStartPos).magnitude;
         float force = CalculateLaunchForce(swipeDistance);
 
         trajectoryLine.enabled = true;
@@ -374,7 +376,19 @@ public class HolensLauncher : MonoBehaviour
 
         LaunchBall(direction, force);
 
-        yield return new WaitForSeconds(7f);
+        // Wait for the specified delay before deducting life
+        yield return new WaitForSeconds(lifeDeductionDelay);
+
+        // Deduct life after the turn
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
+        if (levelManager != null)
+        {
+            levelManager.OnHolenRespawn();
+            Debug.Log("[HolensLauncher] Life deducted after turn");
+        }
+
+        // Wait the remaining time to complete the 7 second sequence
+        yield return new WaitForSeconds(7f - lifeDeductionDelay);
 
         // Reset camera position and look target
         if (cinemachineCamera != null)

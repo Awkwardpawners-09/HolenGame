@@ -2,7 +2,7 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class WagerSpawnPlacer : MonoBehaviour
+public class WagerSpawnPlacer : MonoBehaviourPun
 {
     [Header("Slot settings")]
     public string slotNamePrefix = "Slot";    // e.g., "Slot1", "Slot2"...
@@ -50,6 +50,11 @@ public class WagerSpawnPlacer : MonoBehaviour
             return;
         }
 
+        // **FIX: Set deterministic seed BEFORE collecting slots to ensure consistency**
+        int seed = PhotonNetwork.CurrentRoom.Name.GetHashCode();
+        Random.InitState(seed);
+        Debug.Log($"[WagerSpawnPlacer] Initialized Random with deterministic seed: {seed}");
+
         // Collect all Slot children
         var slots = new List<Transform>();
         foreach (Transform child in transform)
@@ -63,6 +68,8 @@ public class WagerSpawnPlacer : MonoBehaviour
             Debug.LogWarning("[WagerSpawnPlacer] No Slot children found under PlayField.");
             return;
         }
+
+        Debug.Log($"[WagerSpawnPlacer] Found {slots.Count} slots");
 
         // Get wager data based on spawnForPlayer setting
         List<WagerManager.SelectedHolenRecord> wagersToSpawn;
@@ -103,14 +110,13 @@ public class WagerSpawnPlacer : MonoBehaviour
             Debug.Log($"[WagerSpawnPlacer] - Wager record: HolenID={rec.holenID}, Quantity={rec.quantity}");
         }
 
-        // Build list of HolenData to spawn (one instance per selection, even if duplicate holenIDs)
+        // Build list of HolenData to spawn
         var items = new List<HolenData>();
         foreach (var rec in wagersToSpawn)
         {
             var data = inv.GetHolenData(rec.holenID);
             if (data != null && data.holenPrefab != null)
             {
-                // Add each selection as a separate spawn (duplicates allowed)
                 items.Add(data);
                 Debug.Log($"[WagerSpawnPlacer] Added {data.holenName} (ID: {rec.holenID}) to spawn list");
             }
@@ -126,28 +132,33 @@ public class WagerSpawnPlacer : MonoBehaviour
             return;
         }
 
+        Debug.Log($"[WagerSpawnPlacer] Total valid items to spawn: {items.Count}");
+
         // Check if we have enough slots
         if (items.Count > slots.Count)
         {
             Debug.LogWarning($"[WagerSpawnPlacer] Not enough slots! Need {items.Count} but only have {slots.Count}. Some holens won't spawn.");
         }
 
-        // Randomize if enabled
+        // Randomize if enabled (already seeded earlier)
         if (randomizeOrder)
         {
             Shuffle(slots);
             Shuffle(items);
+            Debug.Log($"[WagerSpawnPlacer] Randomized spawn order");
         }
 
         // Spawn holens at slot positions
         int spawnCount = Mathf.Min(items.Count, slots.Count);
 
-        Debug.Log($"[WagerSpawnPlacer] Spawning {spawnCount} holens at {slots.Count} slots");
+        Debug.Log($"[WagerSpawnPlacer] About to spawn {spawnCount} holens");
 
         for (int i = 0; i < spawnCount; i++)
         {
             var slot = slots[i];
             var data = items[i];
+
+            Debug.Log($"[WagerSpawnPlacer] Spawning {data.holenName} at slot {slot.name} (position: {slot.position})");
 
             // Use PhotonNetwork.Instantiate for multiplayer sync
             GameObject go = PhotonNetwork.Instantiate(
@@ -160,13 +171,16 @@ public class WagerSpawnPlacer : MonoBehaviour
             go.transform.SetParent(transform);
             spawnedHolens.Add(go);
 
-            Debug.Log($"[WagerSpawnPlacer] Spawned {data.holenName} at {slot.name}");
+            Debug.Log($"[WagerSpawnPlacer] ✅ Successfully spawned {data.holenName} at {slot.name}");
 
+            // Destroy slot marker (local only - non-networked)
             if (destroySlotAfterSpawn)
+            {
                 Destroy(slot.gameObject);
+            }
         }
 
-        Debug.Log($"[WagerSpawnPlacer] ✅ Successfully spawned {spawnCount} holens");
+        Debug.Log($"[WagerSpawnPlacer] ✅✅✅ Spawning complete! Total spawned: {spawnCount} holens");
     }
 
     private void Shuffle<T>(List<T> list)

@@ -69,6 +69,7 @@ MonoBehaviour:
   - RPC_RequestForceApplication
   - RPC_SwitchTurn
   - RPC_RequestShootHolen
+  - RPC_DestroySlot
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
