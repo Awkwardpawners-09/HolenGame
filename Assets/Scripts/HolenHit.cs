@@ -5,8 +5,8 @@ public class HolenHit : MonoBehaviour
     // Drag your particle prefab here in the inspector
     public GameObject particleEffectPrefab;
 
-    // Drag your sound effect here in the inspector
-    public AudioClip soundEffect;
+    // Drag multiple sound effects here in the inspector - one will be chosen randomly
+    public AudioClip[] soundEffects;
 
     // The audio source to play the sound (it will be created automatically if you don't assign one)
     private AudioSource audioSource;
@@ -14,7 +14,7 @@ public class HolenHit : MonoBehaviour
     // Reference to the background music AudioSource (you can drag this in the inspector)
     public AudioSource backgroundMusic;
 
-    // Set the volume of the hit sound (make it louder than the background music)
+    // Base volume of the hit sound - actual volume will be randomized between 80-120% of this value
     public float hitSoundVolume = 1.0f;
 
     private void Start()
@@ -38,14 +38,21 @@ public class HolenHit : MonoBehaviour
                 Instantiate(particleEffectPrefab, collision.contacts[0].point, Quaternion.identity);
             }
 
-            // Play the hit sound effect if it's assigned
-            if (soundEffect != null && audioSource != null)
+            // Play a randomly selected hit sound effect if any are assigned
+            if (soundEffects != null && soundEffects.Length > 0 && audioSource != null)
             {
-                // Temporarily increase the volume of the hit sound effect
-                audioSource.volume = hitSoundVolume;
+                // Pick a random clip from the array
+                AudioClip randomClip = soundEffects[Random.Range(0, soundEffects.Length)];
 
-                // Play the hit sound
-                audioSource.PlayOneShot(soundEffect);
+                if (randomClip != null)
+                {
+                    // Randomize volume between 80% and 120% of the base hit sound volume
+                    float randomVolume = hitSoundVolume * Random.Range(0.8f, 1.2f);
+                    audioSource.volume = randomVolume;
+
+                    // Play the selected sound
+                    audioSource.PlayOneShot(randomClip, randomVolume);
+                }
             }
         }
     }

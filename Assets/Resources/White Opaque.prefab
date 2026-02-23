@@ -152,7 +152,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleEffectPrefab: {fileID: 4927711562988715638, guid: fc626deb7228f1f4792180c7d8ad123a, type: 3}
-  soundEffect: {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  soundEffects:
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
+  - {fileID: 8300000, guid: 49a84bc18a9bf7840b0d14fa96f0be32, type: 3}
   backgroundMusic: {fileID: 0}
   hitSoundVolume: 1
 --- !u!114 &-275092049909924006
@@ -176,7 +179,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 489457883166870360}
   - {fileID: 477615190711541994}
-  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

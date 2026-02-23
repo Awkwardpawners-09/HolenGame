@@ -1,0 +1,11 @@
+Model Information:
+* title:	circle green
+* source:	https://sketchfab.com/3d-models/circle-green-21796dcbade04214a7259193c88de4b4
+* author:	Tahni (https://sketchfab.com/Tahni)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "circle green" (https://sketchfab.com/3d-models/circle-green-21796dcbade04214a7259193c88de4b4) by Tahni (https://sketchfab.com/Tahni) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

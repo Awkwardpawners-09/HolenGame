@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -46,6 +46,32 @@ public class LevelManager : MonoBehaviour
 
     [Tooltip("Delay before enabling game over objects (seconds)")]
     public float gameOverDelay = 3f;
+
+    [Header("Turn Feedback (Launch Result)")]
+    [Tooltip("Enabled briefly when the player launches but knocks out NO holens. Shown after the holen respawns.")]
+    public GameObject feedbackNoKnockout;
+
+    [Tooltip("Enabled briefly when exactly 1 holen is knocked out of the field.")]
+    public GameObject feedback1Knockout;
+
+    [Tooltip("Enabled briefly when exactly 2 holens are knocked out of the field.")]
+    public GameObject feedback2Knockout;
+
+    [Tooltip("Enabled briefly when exactly 3 holens are knocked out of the field.")]
+    public GameObject feedback3Knockout;
+
+    [Tooltip("Enabled briefly when exactly 4 holens are knocked out of the field.")]
+    public GameObject feedback4Knockout;
+
+    [Tooltip("Enabled briefly when 5 or more holens are knocked out of the field.")]
+    public GameObject feedback5Knockout;
+
+    [Tooltip("How long (seconds) the feedback object stays visible before being disabled again.")]
+    public float feedbackDisplayDuration = 4f;
+
+    private Coroutine activeFeedbackCoroutine;
+    private bool turnInProgress = false;
+    private int holensKnockedOutThisTurn = 0;
 
     [Header("Scene Management (Optional)")]
     [Tooltip("Load a scene after level complete? Leave empty to disable")]
@@ -96,6 +122,14 @@ public class LevelManager : MonoBehaviour
 
         if (transitionObject != null)
             transitionObject.SetActive(false);
+
+        // Disable all feedback objects at start
+        DisableFeedbackObject(feedbackNoKnockout);
+        DisableFeedbackObject(feedback1Knockout);
+        DisableFeedbackObject(feedback2Knockout);
+        DisableFeedbackObject(feedback3Knockout);
+        DisableFeedbackObject(feedback4Knockout);
+        DisableFeedbackObject(feedback5Knockout);
     }
 
     void Update()
@@ -147,6 +181,14 @@ public class LevelManager : MonoBehaviour
         {
             holensInTrigger.Remove(other.gameObject);
             Debug.Log("[LevelManager] Holen exited: " + other.name + ". Total in area: " + holensInTrigger.Count);
+
+            // If a turn is in progress, count the knockout and show feedback immediately
+            if (turnInProgress)
+            {
+                holensKnockedOutThisTurn++;
+                Debug.Log($"[LevelManager] Knockout #{holensKnockedOutThisTurn} this turn — showing feedback immediately.");
+                ShowTurnFeedback(holensKnockedOutThisTurn, false);
+            }
         }
     }
 
@@ -337,5 +379,107 @@ public class LevelManager : MonoBehaviour
 
         ReduceLife();
         Debug.Log("[LevelManager] Life deducted due to turn end");
+    }
+
+    // ─────────────────────────────────────────────
+    //  TURN FEEDBACK SYSTEM
+    // ─────────────────────────────────────────────
+
+    /// <summary>
+    /// Returns the current number of holens tracked inside the play field trigger.
+    /// Called by HolensLauncher at launch time to capture a baseline count.
+    /// </summary>
+    public int GetHolensInFieldCount()
+    {
+        return holensInTrigger.Count;
+    }
+
+    /// <summary>
+    /// Called by HolensLauncher the moment the holen is launched.
+    /// Starts tracking knockouts for this turn so OnTriggerExit can fire feedback immediately.
+    /// </summary>
+    public void OnTurnStarted()
+    {
+        turnInProgress = true;
+        holensKnockedOutThisTurn = 0;
+        Debug.Log("[LevelManager] Turn started — tracking knockouts.");
+    }
+
+    /// <summary>
+    /// Called by HolensLauncher after the holen has fully respawned.
+    /// Ends knockout tracking for this turn and triggers the no-knockout feedback if needed.
+    /// </summary>
+    public void OnTurnEnded()
+    {
+        turnInProgress = false;
+        Debug.Log($"[LevelManager] Turn ended — total knockouts: {holensKnockedOutThisTurn}");
+
+        // Only show the no-knockout feedback here; 1–5 are shown immediately via OnTriggerExit
+        if (holensKnockedOutThisTurn == 0)
+        {
+            ShowTurnFeedback(0, false);
+        }
+    }
+
+    /// <summary>
+    /// Called by HolensLauncher after the turn ends to show the appropriate feedback object.
+    /// knockedOut = how many holens left the field during this turn.
+    /// showAfterRespawn = true when the feedback should appear after the holen respawns (0-knockout case).
+    /// </summary>
+    public void ShowTurnFeedback(int knockedOut, bool showAfterRespawn = false)
+    {
+        if (gameOverTriggered || levelCompleted)
+            return;
+
+        GameObject target = GetFeedbackObject(knockedOut);
+        if (target == null)
+        {
+            Debug.Log($"[LevelManager] No feedback object assigned for {knockedOut} knockout(s).");
+            return;
+        }
+
+        if (activeFeedbackCoroutine != null)
+            StopCoroutine(activeFeedbackCoroutine);
+
+        activeFeedbackCoroutine = StartCoroutine(DisplayFeedback(target, showAfterRespawn));
+    }
+
+    private GameObject GetFeedbackObject(int knockedOut)
+    {
+        switch (knockedOut)
+        {
+            case 0: return feedbackNoKnockout;
+            case 1: return feedback1Knockout;
+            case 2: return feedback2Knockout;
+            case 3: return feedback3Knockout;
+            case 4: return feedback4Knockout;
+            default: return feedback5Knockout; // 5+
+        }
+    }
+
+    private IEnumerator DisplayFeedback(GameObject feedbackObj, bool waitForRespawn)
+    {
+        // Disable all feedback objects first so only one is shown at a time
+        DisableFeedbackObject(feedbackNoKnockout);
+        DisableFeedbackObject(feedback1Knockout);
+        DisableFeedbackObject(feedback2Knockout);
+        DisableFeedbackObject(feedback3Knockout);
+        DisableFeedbackObject(feedback4Knockout);
+        DisableFeedbackObject(feedback5Knockout);
+
+        feedbackObj.SetActive(true);
+        Debug.Log($"[LevelManager] Feedback shown: {feedbackObj.name}");
+
+        yield return new WaitForSeconds(feedbackDisplayDuration);
+
+        DisableFeedbackObject(feedbackObj);
+        Debug.Log($"[LevelManager] Feedback hidden: {feedbackObj.name}");
+        activeFeedbackCoroutine = null;
+    }
+
+    private void DisableFeedbackObject(GameObject obj)
+    {
+        if (obj != null && obj.activeSelf)
+            obj.SetActive(false);
     }
 }

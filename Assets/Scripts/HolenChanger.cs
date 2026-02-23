@@ -7,100 +7,95 @@ public class HolenChanger : MonoBehaviour
     public HolenData holen2Data;
     public HolenData holen3Data;
 
+    // UI image that shows which holen is currently selected
     public Image chosenHolenImage;
-    public GameObject chosenHolenPrefab;
+
+    // NOTE: chosenHolenPrefab has been removed.
+    // The HolensLauncher is the single source of truth for spawning the holen in the scene.
+    // Instantiating a separate preview object here was causing a second holen to appear.
 
     public HolensLauncher holensLauncher;
 
-    // Variable to hold the default HolenData (current selected Holen)
     private HolenData currentHolenData;
 
-    // Store references to the buttons for enabling/disabling
     public Button holen1Button;
     public Button holen2Button;
     public Button holen3Button;
 
     void Start()
     {
-        // Set the first HolenData as the default on start (this will be used as the initial prefab)
         currentHolenData = holen1Data;
-
-        // Set the initial Holen as selected
-        UpdateHolen(currentHolenData);
+        // Only update the UI on start – do NOT call ChangeBallPrefab here
+        // because HolensLauncher.Start() already syncs via GetCurrentHolenData().
+        UpdateHolenUI(currentHolenData);
     }
 
-    // This method will be exposed in the Unity Inspector for button clicks
+    // ─────────────────────────────────────────────
+    //  BUTTON CALLBACKS
+    // ─────────────────────────────────────────────
     public void ChangeHolen1()
     {
-        if (!holensLauncher.GetIsBusy()) // Check if not busy (in launching state)
-        {
-            UpdateHolen(holen1Data);
-        }
+        if (!holensLauncher.GetIsBusy())
+            TryChangeHolen(holen1Data);
     }
 
     public void ChangeHolen2()
     {
-        if (!holensLauncher.GetIsBusy()) // Check if not busy (in launching state)
-        {
-            UpdateHolen(holen2Data);
-        }
+        if (!holensLauncher.GetIsBusy())
+            TryChangeHolen(holen2Data);
     }
 
     public void ChangeHolen3()
     {
-        if (!holensLauncher.GetIsBusy()) // Check if not busy (in launching state)
-        {
-            UpdateHolen(holen3Data);
-        }
+        if (!holensLauncher.GetIsBusy())
+            TryChangeHolen(holen3Data);
     }
 
-    // Function to change the image and prefab based on selected HolenData
-    void UpdateHolen(HolenData holenData)
+    // ─────────────────────────────────────────────
+    //  INTERNAL HELPERS
+    // ─────────────────────────────────────────────
+    private void TryChangeHolen(HolenData holenData)
     {
-        // Only update if the HolenData is different from the current
-        if (currentHolenData != holenData)
-        {
-            // Set the new HolenData as the current selected Holen
-            currentHolenData = holenData;
+        if (holenData == null) return;
+        if (currentHolenData == holenData) return; // Already selected – nothing to do
 
-            // Change the image of the "ChosenHolen" based on the selected HolenData
-            if (chosenHolenImage != null)
-            {
-                chosenHolenImage.sprite = holenData.holenIcon;
-            }
+        currentHolenData = holenData;
+        UpdateHolenUI(holenData);
 
-            // Update the HolensLauncher with the new prefab immediately
-            if (holensLauncher != null)
-            {
-                holensLauncher.ChangeBallPrefab(holenData.holenPrefab);
-            }
-
-            // Optionally, instantiate the chosen prefab in a specific location
-            if (chosenHolenPrefab != null)
-            {
-                Destroy(chosenHolenPrefab);
-                chosenHolenPrefab = Instantiate(holenData.holenPrefab, transform.position, Quaternion.identity);
-            }
-        }
+        // Tell the launcher to swap the ball.
+        // ChangeBallPrefab() in the launcher destroys the current ball
+        // and spawns exactly ONE new ball – no duplicates.
+        if (holensLauncher != null)
+            holensLauncher.ChangeBallPrefab(holenData.holenPrefab);
     }
 
-    // Disable buttons when launching is in progress
+    /// <summary>Updates only the UI image – does NOT spawn anything in the scene.</summary>
+    private void UpdateHolenUI(HolenData holenData)
+    {
+        if (chosenHolenImage != null && holenData != null)
+            chosenHolenImage.sprite = holenData.holenIcon;
+    }
+
+    // ─────────────────────────────────────────────
+    //  BUTTON ENABLE / DISABLE  (called by launcher)
+    // ─────────────────────────────────────────────
     public void DisableButtons()
     {
-        holen1Button.interactable = false;
-        holen2Button.interactable = false;
-        holen3Button.interactable = false;
+        if (holen1Button != null) holen1Button.interactable = false;
+        if (holen2Button != null) holen2Button.interactable = false;
+        if (holen3Button != null) holen3Button.interactable = false;
     }
 
-    // Re-enable buttons after launch
     public void EnableButtons()
     {
-        holen1Button.interactable = true;
-        holen2Button.interactable = true;
-        holen3Button.interactable = true;
+        if (holen1Button != null) holen1Button.interactable = true;
+        if (holen2Button != null) holen2Button.interactable = true;
+        if (holen3Button != null) holen3Button.interactable = true;
     }
 
-    // Method to get the current selected Holen (HolenData)
+    // ─────────────────────────────────────────────
+    //  GETTER
+    // ─────────────────────────────────────────────
     public HolenData GetCurrentHolenData()
     {
         return currentHolenData;
