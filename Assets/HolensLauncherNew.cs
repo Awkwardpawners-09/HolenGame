@@ -72,6 +72,14 @@ public class HolensLauncherNew : MonoBehaviour
     [Range(0.1f, 2.0f)]
     public float arcForceMultiplier = 1.0f;
 
+    [Header("Arc Drag Targeting")]
+    [Tooltip("How far ahead of the finger drag the target indicator moves. " +
+             "Higher = target overshoots further, harder to aim precisely.")]
+    public float arcDragAmplification = 2.5f;
+    [Tooltip("Maximum world-space radius the target can travel from the holen. " +
+             "Keeps targets reachable but limits how far a wild drag goes.")]
+    public float arcMaxTargetRadius = 20f;
+
     // ─────────────────────────────────────────────
     //  DOWNWARD MODE SETTINGS
     // ─────────────────────────────────────────────
@@ -429,8 +437,69 @@ public class HolensLauncherNew : MonoBehaviour
     {
         swipeEndPos = screenPos;
 
-        if (activeLaunchMode != LaunchMode.Default)
+        if (activeLaunchMode == LaunchMode.Arc)
         {
+            // ── NEW ARC DRAG TARGETING ─────────────────────────────────────────
+            // The player drags FROM the holen's screen position.
+            // We project the drag delta into world space (on the ground plane at
+            // holen height) then amplify it so the target shoots ahead of the
+            // finger — making the mechanic harder to use precisely.
+
+            Vector3 holenWorldPos = currentBall.transform.position;
+            Vector3 holenScreenPos3 = mainCamera.WorldToScreenPoint(holenWorldPos);
+            Vector2 holenScreenPos2 = new Vector2(holenScreenPos3.x, holenScreenPos3.y);
+
+            // Raw drag delta from holen screen position
+            Vector2 dragDelta = screenPos - holenScreenPos2;
+
+            // Only activate targeting once past the dead zone
+            if (dragDelta.magnitude < swipeDeadZone)
+            {
+                raycastTargetValid = false;
+                if (targetIndicator != null) targetIndicator.SetActive(false);
+                return;
+            }
+
+            // Convert two screen points to world points on the holen's ground plane
+            Plane groundPlane = new Plane(Vector3.up, holenWorldPos);
+
+            Ray holenRay = mainCamera.ScreenPointToRay(holenScreenPos2);
+            Ray fingerRay = mainCamera.ScreenPointToRay(screenPos);
+
+            if (groundPlane.Raycast(holenRay, out float holenDist) &&
+                groundPlane.Raycast(fingerRay, out float fingerDist))
+            {
+                Vector3 holenGroundPt = holenRay.GetPoint(holenDist);
+                Vector3 fingerGroundPt = fingerRay.GetPoint(fingerDist);
+
+                // World-space delta from holen to where the finger points on the ground
+                Vector3 worldDelta = fingerGroundPt - holenGroundPt;
+
+                // Amplify so target races ahead of the finger
+                Vector3 amplifiedDelta = worldDelta * arcDragAmplification;
+
+                // Clamp to max radius so it stays reachable
+                if (amplifiedDelta.magnitude > arcMaxTargetRadius)
+                    amplifiedDelta = amplifiedDelta.normalized * arcMaxTargetRadius;
+
+                raycastTarget = holenGroundPt + amplifiedDelta;
+                raycastTargetValid = true;
+
+                if (targetIndicator != null)
+                {
+                    targetIndicator.SetActive(true);
+                    targetIndicator.transform.position = raycastTarget;
+                }
+            }
+            else
+            {
+                raycastTargetValid = false;
+                if (targetIndicator != null) targetIndicator.SetActive(false);
+            }
+        }
+        else if (activeLaunchMode == LaunchMode.Downward)
+        {
+            // Downward mode keeps the original direct-raycast targeting
             Ray ray = mainCamera.ScreenPointToRay(screenPos);
             if (Physics.Raycast(ray, out RaycastHit hit, 500f, groundLayerMask))
             {
@@ -449,7 +518,7 @@ public class HolensLauncherNew : MonoBehaviour
                     targetIndicator.SetActive(false);
             }
         }
-        else
+        else // Default mode
         {
             if (targetIndicator != null)
                 targetIndicator.SetActive(false);
