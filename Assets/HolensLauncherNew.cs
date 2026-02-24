@@ -141,6 +141,14 @@ public class HolensLauncherNew : MonoBehaviour
     [Header("Holen System")]
     public HolenChanger holenChanger;
 
+    [Header("Holen Select Buttons")]
+    [Tooltip("Assign the Button for Holen 1 here — no OnClick setup needed, wired automatically.")]
+    public Button holenSelectButton1;
+    [Tooltip("Assign the Button for Holen 2 here — no OnClick setup needed, wired automatically.")]
+    public Button holenSelectButton2;
+    [Tooltip("Assign the Button for Holen 3 here — no OnClick setup needed, wired automatically.")]
+    public Button holenSelectButton3;
+
     // ─────────────────────────────────────────────
     //  LIFE SYSTEM
     // ─────────────────────────────────────────────
@@ -200,25 +208,27 @@ public class HolensLauncherNew : MonoBehaviour
         if (swipeIndicator != null)
             swipeIndicator.SetActive(false);
 
-        // ── Trajectory line starts hidden. It only appears while the player is aiming. ──
+        // ── Trajectory line starts hidden ──────────────────────────────────────
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;
             trajectoryLine.startColor = lineColor;
             trajectoryLine.endColor = lineColor;
-            // NOTE: For the alpha (transparency) to work, your LineRenderer material
-            // must use a transparent shader such as "Sprites/Default" or
-            // "Particles/Standard Unlit". The default "Default-Line" ignores alpha.
         }
 
         // Target indicator is always hidden until the player aims in Arc/Downward mode
         if (targetIndicator != null)
             targetIndicator.SetActive(false);
 
-        // Wire up mode buttons
+        // Wire up launch mode buttons
         if (buttonModeDefault != null) buttonModeDefault.onClick.AddListener(() => SetLaunchMode(LaunchMode.Default));
         if (buttonModeArc != null) buttonModeArc.onClick.AddListener(() => SetLaunchMode(LaunchMode.Arc));
         if (buttonModeDownward != null) buttonModeDownward.onClick.AddListener(() => SetLaunchMode(LaunchMode.Downward));
+
+        // Wire up holen select buttons directly here — no OnClick needed in Inspector
+        if (holenSelectButton1 != null) holenSelectButton1.onClick.AddListener(() => SelectHolenSlot(1));
+        if (holenSelectButton2 != null) holenSelectButton2.onClick.AddListener(() => SelectHolenSlot(2));
+        if (holenSelectButton3 != null) holenSelectButton3.onClick.AddListener(() => SelectHolenSlot(3));
 
         RefreshModeButtonVisuals();
         SpawnCurrentHolen();
@@ -243,6 +253,52 @@ public class HolensLauncherNew : MonoBehaviour
                     trajectoryLine.enabled = false;
             }
         }
+    }
+
+    // ─────────────────────────────────────────────
+    //  HOLEN SELECTION  (called by the wired buttons)
+    // ─────────────────────────────────────────────
+    /// <summary>
+    /// Selects a holen slot (1, 2, or 3) directly on the launcher.
+    /// Destroys the current ball and spawns the new one — identical flow to SetLaunchMode.
+    /// Remove any OnClick entries from your buttons; they are wired automatically in Start().
+    /// </summary>
+    private void SelectHolenSlot(int slot)
+    {
+        if (hasLaunched || isBusy)
+        {
+            Debug.Log("[HolensLauncher] Cannot change holen while busy or in flight.");
+            return;
+        }
+
+        if (holenChanger == null)
+        {
+            Debug.LogWarning("[HolensLauncher] holenChanger is not assigned.");
+            return;
+        }
+
+        // Determine which HolenData to use
+        HolenData targetData = slot switch
+        {
+            1 => holenChanger.holen1Data,
+            2 => holenChanger.holen2Data,
+            3 => holenChanger.holen3Data,
+            _ => null
+        };
+
+        if (targetData == null || targetData.holenPrefab == null)
+        {
+            Debug.LogWarning($"[HolensLauncher] HolenData for slot {slot} is null or has no prefab.");
+            return;
+        }
+
+        // Update HolenChanger's internal selection so its UI icon stays in sync
+        // We call the existing setter logic directly via a new lightweight path:
+        holenChanger.SetCurrentHolenDataDirect(targetData);
+
+        // Update our own tracked prefab and swap the ball — same as SetLaunchMode does
+        holensBallPrefab = targetData.holenPrefab;
+        SpawnCurrentHolen();
     }
 
     // ─────────────────────────────────────────────
@@ -294,10 +350,6 @@ public class HolensLauncherNew : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Applied while the holen is sitting at the spawn point waiting to be launched.
-    /// Uses cameraFollowOffset and cameraAimScreenY (typically high on screen).
-    /// </summary>
     private void ApplyAimCameraSettings()
     {
         if (cinemachineCamera == null) return;
@@ -307,20 +359,11 @@ public class HolensLauncherNew : MonoBehaviour
         if (composer != null) composer.m_ScreenY = cameraAimScreenY;
     }
 
-    /// <summary>
-    /// Applied the moment the holen is launched.
-    /// Detaches CinemachineTransposer Follow so the camera STAYS in place,
-    /// but keeps LookAt on the holen so it rotates to track it.
-    /// Screen Y is set to cameraFlightScreenY (0.5 = dead centre) so the
-    /// holen appears in the middle of the screen throughout the flight.
-    /// </summary>
     private void ApplyFlightCameraSettings()
     {
         if (cinemachineCamera == null) return;
-        // Stop the transposer from chasing the holen — camera stays at its current world position
         var transposer = cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();
         if (transposer != null) transposer.m_FollowOffset = Vector3.zero;
-        // Composer: centre the look-at target on screen
         var composer = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();
         if (composer != null) composer.m_ScreenY = cameraFlightScreenY;
     }
@@ -394,7 +437,6 @@ public class HolensLauncherNew : MonoBehaviour
                 raycastTarget = hit.point;
                 raycastTargetValid = true;
 
-                // Show the targeting indicator at the raycast landing point
                 if (targetIndicator != null)
                 {
                     targetIndicator.SetActive(true);
@@ -403,14 +445,12 @@ public class HolensLauncherNew : MonoBehaviour
             }
             else
             {
-                // Finger moved off the ground layer — hide indicator
                 if (targetIndicator != null)
                     targetIndicator.SetActive(false);
             }
         }
         else
         {
-            // Default mode never uses the indicator
             if (targetIndicator != null)
                 targetIndicator.SetActive(false);
 
@@ -433,7 +473,6 @@ public class HolensLauncherNew : MonoBehaviour
 
         isSwiping = false;
 
-        // Hide the line and indicator as soon as the finger lifts
         if (trajectoryLine != null) trajectoryLine.enabled = false;
         if (swipeIndicator != null) swipeIndicator.SetActive(false);
         if (targetIndicator != null) targetIndicator.SetActive(false);
@@ -665,8 +704,6 @@ public class HolensLauncherNew : MonoBehaviour
         if (trajectoryLine != null) trajectoryLine.enabled = false;
         if (holenChanger != null) holenChanger.DisableButtons();
 
-        // Notify LevelManager that a turn has begun — resets knockout counter and
-        // enables OnTriggerExit to fire feedback the instant a holen leaves the field
         LevelManager levelManager = FindObjectOfType<LevelManager>();
         if (levelManager != null)
             levelManager.OnTurnStarted();
@@ -695,7 +732,20 @@ public class HolensLauncherNew : MonoBehaviour
             }
         }
 
-        if (currentBall != null) { Destroy(currentBall); currentBall = null; }
+        // Destroy launched ball and sweep strays
+        if (currentBall != null)
+        {
+            currentBall.tag = "Untagged";
+            DestroyImmediate(currentBall);
+            currentBall = null;
+        }
+        foreach (GameObject stray in GameObject.FindGameObjectsWithTag("Ball"))
+        {
+            stray.transform.parent = null;
+            DestroyImmediate(stray);
+        }
+        for (int i = holensPosition.childCount - 1; i >= 0; i--)
+            DestroyImmediate(holensPosition.GetChild(i).gameObject);
 
         isBusy = false;
         hasLaunched = false;
@@ -705,8 +755,6 @@ public class HolensLauncherNew : MonoBehaviour
 
         if (holenChanger != null) holenChanger.EnableButtons();
 
-        // Notify LevelManager the turn is fully over (holen has respawned).
-        // LevelManager will show the no-knockout feedback here if nothing was knocked out.
         if (levelManager != null)
             levelManager.OnTurnEnded();
     }
@@ -721,20 +769,15 @@ public class HolensLauncherNew : MonoBehaviour
         Rigidbody rb = currentBall.GetComponent<Rigidbody>();
         currentBall.transform.parent = null;
         rb.isKinematic = false;
-        // VelocityChange applies velocity directly regardless of Rigidbody mass
         rb.AddForce(velocity, ForceMode.VelocityChange);
 
-        // ── Camera: freeze position, only rotate to track the flying holen ────
         if (cinemachineCamera != null)
         {
-            // Detach Follow → Cinemachine stops moving the camera body.
-            // Keep LookAt → the camera still rotates to centre the holen on screen.
             cinemachineCamera.Follow = null;
             cinemachineCamera.LookAt = currentBall.transform;
             ApplyFlightCameraSettings();
         }
 
-        // ── Sound ─────────────────────────────────────────────────────────────
         if (audioSource != null && launchSoundClip != null)
             audioSource.PlayOneShot(launchSoundClip);
 
@@ -746,7 +789,7 @@ public class HolensLauncherNew : MonoBehaviour
     // ─────────────────────────────────────────────
     private void SpawnCurrentHolen()
     {
-        // 1. Determine the correct prefab (HolenChanger takes priority)
+        // 1. Determine the correct prefab
         GameObject prefabToUse = holensBallPrefab;
         if (holenChanger != null)
         {
@@ -764,27 +807,39 @@ public class HolensLauncherNew : MonoBehaviour
             return;
         }
 
-        // 2. Destroy tracked ball + nuclear sweep of any stray "Ball" tagged objects
-        if (currentBall != null) { Destroy(currentBall); currentBall = null; }
-        foreach (GameObject stray in GameObject.FindGameObjectsWithTag("Ball"))
-            Destroy(stray);
+        // 2. Destroy the existing ball and sweep all strays BEFORE instantiating
+        if (currentBall != null)
+        {
+            currentBall.transform.parent = null;
+            currentBall.tag = "Untagged";
+            DestroyImmediate(currentBall);
+            currentBall = null;
+        }
 
-        // Always hide the indicator when re-spawning (mode change, holen swap, post-flight)
+        foreach (GameObject stray in GameObject.FindGameObjectsWithTag("Ball"))
+        {
+            stray.transform.parent = null;
+            DestroyImmediate(stray);
+        }
+
+        for (int i = holensPosition.childCount - 1; i >= 0; i--)
+            DestroyImmediate(holensPosition.GetChild(i).gameObject);
+
         if (targetIndicator != null)
             targetIndicator.SetActive(false);
 
-        // 3. Spawn exactly one new ball at the correct height for the active mode
+        // 3. Spawn exactly one new ball
         Vector3 spawnPos = holensPosition.position;
         if (activeLaunchMode == LaunchMode.Downward)
             spawnPos += Vector3.up * downwardSpawnHeightOffset;
 
         currentBall = Instantiate(prefabToUse, spawnPos, holensPosition.rotation);
-        currentBall.transform.parent = holensPosition;
+        currentBall.transform.SetParent(holensPosition, worldPositionStays: true);
         currentBall.tag = "Ball";
         if (ballLayer != -1) currentBall.layer = ballLayer;
         currentBall.GetComponent<Rigidbody>().isKinematic = true;
 
-        // 4. Camera: point at the idle holen using aim settings
+        // 4. Camera
         if (cinemachineCamera != null)
         {
             cinemachineCamera.Follow = currentBall.transform;

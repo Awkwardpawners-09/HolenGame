@@ -100,4 +100,20 @@ public class HolenChanger : MonoBehaviour
     {
         return currentHolenData;
     }
+
+    // ─────────────────────────────────────────────
+    //  SETTER  (called by HolensLauncherNew directly)
+    // ─────────────────────────────────────────────
+    /// <summary>
+    /// Updates the selected holen and refreshes the UI icon.
+    /// Does NOT spawn anything — the launcher handles spawning.
+    /// Called by HolensLauncherNew when a holen select button is pressed.
+    /// </summary>
+    public void SetCurrentHolenDataDirect(HolenData holenData)
+    {
+        if (holenData == null) return;
+        currentHolenData = holenData;
+        UpdateHolenUI(holenData);
+    }
+
 }
