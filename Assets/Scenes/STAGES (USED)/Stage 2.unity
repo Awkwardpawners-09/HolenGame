@@ -2316,6 +2316,8 @@ MonoBehaviour:
   minLaunchForce: 5
   maxLaunchForce: 100
   swipeTimeWindow: 1
+  arcSwipeTimeWindow: 0
+  downwardSwipeTimeWindow: 0
   requireTouchOnBall: 1
   swipeDeadZone: 20
   ballLayerName: HolenBall
@@ -14263,7 +14265,7 @@ MonoBehaviour:
   feedback5Knockout: {fileID: 1461711782}
   feedbackDisplayDuration: 4
   levelCompleteSceneName: 
-  gameOverSceneName: Demo Menu
+  gameOverSceneName: 
   transitionObject: {fileID: 836333308}
   transitionDuration: 3
 --- !u!65 &1918146935

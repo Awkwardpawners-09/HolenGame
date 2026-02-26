@@ -2278,6 +2278,8 @@ MonoBehaviour:
   minLaunchForce: 5
   maxLaunchForce: 100
   swipeTimeWindow: 1
+  arcSwipeTimeWindow: 0.7
+  downwardSwipeTimeWindow: 0.7
   requireTouchOnBall: 1
   swipeDeadZone: 20
   ballLayerName: HolenBall
@@ -2286,6 +2288,8 @@ MonoBehaviour:
   groundLayerName: Ground
   arcAngle: 60
   arcForceMultiplier: 1.1
+  arcDragAmplification: 2.5
+  arcMaxTargetRadius: 20
   downwardSpawnHeightOffset: 4
   downwardAngle: 5
   downwardForceMultiplier: 0.8
@@ -15363,7 +15367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLives: 9
+  maxLives: 1
   livesText: {fileID: 397147109}
   lifeLostSound: {fileID: 0}
   audioSource: {fileID: 0}
@@ -15383,7 +15387,7 @@ MonoBehaviour:
   feedback5Knockout: {fileID: 1461711782}
   feedbackDisplayDuration: 4
   levelCompleteSceneName: 
-  gameOverSceneName: Demo Menu
+  gameOverSceneName: 
   transitionObject: {fileID: 836333308}
   transitionDuration: 3
 --- !u!65 &1918146935
@@ -15913,6 +15917,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1780643490598312598, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: a918cd42a3d5e41489f1847d3cbb4184, type: 2}
     - target: {fileID: 1812266697361287017, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -15966,6 +15974,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2412503241298324828, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: a918cd42a3d5e41489f1847d3cbb4184, type: 2}
+    - target: {fileID: 2458245191588236703, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 13400000, guid: a918cd42a3d5e41489f1847d3cbb4184, type: 2}
@@ -16297,7 +16309,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9165429379348899691, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: a918cd42a3d5e41489f1847d3cbb4184, type: 2}
+    m_RemovedComponents:
+    - {fileID: 8951339262297077143, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
+    - {fileID: 8473066145627978159, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
+    - {fileID: 5703669652239045447, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8232077017399720649, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
     m_AddedGameObjects:

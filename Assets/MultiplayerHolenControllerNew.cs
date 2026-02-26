@@ -1,9 +1,12 @@
-﻿using UnityEngine;
-using Cinemachine;
-using UnityEngine.UI;
+﻿using Cinemachine;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class HolensLauncherNew : MonoBehaviour
+public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
 {
     // ─────────────────────────────────────────────
     //  LAUNCH MODE ENUM
@@ -19,16 +22,20 @@ public class HolensLauncherNew : MonoBehaviour
     //  REFERENCES
     // ─────────────────────────────────────────────
     [Header("References")]
-    public Transform holensPosition;
-    public GameObject holensBallPrefab;
-    public CinemachineVirtualCamera cinemachineCamera;
+    public GameObject holenBallPrefab;
+    public Transform ballSpawnPoint;
     public Camera mainCamera;
+    public CinemachineVirtualCamera activePlayerCamera;
+    public CinemachineVirtualCamera birdsEyeCamera;
+    public TMP_Text playerLabelText;
+    public TMP_Text turnDisplayText;
     public Transform cameraSpawnPoint;
 
     // ─────────────────────────────────────────────
     //  UI
     // ─────────────────────────────────────────────
     [Header("UI")]
+    public GameObject loadingUI;
     public GameObject swipeIndicator;
     public LineRenderer trajectoryLine;
 
@@ -37,11 +44,32 @@ public class HolensLauncherNew : MonoBehaviour
     public Button buttonModeArc;
     public Button buttonModeDownward;
 
+    [Header("Holen Change UI")]
+    [Tooltip("The button that toggles the inventory panel open/closed")]
+    public Button changeHolenButton;
+    [Tooltip("The GameObject containing HolenChangeInventory's panel — toggled by the button")]
+    public GameObject inventoryPanel;
+    [Tooltip("Text visible to BOTH players showing whose turn it is and what they are doing")]
+    public TMP_Text statusText;
+
     // ─────────────────────────────────────────────
     //  ACTIVE MODE
     // ─────────────────────────────────────────────
     [Header("Active Launch Mode")]
     public LaunchMode activeLaunchMode = LaunchMode.Default;
+
+    // ─────────────────────────────────────────────
+    //  HOLEN CHANGE SETTINGS
+    // ─────────────────────────────────────────────
+    [Header("Holen Change Settings")]
+    [Tooltip("Cooldown in seconds before another holen can be selected")]
+    public float changeHolenCooldown = 1f;
+
+    // ─────────────────────────────────────────────
+    //  PLAYER INFO
+    // ─────────────────────────────────────────────
+    [Header("Player Info")]
+    public bool isPlayer1;
 
     // ─────────────────────────────────────────────
     //  SWIPE SETTINGS
@@ -77,11 +105,9 @@ public class HolensLauncherNew : MonoBehaviour
     public float arcForceMultiplier = 1.0f;
 
     [Header("Arc Drag Targeting")]
-    [Tooltip("How far ahead of the finger drag the target indicator moves. " +
-             "Higher = target overshoots further, harder to aim precisely.")]
+    [Tooltip("How far ahead of the finger drag the target indicator moves.")]
     public float arcDragAmplification = 2.5f;
-    [Tooltip("Maximum world-space radius the target can travel from the holen. " +
-             "Keeps targets reachable but limits how far a wild drag goes.")]
+    [Tooltip("Maximum world-space radius the target can travel from the holen.")]
     public float arcMaxTargetRadius = 20f;
 
     // ─────────────────────────────────────────────
@@ -107,7 +133,7 @@ public class HolensLauncherNew : MonoBehaviour
     public float defaultLineLength = 10f;
 
     [Header("Line Color & Animation")]
-    [Tooltip("Color of the trajectory line. Alpha controls transparency (0.5 = 50%).")]
+    [Tooltip("Color of the trajectory line. Alpha controls transparency.")]
     public Color lineColor = new Color(1f, 0f, 0f, 0.5f);
     [Tooltip("How fast the dash travels along the line")]
     public float lineAnimationSpeed = 2f;
@@ -121,10 +147,8 @@ public class HolensLauncherNew : MonoBehaviour
     [Header("Camera Settings")]
     [Tooltip("Camera offset while the holen is at the spawn point (aiming)")]
     public Vector3 cameraFollowOffset = new Vector3(0f, 8f, -6f);
-
     [Tooltip("Screen Y for the holen while AIMING (0.8 = upper part of screen)")]
     public float cameraAimScreenY = 0.80f;
-
     [Tooltip("Screen Y for the holen while IN FLIGHT. 0.5 = dead centre of screen.")]
     public float cameraFlightScreenY = 0.5f;
 
@@ -132,8 +156,7 @@ public class HolensLauncherNew : MonoBehaviour
     //  SOUND
     // ─────────────────────────────────────────────
     [Header("Sound")]
-    [Tooltip("AudioSource to play the launch sound through. " +
-             "If left empty the script will try to find one on this GameObject.")]
+    [Tooltip("AudioSource to play the launch sound through. If left empty the script will try to find one on this GameObject.")]
     public AudioSource audioSource;
     [Tooltip("Sound clip that plays the moment the holen is launched.")]
     public AudioClip launchSoundClip;
@@ -142,40 +165,20 @@ public class HolensLauncherNew : MonoBehaviour
     //  TARGETING INDICATOR
     // ─────────────────────────────────────────────
     [Header("Targeting Indicator")]
-    [Tooltip("3D GameObject that shows where the holen will land. " +
-             "Assign it here — it should be disabled in the scene by default. " +
-             "Only visible in Arc and Downward modes while the player is aiming.")]
+    [Tooltip("3D GameObject that shows where the holen will land. Only visible in Arc and Downward modes while aiming.")]
     public GameObject targetIndicator;
-
-    // ─────────────────────────────────────────────
-    //  HOLEN SYSTEM
-    // ─────────────────────────────────────────────
-    [Header("Holen System")]
-    public HolenChanger holenChanger;
-
-    [Header("Holen Select Buttons")]
-    [Tooltip("Assign the Button for Holen 1 here — no OnClick setup needed, wired automatically.")]
-    public Button holenSelectButton1;
-    [Tooltip("Assign the Button for Holen 2 here — no OnClick setup needed, wired automatically.")]
-    public Button holenSelectButton2;
-    [Tooltip("Assign the Button for Holen 3 here — no OnClick setup needed, wired automatically.")]
-    public Button holenSelectButton3;
-
-    // ─────────────────────────────────────────────
-    //  LIFE SYSTEM
-    // ─────────────────────────────────────────────
-    [Header("Life System")]
-    public float lifeDeductionDelay = 6.5f;
 
     // ─────────────────────────────────────────────
     //  PRIVATE STATE
     // ─────────────────────────────────────────────
     private int ballLayer;
     private int groundLayerMask;
-    private GameObject currentBall;
-    private bool isBusy = false;
-    private bool hasLaunched = false;
     private Transform defaultLookAtTarget;
+
+    // Multiplayer turn state
+    private bool isReady = false;
+    private bool isTurn = false;
+    private string playerRole = "";
 
     // Swipe state
     private Vector2 swipeStartPos;
@@ -191,6 +194,14 @@ public class HolensLauncherNew : MonoBehaviour
     // Animated line
     private Vector3[] fullTrajectoryPoints;
     private float lineAnimOffset = 0f;
+
+    // Holen change state
+    private bool isInventoryOpen = false;
+    private bool isHolenLaunched = false;
+    private bool isOnChangeCooldown = false;
+
+    // Public accessor for other scripts
+    public GameObject currentHolenBall { get; private set; }
 
     // ─────────────────────────────────────────────
     //  UNITY LIFECYCLE
@@ -208,19 +219,18 @@ public class HolensLauncherNew : MonoBehaviour
         if (mainCamera == null)
             mainCamera = Camera.main;
 
-        // Auto-grab AudioSource from this GameObject if not assigned in Inspector
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
+        DisableControls();
         SetInitialCameraPosition();
 
-        if (cinemachineCamera != null)
-            defaultLookAtTarget = cinemachineCamera.LookAt;
+        if (activePlayerCamera != null)
+            defaultLookAtTarget = activePlayerCamera.LookAt;
 
         if (swipeIndicator != null)
             swipeIndicator.SetActive(false);
 
-        // ── Trajectory line starts hidden ──────────────────────────────────────
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;
@@ -228,39 +238,42 @@ public class HolensLauncherNew : MonoBehaviour
             trajectoryLine.endColor = lineColor;
         }
 
-        // Target indicator is always hidden until the player aims in Arc/Downward mode
         if (targetIndicator != null)
             targetIndicator.SetActive(false);
 
-        // Wire up launch mode buttons
+        // Wire launch mode buttons
         if (buttonModeDefault != null) buttonModeDefault.onClick.AddListener(() => SetLaunchMode(LaunchMode.Default));
         if (buttonModeArc != null) buttonModeArc.onClick.AddListener(() => SetLaunchMode(LaunchMode.Arc));
         if (buttonModeDownward != null) buttonModeDownward.onClick.AddListener(() => SetLaunchMode(LaunchMode.Downward));
 
-        // Wire up holen select buttons directly here — no OnClick needed in Inspector
-        if (holenSelectButton1 != null) holenSelectButton1.onClick.AddListener(() => SelectHolenSlot(1));
-        if (holenSelectButton2 != null) holenSelectButton2.onClick.AddListener(() => SelectHolenSlot(2));
-        if (holenSelectButton3 != null) holenSelectButton3.onClick.AddListener(() => SelectHolenSlot(3));
+        // Wire inventory button
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(false);
 
+        if (changeHolenButton != null)
+            changeHolenButton.onClick.AddListener(OnChangeHolenButtonPressed);
+
+        SetChangeHolenButtonInteractable(false);
         RefreshModeButtonVisuals();
-        SpawnCurrentHolen();
+
+        SetCameraView(false);
+        StartCoroutine(GameStartSequence());
     }
 
     void Update()
     {
-        if (!isBusy && !hasLaunched && currentBall != null)
+        // Block swipe while inventory is open, holen is launched, or it is not this player's turn
+        if (isTurn && currentHolenBall != null && !isReady && !isInventoryOpen && !isHolenLaunched)
         {
             HandleSwipeInput();
 
             if (isSwiping)
             {
-                // Only build and show the trajectory while the finger is actively held down
                 BuildLiveTrajectoryPoints();
                 AnimateAndDrawLine();
             }
             else
             {
-                // Hide the line completely when not aiming
                 if (trajectoryLine != null)
                     trajectoryLine.enabled = false;
             }
@@ -268,49 +281,38 @@ public class HolensLauncherNew : MonoBehaviour
     }
 
     // ─────────────────────────────────────────────
-    //  HOLEN SELECTION  (called by the wired buttons)
+    //  GAME START SEQUENCE
     // ─────────────────────────────────────────────
-    /// <summary>
-    /// Selects a holen slot (1, 2, or 3) directly on the launcher.
-    /// Destroys the current ball and spawns the new one — identical flow to SetLaunchMode.
-    /// Remove any OnClick entries from your buttons; they are wired automatically in Start().
-    /// </summary>
-    private void SelectHolenSlot(int slot)
+    private IEnumerator GameStartSequence()
     {
-        if (hasLaunched || isBusy)
+        loadingUI.SetActive(true);
+        Debug.Log("Waiting for both players to connect...");
+
+        while (PhotonNetwork.CurrentRoom.PlayerCount < 2)
+            yield return null;
+
+        Debug.Log("Both players are connected.");
+        yield return new WaitForSeconds(3f);
+
+        isPlayer1 = PhotonNetwork.LocalPlayer.ActorNumber == 1;
+        playerRole = isPlayer1 ? "Player 1" : "Player 2";
+
+        Debug.Log($"Local player assigned as {playerRole}");
+        loadingUI.SetActive(false);
+
+        if (isPlayer1)
         {
-            Debug.Log("[HolensLauncher] Cannot change holen while busy or in flight.");
-            return;
+            isTurn = true;
+            EnableControls();
+            SetChangeHolenButtonInteractable(true);
+            SpawnHolenBall();
+            UpdateStatusText("idle");
+            Debug.Log("Player 1's turn has started.");
         }
-
-        if (holenChanger == null)
+        else
         {
-            Debug.LogWarning("[HolensLauncher] holenChanger is not assigned.");
-            return;
+            UpdateLocalStatusText("idle", "Player 1");
         }
-
-        // Determine which HolenData to use
-        HolenData targetData = slot switch
-        {
-            1 => holenChanger.holen1Data,
-            2 => holenChanger.holen2Data,
-            3 => holenChanger.holen3Data,
-            _ => null
-        };
-
-        if (targetData == null || targetData.holenPrefab == null)
-        {
-            Debug.LogWarning($"[HolensLauncher] HolenData for slot {slot} is null or has no prefab.");
-            return;
-        }
-
-        // Update HolenChanger's internal selection so its UI icon stays in sync
-        // We call the existing setter logic directly via a new lightweight path:
-        holenChanger.SetCurrentHolenDataDirect(targetData);
-
-        // Update our own tracked prefab and swap the ball — same as SetLaunchMode does
-        holensBallPrefab = targetData.holenPrefab;
-        SpawnCurrentHolen();
     }
 
     // ─────────────────────────────────────────────
@@ -318,17 +320,20 @@ public class HolensLauncherNew : MonoBehaviour
     // ─────────────────────────────────────────────
     public void SetLaunchMode(LaunchMode mode)
     {
-        if (hasLaunched)
+        if (isHolenLaunched)
         {
-            Debug.Log("[HolensLauncher] Cannot change mode while holen is in flight.");
+            Debug.Log("[MultiplayerHolenController] Cannot change mode while holen is in flight.");
             return;
         }
         if (activeLaunchMode == mode) return;
 
         activeLaunchMode = mode;
-        Debug.Log($"[HolensLauncher] Mode → {mode}");
+        Debug.Log($"[MultiplayerHolenController] Mode → {mode}");
         RefreshModeButtonVisuals();
-        SpawnCurrentHolen();
+
+        // Respawn so the spawn height adjusts for Downward mode
+        if (isTurn && !isHolenLaunched)
+            RespawnHolenBall();
     }
 
     public void SetLaunchModeDefault() => SetLaunchMode(LaunchMode.Default);
@@ -351,34 +356,106 @@ public class HolensLauncherNew : MonoBehaviour
     }
 
     // ─────────────────────────────────────────────
-    //  CAMERA
+    //  HOLEN CHANGE LOGIC
     // ─────────────────────────────────────────────
-    private void SetInitialCameraPosition()
+    private void OnChangeHolenButtonPressed()
     {
-        if (cameraSpawnPoint != null)
+        if (isHolenLaunched || !isTurn) return;
+
+        if (isInventoryOpen)
         {
-            mainCamera.transform.position = cameraSpawnPoint.position;
-            mainCamera.transform.rotation = cameraSpawnPoint.rotation;
+            CloseInventory();
+            UpdateStatusText("idle");
+        }
+        else
+        {
+            OpenInventory();
+            UpdateStatusText("changing");
         }
     }
 
-    private void ApplyAimCameraSettings()
+    private void OpenInventory()
     {
-        if (cinemachineCamera == null) return;
-        var transposer = cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();
-        var composer = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();
-        if (transposer != null) transposer.m_FollowOffset = cameraFollowOffset;
-        if (composer != null) composer.m_ScreenY = cameraAimScreenY;
+        if (inventoryPanel != null) inventoryPanel.SetActive(true);
+        isInventoryOpen = true;
+        Debug.Log($"{playerRole} opened the Holen inventory.");
     }
 
-    private void ApplyFlightCameraSettings()
+    private void CloseInventory()
     {
-        if (cinemachineCamera == null) return;
-        var transposer = cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();
-        if (transposer != null) transposer.m_FollowOffset = Vector3.zero;
-        var composer = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();
-        if (composer != null) composer.m_ScreenY = cameraFlightScreenY;
+        if (inventoryPanel != null) inventoryPanel.SetActive(false);
+        isInventoryOpen = false;
+        Debug.Log($"{playerRole} closed the Holen inventory.");
     }
+
+    /// <summary>
+    /// Call this from HolenSlotUI when the player taps a Holen in the inventory panel.
+    /// </summary>
+    public void OnHolenSelectedFromInventory(GameObject newHolenPrefab)
+    {
+        if (isHolenLaunched || !isTurn || isOnChangeCooldown) return;
+        if (newHolenPrefab == null) return;
+
+        StartCoroutine(ChangeCooldown());
+
+        if (currentHolenBall != null)
+        {
+            PhotonNetwork.Destroy(currentHolenBall);
+            currentHolenBall = null;
+        }
+
+        holenBallPrefab = newHolenPrefab;
+        SpawnHolenBall();
+
+        Debug.Log($"{playerRole} changed Holen to: {newHolenPrefab.name}");
+    }
+
+    private IEnumerator ChangeCooldown()
+    {
+        isOnChangeCooldown = true;
+        yield return new WaitForSeconds(changeHolenCooldown);
+        isOnChangeCooldown = false;
+    }
+
+    private void SetChangeHolenButtonInteractable(bool value)
+    {
+        if (changeHolenButton != null)
+            changeHolenButton.interactable = value;
+    }
+
+    // ─────────────────────────────────────────────
+    //  STATUS TEXT (visible to both players via RPC)
+    // ─────────────────────────────────────────────
+    private void UpdateStatusText(string state)
+    {
+        string activeName = isTurn ? playerRole : GetOpponentName();
+        photonView.RPC("RPC_UpdateStatusText", RpcTarget.All, state, activeName);
+    }
+
+    private void UpdateLocalStatusText(string state, string activeName)
+    {
+        if (statusText == null) return;
+        statusText.text = BuildStatusString(state, activeName);
+    }
+
+    [PunRPC]
+    private void RPC_UpdateStatusText(string state, string activeName)
+    {
+        UpdateLocalStatusText(state, activeName);
+    }
+
+    private string BuildStatusString(string state, string activeName)
+    {
+        switch (state)
+        {
+            case "idle": return $"{activeName} Turn";
+            case "changing": return $"{activeName} is changing their pamato";
+            case "launched": return $"{activeName} Attacks!";
+            default: return $"{activeName} Turn";
+        }
+    }
+
+    private string GetOpponentName() => isPlayer1 ? "Player 2" : "Player 1";
 
     // ─────────────────────────────────────────────
     //  SWIPE INPUT
@@ -418,11 +495,11 @@ public class HolensLauncherNew : MonoBehaviour
 
     private bool IsTouchingBall(Vector2 screenPos)
     {
-        if (currentBall == null) return false;
+        if (currentHolenBall == null) return false;
         Ray ray = mainCamera.ScreenPointToRay(screenPos);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f) && hit.collider.gameObject == currentBall)
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f) && hit.collider.gameObject == currentHolenBall)
             return true;
-        Vector3 ballScreen = mainCamera.WorldToScreenPoint(currentBall.transform.position);
+        Vector3 ballScreen = mainCamera.WorldToScreenPoint(currentHolenBall.transform.position);
         return Vector2.Distance(screenPos, new Vector2(ballScreen.x, ballScreen.y)) < 100f;
     }
 
@@ -431,10 +508,11 @@ public class HolensLauncherNew : MonoBehaviour
         isSwiping = true;
         swipeStartPos = screenPos;
         swipeStartTime = Time.time;
-        swipeWorldStart = currentBall.transform.position;
+        swipeWorldStart = currentHolenBall.transform.position;
         raycastTargetValid = false;
 
         if (swipeIndicator != null) swipeIndicator.SetActive(true);
+        Debug.Log($"Swipe started at: {screenPos}");
     }
 
     private void UpdateSwipe(Vector2 screenPos)
@@ -443,20 +521,12 @@ public class HolensLauncherNew : MonoBehaviour
 
         if (activeLaunchMode == LaunchMode.Arc)
         {
-            // ── NEW ARC DRAG TARGETING ─────────────────────────────────────────
-            // The player drags FROM the holen's screen position.
-            // We project the drag delta into world space (on the ground plane at
-            // holen height) then amplify it so the target shoots ahead of the
-            // finger — making the mechanic harder to use precisely.
+            // Drag-amplification targeting for Arc mode
+            Vector3 holenWorldPos = currentHolenBall.transform.position;
+            Vector3 holenScreen3 = mainCamera.WorldToScreenPoint(holenWorldPos);
+            Vector2 holenScreen2 = new Vector2(holenScreen3.x, holenScreen3.y);
+            Vector2 dragDelta = screenPos - holenScreen2;
 
-            Vector3 holenWorldPos = currentBall.transform.position;
-            Vector3 holenScreenPos3 = mainCamera.WorldToScreenPoint(holenWorldPos);
-            Vector2 holenScreenPos2 = new Vector2(holenScreenPos3.x, holenScreenPos3.y);
-
-            // Raw drag delta from holen screen position
-            Vector2 dragDelta = screenPos - holenScreenPos2;
-
-            // Only activate targeting once past the dead zone
             if (dragDelta.magnitude < swipeDeadZone)
             {
                 raycastTargetValid = false;
@@ -464,10 +534,8 @@ public class HolensLauncherNew : MonoBehaviour
                 return;
             }
 
-            // Convert two screen points to world points on the holen's ground plane
             Plane groundPlane = new Plane(Vector3.up, holenWorldPos);
-
-            Ray holenRay = mainCamera.ScreenPointToRay(holenScreenPos2);
+            Ray holenRay = mainCamera.ScreenPointToRay(holenScreen2);
             Ray fingerRay = mainCamera.ScreenPointToRay(screenPos);
 
             if (groundPlane.Raycast(holenRay, out float holenDist) &&
@@ -475,18 +543,13 @@ public class HolensLauncherNew : MonoBehaviour
             {
                 Vector3 holenGroundPt = holenRay.GetPoint(holenDist);
                 Vector3 fingerGroundPt = fingerRay.GetPoint(fingerDist);
-
-                // World-space delta from holen to where the finger points on the ground
                 Vector3 worldDelta = fingerGroundPt - holenGroundPt;
+                Vector3 amplified = worldDelta * arcDragAmplification;
 
-                // Amplify so target races ahead of the finger
-                Vector3 amplifiedDelta = worldDelta * arcDragAmplification;
+                if (amplified.magnitude > arcMaxTargetRadius)
+                    amplified = amplified.normalized * arcMaxTargetRadius;
 
-                // Clamp to max radius so it stays reachable
-                if (amplifiedDelta.magnitude > arcMaxTargetRadius)
-                    amplifiedDelta = amplifiedDelta.normalized * arcMaxTargetRadius;
-
-                raycastTarget = holenGroundPt + amplifiedDelta;
+                raycastTarget = holenGroundPt + amplified;
                 raycastTargetValid = true;
 
                 if (targetIndicator != null)
@@ -503,7 +566,7 @@ public class HolensLauncherNew : MonoBehaviour
         }
         else if (activeLaunchMode == LaunchMode.Downward)
         {
-            // Downward mode keeps the original direct-raycast targeting
+            // Direct ground raycast for Downward mode
             Ray ray = mainCamera.ScreenPointToRay(screenPos);
             if (Physics.Raycast(ray, out RaycastHit hit, 500f, groundLayerMask))
             {
@@ -518,18 +581,17 @@ public class HolensLauncherNew : MonoBehaviour
             }
             else
             {
-                if (targetIndicator != null)
-                    targetIndicator.SetActive(false);
+                raycastTargetValid = false;
+                if (targetIndicator != null) targetIndicator.SetActive(false);
             }
         }
         else // Default mode
         {
-            if (targetIndicator != null)
-                targetIndicator.SetActive(false);
+            if (targetIndicator != null) targetIndicator.SetActive(false);
 
             Ray ray = mainCamera.ScreenPointToRay(screenPos);
-            Plane plane = new Plane(Vector3.up, currentBall.transform.position);
-            if (plane.Raycast(ray, out float dist))
+            Plane pl = new Plane(Vector3.up, currentHolenBall.transform.position);
+            if (pl.Raycast(ray, out float dist))
             {
                 raycastTarget = ray.GetPoint(dist);
                 raycastTargetValid = true;
@@ -556,23 +618,25 @@ public class HolensLauncherNew : MonoBehaviour
             LaunchMode.Downward => downwardSwipeTimeWindow,
             _ => swipeTimeWindow
         };
+
         bool valid = swipeDistance >= minSwipeDistance &&
                      (activeTimeWindow <= 0f || swipeTime <= activeTimeWindow);
 
         if (!valid)
         {
-            Debug.Log($"[HolensLauncher] Invalid swipe. Dist={swipeDistance:F0} Time={swipeTime:F2}");
+            Debug.Log($"[MultiplayerHolenController] Invalid swipe. Dist={swipeDistance:F0} Time={swipeTime:F2}");
             return;
         }
 
         Vector3 launchVelocity = ComputeLaunchVelocity(swipeDelta, swipeTime, swipeDistance);
         if (launchVelocity == Vector3.zero)
         {
-            Debug.LogWarning("[HolensLauncher] Could not compute launch velocity — finger may not be over Ground layer.");
+            Debug.LogWarning("[MultiplayerHolenController] Could not compute launch velocity.");
             return;
         }
 
-        StartCoroutine(LaunchSequence(launchVelocity));
+        // Trigger the networked shoot
+        ShootHolen(launchVelocity);
     }
 
     private void CancelSwipe()
@@ -581,6 +645,7 @@ public class HolensLauncherNew : MonoBehaviour
         if (trajectoryLine != null) trajectoryLine.enabled = false;
         if (swipeIndicator != null) swipeIndicator.SetActive(false);
         if (targetIndicator != null) targetIndicator.SetActive(false);
+        Debug.Log("Swipe cancelled.");
     }
 
     // ─────────────────────────────────────────────
@@ -593,7 +658,7 @@ public class HolensLauncherNew : MonoBehaviour
             case LaunchMode.Arc:
                 {
                     if (!raycastTargetValid) { Debug.LogWarning("[Arc] No valid ground target."); return Vector3.zero; }
-                    Vector3 spawnPos = currentBall.transform.position;
+                    Vector3 spawnPos = currentHolenBall.transform.position;
                     Vector3 toTarget = raycastTarget - spawnPos;
                     float horizDist = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;
                     float vertDiff = raycastTarget.y - spawnPos.y;
@@ -608,7 +673,7 @@ public class HolensLauncherNew : MonoBehaviour
             case LaunchMode.Downward:
                 {
                     if (!raycastTargetValid) { Debug.LogWarning("[Downward] No valid ground target."); return Vector3.zero; }
-                    Vector3 spawnPos = currentBall.transform.position;
+                    Vector3 spawnPos = currentHolenBall.transform.position;
                     Vector3 toTarget = raycastTarget - spawnPos;
                     float horizDist = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;
                     float vertDiff = raycastTarget.y - spawnPos.y;
@@ -635,6 +700,7 @@ public class HolensLauncherNew : MonoBehaviour
                         Vector3 camRight = mainCamera.transform.right; camRight.y = 0f; camRight.Normalize();
                         swipeWorldDir = (camRight * swipeDelta.x + camFwd * swipeDelta.y).normalized;
                     }
+
                     float force;
                     if (useSpeedForce)
                     {
@@ -683,14 +749,14 @@ public class HolensLauncherNew : MonoBehaviour
     // ─────────────────────────────────────────────
     private void BuildLiveTrajectoryPoints()
     {
-        if (currentBall == null) return;
+        if (currentHolenBall == null) return;
 
         switch (activeLaunchMode)
         {
             case LaunchMode.Arc:
                 {
                     if (!raycastTargetValid) return;
-                    Vector3 spawnPos = currentBall.transform.position;
+                    Vector3 spawnPos = currentHolenBall.transform.position;
                     Vector3 toTarget = raycastTarget - spawnPos;
                     float horizDist = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;
                     float vertDiff = raycastTarget.y - spawnPos.y;
@@ -706,7 +772,7 @@ public class HolensLauncherNew : MonoBehaviour
             case LaunchMode.Downward:
                 {
                     if (!raycastTargetValid) return;
-                    Vector3 spawnPos = currentBall.transform.position;
+                    Vector3 spawnPos = currentHolenBall.transform.position;
                     Vector3 toTarget = raycastTarget - spawnPos;
                     float horizDist = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;
                     float vertDiff = raycastTarget.y - spawnPos.y;
@@ -721,7 +787,7 @@ public class HolensLauncherNew : MonoBehaviour
                 }
             default:
                 {
-                    Vector3 spawnPos = currentBall.transform.position;
+                    Vector3 spawnPos = currentHolenBall.transform.position;
                     Vector3 dir = Vector3.zero;
                     if (raycastTargetValid) { dir = raycastTarget - swipeWorldStart; dir.y = 0f; dir.Normalize(); }
                     if (dir.sqrMagnitude < 0.01f) { dir = mainCamera.transform.forward; dir.y = 0f; dir.Normalize(); }
@@ -773,37 +839,153 @@ public class HolensLauncherNew : MonoBehaviour
     }
 
     // ─────────────────────────────────────────────
-    //  LAUNCH SEQUENCE
+    //  CAMERA
     // ─────────────────────────────────────────────
-    IEnumerator LaunchSequence(Vector3 launchVelocity)
+    private void SetInitialCameraPosition()
     {
-        isBusy = true;
-        hasLaunched = true;
-
-        if (trajectoryLine != null) trajectoryLine.enabled = false;
-        if (holenChanger != null) holenChanger.DisableButtons();
-
-        LevelManager levelManager = FindObjectOfType<LevelManager>();
-        if (levelManager != null)
-            levelManager.OnTurnStarted();
-
-        LaunchBall(launchVelocity);
-
-        yield return new WaitForSeconds(lifeDeductionDelay);
-
-        if (levelManager != null)
+        if (cameraSpawnPoint != null)
         {
-            levelManager.OnHolenRespawn();
-            Debug.Log("[HolensLauncher] Life deducted after turn");
+            mainCamera.transform.position = cameraSpawnPoint.position;
+            mainCamera.transform.rotation = cameraSpawnPoint.rotation;
+        }
+    }
+
+    private void ApplyAimCameraSettings()
+    {
+        if (activePlayerCamera == null) return;
+        var transposer = activePlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
+        var composer = activePlayerCamera.GetCinemachineComponent<CinemachineComposer>();
+        if (transposer != null) transposer.m_FollowOffset = cameraFollowOffset;
+        if (composer != null) composer.m_ScreenY = cameraAimScreenY;
+    }
+
+    private void ApplyFlightCameraSettings()
+    {
+        if (activePlayerCamera == null) return;
+        var transposer = activePlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
+        if (transposer != null) transposer.m_FollowOffset = Vector3.zero;
+        var composer = activePlayerCamera.GetCinemachineComponent<CinemachineComposer>();
+        if (composer != null) composer.m_ScreenY = cameraFlightScreenY;
+    }
+
+    /// <summary>
+    /// Switches between active-player (close follow) and birds-eye camera based on whose turn it is.
+    /// </summary>
+    private void SetCameraView(bool isActiveTurn)
+    {
+        if (activePlayerCamera != null && birdsEyeCamera != null)
+        {
+            if (isActiveTurn)
+            {
+                activePlayerCamera.Priority = 20;
+                birdsEyeCamera.Priority = 10;
+            }
+            else
+            {
+                activePlayerCamera.Priority = 10;
+                birdsEyeCamera.Priority = 20;
+            }
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    //  HOLEN BALL SPAWN
+    // ─────────────────────────────────────────────
+    private void SpawnHolenBall()
+    {
+        // Determine spawn position — Downward mode spawns higher
+        Vector3 spawnPos = ballSpawnPoint.position;
+        if (activeLaunchMode == LaunchMode.Downward)
+            spawnPos += Vector3.up * downwardSpawnHeightOffset;
+
+        currentHolenBall = PhotonNetwork.Instantiate(holenBallPrefab.name, spawnPos, Quaternion.identity);
+
+        if (ballLayer != -1)
+            currentHolenBall.layer = ballLayer;
+
+        Rigidbody rb = currentHolenBall.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        if (activePlayerCamera != null && isTurn)
+        {
+            activePlayerCamera.Follow = currentHolenBall.transform;
+            activePlayerCamera.LookAt = currentHolenBall.transform;
+            ApplyAimCameraSettings();
         }
 
-        yield return new WaitForSeconds(7f - lifeDeductionDelay);
+        if (targetIndicator != null)
+            targetIndicator.SetActive(false);
 
-        // Reset camera
-        if (cinemachineCamera != null)
+        Debug.Log($"{playerRole} spawned Holen Ball: {holenBallPrefab.name} (Mode: {activeLaunchMode})");
+    }
+
+    /// <summary>
+    /// Destroys and re-spawns the holen ball (e.g. when changing launch mode).
+    /// </summary>
+    private void RespawnHolenBall()
+    {
+        if (currentHolenBall != null)
         {
-            cinemachineCamera.Follow = null;
-            cinemachineCamera.LookAt = defaultLookAtTarget != null ? defaultLookAtTarget : null;
+            PhotonNetwork.Destroy(currentHolenBall);
+            currentHolenBall = null;
+        }
+        SpawnHolenBall();
+    }
+
+    // ─────────────────────────────────────────────
+    //  SHOOT / TURN
+    // ─────────────────────────────────────────────
+    public bool IsTurn() => isTurn;
+
+    /// <summary>
+    /// Called locally once a valid swipe is computed. Sends launch velocity over the network.
+    /// </summary>
+    public void ShootHolen(Vector3 launchVelocity)
+    {
+        if (!isTurn || isReady || currentHolenBall == null) return;
+
+        isReady = true;
+        isHolenLaunched = true;
+
+        SetChangeHolenButtonInteractable(false);
+        CloseInventory();
+
+        photonView.RPC("RPC_ShootHolen", RpcTarget.All, launchVelocity);
+        UpdateStatusText("launched");
+        StartCoroutine(CompleteTurn());
+
+        Debug.Log($"{playerRole} launched Holen Ball. Velocity={launchVelocity} Mode={activeLaunchMode}");
+    }
+
+    [PunRPC]
+    private void RPC_ShootHolen(Vector3 launchVelocity)
+    {
+        if (currentHolenBall == null) return;
+
+        Rigidbody rb = currentHolenBall.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.AddForce(launchVelocity, ForceMode.VelocityChange);
+
+        if (activePlayerCamera != null && isTurn)
+        {
+            activePlayerCamera.Follow = null;
+            activePlayerCamera.LookAt = currentHolenBall.transform;
+            ApplyFlightCameraSettings();
+        }
+
+        if (audioSource != null && launchSoundClip != null)
+            audioSource.PlayOneShot(launchSoundClip);
+    }
+
+    private IEnumerator CompleteTurn()
+    {
+        yield return new WaitForSeconds(7f);
+
+        if (isTurn && activePlayerCamera != null)
+        {
+            activePlayerCamera.Follow = null;
+            activePlayerCamera.LookAt = defaultLookAtTarget != null ? defaultLookAtTarget : null;
+
             if (cameraSpawnPoint != null)
             {
                 mainCamera.transform.position = cameraSpawnPoint.position;
@@ -811,138 +993,72 @@ public class HolensLauncherNew : MonoBehaviour
             }
         }
 
-        // Destroy launched ball and sweep strays
-        if (currentBall != null)
-        {
-            currentBall.tag = "Untagged";
-            DestroyImmediate(currentBall);
-            currentBall = null;
-        }
-        foreach (GameObject stray in GameObject.FindGameObjectsWithTag("Ball"))
-        {
-            stray.transform.parent = null;
-            DestroyImmediate(stray);
-        }
-        for (int i = holensPosition.childCount - 1; i >= 0; i--)
-            DestroyImmediate(holensPosition.GetChild(i).gameObject);
+        if (currentHolenBall != null)
+            PhotonNetwork.Destroy(currentHolenBall);
 
-        isBusy = false;
-        hasLaunched = false;
+        currentHolenBall = null;
+        isReady = false;
         isSwiping = false;
 
-        SpawnCurrentHolen();
-
-        if (holenChanger != null) holenChanger.EnableButtons();
-
-        if (levelManager != null)
-            levelManager.OnTurnEnded();
+        EndTurn();
     }
 
     // ─────────────────────────────────────────────
-    //  LAUNCH BALL
+    //  ENABLE / DISABLE CONTROLS
     // ─────────────────────────────────────────────
-    void LaunchBall(Vector3 velocity)
+    private void DisableControls()
     {
-        if (currentBall == null) return;
-
-        Rigidbody rb = currentBall.GetComponent<Rigidbody>();
-        currentBall.transform.parent = null;
-        rb.isKinematic = false;
-        rb.AddForce(velocity, ForceMode.VelocityChange);
-
-        if (cinemachineCamera != null)
-        {
-            cinemachineCamera.Follow = null;
-            cinemachineCamera.LookAt = currentBall.transform;
-            ApplyFlightCameraSettings();
-        }
-
-        if (audioSource != null && launchSoundClip != null)
-            audioSource.PlayOneShot(launchSoundClip);
-
-        Debug.Log($"[Launch] Mode={activeLaunchMode} Speed={velocity.magnitude:F2}");
+        if (swipeIndicator != null) swipeIndicator.SetActive(false);
+        if (trajectoryLine != null) trajectoryLine.enabled = false;
+        if (targetIndicator != null) targetIndicator.SetActive(false);
+        SetCameraView(false);
     }
 
-    // ─────────────────────────────────────────────
-    //  SPAWN — SINGLE AUTHORITATIVE METHOD
-    // ─────────────────────────────────────────────
-    private void SpawnCurrentHolen()
+    private void EnableControls()
     {
-        // 1. Determine the correct prefab
-        GameObject prefabToUse = holensBallPrefab;
-        if (holenChanger != null)
-        {
-            HolenData data = holenChanger.GetCurrentHolenData();
-            if (data != null && data.holenPrefab != null)
-            {
-                prefabToUse = data.holenPrefab;
-                holensBallPrefab = prefabToUse;
-            }
-        }
-
-        if (prefabToUse == null)
-        {
-            Debug.LogError("[HolensLauncher] No holen prefab available to spawn!");
-            return;
-        }
-
-        // 2. Destroy the existing ball and sweep all strays BEFORE instantiating
-        if (currentBall != null)
-        {
-            currentBall.transform.parent = null;
-            currentBall.tag = "Untagged";
-            DestroyImmediate(currentBall);
-            currentBall = null;
-        }
-
-        foreach (GameObject stray in GameObject.FindGameObjectsWithTag("Ball"))
-        {
-            stray.transform.parent = null;
-            DestroyImmediate(stray);
-        }
-
-        for (int i = holensPosition.childCount - 1; i >= 0; i--)
-            DestroyImmediate(holensPosition.GetChild(i).gameObject);
-
-        if (targetIndicator != null)
-            targetIndicator.SetActive(false);
-
-        // 3. Spawn exactly one new ball
-        Vector3 spawnPos = holensPosition.position;
-        if (activeLaunchMode == LaunchMode.Downward)
-            spawnPos += Vector3.up * downwardSpawnHeightOffset;
-
-        currentBall = Instantiate(prefabToUse, spawnPos, holensPosition.rotation);
-        currentBall.transform.SetParent(holensPosition, worldPositionStays: true);
-        currentBall.tag = "Ball";
-        if (ballLayer != -1) currentBall.layer = ballLayer;
-        currentBall.GetComponent<Rigidbody>().isKinematic = true;
-
-        // 4. Camera
-        if (cinemachineCamera != null)
-        {
-            cinemachineCamera.Follow = currentBall.transform;
-            cinemachineCamera.LookAt = currentBall.transform;
-            ApplyAimCameraSettings();
-        }
-
-        Debug.Log($"[Spawn] Mode={activeLaunchMode} Prefab={prefabToUse.name}");
+        SetCameraView(true);
     }
 
     // ─────────────────────────────────────────────
-    //  PUBLIC API
+    //  END / SWITCH TURN
     // ─────────────────────────────────────────────
-    public void ChangeBallPrefab(GameObject newPrefab)
+    private void EndTurn()
     {
-        if (hasLaunched)
-        {
-            Debug.Log("[HolensLauncher] Cannot change holen while in flight.");
-            return;
-        }
-        holensBallPrefab = newPrefab;
-        SpawnCurrentHolen();
+        isTurn = false;
+        isReady = false;
+        isSwiping = false;
+        isHolenLaunched = false;
+        isInventoryOpen = false;
+        isOnChangeCooldown = false;
+
+        CloseInventory();
+        SetChangeHolenButtonInteractable(false);
+        DisableControls();
+
+        Debug.Log($"{playerRole} ended their turn. Switching to other player.");
+
+        PVPScore scoreManager = FindObjectOfType<PVPScore>();
+        if (scoreManager != null)
+            scoreManager.OnTurnEnd();
+
+        photonView.RPC("SwitchTurn", RpcTarget.Others);
     }
 
-    public bool GetIsBusy() => isBusy;
-    public bool GetHasLaunched() => hasLaunched;
+    [PunRPC]
+    private void SwitchTurn()
+    {
+        isTurn = true;
+        isReady = false;
+        isSwiping = false;
+        isHolenLaunched = false;
+        isInventoryOpen = false;
+        isOnChangeCooldown = false;
+
+        EnableControls();
+        SetChangeHolenButtonInteractable(true);
+        SpawnHolenBall();
+        UpdateStatusText("idle");
+
+        Debug.Log($"{playerRole}'s turn started");
+    }
 }
