@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Serializable player data class.
 /// Handles saving/loading player information to/from PlayerPrefs.
-/// NOW INCLUDES: Level progression tracking + Time-based Energy System + Completed Levels
+/// INCLUDES: Level progression tracking + Time-based Energy System + Completed Levels + Avatar Index
 /// </summary>
 [Serializable]
 public class PlayerData
@@ -36,20 +36,26 @@ public class PlayerData
     public int energy = 10;
     public int highestLevelUnlocked = 1;
 
-    // ===================== NEW: COMPLETED LEVELS TRACKING =====================
-    // Stores which level indices the player has already completed (comma-separated)
-    // e.g. "0,1,3" means levels 0, 1, and 3 have been cleared
+    // ===================== AVATAR SYSTEM =====================
+    // Stores the index of the selected avatar sprite.
+    // The actual Sprite[] lives in PlayerDataManager (set in Inspector).
+    public int selectedAvatarIndex = 0;
+
+    private const string KEY_AVATAR_INDEX = "SelectedAvatarIndex";
+
+    public void SetAvatarIndex(int index)
+    {
+        selectedAvatarIndex = index;
+        Save();
+        Debug.Log($"[PlayerData] Avatar index set to {index}");
+    }
+    // ===================== END AVATAR SYSTEM =====================
+
+    // ===================== COMPLETED LEVELS TRACKING =====================
     public string completedLevelsData = "";
-
     private const string KEY_COMPLETED_LEVELS = "CompletedLevels";
-
-    // Cached set for fast lookup — rebuilt from completedLevelsData on load
     private HashSet<int> completedLevelsCache = null;
 
-    /// <summary>
-    /// Returns the cached HashSet of completed level indices.
-    /// Builds it from the serialized string if needed.
-    /// </summary>
     private HashSet<int> GetCompletedLevels()
     {
         if (completedLevelsCache == null)
@@ -67,34 +73,21 @@ public class PlayerData
         return completedLevelsCache;
     }
 
-    /// <summary>
-    /// Returns true if the player has already completed this level index before.
-    /// </summary>
-    public bool IsLevelCompleted(int levelIndex)
-    {
-        return GetCompletedLevels().Contains(levelIndex);
-    }
+    public bool IsLevelCompleted(int levelIndex) => GetCompletedLevels().Contains(levelIndex);
 
-    /// <summary>
-    /// Marks a level index as completed and saves.
-    /// </summary>
     public void MarkLevelCompleted(int levelIndex)
     {
-        if (GetCompletedLevels().Add(levelIndex)) // Add returns false if already present
+        if (GetCompletedLevels().Add(levelIndex))
         {
-            // Rebuild the serialized string from the set
             completedLevelsData = string.Join(",", completedLevelsCache);
             Save();
             Debug.Log($"[PlayerData] Level {levelIndex} marked as completed. All completed: {completedLevelsData}");
         }
     }
+    // ===================== END COMPLETED LEVELS =====================
 
-    // ===================== END NEW SECTION =====================
-
-    // Time tracking for energy regeneration
     public string lastEnergyUpdateTime = "";
 
-    // PlayerPrefs keys
     private const string KEY_PLAYER_NAME = "PlayerName";
     private const string KEY_COINS = "Coins";
     private const string KEY_ENERGY = "Energy";
@@ -105,21 +98,12 @@ public class PlayerData
 
     public void AddCoins(int amount)
     {
-        if (amount > 0)
-        {
-            coins += amount;
-            Save();
-        }
+        if (amount > 0) { coins += amount; Save(); }
     }
 
     public bool SpendCoins(int amount)
     {
-        if (amount > 0 && coins >= amount)
-        {
-            coins -= amount;
-            Save();
-            return true;
-        }
+        if (amount > 0 && coins >= amount) { coins -= amount; Save(); return true; }
         return false;
     }
 
@@ -155,12 +139,7 @@ public class PlayerData
 
     public void RegenerateEnergy()
     {
-        if (energy >= MAX_ENERGY)
-        {
-            energy = MAX_ENERGY;
-            UpdateEnergyTimestamp();
-            return;
-        }
+        if (energy >= MAX_ENERGY) { energy = MAX_ENERGY; UpdateEnergyTimestamp(); return; }
 
         DateTime lastUpdate;
         if (string.IsNullOrEmpty(lastEnergyUpdateTime) || !DateTime.TryParse(lastEnergyUpdateTime, out lastUpdate))
@@ -178,10 +157,8 @@ public class PlayerData
         {
             energy += energyToAdd;
             if (energy > MAX_ENERGY) energy = MAX_ENERGY;
-
             double remainderMinutes = minutesPassed % ENERGY_REGEN_MINUTES;
             lastEnergyUpdateTime = now.AddMinutes(-remainderMinutes).ToString("o");
-
             Save();
             Debug.Log($"[PlayerData] Regenerated {energyToAdd} energy. Current: {energy}/{MAX_ENERGY}");
         }
@@ -210,19 +187,13 @@ public class PlayerData
         {
             highestLevelUnlocked = levelNumber;
             Save();
-            Debug.Log($"[PlayerData] Level {levelNumber} unlocked! Highest level is now: {highestLevelUnlocked}");
+            Debug.Log($"[PlayerData] Level {levelNumber} unlocked! Highest: {highestLevelUnlocked}");
         }
     }
 
-    public bool IsLevelUnlocked(int levelNumber)
-    {
-        return levelNumber <= highestLevelUnlocked;
-    }
+    public bool IsLevelUnlocked(int levelNumber) => levelNumber <= highestLevelUnlocked;
 
-    public void CompleteLevel(int completedLevel)
-    {
-        UnlockLevel(completedLevel + 1);
-    }
+    public void CompleteLevel(int completedLevel) => UnlockLevel(completedLevel + 1);
 
     // ===================== SAVE/LOAD METHODS =====================
 
@@ -234,7 +205,8 @@ public class PlayerData
         PlayerPrefs.SetInt(KEY_HIGHEST_LEVEL, highestLevelUnlocked);
         PlayerPrefs.SetString(KEY_LAST_ENERGY_UPDATE, lastEnergyUpdateTime);
         PlayerPrefs.SetInt(KEY_SOUND_ENABLED, isSoundEnabled ? 1 : 0);
-        PlayerPrefs.SetString(KEY_COMPLETED_LEVELS, completedLevelsData); // NEW
+        PlayerPrefs.SetString(KEY_COMPLETED_LEVELS, completedLevelsData);
+        PlayerPrefs.SetInt(KEY_AVATAR_INDEX, selectedAvatarIndex); // AVATAR
         PlayerPrefs.Save();
     }
 
@@ -247,7 +219,8 @@ public class PlayerData
         data.highestLevelUnlocked = PlayerPrefs.GetInt(KEY_HIGHEST_LEVEL, 1);
         data.lastEnergyUpdateTime = PlayerPrefs.GetString(KEY_LAST_ENERGY_UPDATE, DateTime.Now.ToString("o"));
         data.isSoundEnabled = PlayerPrefs.GetInt(KEY_SOUND_ENABLED, 1) == 1;
-        data.completedLevelsData = PlayerPrefs.GetString(KEY_COMPLETED_LEVELS, ""); // NEW
+        data.completedLevelsData = PlayerPrefs.GetString(KEY_COMPLETED_LEVELS, "");
+        data.selectedAvatarIndex = PlayerPrefs.GetInt(KEY_AVATAR_INDEX, 0); // AVATAR
 
         data.RegenerateEnergy();
         return data;
@@ -260,7 +233,8 @@ public class PlayerData
         PlayerPrefs.DeleteKey(KEY_ENERGY);
         PlayerPrefs.DeleteKey(KEY_HIGHEST_LEVEL);
         PlayerPrefs.DeleteKey(KEY_LAST_ENERGY_UPDATE);
-        PlayerPrefs.DeleteKey(KEY_COMPLETED_LEVELS); // NEW
+        PlayerPrefs.DeleteKey(KEY_COMPLETED_LEVELS);
+        PlayerPrefs.DeleteKey(KEY_AVATAR_INDEX); // AVATAR
         PlayerPrefs.Save();
         Debug.Log("[PlayerData] All player data deleted");
     }

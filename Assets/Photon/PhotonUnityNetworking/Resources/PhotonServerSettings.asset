@@ -70,6 +70,14 @@ MonoBehaviour:
   - RPC_SwitchTurn
   - RPC_RequestShootHolen
   - RPC_DestroySlot
+  - RPC_StartFirstTurn
+  - RPC_GameReady
+  - RPC_RegisterBall
+  - RPC_BeginGame
+  - RPC_PlayerReady
+  - RPC_OnTurnEnded
+  - RPC_OnTurnStarted
+  - RPC_ShowTurnFeedback
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
 /// <summary>
 /// Manages all player data and provides event-based updates for UI elements.
 /// Singleton pattern with DontDestroyOnLoad for persistence across scenes.
-/// Combines coin management, energy tracking, and player name management.
+/// INCLUDES: Coin, Energy, Player Name management + Avatar System
 /// </summary>
 public class PlayerDataManager : MonoBehaviour
 {
@@ -29,38 +30,94 @@ public class PlayerDataManager : MonoBehaviour
     [Tooltip("Add all UI elements that should display energy count")]
     public List<TMPro.TextMeshProUGUI> energyUIElements = new List<TMPro.TextMeshProUGUI>();
 
-    // 🔔 Events for custom UI updates (if you need more control)
+    // ===================== AVATAR SYSTEM =====================
+    [Header("Avatar System")]
+    [Tooltip("All available avatar sprites, ordered by index. Index 0 = default.")]
+    public Sprite[] avatarSprites;
+
+    [Tooltip("All Image components that should always display the current avatar (e.g. profile picture on HUD).")]
+    public List<Image> avatarDisplayImages = new List<Image>();
+
+    /// <summary>Fired whenever the avatar changes. Passes the new Sprite.</summary>
+    public static event Action<Sprite> OnAvatarChanged;
+
+    /// <summary>Returns the Sprite for the currently selected avatar index, or null if not set up.</summary>
+    public Sprite GetCurrentAvatarSprite()
+    {
+        if (avatarSprites == null || avatarSprites.Length == 0) return null;
+        int idx = Mathf.Clamp(playerData.selectedAvatarIndex, 0, avatarSprites.Length - 1);
+        return avatarSprites[idx];
+    }
+
+    /// <summary>
+    /// Call this from AvatarSelector (or any script) to change and persist the avatar.
+    /// </summary>
+    public void SetAvatar(int index)
+    {
+        if (avatarSprites == null || avatarSprites.Length == 0)
+        {
+            Debug.LogWarning("[PlayerDataManager] avatarSprites array is empty — assign sprites in the Inspector.");
+            return;
+        }
+
+        index = Mathf.Clamp(index, 0, avatarSprites.Length - 1);
+        playerData.SetAvatarIndex(index);
+
+        UpdateAvatarUI();
+        OnAvatarChanged?.Invoke(avatarSprites[index]);
+
+        Debug.Log($"[PlayerDataManager] Avatar changed to index {index}");
+    }
+
+    private void UpdateAvatarUI()
+    {
+        avatarDisplayImages.RemoveAll(img => img == null);
+        Sprite current = GetCurrentAvatarSprite();
+        if (current == null) return;
+
+        foreach (var img in avatarDisplayImages)
+            if (img != null) img.sprite = current;
+    }
+
+    /// <summary>Register an Image at runtime to always mirror the current avatar.</summary>
+    public void RegisterAvatarDisplay(Image image)
+    {
+        if (image != null && !avatarDisplayImages.Contains(image))
+        {
+            avatarDisplayImages.Add(image);
+            image.sprite = GetCurrentAvatarSprite();
+        }
+    }
+
+    public void UnregisterAvatarDisplay(Image image) => avatarDisplayImages.Remove(image);
+    // ===================== END AVATAR SYSTEM =====================
+
+    // Events for custom UI updates
     public static event Action<int> OnCoinsChanged;
     public static event Action<int> OnEnergyChanged;
     public static event Action<string> OnPlayerNameChanged;
 
     private void Awake()
     {
-        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // Load player data from disk
             playerData = PlayerData.Load();
 
-            Debug.Log($"[PlayerDataManager] Loaded - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}/{PlayerData.MAX_ENERGY}");
+            Debug.Log($"[PlayerDataManager] Loaded - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}/{PlayerData.MAX_ENERGY}, Avatar: {playerData.selectedAvatarIndex}");
 
-            // Notify all UI elements of initial values after a short delay
-            // This ensures all UI elements are ready
             Invoke(nameof(NotifyInitialValues), 0.1f);
         }
         else
         {
-            // Destroy duplicate instances
             Destroy(gameObject);
         }
     }
 
     private void Update()
     {
-        // Check for energy regeneration periodically
         energyCheckTimer += Time.deltaTime;
         if (energyCheckTimer >= energyCheckInterval)
         {
@@ -74,7 +131,6 @@ public class PlayerDataManager : MonoBehaviour
         int oldEnergy = playerData.energy;
         playerData.RegenerateEnergy();
 
-        // If energy changed, update UI
         if (oldEnergy != playerData.energy)
         {
             UpdateEnergyUI();
@@ -84,162 +140,89 @@ public class PlayerDataManager : MonoBehaviour
 
     private void NotifyInitialValues()
     {
-        // Update all registered UI elements
         UpdateAllUI();
-
-        // Trigger events for any custom listeners
         OnPlayerNameChanged?.Invoke(playerData.playerName);
         OnCoinsChanged?.Invoke(playerData.coins);
         OnEnergyChanged?.Invoke(playerData.energy);
+        OnAvatarChanged?.Invoke(GetCurrentAvatarSprite());
 
-        Debug.Log($"[PlayerDataManager] Initial UI update complete - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}");
+        Debug.Log($"[PlayerDataManager] Initial UI update complete.");
     }
 
     // ===================== UI UPDATE METHODS =====================
 
-    /// <summary>
-    /// Updates all registered UI elements with current values
-    /// </summary>
     public void UpdateAllUI()
     {
         UpdatePlayerNameUI();
         UpdateCoinUI();
         UpdateEnergyUI();
+        UpdateAvatarUI();
     }
 
-    /// <summary>
-    /// Updates all player name UI elements
-    /// </summary>
     private void UpdatePlayerNameUI()
     {
-        // Remove any null references (destroyed UI elements)
         playerNameUIElements.RemoveAll(item => item == null);
-
-        // Update each UI element
-        foreach (var uiElement in playerNameUIElements)
-        {
-            if (uiElement != null)
-            {
-                uiElement.text = playerData.playerName;
-            }
-        }
+        foreach (var ui in playerNameUIElements)
+            if (ui != null) ui.text = playerData.playerName;
     }
 
-    /// <summary>
-    /// Updates all coin UI elements
-    /// </summary>
     private void UpdateCoinUI()
     {
-        // Remove any null references
         coinUIElements.RemoveAll(item => item == null);
-
-        // Update each UI element
-        foreach (var uiElement in coinUIElements)
-        {
-            if (uiElement != null)
-            {
-                uiElement.text = playerData.coins.ToString();
-            }
-        }
+        foreach (var ui in coinUIElements)
+            if (ui != null) ui.text = playerData.coins.ToString();
     }
 
-    /// <summary>
-    /// Updates all energy UI elements
-    /// </summary>
     private void UpdateEnergyUI()
     {
-        // Remove any null references
         energyUIElements.RemoveAll(item => item == null);
-
-        // Update each UI element with "X/10" format
-        foreach (var uiElement in energyUIElements)
-        {
-            if (uiElement != null)
-            {
-                uiElement.text = $"{playerData.energy}/{PlayerData.MAX_ENERGY}";
-            }
-        }
+        foreach (var ui in energyUIElements)
+            if (ui != null) ui.text = $"{playerData.energy}/{PlayerData.MAX_ENERGY}";
     }
 
     // ===================== RUNTIME UI REGISTRATION =====================
 
-    /// <summary>
-    /// Register a UI element for player name updates at runtime
-    /// </summary>
     public void RegisterPlayerNameUI(TMPro.TextMeshProUGUI uiElement)
     {
         if (uiElement != null && !playerNameUIElements.Contains(uiElement))
         {
             playerNameUIElements.Add(uiElement);
-            uiElement.text = playerData.playerName; // Update immediately
-            Debug.Log($"[PlayerDataManager] Registered player name UI element: {uiElement.gameObject.name}");
+            uiElement.text = playerData.playerName;
         }
     }
 
-    /// <summary>
-    /// Register a UI element for coin updates at runtime
-    /// </summary>
     public void RegisterCoinUI(TMPro.TextMeshProUGUI uiElement)
     {
         if (uiElement != null && !coinUIElements.Contains(uiElement))
         {
             coinUIElements.Add(uiElement);
-            uiElement.text = playerData.coins.ToString(); // Update immediately
-            Debug.Log($"[PlayerDataManager] Registered coin UI element: {uiElement.gameObject.name}");
+            uiElement.text = playerData.coins.ToString();
         }
     }
 
-    /// <summary>
-    /// Register a UI element for energy updates at runtime
-    /// </summary>
     public void RegisterEnergyUI(TMPro.TextMeshProUGUI uiElement)
     {
         if (uiElement != null && !energyUIElements.Contains(uiElement))
         {
             energyUIElements.Add(uiElement);
-            uiElement.text = $"{playerData.energy}/{PlayerData.MAX_ENERGY}"; // Update immediately with format
-            Debug.Log($"[PlayerDataManager] Registered energy UI element: {uiElement.gameObject.name}");
+            uiElement.text = $"{playerData.energy}/{PlayerData.MAX_ENERGY}";
         }
     }
 
-    /// <summary>
-    /// Unregister UI elements (useful when destroying UI)
-    /// </summary>
-    public void UnregisterPlayerNameUI(TMPro.TextMeshProUGUI uiElement)
-    {
-        playerNameUIElements.Remove(uiElement);
-    }
-
-    public void UnregisterCoinUI(TMPro.TextMeshProUGUI uiElement)
-    {
-        coinUIElements.Remove(uiElement);
-    }
-
-    public void UnregisterEnergyUI(TMPro.TextMeshProUGUI uiElement)
-    {
-        energyUIElements.Remove(uiElement);
-    }
+    public void UnregisterPlayerNameUI(TMPro.TextMeshProUGUI uiElement) => playerNameUIElements.Remove(uiElement);
+    public void UnregisterCoinUI(TMPro.TextMeshProUGUI uiElement) => coinUIElements.Remove(uiElement);
+    public void UnregisterEnergyUI(TMPro.TextMeshProUGUI uiElement) => energyUIElements.Remove(uiElement);
 
     // ===================== COIN METHODS =====================
 
     public bool SpendCoins(int amount)
     {
-        if (amount <= 0)
-        {
-            Debug.LogWarning($"[PlayerDataManager] Attempted to spend non-positive amount: {amount}");
-            return false;
-        }
-
-        int oldAmount = playerData.coins;
+        if (amount <= 0) { Debug.LogWarning($"[PlayerDataManager] Attempted to spend non-positive amount: {amount}"); return false; }
 
         if (playerData.SpendCoins(amount))
         {
-            Debug.Log($"[PlayerDataManager] Spent {amount} coins ({oldAmount} → {playerData.coins})");
-
-            // Update UI
             UpdateCoinUI();
             OnCoinsChanged?.Invoke(playerData.coins);
-
             return true;
         }
 
@@ -249,66 +232,33 @@ public class PlayerDataManager : MonoBehaviour
 
     public void AddCoins(int amount)
     {
-        if (amount <= 0)
-        {
-            Debug.LogWarning($"[PlayerDataManager] Attempted to add non-positive amount: {amount}");
-            return;
-        }
-
-        int oldAmount = playerData.coins;
+        if (amount <= 0) return;
         playerData.AddCoins(amount);
-
-        Debug.Log($"[PlayerDataManager] Added {amount} coins ({oldAmount} → {playerData.coins})");
-
-        // Update UI
         UpdateCoinUI();
         OnCoinsChanged?.Invoke(playerData.coins);
     }
 
     public void SetCoins(int amount)
     {
-        if (amount < 0)
-        {
-            Debug.LogWarning($"[PlayerDataManager] Attempted to set negative coins: {amount}");
-            amount = 0;
-        }
-
-        int oldAmount = playerData.coins;
+        if (amount < 0) amount = 0;
         playerData.coins = amount;
         playerData.Save();
-
-        Debug.Log($"[PlayerDataManager] Set coins to {amount} (was {oldAmount})");
-
-        // Update UI
         UpdateCoinUI();
         OnCoinsChanged?.Invoke(playerData.coins);
     }
 
-    public int GetCoins()
-    {
-        return playerData.coins;
-    }
+    public int GetCoins() => playerData.coins;
 
     // ===================== ENERGY METHODS =====================
 
     public bool SpendEnergy(int amount)
     {
-        if (amount <= 0)
-        {
-            Debug.LogWarning($"[PlayerDataManager] Attempted to spend non-positive energy amount: {amount}");
-            return false;
-        }
-
-        int oldAmount = playerData.energy;
+        if (amount <= 0) return false;
 
         if (playerData.SpendEnergy(amount))
         {
-            Debug.Log($"[PlayerDataManager] Spent {amount} energy ({oldAmount} → {playerData.energy})");
-
-            // Update UI
             UpdateEnergyUI();
             OnEnergyChanged?.Invoke(playerData.energy);
-
             return true;
         }
 
@@ -318,182 +268,74 @@ public class PlayerDataManager : MonoBehaviour
 
     public void AddEnergy(int amount)
     {
-        if (amount <= 0)
-        {
-            Debug.LogWarning($"[PlayerDataManager] Attempted to add non-positive energy amount: {amount}");
-            return;
-        }
-
-        int oldAmount = playerData.energy;
+        if (amount <= 0) return;
         playerData.AddEnergy(amount);
-
-        Debug.Log($"[PlayerDataManager] Added {amount} energy ({oldAmount} → {playerData.energy})");
-
-        // Update UI
         UpdateEnergyUI();
         OnEnergyChanged?.Invoke(playerData.energy);
     }
 
     public void SetEnergy(int amount)
     {
-        if (amount < 0)
-        {
-            Debug.LogWarning($"[PlayerDataManager] Attempted to set negative energy: {amount}");
-            amount = 0;
-        }
-
-        if (amount > PlayerData.MAX_ENERGY)
-        {
-            Debug.LogWarning($"[PlayerDataManager] Attempted to set energy above max ({amount}), capping at {PlayerData.MAX_ENERGY}");
-            amount = PlayerData.MAX_ENERGY;
-        }
-
-        int oldAmount = playerData.energy;
+        amount = Mathf.Clamp(amount, 0, PlayerData.MAX_ENERGY);
         playerData.energy = amount;
         playerData.Save();
-
-        Debug.Log($"[PlayerDataManager] Set energy to {amount}/{PlayerData.MAX_ENERGY} (was {oldAmount})");
-
-        // Update UI
         UpdateEnergyUI();
         OnEnergyChanged?.Invoke(playerData.energy);
     }
 
-    public int GetEnergy()
-    {
-        return playerData.energy;
-    }
-
-    /// <summary>
-    /// Get seconds until next energy point regenerates
-    /// </summary>
-    public int GetSecondsUntilNextEnergy()
-    {
-        return playerData.GetSecondsUntilNextEnergy();
-    }
-
-    /// <summary>
-    /// Check if player has enough energy
-    /// </summary>
-    public bool HasEnergy(int amount)
-    {
-        return playerData.energy >= amount;
-    }
+    public int GetEnergy() => playerData.energy;
+    public int GetSecondsUntilNextEnergy() => playerData.GetSecondsUntilNextEnergy();
+    public bool HasEnergy(int amount) => playerData.energy >= amount;
 
     // ===================== PLAYER NAME METHODS =====================
 
     public void SetPlayerName(string name)
     {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            Debug.LogWarning("[PlayerDataManager] Attempted to set empty player name");
-            return;
-        }
-
-        string oldName = playerData.playerName;
+        if (string.IsNullOrWhiteSpace(name)) { Debug.LogWarning("[PlayerDataManager] Attempted to set empty player name"); return; }
         playerData.playerName = name;
         playerData.Save();
-
-        Debug.Log($"[PlayerDataManager] Player name changed: '{oldName}' → '{name}'");
-
-        // Update UI
         UpdatePlayerNameUI();
         OnPlayerNameChanged?.Invoke(playerData.playerName);
     }
 
-    public string GetPlayerName()
-    {
-        return playerData.playerName;
-    }
-
-    public bool HasPlayerName()
-    {
-        return !string.IsNullOrWhiteSpace(playerData.playerName);
-    }
+    public string GetPlayerName() => playerData.playerName;
+    public bool HasPlayerName() => !string.IsNullOrWhiteSpace(playerData.playerName);
 
     // ===================== UTILITY METHODS =====================
 
-    /// <summary>
-    /// Manually refresh all UI elements (useful after loading save data externally)
-    /// </summary>
     public void RefreshAllUI()
     {
         UpdateAllUI();
-
-        // Trigger events
         OnPlayerNameChanged?.Invoke(playerData.playerName);
         OnCoinsChanged?.Invoke(playerData.coins);
         OnEnergyChanged?.Invoke(playerData.energy);
-
-        Debug.Log($"[PlayerDataManager] Manually refreshed all UI - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}");
+        OnAvatarChanged?.Invoke(GetCurrentAvatarSprite());
     }
 
-    /// <summary>
-    /// Reload player data from disk and refresh all UI
-    /// </summary>
     public void ReloadDataFromDisk()
     {
         playerData = PlayerData.Load();
         RefreshAllUI();
-        Debug.Log($"[PlayerDataManager] Reloaded data from disk - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}");
     }
 
-    /// <summary>
-    /// Save current player data to disk
-    /// </summary>
-    public void SaveData()
-    {
-        playerData.Save();
-        Debug.Log($"[PlayerDataManager] Data saved - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}");
-    }
+    public void SaveData() => playerData.Save();
 
     // ===================== TESTING METHODS =====================
 
-    public void AddCoinsForTesting(int amount)
-    {
-        AddCoins(amount);
-        Debug.Log($"🧪 [TESTING] Added {amount} coins (Total: {playerData.coins})");
-    }
-
-    public void ResetCoinsForTesting()
-    {
-        SetCoins(0);
-        Debug.Log("🧪 [TESTING] Reset coins to 0");
-    }
-
-    public void GiveStartingCoinsForTesting(int amount = 1000)
-    {
-        SetCoins(amount);
-        Debug.Log($"🧪 [TESTING] Set starting coins to {amount}");
-    }
-
-    public void AddEnergyForTesting(int amount)
-    {
-        AddEnergy(amount);
-        Debug.Log($"🧪 [TESTING] Added {amount} energy (Total: {playerData.energy})");
-    }
-
-    public void ResetEnergyForTesting()
-    {
-        SetEnergy(0);
-        Debug.Log("🧪 [TESTING] Reset energy to 0");
-    }
-
-    public void GiveStartingEnergyForTesting(int amount = 100)
-    {
-        SetEnergy(amount);
-        Debug.Log($"🧪 [TESTING] Set starting energy to {amount}");
-    }
+    public void AddCoinsForTesting(int amount) => AddCoins(amount);
+    public void ResetCoinsForTesting() => SetCoins(0);
+    public void GiveStartingCoinsForTesting(int amount = 1000) => SetCoins(amount);
+    public void AddEnergyForTesting(int amount) => AddEnergy(amount);
+    public void ResetEnergyForTesting() => SetEnergy(0);
+    public void GiveStartingEnergyForTesting(int amount = 100) => SetEnergy(amount);
 
     public void PrintDataForTesting()
     {
         Debug.Log("🧪 [TESTING] ===== PLAYER DATA =====");
-        Debug.Log($"🧪 [TESTING] Player Name: {(string.IsNullOrEmpty(playerData.playerName) ? "NOT SET" : playerData.playerName)}");
-        Debug.Log($"🧪 [TESTING] Coins: {playerData.coins}");
-        Debug.Log($"🧪 [TESTING] Energy: {playerData.energy}");
-        Debug.Log($"🧪 [TESTING] Registered Name UIs: {playerNameUIElements.Count}");
-        Debug.Log($"🧪 [TESTING] Registered Coin UIs: {coinUIElements.Count}");
-        Debug.Log($"🧪 [TESTING] Registered Energy UIs: {energyUIElements.Count}");
+        Debug.Log($"🧪 Player Name: {playerData.playerName}");
+        Debug.Log($"🧪 Coins: {playerData.coins}");
+        Debug.Log($"🧪 Energy: {playerData.energy}");
+        Debug.Log($"🧪 Avatar Index: {playerData.selectedAvatarIndex}");
         Debug.Log("🧪 [TESTING] ========================");
     }
 
@@ -502,8 +344,8 @@ public class PlayerDataManager : MonoBehaviour
         playerData.playerName = "";
         playerData.coins = 0;
         playerData.energy = 0;
+        playerData.selectedAvatarIndex = 0;
         playerData.Save();
         RefreshAllUI();
-        Debug.Log("🧪 [TESTING] Reset all player data");
     }
 }

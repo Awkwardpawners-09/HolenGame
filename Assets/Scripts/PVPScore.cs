@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -34,6 +34,32 @@ public class PVPScore : MonoBehaviourPunCallbacks
 
     [Header("Settings")]
     public float noHolensWaitTime = 3f; // Time to wait if no holens remain before game over
+
+    [Header("Turn Feedback (Launch Result)")]
+    [Tooltip("Enabled briefly when the active player launches but knocks out NO holens.")]
+    public GameObject feedbackNoKnockout;
+
+    [Tooltip("Enabled briefly when exactly 1 holen is knocked out.")]
+    public GameObject feedback1Knockout;
+
+    [Tooltip("Enabled briefly when exactly 2 holens are knocked out.")]
+    public GameObject feedback2Knockout;
+
+    [Tooltip("Enabled briefly when exactly 3 holens are knocked out.")]
+    public GameObject feedback3Knockout;
+
+    [Tooltip("Enabled briefly when exactly 4 holens are knocked out.")]
+    public GameObject feedback4Knockout;
+
+    [Tooltip("Enabled briefly when 5 or more holens are knocked out.")]
+    public GameObject feedback5Knockout;
+
+    [Tooltip("How long (seconds) the feedback object stays visible before being disabled again.")]
+    public float feedbackDisplayDuration = 4f;
+
+    private Coroutine activeFeedbackCoroutine;
+    private bool turnInProgress = false;
+    private int holensKnockedOutThisTurn = 0;
 
     // Track holens knocked out by each player
     [System.Serializable]
@@ -83,6 +109,14 @@ public class PVPScore : MonoBehaviourPunCallbacks
             firstUIObject.SetActive(false);
         if (secondUIObject != null)
             secondUIObject.SetActive(false);
+
+        // Disable all feedback objects at start
+        DisableFeedbackObject(feedbackNoKnockout);
+        DisableFeedbackObject(feedback1Knockout);
+        DisableFeedbackObject(feedback2Knockout);
+        DisableFeedbackObject(feedback3Knockout);
+        DisableFeedbackObject(feedback4Knockout);
+        DisableFeedbackObject(feedback5Knockout);
 
         UpdateTurnDisplay();
     }
@@ -236,6 +270,14 @@ public class PVPScore : MonoBehaviourPunCallbacks
                     return;
                 }
             }
+
+            // Count the knockout and broadcast feedback to ALL players immediately.
+            // No IsMasterClient gate — whichever client's collider fires this sends the RPC.
+            // turnInProgress is used only for the counter; feedback fires regardless so it's never silently skipped.
+            holensKnockedOutThisTurn++;
+            turnInProgress = true; // ensure flag is set even if OnTurnStarted wasn't called yet
+            Debug.Log($"[PVPScore] Knockout #{holensKnockedOutThisTurn} this turn — syncing feedback to all players.");
+            photonView.RPC("RPC_ShowTurnFeedback", RpcTarget.All, holensKnockedOutThisTurn);
 
             // Try to get HolenData from the knocked out holen
             HolenData holenData = GetHolenDataFromGameObject(other.gameObject);
@@ -543,5 +585,118 @@ public class PVPScore : MonoBehaviourPunCallbacks
         {
             Instance = null;
         }
+    }
+
+    // ─────────────────────────────────────────────
+    //  TURN FEEDBACK SYSTEM
+    // ─────────────────────────────────────────────
+
+    /// <summary>
+    /// Called by the multiplayer launcher the moment the holen is launched.
+    /// Any client can call this — it broadcasts to all players via RPC.
+    /// </summary>
+    public void OnTurnStarted()
+    {
+        photonView.RPC("RPC_OnTurnStarted", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPC_OnTurnStarted()
+    {
+        turnInProgress = true;
+        holensKnockedOutThisTurn = 0;
+        Debug.Log("[PVPScore] Turn started — tracking knockouts.");
+    }
+
+    /// <summary>
+    /// Called by the multiplayer launcher after the holen has fully respawned.
+    /// Any client can call this — it broadcasts to all players via RPC.
+    /// </summary>
+    public void OnTurnEnded()
+    {
+        photonView.RPC("RPC_OnTurnEnded", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPC_OnTurnEnded()
+    {
+        turnInProgress = false;
+        Debug.Log($"[PVPScore] Turn ended — total knockouts: {holensKnockedOutThisTurn}");
+
+        // Show no-knockout feedback if nothing was knocked out this turn
+        if (holensKnockedOutThisTurn == 0)
+        {
+            ShowTurnFeedbackLocal(0);
+        }
+    }
+
+    /// <summary>
+    /// RPC called on ALL clients to show the same feedback object simultaneously.
+    /// knockedOut = number of holens knocked out so far this turn.
+    /// </summary>
+    [PunRPC]
+    private void RPC_ShowTurnFeedback(int knockedOut)
+    {
+        ShowTurnFeedbackLocal(knockedOut);
+    }
+
+    /// <summary>
+    /// Locally activates the correct feedback GameObject and starts the display timer.
+    /// </summary>
+    private void ShowTurnFeedbackLocal(int knockedOut)
+    {
+        if (gameOverTriggered)
+            return;
+
+        GameObject target = GetFeedbackObject(knockedOut);
+        if (target == null)
+        {
+            Debug.Log($"[PVPScore] No feedback object assigned for {knockedOut} knockout(s).");
+            return;
+        }
+
+        if (activeFeedbackCoroutine != null)
+            StopCoroutine(activeFeedbackCoroutine);
+
+        activeFeedbackCoroutine = StartCoroutine(DisplayFeedback(target));
+    }
+
+    private GameObject GetFeedbackObject(int knockedOut)
+    {
+        switch (knockedOut)
+        {
+            case 0: return feedbackNoKnockout;
+            case 1: return feedback1Knockout;
+            case 2: return feedback2Knockout;
+            case 3: return feedback3Knockout;
+            case 4: return feedback4Knockout;
+            default: return feedback5Knockout; // 5+
+        }
+    }
+
+    private IEnumerator DisplayFeedback(GameObject feedbackObj)
+    {
+        // Disable all feedback objects first so only one shows at a time
+        DisableFeedbackObject(feedbackNoKnockout);
+        DisableFeedbackObject(feedback1Knockout);
+        DisableFeedbackObject(feedback2Knockout);
+        DisableFeedbackObject(feedback3Knockout);
+        DisableFeedbackObject(feedback4Knockout);
+        DisableFeedbackObject(feedback5Knockout);
+
+        feedbackObj.SetActive(true);
+        Debug.Log($"[PVPScore] Feedback shown: {feedbackObj.name}");
+
+        yield return new WaitForSeconds(feedbackDisplayDuration);
+
+        DisableFeedbackObject(feedbackObj);
+        Debug.Log($"[PVPScore] Feedback hidden: {feedbackObj.name}");
+        activeFeedbackCoroutine = null;
+    }
+
+    private void DisableFeedbackObject(GameObject obj)
+    {
+        if (obj != null && obj.activeSelf)
+            obj.SetActive(false);
     }
 }
