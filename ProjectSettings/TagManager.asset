@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Objective
   - Ball
+  - HolenModel
   layers:
   - Default
   - TransparentFX

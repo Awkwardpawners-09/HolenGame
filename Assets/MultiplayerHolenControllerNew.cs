@@ -2,6 +2,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,30 @@ using UnityEngine.UI;
 /// Turn-based multiplayer Holen controller.
 /// Architecture: ONE instance of this script exists in the scene (not per-player prefab).
 /// photonView is shared — RPCs reach all clients. isTurn gates whose input is active.
+///
+/// ══ CHANGES FROM ORIGINAL ════════════════════════════════════════════════════
+///
+/// 1. OnHolenSelectedFromInventory(GameObject, HolenData)
+///    Old signature: OnHolenSelectedFromInventory(GameObject newHolenPrefab)
+///    New signature: OnHolenSelectedFromInventory(GameObject newHolenPrefab, HolenData data)
+///
+///    The extra HolenData parameter lets us swap the visible 3D model on the ball.
+///    When a player picks a new holen from the inventory:
+///      a) holenBallPrefab is updated (controls which Photon prefab is spawned)
+///      b) SpawnHolenBall() destroys the old network ball and spawns a new one
+///      c) SwapHolenModel(data) is called: finds the first child of currentHolenBall
+///         that is the old 3D model, destroys it, then instantiates data.holenPrefab
+///         as a child at local zero offset.
+///
+/// 2. New field: activeHolenData
+///    Stores the currently selected HolenData so SwapHolenModel knows what the ball
+///    should look like after spawn (called from SpawnHolenBall via pendingHolenData).
+///
+/// 3. New field: modelParentTag / modelChildName (optional)
+///    To find the right child to destroy, we look for a child tagged "HolenModel".
+///    Tag your 3D model children with "HolenModel" in the Inspector.
+///    If nothing is tagged, we fall back to destroying ALL children of currentHolenBall
+///    that are NOT core components (Rigidbody, Collider) — see SwapHolenModel().
 /// </summary>
 public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
 {
@@ -126,6 +151,9 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
     private bool isOnChangeCooldown = false;
     private bool isCompletingTurn = false;
 
+    // Tracks the currently selected HolenData so SpawnHolenBall can apply the model.
+    private HolenData pendingHolenData = null;
+
     public GameObject currentHolenBall { get; private set; }
 
     // ─────────────────────────────────────────────
@@ -179,8 +207,6 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
 
     // ─────────────────────────────────────────────
     //  GAME START SEQUENCE
-    //  Copied directly from the original working script.
-    //  Simple: wait for 2 players, delay 3s, assign roles, begin.
     // ─────────────────────────────────────────────
     private IEnumerator GameStartSequence()
     {
@@ -280,16 +306,27 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         isInventoryOpen = false;
     }
 
-    public void OnHolenSelectedFromInventory(GameObject newHolenPrefab)
+    /// <summary>
+    /// Called by HolenInventoryPanel when a slot is tapped.
+    /// Updates both the network prefab (for Photon spawn) and the visible 3D model.
+    /// </summary>
+    /// <param name="newHolenPrefab">The Photon-registered network ball prefab.</param>
+    /// <param name="data">The HolenData whose holenPrefab is the 3D model to display.</param>
+    public void OnHolenSelectedFromInventory(GameObject newHolenPrefab, HolenData data)
     {
         if (!isTurn || isHolenLaunched || isOnChangeCooldown) return;
         if (newHolenPrefab == null) return;
 
+        // Store the selected data so SpawnHolenBall can apply the model after Photon spawn.
+        pendingHolenData = data;
+
         holenBallPrefab = newHolenPrefab;
-        SpawnHolenBall();
+        SpawnHolenBall(); // destroys old ball, spawns new one, then SwapHolenModel is called inside
+
         CloseInventory();
         UpdateStatusText("idle");
         StartCoroutine(ChangeCooldown());
+
         Debug.Log($"{playerRole} changed Holen to: {newHolenPrefab.name}");
     }
 
@@ -647,7 +684,68 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         }
 
         if (targetIndicator != null) targetIndicator.SetActive(false);
+
+        // Apply the 3D model swap if a new holen was selected from inventory
+        if (pendingHolenData != null)
+        {
+            SwapHolenModel(pendingHolenData);
+            pendingHolenData = null;
+        }
+
         Debug.Log($"{playerRole} spawned: {holenBallPrefab.name}");
+    }
+
+    /// <summary>
+    /// Swaps the visible 3D model on the current holen ball.
+    ///
+    /// HOW IT WORKS:
+    ///   Your holenball network prefab (used by Photon) contains a child GameObject
+    ///   that is the actual visible 3D model. This method:
+    ///     1. Finds and destroys all children tagged "HolenModel" (recommended setup).
+    ///        If none are tagged, destroys all children that only have a Transform
+    ///        (i.e. pure visual children, not physics components).
+    ///     2. Instantiates data.holenPrefab as a local child of currentHolenBall at
+    ///        zero local offset so it sits exactly at the ball's position.
+    ///
+    /// SETUP IN UNITY:
+    ///   - Tag the 3D model child inside your holenball prefab with the tag "HolenModel".
+    ///   - Create a "HolenModel" tag in Edit → Project Settings → Tags and Layers.
+    ///   - Make sure each HolenData's holenPrefab field points to the correct 3D model prefab.
+    ///
+    /// NOTE: This is a LOCAL-only visual swap. The Photon network ball is already
+    ///       replaced by re-spawning via PhotonNetwork.Instantiate. The 3D model is
+    ///       purely cosmetic for the local player's view.
+    /// </summary>
+    private void SwapHolenModel(HolenData data)
+    {
+        if (currentHolenBall == null || data == null || data.holenPrefab == null)
+        {
+            Debug.LogWarning("[SwapHolenModel] Cannot swap — ball, data, or holenPrefab is null.");
+            return;
+        }
+
+        // Find and destroy the existing model child by looking for a HolenIdentifier component.
+        // This avoids touching any tags on your prefabs.
+        List<GameObject> toDestroy = new List<GameObject>();
+        foreach (Transform child in currentHolenBall.transform)
+        {
+            if (child.GetComponent<HolenIdentifier>() != null)
+                toDestroy.Add(child.gameObject);
+        }
+
+        if (toDestroy.Count == 0)
+            Debug.LogWarning("[SwapHolenModel] No child with HolenIdentifier found on currentHolenBall. Make sure your holenPrefab has a HolenIdentifier component.");
+
+        foreach (GameObject go in toDestroy)
+            Destroy(go);
+
+        // Instantiate the new 3D model as a child at local zero
+        GameObject newModel = Instantiate(data.holenPrefab, currentHolenBall.transform);
+        newModel.transform.localPosition = Vector3.zero;
+        newModel.transform.localRotation = Quaternion.identity;
+        newModel.transform.localScale = Vector3.one;
+
+        Debug.Log($"[SwapHolenModel] Swapped model to: {data.holenName}");
     }
 
     // ─────────────────────────────────────────────

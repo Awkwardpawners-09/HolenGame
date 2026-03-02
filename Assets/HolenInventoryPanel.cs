@@ -5,21 +5,29 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Attach to the InventoryPanel GameObject (which sits under the local player's UI).
-/// Reads HolenInventoryManager.Instance (which is local and persistent) and
-/// builds one HolenSlotUI per owned holen.
+/// Reads HolenInventoryManager.Instance and builds one HolenSlotUI per owned holen.
 ///
-/// MULTIPLAYER NOTE:
-///   HolenInventoryManager is a DontDestroyOnLoad singleton — it always holds
-///   the LOCAL player's inventory. This panel simply reads from it, so each
-///   Photon client automatically shows their own inventory. No special networking
-///   is needed here.
+/// ══ BUG FIX 1 — Only one player's inventory was populating ══════════════════
+///   The old OnEnable() had this guard:
+///       if (controller != null && !controller.photonView.IsMine) → SetActive(false)
 ///
-/// SETUP:
-///   1. Assign this script to your InventoryPanel GameObject.
-///   2. slotPrefab    → your HolenSlotUI prefab
-///   3. gridContainer → the Grid Layout Group Transform inside the panel
-///   4. controller    → the MultiplayerHolenControllerNew on THIS player's prefab
-///   5. holenBallPrefabs → drag ALL holenball prefabs (each needs a HolenIdentifier)
+///   This was WRONG. MultiplayerHolenControllerNew is ONE shared scene object (not
+///   per-player). Its photonView is owned by whichever client first created it
+///   (usually the MasterClient / Player 1). So on Player 2's screen, IsMine = false
+///   and their inventory panel was immediately disabled every time it opened.
+///
+///   Fix: Remove the IsMine guard. Each client runs this script on their own local
+///   UI Canvas. HolenInventoryManager is a DontDestroyOnLoad singleton that always
+///   holds the LOCAL player's data, so each client correctly shows their own items.
+///   The IsTurn() check in OnSlotClicked still prevents the wrong player from acting.
+///
+/// ══ BUG FIX 2 — Holen 3D model didn't change on selection ══════════════════
+///   OnSlotClicked was only passing the network prefab to the controller, which
+///   only changed the Photon ball name. The visible 3D model on the ball was never
+///   swapped to match the selected holen.
+///
+///   Fix: Pass the full HolenData to OnHolenSelectedFromInventory so the controller
+///   can also swap out the 3D model child using HolenData.holenPrefab.
 /// </summary>
 public class HolenInventoryPanel : MonoBehaviour
 {
@@ -33,11 +41,11 @@ public class HolenInventoryPanel : MonoBehaviour
     [Tooltip("The Grid Layout Group Transform that slots will be parented to.")]
     public Transform gridContainer;
 
-    [Tooltip("The MultiplayerHolenControllerNew that owns this panel (local player only).")]
+    [Tooltip("The MultiplayerHolenControllerNew in the scene (the one shared controller).")]
     public MultiplayerHolenControllerNew controller;
 
     [Header("Holen Ball Prefabs")]
-    [Tooltip("Drag ALL holenball prefabs here. Each must have a HolenIdentifier with HolenData assigned.")]
+    [Tooltip("Drag ALL holenball network prefabs here. Each must have a HolenIdentifier with HolenData assigned.")]
     public List<GameObject> holenBallPrefabs = new List<GameObject>();
 
     [Header("Selection Visuals")]
@@ -61,17 +69,10 @@ public class HolenInventoryPanel : MonoBehaviour
     // ─────────────────────────────────────────────
     private void OnEnable()
     {
-        // Safety: only populate if this panel belongs to the local player's controller.
-        // The controller reference is set in the Inspector on the local player prefab,
-        // so on the remote client this panel won't be active anyway — but this guard
-        // adds an extra layer of protection.
-        if (controller != null && !controller.photonView.IsMine)
-        {
-            Debug.Log("[HolenInventoryPanel] Skipping populate — controller is not local player.");
-            gameObject.SetActive(false);
-            return;
-        }
-
+        // FIX: Removed the old "if (!controller.photonView.IsMine) SetActive(false)" guard.
+        // That guard was silently disabling Player 2's panel because the controller's
+        // photonView belongs to Player 1. Each client populates their own panel from
+        // their own HolenInventoryManager singleton — no ownership check needed here.
         PopulateGrid();
     }
 
@@ -154,7 +155,7 @@ public class HolenInventoryPanel : MonoBehaviour
                 ApplySelectionHighlight(id.holenData.holenID);
         }
 
-        Debug.Log($"[HolenInventoryPanel] Populated {spawnedSlots.Count} slots for local player.");
+        Debug.Log($"[HolenInventoryPanel] Populated {spawnedSlots.Count} slots.");
     }
 
     // ─────────────────────────────────────────────
@@ -174,21 +175,28 @@ public class HolenInventoryPanel : MonoBehaviour
             return;
         }
 
-        // Extra multiplayer guard — only respond if this is the local player's controller
-        if (!controller.photonView.IsMine)
+        // Only the player whose turn it is should be able to change their holen.
+        // controller.IsTurn() is evaluated locally per-client, so this is safe.
+        if (!controller.IsTurn())
         {
-            Debug.LogWarning("[HolenInventoryPanel] Slot clicked on non-local controller. Ignoring.");
+            Debug.Log("[HolenInventoryPanel] Not your turn — ignoring slot click.");
             return;
         }
 
-        GameObject prefab = FindPrefabForHolen(holenID);
-        if (prefab == null)
+        // Find the Photon network prefab for this holenID.
+        // This is the prefab used by PhotonNetwork.Instantiate (must be in a Resources folder).
+        GameObject networkPrefab = FindPrefabForHolen(holenID);
+        if (networkPrefab == null)
         {
             Debug.LogWarning($"[HolenInventoryPanel] No holenball prefab found for ID '{holenID}'.");
             return;
         }
 
-        controller.OnHolenSelectedFromInventory(prefab);
+        // FIX: Pass BOTH the network prefab AND the HolenData to the controller.
+        //   - networkPrefab  → used to set holenBallPrefab for PhotonNetwork.Instantiate
+        //   - data           → data.holenPrefab is the 3D model to show on the ball
+        controller.OnHolenSelectedFromInventory(networkPrefab, data);
+
         ApplySelectionHighlight(holenID);
         StartCoroutine(CooldownVisual(controller.changeHolenCooldown));
 
