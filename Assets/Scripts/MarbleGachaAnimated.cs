@@ -368,7 +368,7 @@ IEnumerator ShakeButton(Button button = null)
     if (animationPanel != null)
         animationPanel.SetActive(false);
 
-    yield return new WaitForSeconds(0.3f);
+    yield return new WaitForSeconds(0.1f);
 
     // Show background
     if (resultBackground != null)
@@ -382,7 +382,7 @@ IEnumerator ShakeButton(Button button = null)
     for (int i = 0; i < awardedMarbles.Count && i < marbleSlots.Length; i++)
     {
         yield return StartCoroutine(RevealMarbleInSlot(marbleSlots[i], awardedMarbles[i]));
-        yield return new WaitForSeconds(0.3f); // Pause between reveals
+        yield return new WaitForSeconds(1f); // Pause between reveals
     }
 
     // Re-enable buttons
@@ -437,6 +437,24 @@ IEnumerator RevealMarbleInSlot(Transform slot, HolenData marble)
     }
     
     slot.localScale = Vector3.one;
+
+    yield return new WaitForSeconds(1f);
+
+// Fade out over 0.3 seconds
+float fadeElapsed = 0f;
+float fadeDuration = 0.3f;
+CanvasGroup cg = slot.GetComponent<CanvasGroup>();
+if (cg == null) cg = slot.gameObject.AddComponent<CanvasGroup>();
+
+while (fadeElapsed < fadeDuration)
+{
+    fadeElapsed += Time.deltaTime;
+    cg.alpha = Mathf.Lerp(1, 0, fadeElapsed / fadeDuration);
+    yield return null;
+}
+
+slot.gameObject.SetActive(false);
+cg.alpha = 1f; // Reset for next time
 }
 
     IEnumerator ShakeAnimation(float duration)
@@ -485,15 +503,17 @@ IEnumerator CloseMultiResultPanelAnimated()
 {
     if (multiResultPanel == null) yield break;
 
+    // Get or add CanvasGroup
+    CanvasGroup cg = multiResultPanel.GetComponent<CanvasGroup>();
+    if (cg == null) cg = multiResultPanel.AddComponent<CanvasGroup>();
+
     float elapsed = 0f;
     float duration = 0.3f;
 
     while (elapsed < duration)
     {
         elapsed += Time.deltaTime;
-        float progress = elapsed / duration;
-        float scale = Mathf.Lerp(1, 0, progress);
-        multiResultPanel.transform.localScale = Vector3.one * scale;
+        cg.alpha = Mathf.Lerp(1, 0, elapsed / duration);
         yield return null;
     }
 
@@ -502,7 +522,7 @@ IEnumerator CloseMultiResultPanelAnimated()
     if (resultBackground != null)
         resultBackground.SetActive(false);
 
-    multiResultPanel.transform.localScale = Vector3.one;
+    cg.alpha = 1f; // Reset for next time
 }
 
 // =============================================================================
