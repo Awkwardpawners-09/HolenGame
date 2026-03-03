@@ -24,6 +24,15 @@ public class MarbleGachaAnimated : MonoBehaviour
     public CoinUIManager coinUI;
     public Button pullButton; // The gacha pull button
 
+    [Header("Multi-Pull Settings")]
+    public Button pull5Button; // x5 pull button
+    public int singlePullCost = 100;
+    public int multiPullCost = 450; // Discounted! (normally 500)
+    public GameObject multiResultPanel; // Special panel for showing 5 results
+    public Transform[] marbleSlots;
+    public Transform multiResultGrid; // Grid to hold the 5 marbles
+    public GameObject multiResultSlotPrefab; // Prefab for each marble slot
+
     [Header("Animation Settings")]
     public GameObject animationPanel; // Panel that shows during animation
     public Image spinningImage; // Image that spins during pull
@@ -73,7 +82,7 @@ public class MarbleGachaAnimated : MonoBehaviour
         {
             Debug.Log("Not enough coins!");
             // Optional: Shake the button or show error message
-            StartCoroutine(ShakeButton());
+            StartCoroutine(ShakeButton(pullButton));
         }
     }
 
@@ -273,25 +282,227 @@ IEnumerator CloseResultPanelAnimated()
     resultPanel.transform.localScale = Vector3.one;
 }
 
-    IEnumerator ShakeButton()
-    {
-        if (pullButton == null) yield break;
+IEnumerator ShakeButton(Button button = null)
+{
+    // If no button specified, use the default pullButton
+    if (button == null)
+        button = pullButton;
+    
+    if (button == null) yield break;
 
-        Vector3 originalPos = pullButton.transform.localPosition;
+    Vector3 originalPos = button.transform.localPosition;
+    float elapsed = 0f;
+    float duration = 0.5f;
+
+    while (elapsed < duration)
+    {
+        elapsed += Time.deltaTime;
+        float x = Random.Range(-10f, 10f);
+        float y = Random.Range(-10f, 10f);
+        button.transform.localPosition = originalPos + new Vector3(x, y, 0);
+        yield return null;
+    }
+
+    button.transform.localPosition = originalPos;
+}
+
+
+ public void TryBuyMultiPull()
+    {
+        if (isPulling) return;
+
+        bool success = (coinUI != null) ? coinUI.SpendCoins(multiPullCost) : playerData.SpendCoins(multiPullCost);
+
+        if (success)
+        {
+            StartCoroutine(MultiPullAnimationAllAtOnce());
+        }
+        else
+        {
+            Debug.Log("Not enough coins for x5 pull!");
+            StartCoroutine(ShakeButton(pull5Button));
+        }
+    }
+
+    IEnumerator MultiPullAnimationAllAtOnce()
+{
+    isPulling = true;
+
+    // Disable both buttons
+    if (pullButton != null) pullButton.interactable = false;
+    if (pull5Button != null) pull5Button.interactable = false;
+
+    // Show animation panel
+    if (animationPanel != null)
+        animationPanel.SetActive(true);
+
+    // Play pull sound
+    if (pullSound != null)
+        pullSound.Play();
+
+    // Start particles
+    if (pullParticles != null)
+        pullParticles.Play();
+
+    // Shake 5 times rapidly
+    for (int i = 0; i < 5; i++)
+    {
+        yield return StartCoroutine(ShakeAnimation(0.4f));
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    // Stop particles
+    if (pullParticles != null)
+        pullParticles.Stop();
+
+    // Get 5 marbles
+    List<HolenData> awardedMarbles = new List<HolenData>();
+    for (int i = 0; i < 5; i++)
+    {
+        HolenData marble = GetRandomMarble();
+        awardedMarbles.Add(marble);
+        inventoryManager.AddHolen(marble.holenID, 1);
+    }
+
+    // Hide animation panel
+    if (animationPanel != null)
+        animationPanel.SetActive(false);
+
+    yield return new WaitForSeconds(0.3f);
+
+    // Show background
+    if (resultBackground != null)
+        resultBackground.SetActive(true);
+
+    // Show multi result panel
+    if (multiResultPanel != null)
+        multiResultPanel.SetActive(true);
+
+    // Reveal each marble one by one
+    for (int i = 0; i < awardedMarbles.Count && i < marbleSlots.Length; i++)
+    {
+        yield return StartCoroutine(RevealMarbleInSlot(marbleSlots[i], awardedMarbles[i]));
+        yield return new WaitForSeconds(0.3f); // Pause between reveals
+    }
+
+    // Re-enable buttons
+    if (pullButton != null) pullButton.interactable = true;
+    if (pull5Button != null) pull5Button.interactable = true;
+
+    isPulling = false;
+
+    Debug.Log("🎉 Got 5 marbles!");
+}
+
+IEnumerator RevealMarbleInSlot(Transform slot, HolenData marble)
+{
+    if (slot == null) yield break;
+
+    // Find components in the slot
+    Image marbleIcon = slot.Find("Marble ICON")?.GetComponent<Image>();
+    TextMeshProUGUI marbleName = slot.Find("Marble NAME")?.GetComponent<TextMeshProUGUI>();
+    SunrayRevealEffect sunray = slot.GetComponent<SunrayRevealEffect>();
+    slot.gameObject.SetActive(true);
+
+    // Set the marble data
+    if (marbleIcon != null)
+        marbleIcon.sprite = marble.holenIcon;
+
+    if (marbleName != null)
+    {
+        marbleName.text = marble.holenName;
+        marbleName.color = GetRarityColor(marble.rarity);
+    }
+
+    // Play reveal sound
+    if (revealSound != null)
+        revealSound.Play();
+
+    // Start sunray effect
+    if (sunray != null)
+        sunray.PlayRevealEffect(marble.rarity);
+
+    // Scale up animation for this slot
+    slot.localScale = Vector3.zero;
+    float elapsed = 0f;
+    float duration = 0.4f;
+
+    while (elapsed < duration)
+    {
+        elapsed += Time.deltaTime;
+        float progress = elapsed / duration;
+        float scale = Mathf.Lerp(0, 1, progress);
+        slot.localScale = Vector3.one * scale;
+        yield return null;
+    }
+    
+    slot.localScale = Vector3.one;
+}
+
+    IEnumerator ShakeAnimation(float duration)
+    {
         float elapsed = 0f;
-        float duration = 0.5f;
+        Vector3 originalPos = spinningImage != null ? spinningImage.transform.localPosition : Vector3.zero;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float x = Random.Range(-10f, 10f);
-            float y = Random.Range(-10f, 10f);
-            pullButton.transform.localPosition = originalPos + new Vector3(x, y, 0);
+            float progress = elapsed / duration;
+
+            if (spinningImage != null)
+            {
+                float intensity = Mathf.Sin(progress * Mathf.PI) * 25f;
+                float shakeSpeed = 40f;
+
+                float x = Mathf.Sin(elapsed * shakeSpeed) * intensity;
+                float y = Mathf.Cos(elapsed * shakeSpeed * 1.3f) * intensity;
+                float rotation = Mathf.Sin(elapsed * shakeSpeed * 0.7f) * intensity * 0.5f;
+
+                spinningImage.transform.localPosition = originalPos + new Vector3(x, y, 0);
+                spinningImage.transform.rotation = Quaternion.Euler(0, 0, rotation);
+
+                float scale = 1f + Mathf.Sin(elapsed * 15f) * 0.05f;
+                spinningImage.transform.localScale = Vector3.one * scale;
+            }
+
             yield return null;
         }
 
-        pullButton.transform.localPosition = originalPos;
+        if (spinningImage != null)
+        {
+            spinningImage.transform.localPosition = originalPos;
+            spinningImage.transform.rotation = Quaternion.identity;
+            spinningImage.transform.localScale = Vector3.one;
+        }
     }
+
+public void CloseMultiResultPanel()
+{
+    StartCoroutine(CloseMultiResultPanelAnimated());
+}
+
+IEnumerator CloseMultiResultPanelAnimated()
+{
+    if (multiResultPanel == null) yield break;
+
+    float elapsed = 0f;
+    float duration = 0.3f;
+
+    while (elapsed < duration)
+    {
+        elapsed += Time.deltaTime;
+        float progress = elapsed / duration;
+        float scale = Mathf.Lerp(1, 0, progress);
+        multiResultPanel.transform.localScale = Vector3.one * scale;
+        yield return null;
+    }
+
+    multiResultPanel.SetActive(false);
+
+    if (resultBackground != null)
+        resultBackground.SetActive(false);
+
+    multiResultPanel.transform.localScale = Vector3.one;
 }
 
 // =============================================================================
@@ -350,4 +561,5 @@ public class WeightedGachaSystem : MonoBehaviour
 
         return "Common"; // fallback
     }
+}
 }

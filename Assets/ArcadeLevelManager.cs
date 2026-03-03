@@ -16,23 +16,20 @@ public class ArcadeLevelManager : MonoBehaviour
 
     private PlayerData playerData;
 
-    private void Start()
-    {
-        // Load player data
-        playerData = PlayerData.Load();
-    }
-
     /// <summary>
     /// Call this method when the player successfully completes the level
     /// </summary>
-    public void CompleteLevel()
+public void CompleteLevel()
+{
+    if (PlayerDataManager.Instance == null)
     {
-        // Give rewards
-        playerData.AddCoins(coinReward);
-        playerData.AddEnergy(energyReward);
+        Debug.LogError("❌ PlayerDataManager not found!");
+        return;
+    }
 
-        // Unlock next level
-        playerData.CompleteLevel(currentLevelNumber);
+    PlayerDataManager.Instance.AddCoins(coinReward);
+    PlayerDataManager.Instance.AddEnergy(energyReward);
+    playerData.CompleteLevel(currentLevelNumber);
 
         Debug.Log($"[LevelManager] Level {currentLevelNumber} completed! Next level unlocked.");
         Debug.Log($"[LevelManager] Rewards: +{coinReward} coins, +{energyReward} energy");
