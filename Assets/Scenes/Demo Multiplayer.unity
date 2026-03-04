@@ -4232,8 +4232,8 @@ MonoBehaviour:
   mainCamera: {fileID: 291026016873935694}
   activePlayerCamera: {fileID: 1815049141}
   birdsEyeCamera: {fileID: 1069591812}
-  playerLabelText: {fileID: 618086632}
-  turnDisplayText: {fileID: 805143804}
+  playerLabelText: {fileID: 0}
+  turnDisplayText: {fileID: 0}
   cameraSpawnPoint: {fileID: 430090578}
   loadingUI: {fileID: 55478039}
   swipeIndicator: {fileID: 564996207}
@@ -8121,7 +8121,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TURN
+  m_text: PVP MODE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -10886,7 +10886,7 @@ GameObject:
   - component: {fileID: 900238639}
   - component: {fileID: 900238641}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29255,8 +29255,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5537097794346856951}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.27872723, y: 0.23103367, z: -0.06927291, w: -0.9295891}
-  m_LocalPosition: {x: 17.41, y: 23.4, z: -27.16}
+  m_LocalRotation: {x: 0.21011417, y: -0.0024580373, z: -0.0005286548, w: 0.97767365}
+  m_LocalPosition: {x: 0.8, y: 14.8, z: -15.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

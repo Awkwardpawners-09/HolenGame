@@ -3394,6 +3394,8 @@ MonoBehaviour:
   minLaunchForce: 5
   maxLaunchForce: 100
   swipeTimeWindow: 1
+  arcSwipeTimeWindow: 0
+  downwardSwipeTimeWindow: 0
   requireTouchOnBall: 1
   swipeDeadZone: 20
   ballLayerName: HolenBall
@@ -9352,7 +9354,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LEVEL 1
+  m_text: LEVEL 4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -10283,7 +10285,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Strike All Holens!
+  m_text: Knock the Holen!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -12180,9 +12182,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 387487144}
-  continueSceneName: Demo Menu
+  continueSceneName: Stage 5
   retryButton: {fileID: 1092251883}
-  retrySceneName: Stage 1
+  retrySceneName: Stage 4
   transitionObject: {fileID: 836333308}
   delayBeforeTransition: 5
 --- !u!114 &1005936888

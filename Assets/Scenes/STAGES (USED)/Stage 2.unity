@@ -2114,6 +2114,14 @@ Transform:
   - {fileID: 1817495328}
   - {fileID: 107997305}
   - {fileID: 739917561}
+  - {fileID: 1902836004}
+  - {fileID: 1598984633}
+  - {fileID: 1521628412}
+  - {fileID: 366357121}
+  - {fileID: 1659117416}
+  - {fileID: 1165262692}
+  - {fileID: 1767794881}
+  - {fileID: 1239925832}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &310227655
@@ -2325,9 +2333,9 @@ MonoBehaviour:
   useSpeedForce: 1
   groundLayerName: Ground
   arcAngle: 60
-  arcForceMultiplier: 1.1
+  arcForceMultiplier: 2
   arcDragAmplification: 2.5
-  arcMaxTargetRadius: 20
+  arcMaxTargetRadius: 100
   downwardSpawnHeightOffset: 4
   downwardAngle: 5
   downwardForceMultiplier: 0.8
@@ -2982,6 +2990,140 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1504724368}
   m_SourcePrefab: {fileID: 100100000, guid: d422a3f27b349754f8dd6b70d3a3be4a, type: 3}
+--- !u!1001 &366357120
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300943037}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 42.74511
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 42.7451
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 73.47119
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 47.447
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.61
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.67489916
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.54239386
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.19367401
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.46131378
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -65.618
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -35.377
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 91.944
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Name
+      value: Rock (10)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 366357124}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 366357123}
+  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!4 &366357121 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 366357120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &366357122 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 366357120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &366357123
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366357122}
+  serializedVersion: 4
+  m_Mass: 2
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &366357124
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366357122}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!1 &368360524
 GameObject:
   m_ObjectHideFlags: 0
@@ -6416,7 +6558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LEVEL 1
+  m_text: Level 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -7079,7 +7221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Strike All Holens!
+  m_text: Knock all Holens!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -8641,9 +8783,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 387487144}
-  continueSceneName: Demo Menu
+  continueSceneName: Stage 3
   retryButton: {fileID: 1092251883}
-  retrySceneName: Stage 1
+  retrySceneName: Stage 2
   transitionObject: {fileID: 836333308}
   delayBeforeTransition: 5
 --- !u!114 &1005936888
@@ -8658,7 +8800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1f8bca390574d4997604fc1de803e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevelNumber: 1
+  currentLevelNumber: 2
   coinReward: 500
   energyReward: -10
 --- !u!1 &1006261354
@@ -9862,6 +10004,140 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
   m_PrefabInstance: {fileID: 1653822694}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1165262691
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300943037}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 42.74511
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 42.7451
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 73.47119
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.77
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 47.847
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -36.33
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.67489916
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.54239386
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.19367401
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.46131378
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -65.618
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -35.377
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 91.944
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Name
+      value: Rock (8)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1165262695}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1165262694}
+  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!4 &1165262692 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1165262691}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1165262693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1165262691}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1165262694
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165262693}
+  serializedVersion: 4
+  m_Mass: 2
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &1165262695
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165262693}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!1 &1169681359
 GameObject:
   m_ObjectHideFlags: 0
@@ -10277,6 +10553,140 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2013275174422882284, guid: 2fcf6ad43fc49944fb975ea1daf9384c, type: 3}
   m_PrefabInstance: {fileID: 5276837441364850800}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1239925831
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300943037}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 42.74511
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 42.7451
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 73.47119
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.04
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 47.018
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -38.52
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.67489916
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.54239386
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.19367401
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.46131378
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -65.618
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -35.377
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 91.944
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Name
+      value: Rock (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1239925835}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1239925834}
+  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!4 &1239925832 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1239925831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239925833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1239925831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1239925834
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239925833}
+  serializedVersion: 4
+  m_Mass: 2
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &1239925835
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239925833}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!1 &1269906464
 GameObject:
   m_ObjectHideFlags: 0
@@ -12121,6 +12531,513 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.055202566, y: 0.10555802, z: 0.071016215}
   m_Center: {x: 0.00083195063, y: 0.037435517, z: 0.005009415}
+--- !u!1001 &1521628411
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300943037}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 853.10016
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 853.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 853.10004
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.74
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 37.97
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -18.74
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7876536
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2183803
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.44958058
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.36026266
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.151
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 59.969
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 49.821
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 37f976666bd200947a1227b7d6997e30, type: 2}
+    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Name
+      value: "UnevenGroundusing UnityEngine; using Cinemachine; using UnityEngine.UI;
+        using System.Collections;  public class HolensLauncher : MonoBehaviour {    
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH MODE ENUM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public enum LaunchMode     {         Default  = 0,   // Swipe speed/distance
+        \u2192 force, straight horizontal line         Arc      = 1,   // Finger
+        raycast on Ground \u2192 holen arcs UP and lands exactly there         Downward
+        = 2    // Finger raycast on Ground \u2192 holen launches from raised position
+        DOWN to there     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  REFERENCES     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"References\")]     public Transform holensPosition;     public
+        GameObject holensBallPrefab;     public CinemachineVirtualCamera cinemachineCamera;    
+        public Camera mainCamera;     public Transform cameraSpawnPoint;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  UI     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"UI\")]     public GameObject swipeIndicator;     public LineRenderer
+        trajectoryLine;      [Header(\"Launch Mode UI Buttons\")]     public Button
+        buttonModeDefault;     public Button buttonModeArc;     public Button buttonModeDownward;     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ACTIVE MODE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Active Launch Mode\")]     public LaunchMode activeLaunchMode =
+        LaunchMode.Default;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SWIPE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Swipe Settings (All Modes)\")]     public float minSwipeDistance  
+        = 50f;     public float maxSwipeDistance   = 500f;     public float minLaunchForce    
+        = 5f;     public float maxLaunchForce     = 100f;     [Tooltip(\"Time window
+        only enforced in Default mode\")]     public float swipeTimeWindow    = 1f;    
+        public bool  requireTouchOnBall = false;     public float swipeDeadZone     
+        = 20f;     public string ballLayerName     = \"HolenBall\";      [Header(\"Force
+        Calculation (Default Mode Only)\")]     public float speedMultiplier = 0.05f;    
+        public bool  useSpeedForce   = true;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ARC MODE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Arc Mode Settings\")]     public string groundLayerName = \"Ground\";    
+        [Tooltip(\"Launch angle above horizontal (degrees). 45\xB0 = max range.\")]    
+        public float arcAngle = 45f;     [Tooltip(\"1.0 = exact. Reduce if overshooting,
+        increase if undershooting.\")]     [Range(0.1f, 2.0f)]     public float arcForceMultiplier
+        = 1.0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  DOWNWARD MODE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Downward Mode Settings\")]     public float downwardSpawnHeightOffset
+        = 4f;     [Tooltip(\"Angle below horizontal in degrees.\")]     public float
+        downwardAngle = 30f;     [Tooltip(\"1.0 = exact. Reduce if overshooting,
+        increase if undershooting.\")]     [Range(0.1f, 2.0f)]     public float downwardForceMultiplier
+        = 1.0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TRAJECTORY LINE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Trajectory Settings\")]     [Tooltip(\"Points on arc/downward trajectory
+        line\")]     public int   trajectoryPointCount = 40;     [Tooltip(\"Time
+        step per arc point (smaller = smoother)\")]     public float trajectoryTimeStep  
+        = 0.08f;     [Tooltip(\"How far the Default mode straight line extends (world
+        units)\")]     public float defaultLineLength    = 10f;      [Header(\"Line
+        Color & Animation\")]     [Tooltip(\"Color of the trajectory line. Alpha
+        controls transparency (0.5 = 50%).\")]     public Color lineColor = new Color(1f,
+        0f, 0f, 0.5f);     [Tooltip(\"How fast the dash travels along the line\")]    
+        public float lineAnimationSpeed  = 2f;     [Tooltip(\"Fraction of the line
+        visible at once (0.6 = 60% of path shown)\")]     [Range(0.01f, 1f)]    
+        public float lineVisibleFraction = 0.6f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  CAMERA SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Camera Settings\")]     [Tooltip(\"Camera offset while the holen
+        is at the spawn point (aiming)\")]     public Vector3 cameraFollowOffset
+        = new Vector3(0f, 8f, -6f);      [Tooltip(\"Screen Y for the holen while
+        AIMING (0.8 = upper part of screen)\")]     public float cameraAimScreenY
+        = 0.80f;      [Tooltip(\"Screen Y for the holen while IN FLIGHT. 0.5 = dead
+        centre of screen.\")]     public float cameraFlightScreenY = 0.5f;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SOUND     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Sound\")]     [Tooltip(\"AudioSource to play the launch sound through.
+        \" +              \"If left empty the script will try to find one on this
+        GameObject.\")]     public AudioSource audioSource;     [Tooltip(\"Sound
+        clip that plays the moment the holen is launched.\")]     public AudioClip
+        launchSoundClip;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TARGETING INDICATOR     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Targeting Indicator\")]     [Tooltip(\"3D GameObject that shows
+        where the holen will land. \" +              \"Assign it here \u2014 it should
+        be disabled in the scene by default. \" +              \"Only visible in
+        Arc and Downward modes while the player is aiming.\")]     public GameObject
+        targetIndicator;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  HOLEN SYSTEM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Holen System\")]     public HolenChanger holenChanger;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LIFE SYSTEM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Life System\")]     public float lifeDeductionDelay = 6.5f;     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PRIVATE STATE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private int        ballLayer;     private int        groundLayerMask;    
+        private GameObject currentBall;     private bool       isBusy      = false;    
+        private bool       hasLaunched = false;     private Transform  defaultLookAtTarget;     
+        // Swipe state     private Vector2 swipeStartPos;     private Vector2 swipeEndPos;    
+        private float   swipeStartTime;     private bool    isSwiping      = false;    
+        private Vector3 swipeWorldStart;      // Raycast target (Arc & Downward)    
+        private Vector3 raycastTarget;     private bool    raycastTargetValid;     
+        // Animated line     private Vector3[] fullTrajectoryPoints;     private
+        float     lineAnimOffset = 0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  UNITY LIFECYCLE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        void Start()     {         ballLayer       = LayerMask.NameToLayer(ballLayerName);        
+        groundLayerMask = LayerMask.GetMask(groundLayerName);          if (ballLayer
+        == -1)             Debug.LogWarning($\"Layer '{ballLayerName}' not found.\");        
+        if (groundLayerMask == 0)             Debug.LogWarning($\"Layer '{groundLayerName}'
+        not found. Arc/Downward targeting won't work.\");          if (mainCamera
+        == null)             mainCamera = Camera.main;          // Auto-grab AudioSource
+        from this GameObject if not assigned in Inspector         if (audioSource
+        == null)             audioSource = GetComponent<AudioSource>();         
+        SetInitialCameraPosition();          if (cinemachineCamera != null)            
+        defaultLookAtTarget = cinemachineCamera.LookAt;          if (swipeIndicator
+        != null)             swipeIndicator.SetActive(false);          // \u2500\u2500
+        Trajectory line starts hidden. It only appears while the player is aiming.
+        \u2500\u2500         if (trajectoryLine != null)         {             trajectoryLine.enabled   
+        = false;             trajectoryLine.startColor = lineColor;             trajectoryLine.endColor  
+        = lineColor;             // NOTE: For the alpha (transparency) to work, your
+        LineRenderer material             // must use a transparent shader such as
+        \"Sprites/Default\" or             // \"Particles/Standard Unlit\". The default
+        \"Default-Line\" ignores alpha.         }          // Target indicator is
+        always hidden until the player aims in Arc/Downward mode         if (targetIndicator
+        != null)             targetIndicator.SetActive(false);          // Wire up
+        mode buttons         if (buttonModeDefault  != null) buttonModeDefault .onClick.AddListener(()
+        => SetLaunchMode(LaunchMode.Default));         if (buttonModeArc      !=
+        null) buttonModeArc     .onClick.AddListener(() => SetLaunchMode(LaunchMode.Arc));        
+        if (buttonModeDownward != null) buttonModeDownward.onClick.AddListener(()
+        => SetLaunchMode(LaunchMode.Downward));          RefreshModeButtonVisuals();        
+        SpawnCurrentHolen();     }      void Update()     {         if (!isBusy &&
+        !hasLaunched && currentBall != null)         {             HandleSwipeInput();             
+        if (isSwiping)             {                 // Only build and show the trajectory
+        while the finger is actively held down                 BuildLiveTrajectoryPoints();                
+        AnimateAndDrawLine();             }             else             {                
+        // Hide the line completely when not aiming                 if (trajectoryLine
+        != null)                     trajectoryLine.enabled = false;            
+        }         }     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH MODE SELECTION     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public void SetLaunchMode(LaunchMode mode)     {         if (hasLaunched)        
+        {             Debug.Log(\"[HolensLauncher] Cannot change mode while holen
+        is in flight.\");             return;         }         if (activeLaunchMode
+        == mode) return;          activeLaunchMode = mode;         Debug.Log($\"[HolensLauncher]
+        Mode \u2192 {mode}\");         RefreshModeButtonVisuals();         SpawnCurrentHolen();    
+        }      public void SetLaunchModeDefault()  => SetLaunchMode(LaunchMode.Default);    
+        public void SetLaunchModeArc()      => SetLaunchMode(LaunchMode.Arc);    
+        public void SetLaunchModeDownward() => SetLaunchMode(LaunchMode.Downward);     
+        private void RefreshModeButtonVisuals()     {         SetButtonSelected(buttonModeDefault, 
+        activeLaunchMode == LaunchMode.Default);         SetButtonSelected(buttonModeArc,     
+        activeLaunchMode == LaunchMode.Arc);         SetButtonSelected(buttonModeDownward,
+        activeLaunchMode == LaunchMode.Downward);     }      private void SetButtonSelected(Button
+        btn, bool selected)     {         if (btn == null) return;         ColorBlock
+        cb  = btn.colors;         cb.normalColor = selected ? new Color(0.3f, 0.8f,
+        0.3f) : Color.white;         btn.colors     = cb;     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  CAMERA     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void SetInitialCameraPosition()     {         if (cameraSpawnPoint
+        != null)         {             mainCamera.transform.position = cameraSpawnPoint.position;            
+        mainCamera.transform.rotation = cameraSpawnPoint.rotation;         }    
+        }      /// <summary>     /// Applied while the holen is sitting at the spawn
+        point waiting to be launched.     /// Uses cameraFollowOffset and cameraAimScreenY
+        (typically high on screen).     /// </summary>     private void ApplyAimCameraSettings()    
+        {         if (cinemachineCamera == null) return;         var transposer =
+        cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();        
+        var composer   = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();        
+        if (transposer != null) transposer.m_FollowOffset = cameraFollowOffset;        
+        if (composer   != null) composer.m_ScreenY        = cameraAimScreenY;    
+        }      /// <summary>     /// Applied the moment the holen is launched.    
+        /// Detaches CinemachineTransposer Follow so the camera STAYS in place,    
+        /// but keeps LookAt on the holen so it rotates to track it.     /// Screen
+        Y is set to cameraFlightScreenY (0.5 = dead centre) so the     /// holen
+        appears in the middle of the screen throughout the flight.     /// </summary>    
+        private void ApplyFlightCameraSettings()     {         if (cinemachineCamera
+        == null) return;         // Stop the transposer from chasing the holen \u2014
+        camera stays at its current world position         var transposer = cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();        
+        if (transposer != null) transposer.m_FollowOffset = Vector3.zero;        
+        // Composer: centre the look-at target on screen         var composer = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();        
+        if (composer != null) composer.m_ScreenY = cameraFlightScreenY;     }     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SWIPE INPUT     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void HandleSwipeInput()     {         if (Input.touchCount > 0)        
+        {             Touch touch = Input.GetTouch(0);             switch (touch.phase)            
+        {                 case TouchPhase.Began:                     if (!requireTouchOnBall
+        || IsTouchingBall(touch.position))                         StartSwipe(touch.position);                    
+        break;                 case TouchPhase.Moved:                     if (isSwiping)
+        UpdateSwipe(touch.position);                     break;                 case
+        TouchPhase.Ended:                     if (isSwiping) EndSwipe(touch.position);                    
+        break;                 case TouchPhase.Canceled:                     if (isSwiping)
+        CancelSwipe();                     break;             }         }        
+        else if (Input.GetMouseButtonDown(0))         {             if (!requireTouchOnBall
+        || IsTouchingBall(Input.mousePosition))                 StartSwipe(Input.mousePosition);        
+        }         else if (Input.GetMouseButton(0) && isSwiping)             UpdateSwipe(Input.mousePosition);        
+        else if (Input.GetMouseButtonUp(0) && isSwiping)             EndSwipe(Input.mousePosition);    
+        }      private bool IsTouchingBall(Vector2 screenPos)     {         if (currentBall
+        == null) return false;         Ray ray = mainCamera.ScreenPointToRay(screenPos);        
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f) && hit.collider.gameObject
+        == currentBall)             return true;         Vector3 ballScreen = mainCamera.WorldToScreenPoint(currentBall.transform.position);        
+        return Vector2.Distance(screenPos, new Vector2(ballScreen.x, ballScreen.y))
+        < 100f;     }      private void StartSwipe(Vector2 screenPos)     {        
+        isSwiping          = true;         swipeStartPos      = screenPos;        
+        swipeStartTime     = Time.time;         swipeWorldStart    = currentBall.transform.position;        
+        raycastTargetValid = false;          if (swipeIndicator != null) swipeIndicator.SetActive(true);    
+        }      private void UpdateSwipe(Vector2 screenPos)     {         swipeEndPos
+        = screenPos;          if (activeLaunchMode != LaunchMode.Default)        
+        {             Ray ray = mainCamera.ScreenPointToRay(screenPos);            
+        if (Physics.Raycast(ray, out RaycastHit hit, 500f, groundLayerMask))            
+        {                 raycastTarget      = hit.point;                 raycastTargetValid
+        = true;                  // Show the targeting indicator at the raycast landing
+        point                 if (targetIndicator != null)                 {                    
+        targetIndicator.SetActive(true);                     targetIndicator.transform.position
+        = raycastTarget;                 }             }             else            
+        {                 // Finger moved off the ground layer \u2014 hide indicator                
+        if (targetIndicator != null)                     targetIndicator.SetActive(false);            
+        }         }         else         {             // Default mode never uses
+        the indicator             if (targetIndicator != null)                 targetIndicator.SetActive(false);             
+        Ray   ray   = mainCamera.ScreenPointToRay(screenPos);             Plane plane
+        = new Plane(Vector3.up, currentBall.transform.position);             if (plane.Raycast(ray,
+        out float dist))             {                 raycastTarget      = ray.GetPoint(dist);                
+        raycastTargetValid = true;             }         }     }      private void
+        EndSwipe(Vector2 screenPos)     {         swipeEndPos = screenPos;        
+        float   swipeTime     = Time.time - swipeStartTime;         Vector2 swipeDelta   
+        = swipeEndPos - swipeStartPos;         float   swipeDistance = swipeDelta.magnitude;         
+        isSwiping = false;          // Hide the line and indicator as soon as the
+        finger lifts         if (trajectoryLine    != null) trajectoryLine.enabled
+        = false;         if (swipeIndicator    != null) swipeIndicator.SetActive(false);        
+        if (targetIndicator   != null) targetIndicator.SetActive(false);         
+        bool valid = swipeDistance >= minSwipeDistance &&                      (activeLaunchMode
+        != LaunchMode.Default || swipeTime <= swipeTimeWindow);          if (!valid)        
+        {             Debug.Log($\"[HolensLauncher] Invalid swipe. Dist={swipeDistance:F0}
+        Time={swipeTime:F2}\");             return;         }          Vector3 launchVelocity
+        = ComputeLaunchVelocity(swipeDelta, swipeTime, swipeDistance);         if
+        (launchVelocity == Vector3.zero)         {             Debug.LogWarning(\"[HolensLauncher]
+        Could not compute launch velocity \u2014 finger may not be over Ground layer.\");            
+        return;         }          StartCoroutine(LaunchSequence(launchVelocity));    
+        }      private void CancelSwipe()     {         isSwiping = false;        
+        if (trajectoryLine  != null) trajectoryLine.enabled = false;         if (swipeIndicator 
+        != null) swipeIndicator.SetActive(false);         if (targetIndicator !=
+        null) targetIndicator.SetActive(false);     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH VELOCITY COMPUTATION     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private Vector3 ComputeLaunchVelocity(Vector2 swipeDelta, float swipeTime,
+        float swipeDistance)     {         switch (activeLaunchMode)         {            
+        case LaunchMode.Arc:             {                 if (!raycastTargetValid)
+        { Debug.LogWarning(\"[Arc] No valid ground target.\"); return Vector3.zero;
+        }                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveArcSpeed(horizDist, vertDiff, arcAngle);                 if (rawSpeed
+        <= 0f) return Vector3.zero;                 float   speed    = rawSpeed *
+        arcForceMultiplier;                 float   rad      = arcAngle * Mathf.Deg2Rad;                
+        Vector3 horizDir = new Vector3(toTarget.x, 0f, toTarget.z).normalized;                
+        return horizDir * (speed * Mathf.Cos(rad)) + Vector3.up * (speed * Mathf.Sin(rad));            
+        }              case LaunchMode.Downward:             {                 if
+        (!raycastTargetValid) { Debug.LogWarning(\"[Downward] No valid ground target.\");
+        return Vector3.zero; }                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveDownwardSpeed(horizDist, vertDiff, downwardAngle);                
+        if (rawSpeed <= 0f) return Vector3.zero;                 float   speed   
+        = rawSpeed * downwardForceMultiplier;                 float   rad      =
+        downwardAngle * Mathf.Deg2Rad;                 Vector3 horizDir = new Vector3(toTarget.x,
+        0f, toTarget.z).normalized;                 return horizDir * (speed * Mathf.Cos(rad))
+        - Vector3.up * (speed * Mathf.Sin(rad));             }              default:
+        // Default             {                 Vector3 swipeWorldDir = Vector3.zero;                
+        if (raycastTargetValid)                 {                     swipeWorldDir  
+        = raycastTarget - swipeWorldStart;                     swipeWorldDir.y =
+        0f;                     swipeWorldDir.Normalize();                 }                
+        if (swipeWorldDir.sqrMagnitude < 0.01f)                 {                    
+        Vector3 camFwd   = mainCamera.transform.forward; camFwd.y   = 0f; camFwd.Normalize();                    
+        Vector3 camRight = mainCamera.transform.right;   camRight.y = 0f; camRight.Normalize();                    
+        swipeWorldDir    = (camRight * swipeDelta.x + camFwd * swipeDelta.y).normalized;                
+        }                 float force;                 if (useSpeedForce)                
+        {                     float sp = swipeDistance / Mathf.Max(swipeTime, 0.01f);                    
+        force    = Mathf.Clamp(sp * speedMultiplier, minLaunchForce, maxLaunchForce);                
+        }                 else                 {                     float nd  =
+        Mathf.InverseLerp(minSwipeDistance, maxSwipeDistance, swipeDistance);                    
+        force     = Mathf.Lerp(minLaunchForce, maxLaunchForce, nd);                    
+        float sp2 = swipeDistance / Mathf.Max(swipeTime, 0.01f);                    
+        force     = Mathf.Lerp(force, maxLaunchForce, Mathf.Clamp01(sp2 / 2000f));                
+        }                 return swipeWorldDir * force;             }         }    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PHYSICS SOLVERS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private float SolveArcSpeed(float horizDist, float vertDiff, float angleDeg)    
+        {         float \u03B8     = angleDeg * Mathf.Deg2Rad;         float g    
+        = Mathf.Abs(Physics.gravity.y);         float cos\u03B8  = Mathf.Cos(\u03B8);        
+        float tan\u03B8  = Mathf.Tan(\u03B8);         float denom = 2f * cos\u03B8
+        * cos\u03B8 * (horizDist * tan\u03B8 - vertDiff);         if (denom <= 0f)
+        { Debug.LogWarning($\"[Arc Solver] Unreachable. hDist={horizDist:F2} vDiff={vertDiff:F2}\");
+        return -1f; }         return Mathf.Sqrt((g * horizDist * horizDist) / denom);    
+        }      private float SolveDownwardSpeed(float horizDist, float vertDiff,
+        float angleDeg)     {         float \u03B8     = angleDeg * Mathf.Deg2Rad;        
+        float g     = Mathf.Abs(Physics.gravity.y);         float cos\u03B8  = Mathf.Cos(\u03B8);        
+        float tan\u03B8  = Mathf.Tan(\u03B8);         float denom = 2f * cos\u03B8
+        * cos\u03B8 * (-horizDist * tan\u03B8 - vertDiff);         if (denom <= 0f)
+        { Debug.LogWarning($\"[Downward Solver] Unreachable. hDist={horizDist:F2}
+        vDiff={vertDiff:F2}\"); return -1f; }         return Mathf.Sqrt((g * horizDist
+        * horizDist) / denom);     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TRAJECTORY BUILDING  (only runs while isSwiping)     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void BuildLiveTrajectoryPoints()     {         if (currentBall ==
+        null) return;          switch (activeLaunchMode)         {             case
+        LaunchMode.Arc:             {                 if (!raycastTargetValid) return;                
+        Vector3 spawnPos  = currentBall.transform.position;                 Vector3
+        toTarget  = raycastTarget - spawnPos;                 float   horizDist =
+        new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveArcSpeed(horizDist, vertDiff, arcAngle);                 if (rawSpeed
+        <= 0f) return;                 float   speed    = rawSpeed * arcForceMultiplier;                
+        float   rad      = arcAngle * Mathf.Deg2Rad;                 Vector3 horizDir
+        = new Vector3(toTarget.x, 0f, toTarget.z).normalized;                 Vector3
+        vel      = horizDir * (speed * Mathf.Cos(rad)) + Vector3.up * (speed * Mathf.Sin(rad));                
+        BuildPhysicsPoints(spawnPos, vel);                 break;             }            
+        case LaunchMode.Downward:             {                 if (!raycastTargetValid)
+        return;                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveDownwardSpeed(horizDist, vertDiff, downwardAngle);                
+        if (rawSpeed <= 0f) return;                 float   speed    = rawSpeed *
+        downwardForceMultiplier;                 float   rad      = downwardAngle
+        * Mathf.Deg2Rad;                 Vector3 horizDir = new Vector3(toTarget.x,
+        0f, toTarget.z).normalized;                 Vector3 vel      = horizDir *
+        (speed * Mathf.Cos(rad)) - Vector3.up * (speed * Mathf.Sin(rad));                
+        BuildPhysicsPoints(spawnPos, vel);                 break;             }            
+        default:             {                 Vector3 spawnPos = currentBall.transform.position;                
+        Vector3 dir      = Vector3.zero;                 if (raycastTargetValid)
+        { dir = raycastTarget - swipeWorldStart; dir.y = 0f; dir.Normalize(); }                
+        if (dir.sqrMagnitude < 0.01f) { dir = mainCamera.transform.forward; dir.y
+        = 0f; dir.Normalize(); }                 BuildStraightPoints(spawnPos, dir);                
+        break;             }         }     }      private void BuildPhysicsPoints(Vector3
+        startPos, Vector3 velocity)     {         fullTrajectoryPoints = new Vector3[trajectoryPointCount];        
+        for (int i = 0; i < trajectoryPointCount; i++)         {             float
+        t = i * trajectoryTimeStep;             fullTrajectoryPoints[i] = startPos
+        + velocity * t + 0.5f * Physics.gravity * t * t;         }     }      private
+        void BuildStraightPoints(Vector3 startPos, Vector3 direction)     {        
+        fullTrajectoryPoints    = new Vector3[2];         fullTrajectoryPoints[0]
+        = startPos;         fullTrajectoryPoints[1] = startPos + direction * defaultLineLength;    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ANIMATED LINE RENDERING     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void AnimateAndDrawLine()     {         if (trajectoryLine == null
+        || fullTrajectoryPoints == null || fullTrajectoryPoints.Length < 2)            
+        return;          lineAnimOffset = (lineAnimOffset + Time.deltaTime * lineAnimationSpeed)
+        % 1f;          int totalPts     = fullTrajectoryPoints.Length;         int
+        visibleCount = Mathf.Max(2, Mathf.RoundToInt(totalPts * lineVisibleFraction));        
+        int startIdx     = Mathf.FloorToInt(lineAnimOffset * totalPts);         
+        trajectoryLine.enabled       = true;         trajectoryLine.positionCount
+        = visibleCount;          for (int i = 0; i < visibleCount; i++)            
+        trajectoryLine.SetPosition(i, fullTrajectoryPoints[(startIdx + i) % totalPts]);         
+        trajectoryLine.startColor = lineColor;         trajectoryLine.endColor  
+        = lineColor;     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH SEQUENCE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        IEnumerator LaunchSequence(Vector3 launchVelocity)     {         isBusy     
+        = true;         hasLaunched = true;          if (trajectoryLine != null)
+        trajectoryLine.enabled = false;         if (holenChanger   != null) holenChanger.DisableButtons();         
+        LaunchBall(launchVelocity);          yield return new WaitForSeconds(lifeDeductionDelay);         
+        LevelManager levelManager = FindObjectOfType<LevelManager>();         if
+        (levelManager != null)         {             levelManager.OnHolenRespawn();            
+        Debug.Log(\"[HolensLauncher] Life deducted after turn\");         }         
+        yield return new WaitForSeconds(7f - lifeDeductionDelay);          // Reset
+        camera         if (cinemachineCamera != null)         {             cinemachineCamera.Follow
+        = null;             cinemachineCamera.LookAt = defaultLookAtTarget != null
+        ? defaultLookAtTarget : null;             if (cameraSpawnPoint != null)            
+        {                 mainCamera.transform.position = cameraSpawnPoint.position;                
+        mainCamera.transform.rotation = cameraSpawnPoint.rotation;             }        
+        }          if (currentBall != null) { Destroy(currentBall); currentBall =
+        null; }          isBusy      = false;         hasLaunched = false;        
+        isSwiping   = false;          SpawnCurrentHolen();          if (holenChanger
+        != null) holenChanger.EnableButtons();     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH BALL     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        void LaunchBall(Vector3 velocity)     {         if (currentBall == null)
+        return;          Rigidbody rb = currentBall.GetComponent<Rigidbody>();        
+        currentBall.transform.parent = null;         rb.isKinematic = false;        
+        // VelocityChange applies velocity directly regardless of Rigidbody mass        
+        rb.AddForce(velocity, ForceMode.VelocityChange);          // \u2500\u2500
+        Camera: freeze position, only rotate to track the flying holen \u2500\u2500\u2500\u2500        
+        if (cinemachineCamera != null)         {             // Detach Follow \u2192
+        Cinemachine stops moving the camera body.             // Keep LookAt \u2192
+        the camera still rotates to centre the holen on screen.             cinemachineCamera.Follow
+        = null;             cinemachineCamera.LookAt = currentBall.transform;            
+        ApplyFlightCameraSettings();         }          // \u2500\u2500 Sound \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500        
+        if (audioSource != null && launchSoundClip != null)             audioSource.PlayOneShot(launchSoundClip);         
+        Debug.Log($\"[Launch] Mode={activeLaunchMode} Speed={velocity.magnitude:F2}\");    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SPAWN \u2014 SINGLE AUTHORITATIVE METHOD     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void SpawnCurrentHolen()     {         // 1. Determine the correct
+        prefab (HolenChanger takes priority)         GameObject prefabToUse = holensBallPrefab;        
+        if (holenChanger != null)         {             HolenData data = holenChanger.GetCurrentHolenData();            
+        if (data != null && data.holenPrefab != null)             {                
+        prefabToUse      = data.holenPrefab;                 holensBallPrefab = prefabToUse;            
+        }         }          if (prefabToUse == null)         {             Debug.LogError(\"[HolensLauncher]
+        No holen prefab available to spawn!\");             return;         }         
+        // 2. Destroy tracked ball + nuclear sweep of any stray \"Ball\" tagged objects        
+        if (currentBall != null) { Destroy(currentBall); currentBall = null; }        
+        foreach (GameObject stray in GameObject.FindGameObjectsWithTag(\"Ball\"))            
+        Destroy(stray);          // Always hide the indicator when re-spawning (mode
+        change, holen swap, post-flight)         if (targetIndicator != null)            
+        targetIndicator.SetActive(false);          // 3. Spawn exactly one new ball
+        at the correct height for the active mode         Vector3 spawnPos = holensPosition.position;        
+        if (activeLaunchMode == LaunchMode.Downward)             spawnPos += Vector3.up
+        * downwardSpawnHeightOffset;          currentBall = Instantiate(prefabToUse,
+        spawnPos, holensPosition.rotation);         currentBall.transform.parent
+        = holensPosition;         currentBall.tag = \"Ball\";         if (ballLayer
+        != -1) currentBall.layer = ballLayer;         currentBall.GetComponent<Rigidbody>().isKinematic
+        = true;          // 4. Camera: point at the idle holen using aim settings        
+        if (cinemachineCamera != null)         {             cinemachineCamera.Follow
+        = currentBall.transform;             cinemachineCamera.LookAt = currentBall.transform;            
+        ApplyAimCameraSettings();         }          Debug.Log($\"[Spawn] Mode={activeLaunchMode}
+        Prefab={prefabToUse.name}\");     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PUBLIC API     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public void ChangeBallPrefab(GameObject newPrefab)     {         if (hasLaunched)        
+        {             Debug.Log(\"[HolensLauncher] Cannot change holen while in flight.\");            
+        return;         }         holensBallPrefab = newPrefab;         SpawnCurrentHolen();    
+        }      public bool GetIsBusy()      => isBusy;     public bool GetHasLaunched()
+        => hasLaunched; } (1)"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1521628414}
+  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!4 &1521628412 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1521628411}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1521628413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1521628411}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1521628414
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521628413}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!1 &1540625381
 GameObject:
   m_ObjectHideFlags: 0
@@ -12244,6 +13161,513 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540625381}
   m_CullTransparentMesh: 1
+--- !u!1001 &1598984632
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300943037}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 853.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 853.10004
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 853.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.750001
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 37.97
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -34.800003
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.90640056
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0033145729
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.030966718
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.4212697
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.151
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -3.379
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 49.821
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 37f976666bd200947a1227b7d6997e30, type: 2}
+    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Name
+      value: "UnevenGroundusing UnityEngine; using Cinemachine; using UnityEngine.UI;
+        using System.Collections;  public class HolensLauncher : MonoBehaviour {    
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH MODE ENUM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public enum LaunchMode     {         Default  = 0,   // Swipe speed/distance
+        \u2192 force, straight horizontal line         Arc      = 1,   // Finger
+        raycast on Ground \u2192 holen arcs UP and lands exactly there         Downward
+        = 2    // Finger raycast on Ground \u2192 holen launches from raised position
+        DOWN to there     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  REFERENCES     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"References\")]     public Transform holensPosition;     public
+        GameObject holensBallPrefab;     public CinemachineVirtualCamera cinemachineCamera;    
+        public Camera mainCamera;     public Transform cameraSpawnPoint;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  UI     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"UI\")]     public GameObject swipeIndicator;     public LineRenderer
+        trajectoryLine;      [Header(\"Launch Mode UI Buttons\")]     public Button
+        buttonModeDefault;     public Button buttonModeArc;     public Button buttonModeDownward;     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ACTIVE MODE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Active Launch Mode\")]     public LaunchMode activeLaunchMode =
+        LaunchMode.Default;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SWIPE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Swipe Settings (All Modes)\")]     public float minSwipeDistance  
+        = 50f;     public float maxSwipeDistance   = 500f;     public float minLaunchForce    
+        = 5f;     public float maxLaunchForce     = 100f;     [Tooltip(\"Time window
+        only enforced in Default mode\")]     public float swipeTimeWindow    = 1f;    
+        public bool  requireTouchOnBall = false;     public float swipeDeadZone     
+        = 20f;     public string ballLayerName     = \"HolenBall\";      [Header(\"Force
+        Calculation (Default Mode Only)\")]     public float speedMultiplier = 0.05f;    
+        public bool  useSpeedForce   = true;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ARC MODE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Arc Mode Settings\")]     public string groundLayerName = \"Ground\";    
+        [Tooltip(\"Launch angle above horizontal (degrees). 45\xB0 = max range.\")]    
+        public float arcAngle = 45f;     [Tooltip(\"1.0 = exact. Reduce if overshooting,
+        increase if undershooting.\")]     [Range(0.1f, 2.0f)]     public float arcForceMultiplier
+        = 1.0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  DOWNWARD MODE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Downward Mode Settings\")]     public float downwardSpawnHeightOffset
+        = 4f;     [Tooltip(\"Angle below horizontal in degrees.\")]     public float
+        downwardAngle = 30f;     [Tooltip(\"1.0 = exact. Reduce if overshooting,
+        increase if undershooting.\")]     [Range(0.1f, 2.0f)]     public float downwardForceMultiplier
+        = 1.0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TRAJECTORY LINE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Trajectory Settings\")]     [Tooltip(\"Points on arc/downward trajectory
+        line\")]     public int   trajectoryPointCount = 40;     [Tooltip(\"Time
+        step per arc point (smaller = smoother)\")]     public float trajectoryTimeStep  
+        = 0.08f;     [Tooltip(\"How far the Default mode straight line extends (world
+        units)\")]     public float defaultLineLength    = 10f;      [Header(\"Line
+        Color & Animation\")]     [Tooltip(\"Color of the trajectory line. Alpha
+        controls transparency (0.5 = 50%).\")]     public Color lineColor = new Color(1f,
+        0f, 0f, 0.5f);     [Tooltip(\"How fast the dash travels along the line\")]    
+        public float lineAnimationSpeed  = 2f;     [Tooltip(\"Fraction of the line
+        visible at once (0.6 = 60% of path shown)\")]     [Range(0.01f, 1f)]    
+        public float lineVisibleFraction = 0.6f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  CAMERA SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Camera Settings\")]     [Tooltip(\"Camera offset while the holen
+        is at the spawn point (aiming)\")]     public Vector3 cameraFollowOffset
+        = new Vector3(0f, 8f, -6f);      [Tooltip(\"Screen Y for the holen while
+        AIMING (0.8 = upper part of screen)\")]     public float cameraAimScreenY
+        = 0.80f;      [Tooltip(\"Screen Y for the holen while IN FLIGHT. 0.5 = dead
+        centre of screen.\")]     public float cameraFlightScreenY = 0.5f;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SOUND     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Sound\")]     [Tooltip(\"AudioSource to play the launch sound through.
+        \" +              \"If left empty the script will try to find one on this
+        GameObject.\")]     public AudioSource audioSource;     [Tooltip(\"Sound
+        clip that plays the moment the holen is launched.\")]     public AudioClip
+        launchSoundClip;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TARGETING INDICATOR     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Targeting Indicator\")]     [Tooltip(\"3D GameObject that shows
+        where the holen will land. \" +              \"Assign it here \u2014 it should
+        be disabled in the scene by default. \" +              \"Only visible in
+        Arc and Downward modes while the player is aiming.\")]     public GameObject
+        targetIndicator;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  HOLEN SYSTEM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Holen System\")]     public HolenChanger holenChanger;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LIFE SYSTEM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Life System\")]     public float lifeDeductionDelay = 6.5f;     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PRIVATE STATE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private int        ballLayer;     private int        groundLayerMask;    
+        private GameObject currentBall;     private bool       isBusy      = false;    
+        private bool       hasLaunched = false;     private Transform  defaultLookAtTarget;     
+        // Swipe state     private Vector2 swipeStartPos;     private Vector2 swipeEndPos;    
+        private float   swipeStartTime;     private bool    isSwiping      = false;    
+        private Vector3 swipeWorldStart;      // Raycast target (Arc & Downward)    
+        private Vector3 raycastTarget;     private bool    raycastTargetValid;     
+        // Animated line     private Vector3[] fullTrajectoryPoints;     private
+        float     lineAnimOffset = 0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  UNITY LIFECYCLE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        void Start()     {         ballLayer       = LayerMask.NameToLayer(ballLayerName);        
+        groundLayerMask = LayerMask.GetMask(groundLayerName);          if (ballLayer
+        == -1)             Debug.LogWarning($\"Layer '{ballLayerName}' not found.\");        
+        if (groundLayerMask == 0)             Debug.LogWarning($\"Layer '{groundLayerName}'
+        not found. Arc/Downward targeting won't work.\");          if (mainCamera
+        == null)             mainCamera = Camera.main;          // Auto-grab AudioSource
+        from this GameObject if not assigned in Inspector         if (audioSource
+        == null)             audioSource = GetComponent<AudioSource>();         
+        SetInitialCameraPosition();          if (cinemachineCamera != null)            
+        defaultLookAtTarget = cinemachineCamera.LookAt;          if (swipeIndicator
+        != null)             swipeIndicator.SetActive(false);          // \u2500\u2500
+        Trajectory line starts hidden. It only appears while the player is aiming.
+        \u2500\u2500         if (trajectoryLine != null)         {             trajectoryLine.enabled   
+        = false;             trajectoryLine.startColor = lineColor;             trajectoryLine.endColor  
+        = lineColor;             // NOTE: For the alpha (transparency) to work, your
+        LineRenderer material             // must use a transparent shader such as
+        \"Sprites/Default\" or             // \"Particles/Standard Unlit\". The default
+        \"Default-Line\" ignores alpha.         }          // Target indicator is
+        always hidden until the player aims in Arc/Downward mode         if (targetIndicator
+        != null)             targetIndicator.SetActive(false);          // Wire up
+        mode buttons         if (buttonModeDefault  != null) buttonModeDefault .onClick.AddListener(()
+        => SetLaunchMode(LaunchMode.Default));         if (buttonModeArc      !=
+        null) buttonModeArc     .onClick.AddListener(() => SetLaunchMode(LaunchMode.Arc));        
+        if (buttonModeDownward != null) buttonModeDownward.onClick.AddListener(()
+        => SetLaunchMode(LaunchMode.Downward));          RefreshModeButtonVisuals();        
+        SpawnCurrentHolen();     }      void Update()     {         if (!isBusy &&
+        !hasLaunched && currentBall != null)         {             HandleSwipeInput();             
+        if (isSwiping)             {                 // Only build and show the trajectory
+        while the finger is actively held down                 BuildLiveTrajectoryPoints();                
+        AnimateAndDrawLine();             }             else             {                
+        // Hide the line completely when not aiming                 if (trajectoryLine
+        != null)                     trajectoryLine.enabled = false;            
+        }         }     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH MODE SELECTION     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public void SetLaunchMode(LaunchMode mode)     {         if (hasLaunched)        
+        {             Debug.Log(\"[HolensLauncher] Cannot change mode while holen
+        is in flight.\");             return;         }         if (activeLaunchMode
+        == mode) return;          activeLaunchMode = mode;         Debug.Log($\"[HolensLauncher]
+        Mode \u2192 {mode}\");         RefreshModeButtonVisuals();         SpawnCurrentHolen();    
+        }      public void SetLaunchModeDefault()  => SetLaunchMode(LaunchMode.Default);    
+        public void SetLaunchModeArc()      => SetLaunchMode(LaunchMode.Arc);    
+        public void SetLaunchModeDownward() => SetLaunchMode(LaunchMode.Downward);     
+        private void RefreshModeButtonVisuals()     {         SetButtonSelected(buttonModeDefault, 
+        activeLaunchMode == LaunchMode.Default);         SetButtonSelected(buttonModeArc,     
+        activeLaunchMode == LaunchMode.Arc);         SetButtonSelected(buttonModeDownward,
+        activeLaunchMode == LaunchMode.Downward);     }      private void SetButtonSelected(Button
+        btn, bool selected)     {         if (btn == null) return;         ColorBlock
+        cb  = btn.colors;         cb.normalColor = selected ? new Color(0.3f, 0.8f,
+        0.3f) : Color.white;         btn.colors     = cb;     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  CAMERA     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void SetInitialCameraPosition()     {         if (cameraSpawnPoint
+        != null)         {             mainCamera.transform.position = cameraSpawnPoint.position;            
+        mainCamera.transform.rotation = cameraSpawnPoint.rotation;         }    
+        }      /// <summary>     /// Applied while the holen is sitting at the spawn
+        point waiting to be launched.     /// Uses cameraFollowOffset and cameraAimScreenY
+        (typically high on screen).     /// </summary>     private void ApplyAimCameraSettings()    
+        {         if (cinemachineCamera == null) return;         var transposer =
+        cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();        
+        var composer   = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();        
+        if (transposer != null) transposer.m_FollowOffset = cameraFollowOffset;        
+        if (composer   != null) composer.m_ScreenY        = cameraAimScreenY;    
+        }      /// <summary>     /// Applied the moment the holen is launched.    
+        /// Detaches CinemachineTransposer Follow so the camera STAYS in place,    
+        /// but keeps LookAt on the holen so it rotates to track it.     /// Screen
+        Y is set to cameraFlightScreenY (0.5 = dead centre) so the     /// holen
+        appears in the middle of the screen throughout the flight.     /// </summary>    
+        private void ApplyFlightCameraSettings()     {         if (cinemachineCamera
+        == null) return;         // Stop the transposer from chasing the holen \u2014
+        camera stays at its current world position         var transposer = cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();        
+        if (transposer != null) transposer.m_FollowOffset = Vector3.zero;        
+        // Composer: centre the look-at target on screen         var composer = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();        
+        if (composer != null) composer.m_ScreenY = cameraFlightScreenY;     }     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SWIPE INPUT     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void HandleSwipeInput()     {         if (Input.touchCount > 0)        
+        {             Touch touch = Input.GetTouch(0);             switch (touch.phase)            
+        {                 case TouchPhase.Began:                     if (!requireTouchOnBall
+        || IsTouchingBall(touch.position))                         StartSwipe(touch.position);                    
+        break;                 case TouchPhase.Moved:                     if (isSwiping)
+        UpdateSwipe(touch.position);                     break;                 case
+        TouchPhase.Ended:                     if (isSwiping) EndSwipe(touch.position);                    
+        break;                 case TouchPhase.Canceled:                     if (isSwiping)
+        CancelSwipe();                     break;             }         }        
+        else if (Input.GetMouseButtonDown(0))         {             if (!requireTouchOnBall
+        || IsTouchingBall(Input.mousePosition))                 StartSwipe(Input.mousePosition);        
+        }         else if (Input.GetMouseButton(0) && isSwiping)             UpdateSwipe(Input.mousePosition);        
+        else if (Input.GetMouseButtonUp(0) && isSwiping)             EndSwipe(Input.mousePosition);    
+        }      private bool IsTouchingBall(Vector2 screenPos)     {         if (currentBall
+        == null) return false;         Ray ray = mainCamera.ScreenPointToRay(screenPos);        
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f) && hit.collider.gameObject
+        == currentBall)             return true;         Vector3 ballScreen = mainCamera.WorldToScreenPoint(currentBall.transform.position);        
+        return Vector2.Distance(screenPos, new Vector2(ballScreen.x, ballScreen.y))
+        < 100f;     }      private void StartSwipe(Vector2 screenPos)     {        
+        isSwiping          = true;         swipeStartPos      = screenPos;        
+        swipeStartTime     = Time.time;         swipeWorldStart    = currentBall.transform.position;        
+        raycastTargetValid = false;          if (swipeIndicator != null) swipeIndicator.SetActive(true);    
+        }      private void UpdateSwipe(Vector2 screenPos)     {         swipeEndPos
+        = screenPos;          if (activeLaunchMode != LaunchMode.Default)        
+        {             Ray ray = mainCamera.ScreenPointToRay(screenPos);            
+        if (Physics.Raycast(ray, out RaycastHit hit, 500f, groundLayerMask))            
+        {                 raycastTarget      = hit.point;                 raycastTargetValid
+        = true;                  // Show the targeting indicator at the raycast landing
+        point                 if (targetIndicator != null)                 {                    
+        targetIndicator.SetActive(true);                     targetIndicator.transform.position
+        = raycastTarget;                 }             }             else            
+        {                 // Finger moved off the ground layer \u2014 hide indicator                
+        if (targetIndicator != null)                     targetIndicator.SetActive(false);            
+        }         }         else         {             // Default mode never uses
+        the indicator             if (targetIndicator != null)                 targetIndicator.SetActive(false);             
+        Ray   ray   = mainCamera.ScreenPointToRay(screenPos);             Plane plane
+        = new Plane(Vector3.up, currentBall.transform.position);             if (plane.Raycast(ray,
+        out float dist))             {                 raycastTarget      = ray.GetPoint(dist);                
+        raycastTargetValid = true;             }         }     }      private void
+        EndSwipe(Vector2 screenPos)     {         swipeEndPos = screenPos;        
+        float   swipeTime     = Time.time - swipeStartTime;         Vector2 swipeDelta   
+        = swipeEndPos - swipeStartPos;         float   swipeDistance = swipeDelta.magnitude;         
+        isSwiping = false;          // Hide the line and indicator as soon as the
+        finger lifts         if (trajectoryLine    != null) trajectoryLine.enabled
+        = false;         if (swipeIndicator    != null) swipeIndicator.SetActive(false);        
+        if (targetIndicator   != null) targetIndicator.SetActive(false);         
+        bool valid = swipeDistance >= minSwipeDistance &&                      (activeLaunchMode
+        != LaunchMode.Default || swipeTime <= swipeTimeWindow);          if (!valid)        
+        {             Debug.Log($\"[HolensLauncher] Invalid swipe. Dist={swipeDistance:F0}
+        Time={swipeTime:F2}\");             return;         }          Vector3 launchVelocity
+        = ComputeLaunchVelocity(swipeDelta, swipeTime, swipeDistance);         if
+        (launchVelocity == Vector3.zero)         {             Debug.LogWarning(\"[HolensLauncher]
+        Could not compute launch velocity \u2014 finger may not be over Ground layer.\");            
+        return;         }          StartCoroutine(LaunchSequence(launchVelocity));    
+        }      private void CancelSwipe()     {         isSwiping = false;        
+        if (trajectoryLine  != null) trajectoryLine.enabled = false;         if (swipeIndicator 
+        != null) swipeIndicator.SetActive(false);         if (targetIndicator !=
+        null) targetIndicator.SetActive(false);     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH VELOCITY COMPUTATION     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private Vector3 ComputeLaunchVelocity(Vector2 swipeDelta, float swipeTime,
+        float swipeDistance)     {         switch (activeLaunchMode)         {            
+        case LaunchMode.Arc:             {                 if (!raycastTargetValid)
+        { Debug.LogWarning(\"[Arc] No valid ground target.\"); return Vector3.zero;
+        }                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveArcSpeed(horizDist, vertDiff, arcAngle);                 if (rawSpeed
+        <= 0f) return Vector3.zero;                 float   speed    = rawSpeed *
+        arcForceMultiplier;                 float   rad      = arcAngle * Mathf.Deg2Rad;                
+        Vector3 horizDir = new Vector3(toTarget.x, 0f, toTarget.z).normalized;                
+        return horizDir * (speed * Mathf.Cos(rad)) + Vector3.up * (speed * Mathf.Sin(rad));            
+        }              case LaunchMode.Downward:             {                 if
+        (!raycastTargetValid) { Debug.LogWarning(\"[Downward] No valid ground target.\");
+        return Vector3.zero; }                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveDownwardSpeed(horizDist, vertDiff, downwardAngle);                
+        if (rawSpeed <= 0f) return Vector3.zero;                 float   speed   
+        = rawSpeed * downwardForceMultiplier;                 float   rad      =
+        downwardAngle * Mathf.Deg2Rad;                 Vector3 horizDir = new Vector3(toTarget.x,
+        0f, toTarget.z).normalized;                 return horizDir * (speed * Mathf.Cos(rad))
+        - Vector3.up * (speed * Mathf.Sin(rad));             }              default:
+        // Default             {                 Vector3 swipeWorldDir = Vector3.zero;                
+        if (raycastTargetValid)                 {                     swipeWorldDir  
+        = raycastTarget - swipeWorldStart;                     swipeWorldDir.y =
+        0f;                     swipeWorldDir.Normalize();                 }                
+        if (swipeWorldDir.sqrMagnitude < 0.01f)                 {                    
+        Vector3 camFwd   = mainCamera.transform.forward; camFwd.y   = 0f; camFwd.Normalize();                    
+        Vector3 camRight = mainCamera.transform.right;   camRight.y = 0f; camRight.Normalize();                    
+        swipeWorldDir    = (camRight * swipeDelta.x + camFwd * swipeDelta.y).normalized;                
+        }                 float force;                 if (useSpeedForce)                
+        {                     float sp = swipeDistance / Mathf.Max(swipeTime, 0.01f);                    
+        force    = Mathf.Clamp(sp * speedMultiplier, minLaunchForce, maxLaunchForce);                
+        }                 else                 {                     float nd  =
+        Mathf.InverseLerp(minSwipeDistance, maxSwipeDistance, swipeDistance);                    
+        force     = Mathf.Lerp(minLaunchForce, maxLaunchForce, nd);                    
+        float sp2 = swipeDistance / Mathf.Max(swipeTime, 0.01f);                    
+        force     = Mathf.Lerp(force, maxLaunchForce, Mathf.Clamp01(sp2 / 2000f));                
+        }                 return swipeWorldDir * force;             }         }    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PHYSICS SOLVERS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private float SolveArcSpeed(float horizDist, float vertDiff, float angleDeg)    
+        {         float \u03B8     = angleDeg * Mathf.Deg2Rad;         float g    
+        = Mathf.Abs(Physics.gravity.y);         float cos\u03B8  = Mathf.Cos(\u03B8);        
+        float tan\u03B8  = Mathf.Tan(\u03B8);         float denom = 2f * cos\u03B8
+        * cos\u03B8 * (horizDist * tan\u03B8 - vertDiff);         if (denom <= 0f)
+        { Debug.LogWarning($\"[Arc Solver] Unreachable. hDist={horizDist:F2} vDiff={vertDiff:F2}\");
+        return -1f; }         return Mathf.Sqrt((g * horizDist * horizDist) / denom);    
+        }      private float SolveDownwardSpeed(float horizDist, float vertDiff,
+        float angleDeg)     {         float \u03B8     = angleDeg * Mathf.Deg2Rad;        
+        float g     = Mathf.Abs(Physics.gravity.y);         float cos\u03B8  = Mathf.Cos(\u03B8);        
+        float tan\u03B8  = Mathf.Tan(\u03B8);         float denom = 2f * cos\u03B8
+        * cos\u03B8 * (-horizDist * tan\u03B8 - vertDiff);         if (denom <= 0f)
+        { Debug.LogWarning($\"[Downward Solver] Unreachable. hDist={horizDist:F2}
+        vDiff={vertDiff:F2}\"); return -1f; }         return Mathf.Sqrt((g * horizDist
+        * horizDist) / denom);     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TRAJECTORY BUILDING  (only runs while isSwiping)     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void BuildLiveTrajectoryPoints()     {         if (currentBall ==
+        null) return;          switch (activeLaunchMode)         {             case
+        LaunchMode.Arc:             {                 if (!raycastTargetValid) return;                
+        Vector3 spawnPos  = currentBall.transform.position;                 Vector3
+        toTarget  = raycastTarget - spawnPos;                 float   horizDist =
+        new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveArcSpeed(horizDist, vertDiff, arcAngle);                 if (rawSpeed
+        <= 0f) return;                 float   speed    = rawSpeed * arcForceMultiplier;                
+        float   rad      = arcAngle * Mathf.Deg2Rad;                 Vector3 horizDir
+        = new Vector3(toTarget.x, 0f, toTarget.z).normalized;                 Vector3
+        vel      = horizDir * (speed * Mathf.Cos(rad)) + Vector3.up * (speed * Mathf.Sin(rad));                
+        BuildPhysicsPoints(spawnPos, vel);                 break;             }            
+        case LaunchMode.Downward:             {                 if (!raycastTargetValid)
+        return;                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveDownwardSpeed(horizDist, vertDiff, downwardAngle);                
+        if (rawSpeed <= 0f) return;                 float   speed    = rawSpeed *
+        downwardForceMultiplier;                 float   rad      = downwardAngle
+        * Mathf.Deg2Rad;                 Vector3 horizDir = new Vector3(toTarget.x,
+        0f, toTarget.z).normalized;                 Vector3 vel      = horizDir *
+        (speed * Mathf.Cos(rad)) - Vector3.up * (speed * Mathf.Sin(rad));                
+        BuildPhysicsPoints(spawnPos, vel);                 break;             }            
+        default:             {                 Vector3 spawnPos = currentBall.transform.position;                
+        Vector3 dir      = Vector3.zero;                 if (raycastTargetValid)
+        { dir = raycastTarget - swipeWorldStart; dir.y = 0f; dir.Normalize(); }                
+        if (dir.sqrMagnitude < 0.01f) { dir = mainCamera.transform.forward; dir.y
+        = 0f; dir.Normalize(); }                 BuildStraightPoints(spawnPos, dir);                
+        break;             }         }     }      private void BuildPhysicsPoints(Vector3
+        startPos, Vector3 velocity)     {         fullTrajectoryPoints = new Vector3[trajectoryPointCount];        
+        for (int i = 0; i < trajectoryPointCount; i++)         {             float
+        t = i * trajectoryTimeStep;             fullTrajectoryPoints[i] = startPos
+        + velocity * t + 0.5f * Physics.gravity * t * t;         }     }      private
+        void BuildStraightPoints(Vector3 startPos, Vector3 direction)     {        
+        fullTrajectoryPoints    = new Vector3[2];         fullTrajectoryPoints[0]
+        = startPos;         fullTrajectoryPoints[1] = startPos + direction * defaultLineLength;    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ANIMATED LINE RENDERING     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void AnimateAndDrawLine()     {         if (trajectoryLine == null
+        || fullTrajectoryPoints == null || fullTrajectoryPoints.Length < 2)            
+        return;          lineAnimOffset = (lineAnimOffset + Time.deltaTime * lineAnimationSpeed)
+        % 1f;          int totalPts     = fullTrajectoryPoints.Length;         int
+        visibleCount = Mathf.Max(2, Mathf.RoundToInt(totalPts * lineVisibleFraction));        
+        int startIdx     = Mathf.FloorToInt(lineAnimOffset * totalPts);         
+        trajectoryLine.enabled       = true;         trajectoryLine.positionCount
+        = visibleCount;          for (int i = 0; i < visibleCount; i++)            
+        trajectoryLine.SetPosition(i, fullTrajectoryPoints[(startIdx + i) % totalPts]);         
+        trajectoryLine.startColor = lineColor;         trajectoryLine.endColor  
+        = lineColor;     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH SEQUENCE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        IEnumerator LaunchSequence(Vector3 launchVelocity)     {         isBusy     
+        = true;         hasLaunched = true;          if (trajectoryLine != null)
+        trajectoryLine.enabled = false;         if (holenChanger   != null) holenChanger.DisableButtons();         
+        LaunchBall(launchVelocity);          yield return new WaitForSeconds(lifeDeductionDelay);         
+        LevelManager levelManager = FindObjectOfType<LevelManager>();         if
+        (levelManager != null)         {             levelManager.OnHolenRespawn();            
+        Debug.Log(\"[HolensLauncher] Life deducted after turn\");         }         
+        yield return new WaitForSeconds(7f - lifeDeductionDelay);          // Reset
+        camera         if (cinemachineCamera != null)         {             cinemachineCamera.Follow
+        = null;             cinemachineCamera.LookAt = defaultLookAtTarget != null
+        ? defaultLookAtTarget : null;             if (cameraSpawnPoint != null)            
+        {                 mainCamera.transform.position = cameraSpawnPoint.position;                
+        mainCamera.transform.rotation = cameraSpawnPoint.rotation;             }        
+        }          if (currentBall != null) { Destroy(currentBall); currentBall =
+        null; }          isBusy      = false;         hasLaunched = false;        
+        isSwiping   = false;          SpawnCurrentHolen();          if (holenChanger
+        != null) holenChanger.EnableButtons();     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH BALL     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        void LaunchBall(Vector3 velocity)     {         if (currentBall == null)
+        return;          Rigidbody rb = currentBall.GetComponent<Rigidbody>();        
+        currentBall.transform.parent = null;         rb.isKinematic = false;        
+        // VelocityChange applies velocity directly regardless of Rigidbody mass        
+        rb.AddForce(velocity, ForceMode.VelocityChange);          // \u2500\u2500
+        Camera: freeze position, only rotate to track the flying holen \u2500\u2500\u2500\u2500        
+        if (cinemachineCamera != null)         {             // Detach Follow \u2192
+        Cinemachine stops moving the camera body.             // Keep LookAt \u2192
+        the camera still rotates to centre the holen on screen.             cinemachineCamera.Follow
+        = null;             cinemachineCamera.LookAt = currentBall.transform;            
+        ApplyFlightCameraSettings();         }          // \u2500\u2500 Sound \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500        
+        if (audioSource != null && launchSoundClip != null)             audioSource.PlayOneShot(launchSoundClip);         
+        Debug.Log($\"[Launch] Mode={activeLaunchMode} Speed={velocity.magnitude:F2}\");    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SPAWN \u2014 SINGLE AUTHORITATIVE METHOD     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void SpawnCurrentHolen()     {         // 1. Determine the correct
+        prefab (HolenChanger takes priority)         GameObject prefabToUse = holensBallPrefab;        
+        if (holenChanger != null)         {             HolenData data = holenChanger.GetCurrentHolenData();            
+        if (data != null && data.holenPrefab != null)             {                
+        prefabToUse      = data.holenPrefab;                 holensBallPrefab = prefabToUse;            
+        }         }          if (prefabToUse == null)         {             Debug.LogError(\"[HolensLauncher]
+        No holen prefab available to spawn!\");             return;         }         
+        // 2. Destroy tracked ball + nuclear sweep of any stray \"Ball\" tagged objects        
+        if (currentBall != null) { Destroy(currentBall); currentBall = null; }        
+        foreach (GameObject stray in GameObject.FindGameObjectsWithTag(\"Ball\"))            
+        Destroy(stray);          // Always hide the indicator when re-spawning (mode
+        change, holen swap, post-flight)         if (targetIndicator != null)            
+        targetIndicator.SetActive(false);          // 3. Spawn exactly one new ball
+        at the correct height for the active mode         Vector3 spawnPos = holensPosition.position;        
+        if (activeLaunchMode == LaunchMode.Downward)             spawnPos += Vector3.up
+        * downwardSpawnHeightOffset;          currentBall = Instantiate(prefabToUse,
+        spawnPos, holensPosition.rotation);         currentBall.transform.parent
+        = holensPosition;         currentBall.tag = \"Ball\";         if (ballLayer
+        != -1) currentBall.layer = ballLayer;         currentBall.GetComponent<Rigidbody>().isKinematic
+        = true;          // 4. Camera: point at the idle holen using aim settings        
+        if (cinemachineCamera != null)         {             cinemachineCamera.Follow
+        = currentBall.transform;             cinemachineCamera.LookAt = currentBall.transform;            
+        ApplyAimCameraSettings();         }          Debug.Log($\"[Spawn] Mode={activeLaunchMode}
+        Prefab={prefabToUse.name}\");     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PUBLIC API     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public void ChangeBallPrefab(GameObject newPrefab)     {         if (hasLaunched)        
+        {             Debug.Log(\"[HolensLauncher] Cannot change holen while in flight.\");            
+        return;         }         holensBallPrefab = newPrefab;         SpawnCurrentHolen();    
+        }      public bool GetIsBusy()      => isBusy;     public bool GetHasLaunched()
+        => hasLaunched; } (2)"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1598984635}
+  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!4 &1598984633 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1598984632}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1598984634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1598984632}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1598984635
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598984634}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!4 &1611057493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1708661563507647557, guid: 1c04302d21c7efe458dde55299961e84, type: 3}
@@ -12655,6 +14079,140 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
+--- !u!1001 &1659117415
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300943037}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 42.74511
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 42.7451
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 73.47119
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.17
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 47.989
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -27.59
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.67489916
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.54239386
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.19367401
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.46131378
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -65.618
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -35.377
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 91.944
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Name
+      value: Rock (9)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1659117419}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1659117418}
+  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!4 &1659117416 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1659117415}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1659117417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1659117415}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1659117418
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659117417}
+  serializedVersion: 4
+  m_Mass: 2
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &1659117419
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659117417}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!1 &1695541190
 GameObject:
   m_ObjectHideFlags: 0
@@ -13243,6 +14801,140 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1001 &1767794880
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300943037}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 42.74511
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 42.7451
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 73.47119
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 46.46
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -34.71
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.67489916
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.54239386
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.19367401
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.46131378
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -65.618
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -35.377
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 91.944
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Name
+      value: Rock (7)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1767794884}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1767794883}
+  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!4 &1767794881 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1767794880}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1767794882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1767794880}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1767794883
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767794882}
+  serializedVersion: 4
+  m_Mass: 2
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &1767794884
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767794882}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!1 &1776412989
 GameObject:
   m_ObjectHideFlags: 0
@@ -14149,6 +15841,513 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5151003996434845050, guid: 56fdf4d141cf8f44ea0e61b550e40d27, type: 3}
   m_PrefabInstance: {fileID: 6646212359217538399}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1902836003
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300943037}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 853.10004
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 853.10004
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 853.09985
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.76
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 37.97
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.47
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.37028992
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.38895643
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.8278927
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.1618394
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.151
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 132.34
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 49.821
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 37f976666bd200947a1227b7d6997e30, type: 2}
+    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      propertyPath: m_Name
+      value: "UnevenGroundusing UnityEngine; using Cinemachine; using UnityEngine.UI;
+        using System.Collections;  public class HolensLauncher : MonoBehaviour {    
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH MODE ENUM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public enum LaunchMode     {         Default  = 0,   // Swipe speed/distance
+        \u2192 force, straight horizontal line         Arc      = 1,   // Finger
+        raycast on Ground \u2192 holen arcs UP and lands exactly there         Downward
+        = 2    // Finger raycast on Ground \u2192 holen launches from raised position
+        DOWN to there     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  REFERENCES     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"References\")]     public Transform holensPosition;     public
+        GameObject holensBallPrefab;     public CinemachineVirtualCamera cinemachineCamera;    
+        public Camera mainCamera;     public Transform cameraSpawnPoint;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  UI     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"UI\")]     public GameObject swipeIndicator;     public LineRenderer
+        trajectoryLine;      [Header(\"Launch Mode UI Buttons\")]     public Button
+        buttonModeDefault;     public Button buttonModeArc;     public Button buttonModeDownward;     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ACTIVE MODE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Active Launch Mode\")]     public LaunchMode activeLaunchMode =
+        LaunchMode.Default;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SWIPE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Swipe Settings (All Modes)\")]     public float minSwipeDistance  
+        = 50f;     public float maxSwipeDistance   = 500f;     public float minLaunchForce    
+        = 5f;     public float maxLaunchForce     = 100f;     [Tooltip(\"Time window
+        only enforced in Default mode\")]     public float swipeTimeWindow    = 1f;    
+        public bool  requireTouchOnBall = false;     public float swipeDeadZone     
+        = 20f;     public string ballLayerName     = \"HolenBall\";      [Header(\"Force
+        Calculation (Default Mode Only)\")]     public float speedMultiplier = 0.05f;    
+        public bool  useSpeedForce   = true;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ARC MODE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Arc Mode Settings\")]     public string groundLayerName = \"Ground\";    
+        [Tooltip(\"Launch angle above horizontal (degrees). 45\xB0 = max range.\")]    
+        public float arcAngle = 45f;     [Tooltip(\"1.0 = exact. Reduce if overshooting,
+        increase if undershooting.\")]     [Range(0.1f, 2.0f)]     public float arcForceMultiplier
+        = 1.0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  DOWNWARD MODE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Downward Mode Settings\")]     public float downwardSpawnHeightOffset
+        = 4f;     [Tooltip(\"Angle below horizontal in degrees.\")]     public float
+        downwardAngle = 30f;     [Tooltip(\"1.0 = exact. Reduce if overshooting,
+        increase if undershooting.\")]     [Range(0.1f, 2.0f)]     public float downwardForceMultiplier
+        = 1.0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TRAJECTORY LINE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Trajectory Settings\")]     [Tooltip(\"Points on arc/downward trajectory
+        line\")]     public int   trajectoryPointCount = 40;     [Tooltip(\"Time
+        step per arc point (smaller = smoother)\")]     public float trajectoryTimeStep  
+        = 0.08f;     [Tooltip(\"How far the Default mode straight line extends (world
+        units)\")]     public float defaultLineLength    = 10f;      [Header(\"Line
+        Color & Animation\")]     [Tooltip(\"Color of the trajectory line. Alpha
+        controls transparency (0.5 = 50%).\")]     public Color lineColor = new Color(1f,
+        0f, 0f, 0.5f);     [Tooltip(\"How fast the dash travels along the line\")]    
+        public float lineAnimationSpeed  = 2f;     [Tooltip(\"Fraction of the line
+        visible at once (0.6 = 60% of path shown)\")]     [Range(0.01f, 1f)]    
+        public float lineVisibleFraction = 0.6f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  CAMERA SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Camera Settings\")]     [Tooltip(\"Camera offset while the holen
+        is at the spawn point (aiming)\")]     public Vector3 cameraFollowOffset
+        = new Vector3(0f, 8f, -6f);      [Tooltip(\"Screen Y for the holen while
+        AIMING (0.8 = upper part of screen)\")]     public float cameraAimScreenY
+        = 0.80f;      [Tooltip(\"Screen Y for the holen while IN FLIGHT. 0.5 = dead
+        centre of screen.\")]     public float cameraFlightScreenY = 0.5f;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SOUND     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Sound\")]     [Tooltip(\"AudioSource to play the launch sound through.
+        \" +              \"If left empty the script will try to find one on this
+        GameObject.\")]     public AudioSource audioSource;     [Tooltip(\"Sound
+        clip that plays the moment the holen is launched.\")]     public AudioClip
+        launchSoundClip;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TARGETING INDICATOR     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Targeting Indicator\")]     [Tooltip(\"3D GameObject that shows
+        where the holen will land. \" +              \"Assign it here \u2014 it should
+        be disabled in the scene by default. \" +              \"Only visible in
+        Arc and Downward modes while the player is aiming.\")]     public GameObject
+        targetIndicator;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  HOLEN SYSTEM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Holen System\")]     public HolenChanger holenChanger;      //
+        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LIFE SYSTEM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        [Header(\"Life System\")]     public float lifeDeductionDelay = 6.5f;     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PRIVATE STATE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private int        ballLayer;     private int        groundLayerMask;    
+        private GameObject currentBall;     private bool       isBusy      = false;    
+        private bool       hasLaunched = false;     private Transform  defaultLookAtTarget;     
+        // Swipe state     private Vector2 swipeStartPos;     private Vector2 swipeEndPos;    
+        private float   swipeStartTime;     private bool    isSwiping      = false;    
+        private Vector3 swipeWorldStart;      // Raycast target (Arc & Downward)    
+        private Vector3 raycastTarget;     private bool    raycastTargetValid;     
+        // Animated line     private Vector3[] fullTrajectoryPoints;     private
+        float     lineAnimOffset = 0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  UNITY LIFECYCLE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        void Start()     {         ballLayer       = LayerMask.NameToLayer(ballLayerName);        
+        groundLayerMask = LayerMask.GetMask(groundLayerName);          if (ballLayer
+        == -1)             Debug.LogWarning($\"Layer '{ballLayerName}' not found.\");        
+        if (groundLayerMask == 0)             Debug.LogWarning($\"Layer '{groundLayerName}'
+        not found. Arc/Downward targeting won't work.\");          if (mainCamera
+        == null)             mainCamera = Camera.main;          // Auto-grab AudioSource
+        from this GameObject if not assigned in Inspector         if (audioSource
+        == null)             audioSource = GetComponent<AudioSource>();         
+        SetInitialCameraPosition();          if (cinemachineCamera != null)            
+        defaultLookAtTarget = cinemachineCamera.LookAt;          if (swipeIndicator
+        != null)             swipeIndicator.SetActive(false);          // \u2500\u2500
+        Trajectory line starts hidden. It only appears while the player is aiming.
+        \u2500\u2500         if (trajectoryLine != null)         {             trajectoryLine.enabled   
+        = false;             trajectoryLine.startColor = lineColor;             trajectoryLine.endColor  
+        = lineColor;             // NOTE: For the alpha (transparency) to work, your
+        LineRenderer material             // must use a transparent shader such as
+        \"Sprites/Default\" or             // \"Particles/Standard Unlit\". The default
+        \"Default-Line\" ignores alpha.         }          // Target indicator is
+        always hidden until the player aims in Arc/Downward mode         if (targetIndicator
+        != null)             targetIndicator.SetActive(false);          // Wire up
+        mode buttons         if (buttonModeDefault  != null) buttonModeDefault .onClick.AddListener(()
+        => SetLaunchMode(LaunchMode.Default));         if (buttonModeArc      !=
+        null) buttonModeArc     .onClick.AddListener(() => SetLaunchMode(LaunchMode.Arc));        
+        if (buttonModeDownward != null) buttonModeDownward.onClick.AddListener(()
+        => SetLaunchMode(LaunchMode.Downward));          RefreshModeButtonVisuals();        
+        SpawnCurrentHolen();     }      void Update()     {         if (!isBusy &&
+        !hasLaunched && currentBall != null)         {             HandleSwipeInput();             
+        if (isSwiping)             {                 // Only build and show the trajectory
+        while the finger is actively held down                 BuildLiveTrajectoryPoints();                
+        AnimateAndDrawLine();             }             else             {                
+        // Hide the line completely when not aiming                 if (trajectoryLine
+        != null)                     trajectoryLine.enabled = false;            
+        }         }     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH MODE SELECTION     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public void SetLaunchMode(LaunchMode mode)     {         if (hasLaunched)        
+        {             Debug.Log(\"[HolensLauncher] Cannot change mode while holen
+        is in flight.\");             return;         }         if (activeLaunchMode
+        == mode) return;          activeLaunchMode = mode;         Debug.Log($\"[HolensLauncher]
+        Mode \u2192 {mode}\");         RefreshModeButtonVisuals();         SpawnCurrentHolen();    
+        }      public void SetLaunchModeDefault()  => SetLaunchMode(LaunchMode.Default);    
+        public void SetLaunchModeArc()      => SetLaunchMode(LaunchMode.Arc);    
+        public void SetLaunchModeDownward() => SetLaunchMode(LaunchMode.Downward);     
+        private void RefreshModeButtonVisuals()     {         SetButtonSelected(buttonModeDefault, 
+        activeLaunchMode == LaunchMode.Default);         SetButtonSelected(buttonModeArc,     
+        activeLaunchMode == LaunchMode.Arc);         SetButtonSelected(buttonModeDownward,
+        activeLaunchMode == LaunchMode.Downward);     }      private void SetButtonSelected(Button
+        btn, bool selected)     {         if (btn == null) return;         ColorBlock
+        cb  = btn.colors;         cb.normalColor = selected ? new Color(0.3f, 0.8f,
+        0.3f) : Color.white;         btn.colors     = cb;     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  CAMERA     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void SetInitialCameraPosition()     {         if (cameraSpawnPoint
+        != null)         {             mainCamera.transform.position = cameraSpawnPoint.position;            
+        mainCamera.transform.rotation = cameraSpawnPoint.rotation;         }    
+        }      /// <summary>     /// Applied while the holen is sitting at the spawn
+        point waiting to be launched.     /// Uses cameraFollowOffset and cameraAimScreenY
+        (typically high on screen).     /// </summary>     private void ApplyAimCameraSettings()    
+        {         if (cinemachineCamera == null) return;         var transposer =
+        cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();        
+        var composer   = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();        
+        if (transposer != null) transposer.m_FollowOffset = cameraFollowOffset;        
+        if (composer   != null) composer.m_ScreenY        = cameraAimScreenY;    
+        }      /// <summary>     /// Applied the moment the holen is launched.    
+        /// Detaches CinemachineTransposer Follow so the camera STAYS in place,    
+        /// but keeps LookAt on the holen so it rotates to track it.     /// Screen
+        Y is set to cameraFlightScreenY (0.5 = dead centre) so the     /// holen
+        appears in the middle of the screen throughout the flight.     /// </summary>    
+        private void ApplyFlightCameraSettings()     {         if (cinemachineCamera
+        == null) return;         // Stop the transposer from chasing the holen \u2014
+        camera stays at its current world position         var transposer = cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();        
+        if (transposer != null) transposer.m_FollowOffset = Vector3.zero;        
+        // Composer: centre the look-at target on screen         var composer = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();        
+        if (composer != null) composer.m_ScreenY = cameraFlightScreenY;     }     
+        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SWIPE INPUT     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void HandleSwipeInput()     {         if (Input.touchCount > 0)        
+        {             Touch touch = Input.GetTouch(0);             switch (touch.phase)            
+        {                 case TouchPhase.Began:                     if (!requireTouchOnBall
+        || IsTouchingBall(touch.position))                         StartSwipe(touch.position);                    
+        break;                 case TouchPhase.Moved:                     if (isSwiping)
+        UpdateSwipe(touch.position);                     break;                 case
+        TouchPhase.Ended:                     if (isSwiping) EndSwipe(touch.position);                    
+        break;                 case TouchPhase.Canceled:                     if (isSwiping)
+        CancelSwipe();                     break;             }         }        
+        else if (Input.GetMouseButtonDown(0))         {             if (!requireTouchOnBall
+        || IsTouchingBall(Input.mousePosition))                 StartSwipe(Input.mousePosition);        
+        }         else if (Input.GetMouseButton(0) && isSwiping)             UpdateSwipe(Input.mousePosition);        
+        else if (Input.GetMouseButtonUp(0) && isSwiping)             EndSwipe(Input.mousePosition);    
+        }      private bool IsTouchingBall(Vector2 screenPos)     {         if (currentBall
+        == null) return false;         Ray ray = mainCamera.ScreenPointToRay(screenPos);        
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f) && hit.collider.gameObject
+        == currentBall)             return true;         Vector3 ballScreen = mainCamera.WorldToScreenPoint(currentBall.transform.position);        
+        return Vector2.Distance(screenPos, new Vector2(ballScreen.x, ballScreen.y))
+        < 100f;     }      private void StartSwipe(Vector2 screenPos)     {        
+        isSwiping          = true;         swipeStartPos      = screenPos;        
+        swipeStartTime     = Time.time;         swipeWorldStart    = currentBall.transform.position;        
+        raycastTargetValid = false;          if (swipeIndicator != null) swipeIndicator.SetActive(true);    
+        }      private void UpdateSwipe(Vector2 screenPos)     {         swipeEndPos
+        = screenPos;          if (activeLaunchMode != LaunchMode.Default)        
+        {             Ray ray = mainCamera.ScreenPointToRay(screenPos);            
+        if (Physics.Raycast(ray, out RaycastHit hit, 500f, groundLayerMask))            
+        {                 raycastTarget      = hit.point;                 raycastTargetValid
+        = true;                  // Show the targeting indicator at the raycast landing
+        point                 if (targetIndicator != null)                 {                    
+        targetIndicator.SetActive(true);                     targetIndicator.transform.position
+        = raycastTarget;                 }             }             else            
+        {                 // Finger moved off the ground layer \u2014 hide indicator                
+        if (targetIndicator != null)                     targetIndicator.SetActive(false);            
+        }         }         else         {             // Default mode never uses
+        the indicator             if (targetIndicator != null)                 targetIndicator.SetActive(false);             
+        Ray   ray   = mainCamera.ScreenPointToRay(screenPos);             Plane plane
+        = new Plane(Vector3.up, currentBall.transform.position);             if (plane.Raycast(ray,
+        out float dist))             {                 raycastTarget      = ray.GetPoint(dist);                
+        raycastTargetValid = true;             }         }     }      private void
+        EndSwipe(Vector2 screenPos)     {         swipeEndPos = screenPos;        
+        float   swipeTime     = Time.time - swipeStartTime;         Vector2 swipeDelta   
+        = swipeEndPos - swipeStartPos;         float   swipeDistance = swipeDelta.magnitude;         
+        isSwiping = false;          // Hide the line and indicator as soon as the
+        finger lifts         if (trajectoryLine    != null) trajectoryLine.enabled
+        = false;         if (swipeIndicator    != null) swipeIndicator.SetActive(false);        
+        if (targetIndicator   != null) targetIndicator.SetActive(false);         
+        bool valid = swipeDistance >= minSwipeDistance &&                      (activeLaunchMode
+        != LaunchMode.Default || swipeTime <= swipeTimeWindow);          if (!valid)        
+        {             Debug.Log($\"[HolensLauncher] Invalid swipe. Dist={swipeDistance:F0}
+        Time={swipeTime:F2}\");             return;         }          Vector3 launchVelocity
+        = ComputeLaunchVelocity(swipeDelta, swipeTime, swipeDistance);         if
+        (launchVelocity == Vector3.zero)         {             Debug.LogWarning(\"[HolensLauncher]
+        Could not compute launch velocity \u2014 finger may not be over Ground layer.\");            
+        return;         }          StartCoroutine(LaunchSequence(launchVelocity));    
+        }      private void CancelSwipe()     {         isSwiping = false;        
+        if (trajectoryLine  != null) trajectoryLine.enabled = false;         if (swipeIndicator 
+        != null) swipeIndicator.SetActive(false);         if (targetIndicator !=
+        null) targetIndicator.SetActive(false);     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH VELOCITY COMPUTATION     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private Vector3 ComputeLaunchVelocity(Vector2 swipeDelta, float swipeTime,
+        float swipeDistance)     {         switch (activeLaunchMode)         {            
+        case LaunchMode.Arc:             {                 if (!raycastTargetValid)
+        { Debug.LogWarning(\"[Arc] No valid ground target.\"); return Vector3.zero;
+        }                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveArcSpeed(horizDist, vertDiff, arcAngle);                 if (rawSpeed
+        <= 0f) return Vector3.zero;                 float   speed    = rawSpeed *
+        arcForceMultiplier;                 float   rad      = arcAngle * Mathf.Deg2Rad;                
+        Vector3 horizDir = new Vector3(toTarget.x, 0f, toTarget.z).normalized;                
+        return horizDir * (speed * Mathf.Cos(rad)) + Vector3.up * (speed * Mathf.Sin(rad));            
+        }              case LaunchMode.Downward:             {                 if
+        (!raycastTargetValid) { Debug.LogWarning(\"[Downward] No valid ground target.\");
+        return Vector3.zero; }                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveDownwardSpeed(horizDist, vertDiff, downwardAngle);                
+        if (rawSpeed <= 0f) return Vector3.zero;                 float   speed   
+        = rawSpeed * downwardForceMultiplier;                 float   rad      =
+        downwardAngle * Mathf.Deg2Rad;                 Vector3 horizDir = new Vector3(toTarget.x,
+        0f, toTarget.z).normalized;                 return horizDir * (speed * Mathf.Cos(rad))
+        - Vector3.up * (speed * Mathf.Sin(rad));             }              default:
+        // Default             {                 Vector3 swipeWorldDir = Vector3.zero;                
+        if (raycastTargetValid)                 {                     swipeWorldDir  
+        = raycastTarget - swipeWorldStart;                     swipeWorldDir.y =
+        0f;                     swipeWorldDir.Normalize();                 }                
+        if (swipeWorldDir.sqrMagnitude < 0.01f)                 {                    
+        Vector3 camFwd   = mainCamera.transform.forward; camFwd.y   = 0f; camFwd.Normalize();                    
+        Vector3 camRight = mainCamera.transform.right;   camRight.y = 0f; camRight.Normalize();                    
+        swipeWorldDir    = (camRight * swipeDelta.x + camFwd * swipeDelta.y).normalized;                
+        }                 float force;                 if (useSpeedForce)                
+        {                     float sp = swipeDistance / Mathf.Max(swipeTime, 0.01f);                    
+        force    = Mathf.Clamp(sp * speedMultiplier, minLaunchForce, maxLaunchForce);                
+        }                 else                 {                     float nd  =
+        Mathf.InverseLerp(minSwipeDistance, maxSwipeDistance, swipeDistance);                    
+        force     = Mathf.Lerp(minLaunchForce, maxLaunchForce, nd);                    
+        float sp2 = swipeDistance / Mathf.Max(swipeTime, 0.01f);                    
+        force     = Mathf.Lerp(force, maxLaunchForce, Mathf.Clamp01(sp2 / 2000f));                
+        }                 return swipeWorldDir * force;             }         }    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PHYSICS SOLVERS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private float SolveArcSpeed(float horizDist, float vertDiff, float angleDeg)    
+        {         float \u03B8     = angleDeg * Mathf.Deg2Rad;         float g    
+        = Mathf.Abs(Physics.gravity.y);         float cos\u03B8  = Mathf.Cos(\u03B8);        
+        float tan\u03B8  = Mathf.Tan(\u03B8);         float denom = 2f * cos\u03B8
+        * cos\u03B8 * (horizDist * tan\u03B8 - vertDiff);         if (denom <= 0f)
+        { Debug.LogWarning($\"[Arc Solver] Unreachable. hDist={horizDist:F2} vDiff={vertDiff:F2}\");
+        return -1f; }         return Mathf.Sqrt((g * horizDist * horizDist) / denom);    
+        }      private float SolveDownwardSpeed(float horizDist, float vertDiff,
+        float angleDeg)     {         float \u03B8     = angleDeg * Mathf.Deg2Rad;        
+        float g     = Mathf.Abs(Physics.gravity.y);         float cos\u03B8  = Mathf.Cos(\u03B8);        
+        float tan\u03B8  = Mathf.Tan(\u03B8);         float denom = 2f * cos\u03B8
+        * cos\u03B8 * (-horizDist * tan\u03B8 - vertDiff);         if (denom <= 0f)
+        { Debug.LogWarning($\"[Downward Solver] Unreachable. hDist={horizDist:F2}
+        vDiff={vertDiff:F2}\"); return -1f; }         return Mathf.Sqrt((g * horizDist
+        * horizDist) / denom);     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  TRAJECTORY BUILDING  (only runs while isSwiping)     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void BuildLiveTrajectoryPoints()     {         if (currentBall ==
+        null) return;          switch (activeLaunchMode)         {             case
+        LaunchMode.Arc:             {                 if (!raycastTargetValid) return;                
+        Vector3 spawnPos  = currentBall.transform.position;                 Vector3
+        toTarget  = raycastTarget - spawnPos;                 float   horizDist =
+        new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveArcSpeed(horizDist, vertDiff, arcAngle);                 if (rawSpeed
+        <= 0f) return;                 float   speed    = rawSpeed * arcForceMultiplier;                
+        float   rad      = arcAngle * Mathf.Deg2Rad;                 Vector3 horizDir
+        = new Vector3(toTarget.x, 0f, toTarget.z).normalized;                 Vector3
+        vel      = horizDir * (speed * Mathf.Cos(rad)) + Vector3.up * (speed * Mathf.Sin(rad));                
+        BuildPhysicsPoints(spawnPos, vel);                 break;             }            
+        case LaunchMode.Downward:             {                 if (!raycastTargetValid)
+        return;                 Vector3 spawnPos  = currentBall.transform.position;                
+        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
+        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
+        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
+        = SolveDownwardSpeed(horizDist, vertDiff, downwardAngle);                
+        if (rawSpeed <= 0f) return;                 float   speed    = rawSpeed *
+        downwardForceMultiplier;                 float   rad      = downwardAngle
+        * Mathf.Deg2Rad;                 Vector3 horizDir = new Vector3(toTarget.x,
+        0f, toTarget.z).normalized;                 Vector3 vel      = horizDir *
+        (speed * Mathf.Cos(rad)) - Vector3.up * (speed * Mathf.Sin(rad));                
+        BuildPhysicsPoints(spawnPos, vel);                 break;             }            
+        default:             {                 Vector3 spawnPos = currentBall.transform.position;                
+        Vector3 dir      = Vector3.zero;                 if (raycastTargetValid)
+        { dir = raycastTarget - swipeWorldStart; dir.y = 0f; dir.Normalize(); }                
+        if (dir.sqrMagnitude < 0.01f) { dir = mainCamera.transform.forward; dir.y
+        = 0f; dir.Normalize(); }                 BuildStraightPoints(spawnPos, dir);                
+        break;             }         }     }      private void BuildPhysicsPoints(Vector3
+        startPos, Vector3 velocity)     {         fullTrajectoryPoints = new Vector3[trajectoryPointCount];        
+        for (int i = 0; i < trajectoryPointCount; i++)         {             float
+        t = i * trajectoryTimeStep;             fullTrajectoryPoints[i] = startPos
+        + velocity * t + 0.5f * Physics.gravity * t * t;         }     }      private
+        void BuildStraightPoints(Vector3 startPos, Vector3 direction)     {        
+        fullTrajectoryPoints    = new Vector3[2];         fullTrajectoryPoints[0]
+        = startPos;         fullTrajectoryPoints[1] = startPos + direction * defaultLineLength;    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  ANIMATED LINE RENDERING     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void AnimateAndDrawLine()     {         if (trajectoryLine == null
+        || fullTrajectoryPoints == null || fullTrajectoryPoints.Length < 2)            
+        return;          lineAnimOffset = (lineAnimOffset + Time.deltaTime * lineAnimationSpeed)
+        % 1f;          int totalPts     = fullTrajectoryPoints.Length;         int
+        visibleCount = Mathf.Max(2, Mathf.RoundToInt(totalPts * lineVisibleFraction));        
+        int startIdx     = Mathf.FloorToInt(lineAnimOffset * totalPts);         
+        trajectoryLine.enabled       = true;         trajectoryLine.positionCount
+        = visibleCount;          for (int i = 0; i < visibleCount; i++)            
+        trajectoryLine.SetPosition(i, fullTrajectoryPoints[(startIdx + i) % totalPts]);         
+        trajectoryLine.startColor = lineColor;         trajectoryLine.endColor  
+        = lineColor;     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH SEQUENCE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        IEnumerator LaunchSequence(Vector3 launchVelocity)     {         isBusy     
+        = true;         hasLaunched = true;          if (trajectoryLine != null)
+        trajectoryLine.enabled = false;         if (holenChanger   != null) holenChanger.DisableButtons();         
+        LaunchBall(launchVelocity);          yield return new WaitForSeconds(lifeDeductionDelay);         
+        LevelManager levelManager = FindObjectOfType<LevelManager>();         if
+        (levelManager != null)         {             levelManager.OnHolenRespawn();            
+        Debug.Log(\"[HolensLauncher] Life deducted after turn\");         }         
+        yield return new WaitForSeconds(7f - lifeDeductionDelay);          // Reset
+        camera         if (cinemachineCamera != null)         {             cinemachineCamera.Follow
+        = null;             cinemachineCamera.LookAt = defaultLookAtTarget != null
+        ? defaultLookAtTarget : null;             if (cameraSpawnPoint != null)            
+        {                 mainCamera.transform.position = cameraSpawnPoint.position;                
+        mainCamera.transform.rotation = cameraSpawnPoint.rotation;             }        
+        }          if (currentBall != null) { Destroy(currentBall); currentBall =
+        null; }          isBusy      = false;         hasLaunched = false;        
+        isSwiping   = false;          SpawnCurrentHolen();          if (holenChanger
+        != null) holenChanger.EnableButtons();     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  LAUNCH BALL     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        void LaunchBall(Vector3 velocity)     {         if (currentBall == null)
+        return;          Rigidbody rb = currentBall.GetComponent<Rigidbody>();        
+        currentBall.transform.parent = null;         rb.isKinematic = false;        
+        // VelocityChange applies velocity directly regardless of Rigidbody mass        
+        rb.AddForce(velocity, ForceMode.VelocityChange);          // \u2500\u2500
+        Camera: freeze position, only rotate to track the flying holen \u2500\u2500\u2500\u2500        
+        if (cinemachineCamera != null)         {             // Detach Follow \u2192
+        Cinemachine stops moving the camera body.             // Keep LookAt \u2192
+        the camera still rotates to centre the holen on screen.             cinemachineCamera.Follow
+        = null;             cinemachineCamera.LookAt = currentBall.transform;            
+        ApplyFlightCameraSettings();         }          // \u2500\u2500 Sound \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500        
+        if (audioSource != null && launchSoundClip != null)             audioSource.PlayOneShot(launchSoundClip);         
+        Debug.Log($\"[Launch] Mode={activeLaunchMode} Speed={velocity.magnitude:F2}\");    
+        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  SPAWN \u2014 SINGLE AUTHORITATIVE METHOD     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        private void SpawnCurrentHolen()     {         // 1. Determine the correct
+        prefab (HolenChanger takes priority)         GameObject prefabToUse = holensBallPrefab;        
+        if (holenChanger != null)         {             HolenData data = holenChanger.GetCurrentHolenData();            
+        if (data != null && data.holenPrefab != null)             {                
+        prefabToUse      = data.holenPrefab;                 holensBallPrefab = prefabToUse;            
+        }         }          if (prefabToUse == null)         {             Debug.LogError(\"[HolensLauncher]
+        No holen prefab available to spawn!\");             return;         }         
+        // 2. Destroy tracked ball + nuclear sweep of any stray \"Ball\" tagged objects        
+        if (currentBall != null) { Destroy(currentBall); currentBall = null; }        
+        foreach (GameObject stray in GameObject.FindGameObjectsWithTag(\"Ball\"))            
+        Destroy(stray);          // Always hide the indicator when re-spawning (mode
+        change, holen swap, post-flight)         if (targetIndicator != null)            
+        targetIndicator.SetActive(false);          // 3. Spawn exactly one new ball
+        at the correct height for the active mode         Vector3 spawnPos = holensPosition.position;        
+        if (activeLaunchMode == LaunchMode.Downward)             spawnPos += Vector3.up
+        * downwardSpawnHeightOffset;          currentBall = Instantiate(prefabToUse,
+        spawnPos, holensPosition.rotation);         currentBall.transform.parent
+        = holensPosition;         currentBall.tag = \"Ball\";         if (ballLayer
+        != -1) currentBall.layer = ballLayer;         currentBall.GetComponent<Rigidbody>().isKinematic
+        = true;          // 4. Camera: point at the idle holen using aim settings        
+        if (cinemachineCamera != null)         {             cinemachineCamera.Follow
+        = currentBall.transform;             cinemachineCamera.LookAt = currentBall.transform;            
+        ApplyAimCameraSettings();         }          Debug.Log($\"[Spawn] Mode={activeLaunchMode}
+        Prefab={prefabToUse.name}\");     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        //  PUBLIC API     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
+        public void ChangeBallPrefab(GameObject newPrefab)     {         if (hasLaunched)        
+        {             Debug.Log(\"[HolensLauncher] Cannot change holen while in flight.\");            
+        return;         }         holensBallPrefab = newPrefab;         SpawnCurrentHolen();    
+        }      public bool GetIsBusy()      => isBusy;     public bool GetHasLaunched()
+        => hasLaunched; }"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1902836006}
+  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!4 &1902836004 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1902836003}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1902836005 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+  m_PrefabInstance: {fileID: 1902836003}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1902836006
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902836005}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!1 &1912863803
 GameObject:
   m_ObjectHideFlags: 0

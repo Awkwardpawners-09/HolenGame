@@ -323,18 +323,8 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         if (newHolenPrefab == null) return;
 
         holenBallPrefab = newHolenPrefab;
-        SpawnHolenBall(); // PhotonNetwork.Instantiate — Photon replicates the ball to both clients
-
-        if (data != null && !string.IsNullOrEmpty(data.holenID))
-        {
-            // Send to OTHERS only — we handle our own swap locally below
-            photonView.RPC("RPC_SwapHolenModel", RpcTarget.Others, data.holenID);
-
-            // Use the same coroutine path locally so we also wait a frame
-            // before swapping — this prevents the duplicate model bug where
-            // the old child hasn't been destroyed yet when Instantiate returns
-            StartCoroutine(SwapAfterSpawn(data.holenID));
-        }
+        SpawnHolenBall(); // Spawns the correct prefab with the correct model already as a child.
+                          // No model swap needed — the prefab IS the right holen.
 
         CloseInventory();
         UpdateStatusText("idle");
