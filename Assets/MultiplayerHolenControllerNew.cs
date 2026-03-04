@@ -151,9 +151,6 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
     private bool isOnChangeCooldown = false;
     private bool isCompletingTurn = false;
 
-    // Tracks the currently selected HolenData so SpawnHolenBall can apply the model.
-    private HolenData pendingHolenData = null;
-
     public GameObject currentHolenBall { get; private set; }
 
     // ─────────────────────────────────────────────
@@ -308,20 +305,36 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
 
     /// <summary>
     /// Called by HolenInventoryPanel when a slot is tapped.
-    /// Updates both the network prefab (for Photon spawn) and the visible 3D model.
+    /// Updates the network prefab (for Photon spawn) and broadcasts the 3D model swap via RPC.
+    ///
+    /// WHY RPC FOR THE MODEL SWAP:
+    ///   SpawnHolenBall uses PhotonNetwork.Instantiate which Photon automatically replicates
+    ///   to all clients — so the network ball object appears on both screens correctly.
+    ///   But SwapHolenModel is a local-only visual operation. If we call it directly inside
+    ///   SpawnHolenBall, the spawning client runs it once locally AND the prefab already has
+    ///   the default model as a child, resulting in two models on the ball.
+    ///
+    ///   Instead: only the turning player calls SpawnHolenBall (which Photon syncs), then
+    ///   we fire an RPC with the holenID so BOTH clients swap their local model view.
     /// </summary>
-    /// <param name="newHolenPrefab">The Photon-registered network ball prefab.</param>
-    /// <param name="data">The HolenData whose holenPrefab is the 3D model to display.</param>
     public void OnHolenSelectedFromInventory(GameObject newHolenPrefab, HolenData data)
     {
         if (!isTurn || isHolenLaunched || isOnChangeCooldown) return;
         if (newHolenPrefab == null) return;
 
-        // Store the selected data so SpawnHolenBall can apply the model after Photon spawn.
-        pendingHolenData = data;
-
         holenBallPrefab = newHolenPrefab;
-        SpawnHolenBall(); // destroys old ball, spawns new one, then SwapHolenModel is called inside
+        SpawnHolenBall(); // PhotonNetwork.Instantiate — Photon replicates the ball to both clients
+
+        if (data != null && !string.IsNullOrEmpty(data.holenID))
+        {
+            // Send to OTHERS only — we handle our own swap locally below
+            photonView.RPC("RPC_SwapHolenModel", RpcTarget.Others, data.holenID);
+
+            // Use the same coroutine path locally so we also wait a frame
+            // before swapping — this prevents the duplicate model bug where
+            // the old child hasn't been destroyed yet when Instantiate returns
+            StartCoroutine(SwapAfterSpawn(data.holenID));
+        }
 
         CloseInventory();
         UpdateStatusText("idle");
@@ -685,37 +698,57 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
 
         if (targetIndicator != null) targetIndicator.SetActive(false);
 
-        // Apply the 3D model swap if a new holen was selected from inventory
-        if (pendingHolenData != null)
-        {
-            SwapHolenModel(pendingHolenData);
-            pendingHolenData = null;
-        }
-
         Debug.Log($"{playerRole} spawned: {holenBallPrefab.name}");
     }
 
     /// <summary>
-    /// Swaps the visible 3D model on the current holen ball.
+    /// RPC received by BOTH clients when the active player changes their holen.
+    /// Each client looks up the HolenData by holenID from HolenInventoryManager and
+    /// swaps the model on their local view of currentHolenBall.
     ///
-    /// HOW IT WORKS:
-    ///   Your holenball network prefab (used by Photon) contains a child GameObject
-    ///   that is the actual visible 3D model. This method:
-    ///     1. Finds and destroys all children tagged "HolenModel" (recommended setup).
-    ///        If none are tagged, destroys all children that only have a Transform
-    ///        (i.e. pure visual children, not physics components).
-    ///     2. Instantiates data.holenPrefab as a local child of currentHolenBall at
-    ///        zero local offset so it sits exactly at the ball's position.
-    ///
-    /// SETUP IN UNITY:
-    ///   - Tag the 3D model child inside your holenball prefab with the tag "HolenModel".
-    ///   - Create a "HolenModel" tag in Edit → Project Settings → Tags and Layers.
-    ///   - Make sure each HolenData's holenPrefab field points to the correct 3D model prefab.
-    ///
-    /// NOTE: This is a LOCAL-only visual swap. The Photon network ball is already
-    ///       replaced by re-spawning via PhotonNetwork.Instantiate. The 3D model is
-    ///       purely cosmetic for the local player's view.
+    /// We wait one frame before swapping because PhotonNetwork.Instantiate (called just
+    /// before this RPC is fired) may not have set currentHolenBall yet on the remote
+    /// client by the time the RPC arrives. The one-frame wait ensures the ball exists.
     /// </summary>
+    [PunRPC]
+    private void RPC_SwapHolenModel(string holenID)
+    {
+        StartCoroutine(SwapAfterSpawn(holenID));
+    }
+
+    private IEnumerator SwapAfterSpawn(string holenID)
+    {
+        // Wait until currentHolenBall is available (may take a frame on the remote client)
+        float timeout = 3f;
+        while (currentHolenBall == null && timeout > 0f)
+        {
+            timeout -= Time.deltaTime;
+            yield return null;
+        }
+
+        if (currentHolenBall == null)
+        {
+            Debug.LogWarning("[SwapHolenModel] currentHolenBall never appeared — cannot swap model.");
+            yield break;
+        }
+
+        // Look up the HolenData from the local HolenInventoryManager database
+        if (HolenInventoryManager.Instance == null)
+        {
+            Debug.LogWarning("[SwapHolenModel] HolenInventoryManager.Instance is null.");
+            yield break;
+        }
+
+        HolenData data = HolenInventoryManager.Instance.GetHolenData(holenID);
+        if (data == null || data.holenPrefab == null)
+        {
+            Debug.LogWarning($"[SwapHolenModel] No HolenData or holenPrefab found for ID '{holenID}'.");
+            yield break;
+        }
+
+        SwapHolenModel(data);
+    }
+
     private void SwapHolenModel(HolenData data)
     {
         if (currentHolenBall == null || data == null || data.holenPrefab == null)
@@ -724,8 +757,7 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
             return;
         }
 
-        // Find and destroy the existing model child by looking for a HolenIdentifier component.
-        // This avoids touching any tags on your prefabs.
+        // Destroy existing model children that have a HolenIdentifier component
         List<GameObject> toDestroy = new List<GameObject>();
         foreach (Transform child in currentHolenBall.transform)
         {
@@ -734,12 +766,12 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         }
 
         if (toDestroy.Count == 0)
-            Debug.LogWarning("[SwapHolenModel] No child with HolenIdentifier found on currentHolenBall. Make sure your holenPrefab has a HolenIdentifier component.");
+            Debug.LogWarning("[SwapHolenModel] No child with HolenIdentifier found. Make sure your holenPrefab has a HolenIdentifier component.");
 
         foreach (GameObject go in toDestroy)
             Destroy(go);
 
-        // Instantiate the new 3D model as a child at local zero
+        // Instantiate the new 3D model as a local child of the ball
         GameObject newModel = Instantiate(data.holenPrefab, currentHolenBall.transform);
         newModel.transform.localPosition = Vector3.zero;
         newModel.transform.localRotation = Quaternion.identity;
@@ -762,6 +794,13 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         CloseInventory();
         photonView.RPC("RPC_ShootHolen", RpcTarget.All, launchVelocity);
         UpdateStatusText("launched");
+
+        // Open the feedback tracking window on both clients.
+        // Called AFTER RPC_ShootHolen so currentHolenBall is still valid when
+        // PVPScore.OnTriggerExit checks against it to skip the launched ball.
+        PVPScore scoreManager = FindObjectOfType<PVPScore>();
+        if (scoreManager != null) scoreManager.OnTurnStarted();
+
         if (!isCompletingTurn) StartCoroutine(CompleteTurn());
     }
 

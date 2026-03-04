@@ -538,6 +538,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -630,7 +632,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -7297,6 +7299,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -7389,7 +7393,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -7944,6 +7948,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -8036,7 +8042,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -13846,7 +13852,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -13878,6 +13884,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -14364,7 +14372,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -14396,6 +14404,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -15402,7 +15412,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -15434,6 +15444,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -15672,7 +15684,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -15704,6 +15716,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -16164,6 +16178,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -16256,7 +16272,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -19234,7 +19250,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -19266,6 +19282,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -21062,6 +21080,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -21154,7 +21174,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -21704,7 +21724,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -21736,6 +21756,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -22133,7 +22155,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -22165,6 +22187,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -30315,7 +30339,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -30347,6 +30371,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -30821,7 +30847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &663736028
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31401,7 +31427,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -31433,6 +31459,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -33368,7 +33396,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -33400,6 +33428,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -35443,6 +35473,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -35535,7 +35567,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -40804,8 +40836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932591d904b54cc449d5da2e1a299c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityMultiplier: 15
-  smoothing: 4
+  gravityMultiplier: 20
+  smoothing: 2
   useGyroscope: 1
   defaultGravity: {x: 0, y: -9.81}
   showDebugInfo: 0
@@ -44101,7 +44133,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -44133,6 +44165,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -44758,7 +44792,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -44790,6 +44824,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -45956,7 +45992,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -45988,6 +46024,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -47427,7 +47465,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -47459,6 +47497,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -48749,9 +48789,9 @@ RectTransform:
   - {fileID: 857915154}
   m_Father: {fileID: 1922190115}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.9, y: -39.6}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -17, y: 18.900002}
   m_SizeDelta: {x: 68.8, y: 7.021}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1149235890
@@ -48766,11 +48806,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dceb5412fd4602c4dbab8a2ab1a97b80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonRect: {fileID: 1149235888}
-  hoverOffset: {x: -50, y: 0}
-  slideSpeed: 5
-  originalPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
 --- !u!114 &1149235891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48826,18 +48861,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1922190114}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1942615786}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -50466,6 +50489,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -50558,7 +50583,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -50608,7 +50633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2, y: 26.359009}
+  m_AnchoredPosition: {x: 2, y: 100}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1208103536
@@ -51273,6 +51298,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -51365,7 +51392,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -53438,6 +53465,7 @@ RectTransform:
   - {fileID: 1965428956}
   - {fileID: 1258216201}
   - {fileID: 1192657792}
+  - {fileID: 1494888904}
   m_Father: {fileID: 2114986018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
@@ -53540,6 +53568,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -53632,7 +53662,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -58121,7 +58151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1451556625
 RectTransform:
   m_ObjectHideFlags: 0
@@ -58976,7 +59006,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -59008,6 +59038,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -59539,17 +59571,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494888900}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1316460563}
-  m_Father: {fileID: 2114986018}
+  m_Father: {fileID: 1293862668}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 593, y: 1004}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -61, y: -9}
   m_SizeDelta: {x: 57, y: 59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1496904711
@@ -60171,7 +60203,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -60203,6 +60235,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -61448,7 +61482,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -61480,6 +61514,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -61738,6 +61774,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -61830,7 +61868,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -62702,6 +62740,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -62794,7 +62834,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -62837,14 +62877,14 @@ RectTransform:
   m_GameObject: {fileID: 1619766564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2703556, y: 1.2703556, z: 1.2703556}
+  m_LocalScale: {x: 1.0233349, y: 1.0233349, z: 1.0233349}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1208103534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 177, y: 1180}
+  m_AnchoredPosition: {x: 177, y: 1171}
   m_SizeDelta: {x: 3567.19, y: 3567.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!328 &1619766566
@@ -63474,6 +63514,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -63566,7 +63608,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -65071,6 +65113,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -65163,7 +65207,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -65714,6 +65758,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -65806,7 +65852,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -66282,6 +66328,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -66374,7 +66422,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -68085,7 +68133,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -68117,6 +68165,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -69111,7 +69161,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -69143,6 +69193,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -69919,7 +69971,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -69951,6 +70003,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -71518,7 +71572,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -71550,6 +71604,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -79960,6 +80016,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -80052,7 +80110,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -80101,7 +80159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 452, y: 923.1299}
+  m_AnchoredPosition: {x: 451.99994, y: 923.1299}
   m_SizeDelta: {x: 344.9949, y: 119.0923}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2030188148
@@ -80406,7 +80464,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -80438,6 +80496,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -80690,7 +80750,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 509.56982, y: 923.1299}
+  m_AnchoredPosition: {x: 509.56976, y: 923.1299}
   m_SizeDelta: {x: 208.5081, y: 52.127}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2060212174
@@ -80947,7 +81007,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -80979,6 +81039,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -81647,7 +81709,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -81679,6 +81741,8 @@ MonoBehaviour:
   collisionSounds:
   - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
   - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
@@ -88432,12 +88496,11 @@ RectTransform:
   - {fileID: 1452369114}
   - {fileID: 172872703}
   - {fileID: 134192574}
+  - {fileID: 1333346166}
+  - {fileID: 272327422}
   - {fileID: 663736028}
   - {fileID: 1451556625}
   - {fileID: 1322775150}
-  - {fileID: 1494888904}
-  - {fileID: 1333346166}
-  - {fileID: 272327422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

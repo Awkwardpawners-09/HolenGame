@@ -10,7 +10,7 @@ public class PVPScore : MonoBehaviourPunCallbacks
     public static PVPScore Instance { get; private set; }
 
     [Header("UI References")]
-    public TMP_Text turnDisplayText; // Shows whose turn it is
+    public TMP_Text turnDisplayText;
 
     [Header("Knocked Out Holens Display")]
     [Tooltip("Prefab containing the HolenSlotUI component")]
@@ -23,51 +23,61 @@ public class PVPScore : MonoBehaviourPunCallbacks
     public Transform player2KnockedOutPanel;
 
     [Header("Game Over UI")]
-    public GameObject firstUIObject;  // Enable after no holens detected
-    public GameObject secondUIObject; // Enable after first UI
-    public float firstUIDelay = 3f;   // Time to wait before showing first UI
-    public float secondUIDelay = 3f;  // Time to wait between first and second UI
-    public float sceneTransitionDelay = 2f; // Time to wait before switching scenes
+    public GameObject firstUIObject;
+    public GameObject secondUIObject;
+    public float firstUIDelay = 3f;
+    public float secondUIDelay = 3f;
+    public float sceneTransitionDelay = 2f;
 
     [Header("Scene Transition")]
-    public string resultSceneName = "PVPResult"; // Scene to load after game over
+    public string resultSceneName = "PVPResult";
 
     [Header("Settings")]
-    public float noHolensWaitTime = 3f; // Time to wait if no holens remain before game over
+    public float noHolensWaitTime = 3f;
 
     [Header("Turn Feedback (Launch Result)")]
-    [Tooltip("Enabled briefly when the active player launches but knocks out NO holens.")]
+    [Tooltip("Shown on both screens when the active player knocks out NO wager holens this turn.")]
     public GameObject feedbackNoKnockout;
 
-    [Tooltip("Enabled briefly when exactly 1 holen is knocked out.")]
+    [Tooltip("Shown on both screens when exactly 1 wager holen is knocked out.")]
     public GameObject feedback1Knockout;
 
-    [Tooltip("Enabled briefly when exactly 2 holens are knocked out.")]
+    [Tooltip("Shown on both screens when exactly 2 wager holens are knocked out.")]
     public GameObject feedback2Knockout;
 
-    [Tooltip("Enabled briefly when exactly 3 holens are knocked out.")]
+    [Tooltip("Shown on both screens when exactly 3 wager holens are knocked out.")]
     public GameObject feedback3Knockout;
 
-    [Tooltip("Enabled briefly when exactly 4 holens are knocked out.")]
+    [Tooltip("Shown on both screens when exactly 4 wager holens are knocked out.")]
     public GameObject feedback4Knockout;
 
-    [Tooltip("Enabled briefly when 5 or more holens are knocked out.")]
+    [Tooltip("Shown on both screens when 5 or more wager holens are knocked out.")]
     public GameObject feedback5Knockout;
 
-    [Tooltip("How long (seconds) the feedback object stays visible before being disabled again.")]
+    [Tooltip("How long (seconds) the feedback object stays visible.")]
     public float feedbackDisplayDuration = 4f;
 
+    [Header("Knocked-Out Holen Destruction")]
+    [Tooltip("Seconds after a wager holen exits the field before it is destroyed.")]
+    public float knockedOutDestroyDelay = 3f;
+
+    [Tooltip("(Optional) Instantiated locally at each knocked-out holen's position before it is destroyed.")]
+    public GameObject knockedOutVFXPrefab;
+
+    [Tooltip("How long (seconds) the VFX object lives before being destroyed. 0 = permanent.")]
+    public float vfxLifetime = 2f;
+
+    // ── Private ──────────────────────────────────
     private Coroutine activeFeedbackCoroutine;
     private bool turnInProgress = false;
     private int holensKnockedOutThisTurn = 0;
 
-    // Track holens knocked out by each player
     [System.Serializable]
     public class KnockedOutHolen
     {
         public string holenID;
         public string holenName;
-        public int playerNumber; // 1 or 2
+        public int playerNumber;
 
         public KnockedOutHolen(string id, string name, int player)
         {
@@ -83,34 +93,31 @@ public class PVPScore : MonoBehaviourPunCallbacks
     private float noHolensTimer = 0f;
     private bool gameOverTriggered = false;
 
-    private MultiplayerHolenController holenController;
+    private MultiplayerHolenControllerNew holenController;
     private List<GameObject> holensToDestroy = new List<GameObject>();
 
+    // ─────────────────────────────────────────────
+    //  LIFECYCLE
+    // ─────────────────────────────────────────────
     void Awake()
     {
-        // Singleton pattern with DontDestroyOnLoad
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
         Debug.Log("[PVPScore] Created and persisting between scenes");
     }
 
     void Start()
     {
-        holenController = FindObjectOfType<MultiplayerHolenController>();
+        holenController = FindObjectOfType<MultiplayerHolenControllerNew>();
 
-        if (firstUIObject != null)
-            firstUIObject.SetActive(false);
-        if (secondUIObject != null)
-            secondUIObject.SetActive(false);
+        if (firstUIObject != null) firstUIObject.SetActive(false);
+        if (secondUIObject != null) secondUIObject.SetActive(false);
 
-        // Disable all feedback objects at start
         DisableFeedbackObject(feedbackNoKnockout);
         DisableFeedbackObject(feedback1Knockout);
         DisableFeedbackObject(feedback2Knockout);
@@ -123,26 +130,27 @@ public class PVPScore : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        if (holenController == null)
+            holenController = FindObjectOfType<MultiplayerHolenControllerNew>();
+
+        // Count only wager holens (not the launched ball) for the game-over check
         GameObject[] allHolens = GameObject.FindGameObjectsWithTag("Objective");
         int holensInside = 0;
-
         foreach (GameObject holen in allHolens)
         {
-            Collider holenCollider = holen.GetComponent<Collider>();
-            if (holenCollider != null && IsInsideTrigger(holenCollider))
-            {
+            if (holenController != null && holen == holenController.currentHolenBall)
+                continue; // skip the launched ball
+
+            Collider col = holen.GetComponent<Collider>();
+            if (col != null && IsInsideTrigger(col))
                 holensInside++;
-            }
         }
 
         if (holensInside == 0)
         {
             noHolensTimer += Time.deltaTime;
-
             if (noHolensTimer >= noHolensWaitTime && !gameOverTriggered)
-            {
                 TriggerGameOver();
-            }
         }
         else
         {
@@ -156,448 +164,64 @@ public class PVPScore : MonoBehaviourPunCallbacks
     {
         Collider thisTrigger = GetComponent<Collider>();
         if (thisTrigger != null && thisTrigger.isTrigger)
-        {
             return thisTrigger.bounds.Intersects(otherCollider.bounds);
-        }
         return false;
     }
 
-    private void TriggerGameOver()
-    {
-        gameOverTriggered = true;
-
-        // Only master client triggers the sequence to ensure sync
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("RPC_TriggerGameOver", RpcTarget.All);
-        }
-    }
-
-    [PunRPC]
-    private void RPC_TriggerGameOver()
-    {
-        StartCoroutine(ShowGameOverSequence());
-    }
-
-    private IEnumerator ShowGameOverSequence()
-    {
-        Debug.Log("Game Over! No holens remaining in play field.");
-
-        // Wait for first UI delay
-        yield return new WaitForSeconds(firstUIDelay);
-
-        // Show first UI object
-        if (firstUIObject != null)
-        {
-            firstUIObject.SetActive(true);
-            Debug.Log("First UI object displayed");
-        }
-
-        // Wait for second UI delay
-        yield return new WaitForSeconds(secondUIDelay);
-
-        // Show second UI object
-        if (secondUIObject != null)
-        {
-            secondUIObject.SetActive(true);
-            Debug.Log("Second UI object displayed");
-        }
-
-        // Log final results
-        LogFinalResults();
-
-        // Wait before scene transition
-        yield return new WaitForSeconds(sceneTransitionDelay);
-
-        // Load result scene
-        LoadResultScene();
-    }
-
-    private void LoadResultScene()
-    {
-        Debug.Log($"Loading result scene: {resultSceneName}");
-
-        // Store match data in static holder before scene transition
-        int localPlayer = GetLocalPlayerNumber();
-
-        // Convert to tuples to avoid type dependency
-        var p1Data = new List<(string, string, int)>();
-        foreach (var holen in player1KnockedOut)
-        {
-            p1Data.Add((holen.holenID, holen.holenName, holen.playerNumber));
-        }
-
-        var p2Data = new List<(string, string, int)>();
-        foreach (var holen in player2KnockedOut)
-        {
-            p2Data.Add((holen.holenID, holen.holenName, holen.playerNumber));
-        }
-
-        PVPDataHolder.StoreMatchResults(p1Data, p2Data, localPlayer);
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // Master client loads the scene for all players
-            PhotonNetwork.LoadLevel(resultSceneName);
-        }
-    }
-
-    private void LogFinalResults()
-    {
-        Debug.Log($"=== GAME RESULTS ===");
-        Debug.Log($"Player 1 knocked out {player1KnockedOut.Count} holens:");
-        foreach (var holen in player1KnockedOut)
-        {
-            Debug.Log($"  - {holen.holenName} (ID: {holen.holenID})");
-        }
-
-        Debug.Log($"Player 2 knocked out {player2KnockedOut.Count} holens:");
-        foreach (var holen in player2KnockedOut)
-        {
-            Debug.Log($"  - {holen.holenName} (ID: {holen.holenID})");
-        }
-    }
-
+    // ─────────────────────────────────────────────
+    //  TRIGGER — wager holens only
+    // ─────────────────────────────────────────────
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Objective"))
+        if (!other.CompareTag("Objective")) return;
+
+        // ── CRITICAL: skip the ball the active player launched ──
+        // currentHolenBall is the ball shot by MultiplayerHolenControllerNew.
+        // It is tagged "Objective" so we must explicitly ignore it here.
+        if (holenController != null && holenController.currentHolenBall != null)
         {
-            // Don't count the current player's own ball
-            if (holenController != null && holenController.currentHolenBall != null)
+            if (other.gameObject == holenController.currentHolenBall)
             {
-                if (other.gameObject == holenController.currentHolenBall)
-                {
-                    return;
-                }
-            }
-
-            // Count the knockout and broadcast feedback to ALL players immediately.
-            // No IsMasterClient gate — whichever client's collider fires this sends the RPC.
-            // turnInProgress is used only for the counter; feedback fires regardless so it's never silently skipped.
-            holensKnockedOutThisTurn++;
-            turnInProgress = true; // ensure flag is set even if OnTurnStarted wasn't called yet
-            Debug.Log($"[PVPScore] Knockout #{holensKnockedOutThisTurn} this turn — syncing feedback to all players.");
-            photonView.RPC("RPC_ShowTurnFeedback", RpcTarget.All, holensKnockedOutThisTurn);
-
-            // Try to get HolenData from the knocked out holen
-            HolenData holenData = GetHolenDataFromGameObject(other.gameObject);
-
-            if (holenData != null)
-            {
-                RecordKnockedOutHolen(holenData);
-            }
-            else
-            {
-                Debug.LogWarning($"Could not find HolenData for knocked out object: {other.gameObject.name}");
-            }
-
-            // Queue for destruction
-            if (!holensToDestroy.Contains(other.gameObject))
-            {
-                holensToDestroy.Add(other.gameObject);
-            }
-        }
-    }
-
-    private HolenData GetHolenDataFromGameObject(GameObject holenObject)
-    {
-        // Method 1: Check if there's a HolenIdentifier component (recommended approach)
-        HolenIdentifier identifier = holenObject.GetComponent<HolenIdentifier>();
-        if (identifier != null && identifier.holenData != null)
-        {
-            return identifier.holenData;
-        }
-
-        // Method 2: Try to find matching HolenData from WagerDataManager by name
-        if (WagerDataManager.Instance != null)
-        {
-            var allWagers = WagerDataManager.Instance.GetAllWageredHolensIndividual();
-
-            // Try to match by prefab name (assumes GameObject name matches HolenData prefab name)
-            string objectName = holenObject.name.Replace("(Clone)", "").Trim();
-
-            foreach (var wager in allWagers)
-            {
-                HolenData data = LoadHolenDataByID(wager.holenID);
-                if (data != null && data.holenPrefab != null)
-                {
-                    string prefabName = data.holenPrefab.name;
-                    if (prefabName == objectName)
-                    {
-                        return data;
-                    }
-                }
+                Debug.Log("[PVPScore] Launched ball exited field — skipped.");
+                return;
             }
         }
 
-        return null;
-    }
+        // It's a wager holen that was knocked out. ─────────────────
 
-    private HolenData LoadHolenDataByID(string holenID)
-    {
-        // Load all HolenData from Resources folder
-        HolenData[] allHolenData = Resources.LoadAll<HolenData>("HolenData");
-
-        foreach (var data in allHolenData)
-        {
-            if (data.holenID == holenID)
-            {
-                return data;
-            }
-        }
-
-        return null;
-    }
-
-    private void RecordKnockedOutHolen(HolenData holenData)
-    {
-        if (holenController == null) return;
-
-        // Determine which player (1 or 2) knocked out this holen
-        int currentPlayer = holenController.isPlayer1 ? 1 : 2;
-
-        // Only record if it's actually that player's turn
-        if (holenController.IsTurn())
-        {
-            KnockedOutHolen knockedOut = new KnockedOutHolen(
-                holenData.holenID,
-                holenData.holenName,
-                currentPlayer
-            );
-
-            if (currentPlayer == 1)
-            {
-                player1KnockedOut.Add(knockedOut);
-                Debug.Log($"Player 1 knocked out: {holenData.holenName} (ID: {holenData.holenID})");
-
-                // Display visual feedback (local player always shows as Player 1)
-                DisplayKnockedOutHolen(holenData, true); // true = local player
-
-                // Sync to other player
-                photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 1);
-            }
-            else
-            {
-                player2KnockedOut.Add(knockedOut);
-                Debug.Log($"Player 2 knocked out: {holenData.holenName} (ID: {holenData.holenID})");
-
-                // Display visual feedback (local player always shows as Player 1)
-                DisplayKnockedOutHolen(holenData, true); // true = local player
-
-                // Sync to other player
-                photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 2);
-            }
-        }
-    }
-
-    [PunRPC]
-    private void RPC_RecordKnockout(string holenID, string holenName, int playerNumber)
-    {
-        KnockedOutHolen knockedOut = new KnockedOutHolen(holenID, holenName, playerNumber);
-
-        if (playerNumber == 1)
-        {
-            player1KnockedOut.Add(knockedOut);
-        }
-        else if (playerNumber == 2)
-        {
-            player2KnockedOut.Add(knockedOut);
-        }
-
-        Debug.Log($"Received sync: Player {playerNumber} knocked out {holenName}");
-
-        // Load the HolenData and display visual feedback
-        HolenData data = LoadHolenDataByID(holenID);
-        if (data != null)
-        {
-            // Opponent's knockouts always display as Player 2 (false = opponent)
-            DisplayKnockedOutHolen(data, false);
-        }
+        // Record the score
+        HolenData holenData = GetHolenDataFromGameObject(other.gameObject);
+        if (holenData != null)
+            RecordKnockedOutHolen(holenData);
         else
+            Debug.LogWarning($"[PVPScore] Could not find HolenData for: {other.gameObject.name}");
+
+        // Queue for delayed destruction
+        if (!holensToDestroy.Contains(other.gameObject))
+            holensToDestroy.Add(other.gameObject);
+
+        // Update counter and broadcast feedback to both screens.
+        // Master client is the single authority so feedback fires exactly once.
+        if (turnInProgress && PhotonNetwork.IsMasterClient)
         {
-            Debug.LogWarning($"[PVPScore] Could not load HolenData for synced knockout. ID: {holenID}");
-        }
-    }
-
-    /// <summary>
-    /// Displays a knocked out holen in the appropriate player's panel.
-    /// Instantiates a HolenSlotUI prefab and populates it with the holen's data.
-    /// Local player is always shown as Player 1, opponent as Player 2.
-    /// </summary>
-    /// <param name="holenData">The HolenData of the knocked out holen</param>
-    /// <param name="isLocalPlayer">True if local player knocked it out, false if opponent did</param>
-    private void DisplayKnockedOutHolen(HolenData holenData, bool isLocalPlayer)
-    {
-        // Validate prefab
-        if (holenSlotUIPrefab == null)
-        {
-            Debug.LogWarning("[PVPScore] HolenSlotUI Prefab not assigned. Cannot display knocked out holen.");
-            return;
-        }
-
-        // Local player always displays in Player 1 panel, opponent in Player 2 panel
-        Transform targetPanel = isLocalPlayer ? player1KnockedOutPanel : player2KnockedOutPanel;
-
-        if (targetPanel == null)
-        {
-            string panelName = isLocalPlayer ? "Player 1 (Local)" : "Player 2 (Opponent)";
-            Debug.LogWarning($"[PVPScore] {panelName} knocked out panel not assigned. Cannot display knocked out holen.");
-            return;
-        }
-
-        // Instantiate the HolenSlotUI prefab as a child of the target panel
-        GameObject slotInstance = Instantiate(holenSlotUIPrefab, targetPanel);
-
-        // Get the HolenSlotUI component
-        HolenSlotUI slotUI = slotInstance.GetComponent<HolenSlotUI>();
-
-        if (slotUI == null)
-        {
-            Debug.LogError("[PVPScore] HolenSlotUI component not found on prefab!");
-            Destroy(slotInstance);
-            return;
-        }
-
-        // Set the slot data (quantity = 1 for a single knocked out holen)
-        slotUI.SetSlot(holenData, 1);
-
-        string playerLabel = isLocalPlayer ? "Local Player" : "Opponent";
-        Debug.Log($"[PVPScore] Displayed knocked out holen '{holenData.holenName}' in {playerLabel}'s panel");
-    }
-
-    public void OnTurnEnd()
-    {
-        StartCoroutine(DestroyQueuedHolens());
-    }
-
-    private IEnumerator DestroyQueuedHolens()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        foreach (GameObject holen in holensToDestroy)
-        {
-            if (holen != null && PhotonNetwork.IsMasterClient)
-            {
-                PhotonView pv = holen.GetComponent<PhotonView>();
-                if (pv != null)
-                {
-                    PhotonNetwork.Destroy(holen);
-                }
-                else
-                {
-                    Destroy(holen);
-                }
-            }
-        }
-
-        holensToDestroy.Clear();
-    }
-
-    private void UpdateTurnDisplay()
-    {
-        if (turnDisplayText != null && holenController != null)
-        {
-            if (holenController.IsTurn())
-            {
-                turnDisplayText.text = "Your Turn";
-            }
-            else
-            {
-                turnDisplayText.text = "Opponent's Turn";
-            }
-        }
-    }
-
-    /// <summary>
-    /// Returns the local player's number (1 or 2).
-    /// Returns 0 if unable to determine.
-    /// </summary>
-    public int GetLocalPlayerNumber()
-    {
-        if (holenController == null)
-        {
-            holenController = FindObjectOfType<MultiplayerHolenController>();
-        }
-
-        if (holenController != null)
-        {
-            return holenController.isPlayer1 ? 1 : 2;
-        }
-
-        return 0;
-    }
-
-    public List<KnockedOutHolen> GetPlayerKnockedOutHolens(int playerNumber)
-    {
-        if (playerNumber == 1)
-            return new List<KnockedOutHolen>(player1KnockedOut);
-        else if (playerNumber == 2)
-            return new List<KnockedOutHolen>(player2KnockedOut);
-
-        return new List<KnockedOutHolen>();
-    }
-
-    public List<KnockedOutHolen> GetAllKnockedOutHolens()
-    {
-        List<KnockedOutHolen> allKnockedOut = new List<KnockedOutHolen>();
-        allKnockedOut.AddRange(player1KnockedOut);
-        allKnockedOut.AddRange(player2KnockedOut);
-        return allKnockedOut;
-    }
-
-    /// <summary>
-    /// Clears the visual display panels of knocked out holens.
-    /// </summary>
-    private void ClearKnockedOutPanels()
-    {
-        if (player1KnockedOutPanel != null)
-        {
-            foreach (Transform child in player1KnockedOutPanel)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        if (player2KnockedOutPanel != null)
-        {
-            foreach (Transform child in player2KnockedOutPanel)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        Debug.Log("[PVPScore] Knocked out panels cleared");
-    }
-
-    public void ClearData()
-    {
-        player1KnockedOut.Clear();
-        player2KnockedOut.Clear();
-        gameOverTriggered = false;
-        noHolensTimer = 0f;
-        ClearKnockedOutPanels();
-        Debug.Log("[PVPScore] Data cleared");
-    }
-
-    void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
+            holensKnockedOutThisTurn++;
+            Debug.Log($"[PVPScore] Wager holen knocked out #{holensKnockedOutThisTurn} — broadcasting feedback.");
+            photonView.RPC("RPC_ShowTurnFeedback", RpcTarget.All, holensKnockedOutThisTurn);
         }
     }
 
     // ─────────────────────────────────────────────
-    //  TURN FEEDBACK SYSTEM
+    //  TURN FEEDBACK
     // ─────────────────────────────────────────────
 
     /// <summary>
-    /// Called by the multiplayer launcher the moment the holen is launched.
-    /// Any client can call this — it broadcasts to all players via RPC.
+    /// Call from MultiplayerHolenControllerNew.ShootHolen() right when the ball is launched.
+    /// Opens the window so wager-holen exits are counted toward this turn's feedback.
     /// </summary>
     public void OnTurnStarted()
     {
-        photonView.RPC("RPC_OnTurnStarted", RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC("RPC_OnTurnStarted", RpcTarget.All);
     }
 
     [PunRPC]
@@ -605,48 +229,44 @@ public class PVPScore : MonoBehaviourPunCallbacks
     {
         turnInProgress = true;
         holensKnockedOutThisTurn = 0;
-        Debug.Log("[PVPScore] Turn started — tracking knockouts.");
+        Debug.Log("[PVPScore] Turn started — tracking wager holen knockouts.");
     }
 
     /// <summary>
-    /// Called by the multiplayer launcher after the holen has fully respawned.
-    /// Any client can call this — it broadcasts to all players via RPC.
+    /// Called by MultiplayerHolenControllerNew.EndTurn() → scoreManager.OnTurnEnd().
+    /// Closes the tracking window, shows no-knockout feedback if needed, and destroys
+    /// queued holens after the configured delay.
     /// </summary>
-    public void OnTurnEnded()
+    public void OnTurnEnd()
     {
-        photonView.RPC("RPC_OnTurnEnded", RpcTarget.All);
+        if (holensToDestroy.Count > 0)
+            StartCoroutine(DestroyQueuedHolens());
+
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC("RPC_OnTurnEnded", RpcTarget.All);
     }
 
     [PunRPC]
     private void RPC_OnTurnEnded()
     {
         turnInProgress = false;
-        Debug.Log($"[PVPScore] Turn ended — total knockouts: {holensKnockedOutThisTurn}");
+        Debug.Log($"[PVPScore] Turn ended — total knockouts this turn: {holensKnockedOutThisTurn}");
 
-        // Show no-knockout feedback if nothing was knocked out this turn
+        // Knockout feedback (1–5+) fires immediately in OnTriggerExit.
+        // No-knockout feedback only fires here, once the turn is fully over.
         if (holensKnockedOutThisTurn == 0)
-        {
             ShowTurnFeedbackLocal(0);
-        }
     }
 
-    /// <summary>
-    /// RPC called on ALL clients to show the same feedback object simultaneously.
-    /// knockedOut = number of holens knocked out so far this turn.
-    /// </summary>
     [PunRPC]
     private void RPC_ShowTurnFeedback(int knockedOut)
     {
         ShowTurnFeedbackLocal(knockedOut);
     }
 
-    /// <summary>
-    /// Locally activates the correct feedback GameObject and starts the display timer.
-    /// </summary>
     private void ShowTurnFeedbackLocal(int knockedOut)
     {
-        if (gameOverTriggered)
-            return;
+        if (gameOverTriggered) return;
 
         GameObject target = GetFeedbackObject(knockedOut);
         if (target == null)
@@ -670,13 +290,12 @@ public class PVPScore : MonoBehaviourPunCallbacks
             case 2: return feedback2Knockout;
             case 3: return feedback3Knockout;
             case 4: return feedback4Knockout;
-            default: return feedback5Knockout; // 5+
+            default: return feedback5Knockout;
         }
     }
 
     private IEnumerator DisplayFeedback(GameObject feedbackObj)
     {
-        // Disable all feedback objects first so only one shows at a time
         DisableFeedbackObject(feedbackNoKnockout);
         DisableFeedbackObject(feedback1Knockout);
         DisableFeedbackObject(feedback2Knockout);
@@ -698,5 +317,242 @@ public class PVPScore : MonoBehaviourPunCallbacks
     {
         if (obj != null && obj.activeSelf)
             obj.SetActive(false);
+    }
+
+    // ─────────────────────────────────────────────
+    //  DELAYED DESTROY + OPTIONAL VFX
+    // ─────────────────────────────────────────────
+
+    private IEnumerator DestroyQueuedHolens()
+    {
+        // Snapshot positions now; the objects may move or be destroyed remotely before the delay ends
+        var snapshot = new List<(GameObject go, Vector3 pos)>();
+        foreach (GameObject holen in holensToDestroy)
+            if (holen != null)
+                snapshot.Add((holen, holen.transform.position));
+
+        yield return new WaitForSeconds(knockedOutDestroyDelay);
+
+        foreach (var (go, pos) in snapshot)
+        {
+            // VFX is purely visual — spawn locally on every client, no network object needed
+            if (knockedOutVFXPrefab != null)
+            {
+                GameObject vfx = Instantiate(knockedOutVFXPrefab, pos, Quaternion.identity);
+                if (vfxLifetime > 0f)
+                    Destroy(vfx, vfxLifetime);
+                Debug.Log($"[PVPScore] VFX spawned at {pos}");
+            }
+
+            // Only master client destroys the networked holen
+            if (go != null && PhotonNetwork.IsMasterClient)
+            {
+                PhotonView pv = go.GetComponent<PhotonView>();
+                if (pv != null)
+                    PhotonNetwork.Destroy(go);
+                else
+                    Destroy(go);
+
+                Debug.Log($"[PVPScore] Knocked-out holen destroyed at {pos}");
+            }
+        }
+
+        holensToDestroy.Clear();
+    }
+
+    // ─────────────────────────────────────────────
+    //  GAME OVER
+    // ─────────────────────────────────────────────
+    private void TriggerGameOver()
+    {
+        gameOverTriggered = true;
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC("RPC_TriggerGameOver", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPC_TriggerGameOver()
+    {
+        StartCoroutine(ShowGameOverSequence());
+    }
+
+    private IEnumerator ShowGameOverSequence()
+    {
+        Debug.Log("[PVPScore] Game Over! No wager holens remaining.");
+
+        yield return new WaitForSeconds(firstUIDelay);
+        if (firstUIObject != null) firstUIObject.SetActive(true);
+
+        yield return new WaitForSeconds(secondUIDelay);
+        if (secondUIObject != null) secondUIObject.SetActive(true);
+
+        LogFinalResults();
+
+        yield return new WaitForSeconds(sceneTransitionDelay);
+        LoadResultScene();
+    }
+
+    private void LoadResultScene()
+    {
+        int localPlayer = GetLocalPlayerNumber();
+
+        var p1Data = new List<(string, string, int)>();
+        foreach (var h in player1KnockedOut)
+            p1Data.Add((h.holenID, h.holenName, h.playerNumber));
+
+        var p2Data = new List<(string, string, int)>();
+        foreach (var h in player2KnockedOut)
+            p2Data.Add((h.holenID, h.holenName, h.playerNumber));
+
+        PVPDataHolder.StoreMatchResults(p1Data, p2Data, localPlayer);
+
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel(resultSceneName);
+    }
+
+    private void LogFinalResults()
+    {
+        Debug.Log("=== GAME RESULTS ===");
+        Debug.Log($"Player 1 knocked out {player1KnockedOut.Count} holens:");
+        foreach (var h in player1KnockedOut) Debug.Log($"  - {h.holenName} (ID: {h.holenID})");
+        Debug.Log($"Player 2 knocked out {player2KnockedOut.Count} holens:");
+        foreach (var h in player2KnockedOut) Debug.Log($"  - {h.holenName} (ID: {h.holenID})");
+    }
+
+    // ─────────────────────────────────────────────
+    //  KNOCKOUT RECORDING
+    // ─────────────────────────────────────────────
+    private HolenData GetHolenDataFromGameObject(GameObject holenObject)
+    {
+        HolenIdentifier identifier = holenObject.GetComponent<HolenIdentifier>();
+        if (identifier != null && identifier.holenData != null)
+            return identifier.holenData;
+
+        if (WagerDataManager.Instance != null)
+        {
+            string objectName = holenObject.name.Replace("(Clone)", "").Trim();
+            foreach (var wager in WagerDataManager.Instance.GetAllWageredHolensIndividual())
+            {
+                HolenData data = LoadHolenDataByID(wager.holenID);
+                if (data != null && data.holenPrefab != null && data.holenPrefab.name == objectName)
+                    return data;
+            }
+        }
+
+        return null;
+    }
+
+    private HolenData LoadHolenDataByID(string holenID)
+    {
+        foreach (var data in Resources.LoadAll<HolenData>("HolenData"))
+            if (data.holenID == holenID) return data;
+        return null;
+    }
+
+    private void RecordKnockedOutHolen(HolenData holenData)
+    {
+        if (holenController == null || !holenController.IsTurn()) return;
+
+        int currentPlayer = holenController.isPlayer1 ? 1 : 2;
+        var knockedOut = new KnockedOutHolen(holenData.holenID, holenData.holenName, currentPlayer);
+
+        if (currentPlayer == 1)
+        {
+            player1KnockedOut.Add(knockedOut);
+            DisplayKnockedOutHolen(holenData, true);
+            photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 1);
+        }
+        else
+        {
+            player2KnockedOut.Add(knockedOut);
+            DisplayKnockedOutHolen(holenData, true);
+            photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 2);
+        }
+
+        Debug.Log($"[PVPScore] Player {currentPlayer} knocked out: {holenData.holenName}");
+    }
+
+    [PunRPC]
+    private void RPC_RecordKnockout(string holenID, string holenName, int playerNumber)
+    {
+        var knockedOut = new KnockedOutHolen(holenID, holenName, playerNumber);
+        if (playerNumber == 1) player1KnockedOut.Add(knockedOut);
+        else if (playerNumber == 2) player2KnockedOut.Add(knockedOut);
+
+        HolenData data = LoadHolenDataByID(holenID);
+        if (data != null) DisplayKnockedOutHolen(data, false);
+        else Debug.LogWarning($"[PVPScore] Could not load HolenData for synced knockout. ID: {holenID}");
+    }
+
+    private void DisplayKnockedOutHolen(HolenData holenData, bool isLocalPlayer)
+    {
+        if (holenSlotUIPrefab == null) { Debug.LogWarning("[PVPScore] HolenSlotUI prefab not assigned."); return; }
+
+        Transform targetPanel = isLocalPlayer ? player1KnockedOutPanel : player2KnockedOutPanel;
+        if (targetPanel == null) { Debug.LogWarning("[PVPScore] Target panel not assigned."); return; }
+
+        GameObject slotInstance = Instantiate(holenSlotUIPrefab, targetPanel);
+        HolenSlotUI slotUI = slotInstance.GetComponent<HolenSlotUI>();
+        if (slotUI == null) { Debug.LogError("[PVPScore] HolenSlotUI not on prefab!"); Destroy(slotInstance); return; }
+
+        slotUI.SetSlot(holenData, 1);
+        Debug.Log($"[PVPScore] Displayed '{holenData.holenName}' in {(isLocalPlayer ? "local" : "opponent")}'s panel");
+    }
+
+    // ─────────────────────────────────────────────
+    //  HELPERS
+    // ─────────────────────────────────────────────
+    private void UpdateTurnDisplay()
+    {
+        if (turnDisplayText != null && holenController != null)
+            turnDisplayText.text = holenController.IsTurn() ? "Your Turn" : "Opponent's Turn";
+    }
+
+    public int GetLocalPlayerNumber()
+    {
+        if (holenController == null)
+            holenController = FindObjectOfType<MultiplayerHolenControllerNew>();
+        return holenController != null ? (holenController.isPlayer1 ? 1 : 2) : 0;
+    }
+
+    public List<KnockedOutHolen> GetPlayerKnockedOutHolens(int playerNumber)
+    {
+        if (playerNumber == 1) return new List<KnockedOutHolen>(player1KnockedOut);
+        if (playerNumber == 2) return new List<KnockedOutHolen>(player2KnockedOut);
+        return new List<KnockedOutHolen>();
+    }
+
+    public List<KnockedOutHolen> GetAllKnockedOutHolens()
+    {
+        var all = new List<KnockedOutHolen>();
+        all.AddRange(player1KnockedOut);
+        all.AddRange(player2KnockedOut);
+        return all;
+    }
+
+    private void ClearKnockedOutPanels()
+    {
+        if (player1KnockedOutPanel != null)
+            foreach (Transform child in player1KnockedOutPanel)
+                Destroy(child.gameObject);
+
+        if (player2KnockedOutPanel != null)
+            foreach (Transform child in player2KnockedOutPanel)
+                Destroy(child.gameObject);
+    }
+
+    public void ClearData()
+    {
+        player1KnockedOut.Clear();
+        player2KnockedOut.Clear();
+        gameOverTriggered = false;
+        noHolensTimer = 0f;
+        ClearKnockedOutPanels();
+        Debug.Log("[PVPScore] Data cleared");
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 }
