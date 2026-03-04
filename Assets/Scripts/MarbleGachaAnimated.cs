@@ -72,7 +72,7 @@ public class MarbleGachaAnimated : MonoBehaviour
         if (isPulling) return; // Prevent double-clicks
 
         // Use coinUI if available so UI refreshes instantly
-        bool success = (coinUI != null) ? coinUI.SpendCoins(100) : playerData.SpendCoins(100);
+        bool success = PlayerDataManager.Instance.SpendCoins(singlePullCost);
 
         if (success)
         {
@@ -311,7 +311,7 @@ IEnumerator ShakeButton(Button button = null)
     {
         if (isPulling) return;
 
-        bool success = (coinUI != null) ? coinUI.SpendCoins(multiPullCost) : playerData.SpendCoins(multiPullCost);
+        bool success = PlayerDataManager.Instance.SpendCoins(multiPullCost);
 
         if (success)
         {

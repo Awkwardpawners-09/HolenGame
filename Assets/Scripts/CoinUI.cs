@@ -40,20 +40,26 @@ public class CoinUI : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        // Register this instance
-        if (!activeInstances.Contains(this))
-        {
-            activeInstances.Add(this);
-        }
+private void OnEnable()
+{
+    if (!activeInstances.Contains(this))
+        activeInstances.Add(this);
 
-        // Subscribe to coin change events
-        PlayerDataManager.OnCoinsChanged += OnCoinsChanged;
+    PlayerDataManager.OnCoinsChanged += OnCoinsChanged;
 
-        // Force immediate update
+    if (PlayerDataManager.Instance != null)
         ForceUpdate();
-    }
+    else
+        StartCoroutine(ForceUpdateWhenReady());
+}
+
+private System.Collections.IEnumerator ForceUpdateWhenReady()
+{
+    while (PlayerDataManager.Instance == null)
+        yield return null;
+
+    ForceUpdate();
+}
 
     private void OnDisable()
     {
