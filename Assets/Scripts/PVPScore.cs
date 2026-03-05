@@ -12,6 +12,13 @@ public class PVPScore : MonoBehaviourPunCallbacks
     [Header("UI References")]
     public TMP_Text turnDisplayText;
 
+    [Header("Knockout Count Display")]
+    [Tooltip("TMP_Text that shows how many holens Player 1 has knocked out (e.g. '0', '1', '3')")]
+    public TMP_Text player1KnockoutCountText;
+
+    [Tooltip("TMP_Text that shows how many holens Player 2 has knocked out (e.g. '0', '1', '3')")]
+    public TMP_Text player2KnockoutCountText;
+
     [Header("Knocked Out Holens Display")]
     [Tooltip("Prefab containing the HolenSlotUI component")]
     public GameObject holenSlotUIPrefab;
@@ -126,6 +133,7 @@ public class PVPScore : MonoBehaviourPunCallbacks
         DisableFeedbackObject(feedback5Knockout);
 
         UpdateTurnDisplay();
+        UpdateKnockoutCountDisplay();
     }
 
     void Update()
@@ -457,17 +465,14 @@ public class PVPScore : MonoBehaviourPunCallbacks
         var knockedOut = new KnockedOutHolen(holenData.holenID, holenData.holenName, currentPlayer);
 
         if (currentPlayer == 1)
-        {
             player1KnockedOut.Add(knockedOut);
-            DisplayKnockedOutHolen(holenData, true);
-            photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 1);
-        }
         else
-        {
             player2KnockedOut.Add(knockedOut);
-            DisplayKnockedOutHolen(holenData, true);
-            photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, 2);
-        }
+
+        // Display using the actual player number so both clients route to the correct panel
+        DisplayKnockedOutHolen(holenData, currentPlayer);
+        UpdateKnockoutCountDisplay();
+        photonView.RPC("RPC_RecordKnockout", RpcTarget.Others, holenData.holenID, holenData.holenName, currentPlayer);
 
         Debug.Log($"[PVPScore] Player {currentPlayer} knocked out: {holenData.holenName}");
     }
@@ -480,15 +485,20 @@ public class PVPScore : MonoBehaviourPunCallbacks
         else if (playerNumber == 2) player2KnockedOut.Add(knockedOut);
 
         HolenData data = LoadHolenDataByID(holenID);
-        if (data != null) DisplayKnockedOutHolen(data, false);
+        // Use the player number (not a local/remote flag) so the panel mapping is identical on both clients
+        if (data != null) DisplayKnockedOutHolen(data, playerNumber);
         else Debug.LogWarning($"[PVPScore] Could not load HolenData for synced knockout. ID: {holenID}");
+
+        UpdateKnockoutCountDisplay();
     }
 
-    private void DisplayKnockedOutHolen(HolenData holenData, bool isLocalPlayer)
+    private void DisplayKnockedOutHolen(HolenData holenData, int scoringPlayerNumber)
     {
         if (holenSlotUIPrefab == null) { Debug.LogWarning("[PVPScore] HolenSlotUI prefab not assigned."); return; }
 
-        Transform targetPanel = isLocalPlayer ? player1KnockedOutPanel : player2KnockedOutPanel;
+        // player1KnockedOutPanel always shows Player 1's knockouts; player2KnockedOutPanel shows Player 2's.
+        // This mapping is the same on both clients, so both screens stay in sync.
+        Transform targetPanel = (scoringPlayerNumber == 1) ? player1KnockedOutPanel : player2KnockedOutPanel;
         if (targetPanel == null) { Debug.LogWarning("[PVPScore] Target panel not assigned."); return; }
 
         GameObject slotInstance = Instantiate(holenSlotUIPrefab, targetPanel);
@@ -496,7 +506,7 @@ public class PVPScore : MonoBehaviourPunCallbacks
         if (slotUI == null) { Debug.LogError("[PVPScore] HolenSlotUI not on prefab!"); Destroy(slotInstance); return; }
 
         slotUI.SetSlot(holenData, 1);
-        Debug.Log($"[PVPScore] Displayed '{holenData.holenName}' in {(isLocalPlayer ? "local" : "opponent")}'s panel");
+        Debug.Log($"[PVPScore] Displayed '{holenData.holenName}' in Player {scoringPlayerNumber}'s panel");
     }
 
     // ─────────────────────────────────────────────
@@ -506,6 +516,15 @@ public class PVPScore : MonoBehaviourPunCallbacks
     {
         if (turnDisplayText != null && holenController != null)
             turnDisplayText.text = holenController.IsTurn() ? "Your Turn" : "Opponent's Turn";
+    }
+
+    private void UpdateKnockoutCountDisplay()
+    {
+        if (player1KnockoutCountText != null)
+            player1KnockoutCountText.text = player1KnockedOut.Count.ToString();
+
+        if (player2KnockoutCountText != null)
+            player2KnockoutCountText.text = player2KnockedOut.Count.ToString();
     }
 
     public int GetLocalPlayerNumber()
@@ -548,6 +567,7 @@ public class PVPScore : MonoBehaviourPunCallbacks
         gameOverTriggered = false;
         noHolensTimer = 0f;
         ClearKnockedOutPanels();
+        UpdateKnockoutCountDisplay();
         Debug.Log("[PVPScore] Data cleared");
     }
 

@@ -135,37 +135,54 @@ public class PVPResultDisplay : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Create a slot for each knocked out holen
+        // Group duplicate holens by ID and stack their quantities
+        Dictionary<string, int> holenQuantities = new Dictionary<string, int>();
+        Dictionary<string, string> holenNames = new Dictionary<string, string>(); // for debug logging
+
         foreach (var holen in holens)
         {
-            Debug.Log($"[PVPResultDisplay] Creating slot for {playerLabel}: {holen.holenName} (ID: {holen.holenID})");
-
-            // Load HolenData by ID
-            HolenData holenData = LoadHolenDataByID(holen.holenID);
-
-            if (holenData != null)
+            if (holenQuantities.ContainsKey(holen.holenID))
             {
-                // Instantiate slot prefab
-                GameObject slotObj = Instantiate(holenSlotPrefab, gridParent);
-                Debug.Log($"[PVPResultDisplay] Instantiated slot for {holenData.holenName}");
-
-                // Setup the slot with holen data
-                SetupHolenSlot(slotObj, holenData);
+                holenQuantities[holen.holenID]++;
             }
             else
             {
-                Debug.LogWarning($"[PVPResultDisplay] Could not load HolenData for ID: {holen.holenID}");
+                holenQuantities[holen.holenID] = 1;
+                holenNames[holen.holenID] = holen.holenName;
+            }
+        }
+
+        // Create one slot per unique holen ID, with stacked quantity
+        foreach (var kvp in holenQuantities)
+        {
+            string holenID = kvp.Key;
+            int quantity = kvp.Value;
+
+            Debug.Log($"[PVPResultDisplay] Creating slot for {playerLabel}: {holenNames[holenID]} (ID: {holenID}) x{quantity}");
+
+            HolenData holenData = LoadHolenDataByID(holenID);
+
+            if (holenData != null)
+            {
+                GameObject slotObj = Instantiate(holenSlotPrefab, gridParent);
+                Debug.Log($"[PVPResultDisplay] Instantiated slot for {holenData.holenName} x{quantity}");
+
+                SetupHolenSlot(slotObj, holenData, quantity);
+            }
+            else
+            {
+                Debug.LogWarning($"[PVPResultDisplay] Could not load HolenData for ID: {holenID}");
             }
         }
     }
 
-    private void SetupHolenSlot(GameObject slotObj, HolenData holenData)
+    private void SetupHolenSlot(GameObject slotObj, HolenData holenData, int quantity = 1)
     {
         // Try to use HolenSlotUI if it exists
         HolenSlotUI slotUI = slotObj.GetComponent<HolenSlotUI>();
         if (slotUI != null)
         {
-            slotUI.SetSlot(holenData, 1); // Quantity is 1 for each knocked out holen
+            slotUI.SetSlot(holenData, quantity); // Pass stacked quantity
             return;
         }
 
@@ -181,7 +198,7 @@ public class PVPResultDisplay : MonoBehaviour
 
         if (nameText != null)
         {
-            nameText.text = holenData.holenName;
+            nameText.text = quantity > 1 ? $"{holenData.holenName} x{quantity}" : holenData.holenName;
         }
     }
 

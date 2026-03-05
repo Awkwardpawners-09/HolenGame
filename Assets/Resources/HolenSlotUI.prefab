@@ -139,8 +139,7 @@ MonoBehaviour:
   nameText: {fileID: 7096621786505425450}
   quantityText: {fileID: 8069829494446534900}
   itemBorder: {fileID: 5434390785898463320}
-  contentPrefab: {fileID: 0}
-  inventoryView: {fileID: 0}
+  mythicCycleSpeed: 4
 --- !u!114 &7097100684356891986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +265,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7f936c45122bcad4f975e44ea5754856, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d7b3c74fd10f2c74a911871c97cde4bd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -378,14 +377,14 @@ RectTransform:
   m_GameObject: {fileID: 8830529870745160147}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.48736, y: 0.48736, z: 0.48736}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6366061347363253669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 88.64412, y: 89.035286}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 57.4, y: -87.2}
   m_SizeDelta: {x: 177.28824, y: 178.07057}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8403345845379891863
@@ -512,14 +511,14 @@ RectTransform:
   m_GameObject: {fileID: 8884050219188587191}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.74368, y: 0.74368, z: 0.74368}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6366061347363253669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.111705884, y: 0.082411766}
   m_AnchorMax: {x: 0.7647059, y: 0.31758824}
-  m_AnchoredPosition: {x: 4.3205833, y: 21.000002}
+  m_AnchoredPosition: {x: -17, y: 3.3}
   m_SizeDelta: {x: 124.3, y: 153.51765}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6327420615755598330

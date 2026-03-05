@@ -141,7 +141,10 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             // Set initial button text
             UpdateSharedReadyButtonText(false);
 
-            Debug.Log($"[SETUP] Shared ready button configured for Player {localPlayerNumber}");
+            // Hide the button until player has set exactly 10 wager points
+            sharedReadyButton.gameObject.SetActive(false);
+
+            Debug.Log($"[SETUP] Shared ready button configured for Player {localPlayerNumber} (hidden until 10 points wagered)");
         }
     }
 
@@ -150,16 +153,23 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         if (localWager == null) return;
 
         bool currentReadyState = GetPlayerReadyState(localPlayerNumber);
-        bool newReadyState = !currentReadyState;
 
-        Debug.Log($"[READY] Player {localPlayerNumber} toggling ready: {currentReadyState} -> {newReadyState}");
+        // Prevent unreadying - once ready, the button does nothing
+        if (currentReadyState) return;
+
+        bool newReadyState = true;
+
+        Debug.Log($"[READY] Player {localPlayerNumber} is now ready");
 
         // Update local wager manager state
         localWager.OnActionButtonPressed();
         SetPlayerReadyState(localPlayerNumber, newReadyState);
 
-        // Update button appearance
-        UpdateSharedReadyButtonText(newReadyState);
+        // Hide the ready button - player cannot unready
+        if (sharedReadyButton != null)
+        {
+            sharedReadyButton.gameObject.SetActive(false);
+        }
 
         // Update local player's state text (always bottom)
         UpdateLocalPlayerStateText(newReadyState);
@@ -180,7 +190,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     {
         if (sharedReadyButtonText != null)
         {
-            sharedReadyButtonText.text = isReady ? "CANCEL" : "READY";
+            sharedReadyButtonText.text = "READY";
         }
         else if (sharedReadyButton != null)
         {
@@ -188,14 +198,14 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             TMP_Text buttonText = sharedReadyButton.GetComponentInChildren<TMP_Text>();
             if (buttonText != null)
             {
-                buttonText.text = isReady ? "CANCEL" : "READY";
+                buttonText.text = "READY";
             }
         }
     }
 
     private void UpdateLocalPlayerStateText(bool isReady)
     {
-        string stateLabel = isReady ? "READY" : "CANCEL";
+        string stateLabel = isReady ? "READY" : "NOT READY";
 
         // Local player is always on bottom
         if (bottomPlayerStateText != null)
@@ -421,6 +431,14 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"[POINTS] Player {localPlayerNumber} points changed to: {newPoints}");
 
+        // Show ready button only when exactly 10 points are wagered and player isn't already ready
+        if (sharedReadyButton != null && !GetPlayerReadyState(localPlayerNumber))
+        {
+            bool hasEnoughPoints = newPoints >= 10;
+            sharedReadyButton.gameObject.SetActive(hasEnoughPoints);
+            Debug.Log($"[READY BUTTON] {(hasEnoughPoints ? "Shown" : "Hidden")} (wager points: {newPoints})");
+        }
+
         object[] content = new object[] { localPlayerNumber, newPoints };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         SendOptions sendOptions = SendOptions.SendReliable;
@@ -527,13 +545,24 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
         if (isPlayer1Ready && isPlayer2Ready)
         {
-            Debug.Log("[GAME START] Both players ready! Starting game...");
+            Debug.Log("[GAME START] Both players ready! Starting transition sequence...");
 
-            if (PhotonNetwork.IsMasterClient)
-            {
-                //transitionObject.SetActive(true);
-                Invoke(nameof(LoadGameScene), 2f);
-            }
+            // Wait 2 seconds, then enable transition object, then wait 2 more seconds and load scene
+            Invoke(nameof(EnableTransitionObject), 2f);
+        }
+    }
+
+    private void EnableTransitionObject()
+    {
+        if (transitionObject != null)
+        {
+            transitionObject.SetActive(true);
+            Debug.Log("[TRANSITION] Transition object enabled");
+        }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Invoke(nameof(LoadGameScene), 2f);
         }
     }
 
@@ -725,7 +754,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     private void UpdateOpponentStateText(bool isReady)
     {
-        string stateLabel = isReady ? "READY" : "CANCEL";
+        string stateLabel = isReady ? "READY" : "NOT READY";
 
         // Opponent state always on top
         if (topPlayerStateText != null)
