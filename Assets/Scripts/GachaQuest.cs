@@ -62,5 +62,8 @@ public void ClaimReward()
 
     RefreshUI();
     Debug.Log($"[GachaQuest] Claimed! +{coinReward} coins.");
+
+    foreach (var q in FindObjectsOfType<AllQuestsQuest>())
+        q.RefreshUI();
 }
 }

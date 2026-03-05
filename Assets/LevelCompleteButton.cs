@@ -60,6 +60,15 @@ public class LevelCompleteButton : MonoBehaviour
     PlayerDataManager.Instance.playerData.arcadeLevel1QuestCompleted = true;
     PlayerDataManager.Instance.playerData.Save();
 
+    if (thisLevelIndex == 4)
+{
+    PlayerDataManager.Instance.playerData.kalyeStageAchievementCompleted = true;
+    PlayerDataManager.Instance.playerData.Save();
+
+    foreach (var a in FindObjectsOfType<KalyeStageAchievement>())
+        a.RefreshUI();
+}
+
     foreach (var q in FindObjectsOfType<ArcadeLevel1Quest>())
     {
         Debug.Log($"[ArcadeLevel1Quest] Found and refreshing: {q.gameObject.name}");

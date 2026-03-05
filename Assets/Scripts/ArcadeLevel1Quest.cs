@@ -63,5 +63,8 @@ public class ArcadeLevel1Quest : MonoBehaviour
 
         RefreshUI();
         Debug.Log($"[ArcadeLevel1Quest] Claimed! +{coinReward} coins.");
+        
+        foreach (var q in FindObjectsOfType<AllQuestsQuest>())
+        q.RefreshUI();
     }
 }

@@ -53,5 +53,8 @@ public void ClaimReward()
 
     RefreshUI();
     Debug.Log($"[LoginQuest] Claimed! +{coinReward} coins.");
+
+    foreach (var q in FindObjectsOfType<AllQuestsQuest>())
+        q.RefreshUI();
 }
 }
