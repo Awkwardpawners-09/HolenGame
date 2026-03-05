@@ -105,6 +105,7 @@ public class PlayerDataManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             playerData = PlayerData.Load();
+            Debug.Log($"[PlayerDataManager] gachaQuestCompleted={playerData.gachaQuestCompleted}, gachaQuestClaimed={playerData.gachaQuestClaimed}");
 
             Debug.Log($"[PlayerDataManager] Loaded - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}/{PlayerData.MAX_ENERGY}, Avatar: {playerData.selectedAvatarIndex}");
 
@@ -319,6 +320,12 @@ public class PlayerDataManager : MonoBehaviour
     }
 
     public void SaveData() => playerData.Save();
+
+    private void OnApplicationQuit()
+{
+    playerData.Save();
+    Debug.Log("[PlayerDataManager] Data saved on quit.");
+}
 
     // ===================== TESTING METHODS =====================
 

@@ -87,108 +87,145 @@ public class MarbleGachaAnimated : MonoBehaviour
     }
 
     IEnumerator GachaPullAnimation()
-    {
-        isPulling = true;
-
-        if (resultBackground != null)
-            resultBackground.SetActive(true);
-        
-        // Disable pull button during animation
-        if (pullButton != null)
-            pullButton.interactable = false;
-
-        // Show animation panel
-        if (animationPanel != null)
-            animationPanel.SetActive(true);
-
-        // Play pull sound
-        if (pullSound != null)
-            pullSound.Play();
-
-        // Start particle effect
-        if (pullParticles != null)
-            pullParticles.Play();
-
-        // Spinning animation
-// Shaking animation
-float elapsed = 0f;
-Vector3 originalPos = spinningImage != null ? spinningImage.transform.localPosition : Vector3.zero;
-
-while (elapsed < spinDuration)
 {
-    elapsed += Time.deltaTime;
-    float progress = elapsed / spinDuration;
-    
-    if (spinningImage != null)
+    isPulling = true;
+
+    if (resultBackground != null)
+        resultBackground.SetActive(true);
+
+    if (pullButton != null)
+        pullButton.interactable = false;
+
+    if (animationPanel != null)
+        animationPanel.SetActive(true);
+
+    if (pullSound != null)
+        pullSound.Play();
+
+    if (pullParticles != null)
+        pullParticles.Play();
+
+    float elapsed = 0f;
+    Vector3 originalPos = spinningImage != null ? spinningImage.transform.localPosition : Vector3.zero;
+
+    while (elapsed < spinDuration)
     {
-        // Shake intensity increases then decreases
-        float intensity = Mathf.Sin(progress * Mathf.PI) * 20f; // Peak at middle
-        float shakeSpeed = 30f; // How fast it shakes
-        
-        // Random shake direction
-        float x = Mathf.Sin(elapsed * shakeSpeed) * intensity;
-        float y = Mathf.Cos(elapsed * shakeSpeed * 1.3f) * intensity;
-        float rotation = Mathf.Sin(elapsed * shakeSpeed * 0.7f) * intensity * 0.5f;
-        
-        spinningImage.transform.localPosition = originalPos + new Vector3(x, y, 0);
-        spinningImage.transform.rotation = Quaternion.Euler(0, 0, rotation);
-        
-        // Optional: Pulse scale slightly
-        float scale = 1f + Mathf.Sin(elapsed * 15f) * 0.05f;
-        spinningImage.transform.localScale = Vector3.one * scale;
-    }
+        elapsed += Time.deltaTime;
+        float progress = elapsed / spinDuration;
 
-    yield return null;
-}
-
-// Reset position
-if (spinningImage != null)
-{
-    spinningImage.transform.localPosition = originalPos;
-}
-        // Get the awarded marble
-        HolenData awardedMarble = GetRandomMarble();
-
-        // Add to inventory
-        inventoryManager.AddHolen(awardedMarble.holenID, 1);
-
-        // Hide animation panel
-        if (animationPanel != null)
-            animationPanel.SetActive(false);
-
-        // Small delay for dramatic effect
-        yield return new WaitForSeconds(0.3f);
-
-        // Play reveal sound
-        if (revealSound != null)
-            revealSound.Play();
-
-        // Play reveal particles with rarity color
-        if (revealParticles != null)
-        {
-            var main = revealParticles.main;
-            main.startColor = GetRarityColor(awardedMarble.rarity);
-            revealParticles.Play();
-        }
-
-        // Show result
-        ShowMarbleResult(awardedMarble);
-
-        // Reset spinning image
         if (spinningImage != null)
         {
-            spinningImage.transform.rotation = Quaternion.identity;
-            spinningImage.transform.localScale = Vector3.one;
+            float intensity = Mathf.Sin(progress * Mathf.PI) * 20f;
+            float shakeSpeed = 30f;
+
+            float x = Mathf.Sin(elapsed * shakeSpeed) * intensity;
+            float y = Mathf.Cos(elapsed * shakeSpeed * 1.3f) * intensity;
+            float rotation = Mathf.Sin(elapsed * shakeSpeed * 0.7f) * intensity * 0.5f;
+
+            spinningImage.transform.localPosition = originalPos + new Vector3(x, y, 0);
+            spinningImage.transform.rotation = Quaternion.Euler(0, 0, rotation);
+
+            float scale = 1f + Mathf.Sin(elapsed * 15f) * 0.05f;
+            spinningImage.transform.localScale = Vector3.one * scale;
         }
 
-        // Re-enable pull button
-        if (pullButton != null)
-            pullButton.interactable = true;
-
-        isPulling = false;
-
-        Debug.Log($"🎉 Gacha awarded: {awardedMarble.holenName}");
+        yield return null;
     }
+
+    if (spinningImage != null)
+        spinningImage.transform.localPosition = originalPos;
+
+    HolenData awardedMarble = GetRandomMarble();
+    inventoryManager.AddHolen(awardedMarble.holenID, 1);
+
+    if (animationPanel != null)
+        animationPanel.SetActive(false);
+
+    yield return new WaitForSeconds(0.3f);
+
+    if (revealSound != null)
+        revealSound.Play();
+
+    if (revealParticles != null)
+    {
+        var main = revealParticles.main;
+        main.startColor = GetRarityColor(awardedMarble.rarity);
+        revealParticles.Play();
+    }
+
+    // Show result panel
+    if (resultBackground != null)
+        resultBackground.SetActive(true);
+
+    resultPanel.SetActive(true);
+    marbleNameText.text = awardedMarble.holenName;
+    marbleImage.sprite = awardedMarble.holenIcon;
+
+    if (rarityText != null)
+    {
+        rarityText.text = awardedMarble.rarity;
+        rarityText.color = GetRarityColor(awardedMarble.rarity);
+    }
+
+    if (sunrayEffect != null)
+        sunrayEffect.PlayRevealEffect(awardedMarble.rarity);
+
+    // Scale up animation
+    resultPanel.transform.localScale = Vector3.zero;
+    float scaleElapsed = 0f;
+    float scaleDuration = 0.5f;
+
+    while (scaleElapsed < scaleDuration)
+    {
+        scaleElapsed += Time.deltaTime;
+        resultPanel.transform.localScale = Vector3.one * Mathf.Lerp(0, 1, scaleElapsed / scaleDuration);
+        yield return null;
+    }
+
+    resultPanel.transform.localScale = Vector3.one;
+
+    // Wait before fading
+    yield return new WaitForSeconds(1.5f);
+
+    // Fade out result panel
+    CanvasGroup cg = resultPanel.GetComponent<CanvasGroup>();
+    if (cg == null) cg = resultPanel.AddComponent<CanvasGroup>();
+
+    float fadeElapsed = 0f;
+    float fadeDuration = 0.3f;
+
+    while (fadeElapsed < fadeDuration)
+    {
+        fadeElapsed += Time.deltaTime;
+        cg.alpha = Mathf.Lerp(1, 0, fadeElapsed / fadeDuration);
+        yield return null;
+    }
+
+    resultPanel.SetActive(false);
+    cg.alpha = 1f;
+
+    if (resultBackground != null)
+        resultBackground.SetActive(false);
+
+    if (spinningImage != null)
+    {
+        spinningImage.transform.rotation = Quaternion.identity;
+        spinningImage.transform.localScale = Vector3.one;
+    }
+
+    if (pullButton != null)
+        pullButton.interactable = true;
+
+    // ✅ Mark quest complete after marble is awarded
+    PlayerDataManager.Instance.playerData.gacha1xQuestCompleted = true;
+    PlayerDataManager.Instance.playerData.Save();
+    foreach (var q in FindObjectsOfType<Gacha1xQuest>())
+        q.RefreshUI();
+
+    isPulling = false;
+
+    Debug.Log($"🎉 Gacha awarded: {awardedMarble.holenName}");
+}
 
 void ShowMarbleResult(HolenData marble)
 {
@@ -253,33 +290,37 @@ void ShowMarbleResult(HolenData marble)
         return marblePool[randomIndex];
     }
 
-    public void CloseResultPanel()
-    {
-        StartCoroutine(CloseResultPanelAnimated());
-    }
-
-IEnumerator CloseResultPanelAnimated()
+public void CloseResultPanel()
 {
-    // Scale down animation
-    float elapsed = 0f;
-    float duration = 0.3f;
-
-    while (elapsed < duration)
-    {
-        elapsed += Time.deltaTime;
-        float progress = elapsed / duration;
-        float scale = Mathf.Lerp(1, 0, progress);
-        resultPanel.transform.localScale = Vector3.one * scale;
-        yield return null;
-    }
+    StopAllCoroutines();
 
     resultPanel.SetActive(false);
-    
-    // Hide background too (ADD THIS)
+    CanvasGroup cg = resultPanel.GetComponent<CanvasGroup>();
+    if (cg != null) cg.alpha = 1f;
+    resultPanel.transform.localScale = Vector3.one;
+
     if (resultBackground != null)
         resultBackground.SetActive(false);
-    
-    resultPanel.transform.localScale = Vector3.one;
+
+    if (animationPanel != null)
+        animationPanel.SetActive(false);
+
+    if (spinningImage != null)
+    {
+        spinningImage.transform.localPosition = Vector3.zero;
+        spinningImage.transform.rotation = Quaternion.identity;
+        spinningImage.transform.localScale = Vector3.one;
+    }
+
+    if (pullButton != null) pullButton.interactable = true;
+
+    // ✅ Mark quest complete even if skipped
+    PlayerDataManager.Instance.playerData.gacha1xQuestCompleted = true;
+    PlayerDataManager.Instance.playerData.Save();
+    foreach (var q in FindObjectsOfType<Gacha1xQuest>())
+        q.RefreshUI();
+
+    isPulling = false;
 }
 
 IEnumerator ShakeButton(Button button = null)
@@ -324,38 +365,31 @@ IEnumerator ShakeButton(Button button = null)
         }
     }
 
-    IEnumerator MultiPullAnimationAllAtOnce()
+IEnumerator MultiPullAnimationAllAtOnce()
 {
     isPulling = true;
 
-    // Disable both buttons
     if (pullButton != null) pullButton.interactable = false;
     if (pull5Button != null) pull5Button.interactable = false;
 
-    // Show animation panel
     if (animationPanel != null)
         animationPanel.SetActive(true);
 
-    // Play pull sound
     if (pullSound != null)
         pullSound.Play();
 
-    // Start particles
     if (pullParticles != null)
         pullParticles.Play();
 
-    // Shake 5 times rapidly
     for (int i = 0; i < 5; i++)
     {
         yield return StartCoroutine(ShakeAnimation(0.4f));
         yield return new WaitForSeconds(0.1f);
     }
 
-    // Stop particles
     if (pullParticles != null)
         pullParticles.Stop();
 
-    // Get 5 marbles
     List<HolenData> awardedMarbles = new List<HolenData>();
     for (int i = 0; i < 5; i++)
     {
@@ -364,34 +398,50 @@ IEnumerator ShakeButton(Button button = null)
         inventoryManager.AddHolen(marble.holenID, 1);
     }
 
-    // Hide animation panel
+            // ✅ Always mark quest complete, even if GachaQuest UI isn't visible
+        PlayerDataManager.Instance.playerData.gachaQuestCompleted = true;
+        PlayerDataManager.Instance.playerData.Save();
+        Debug.Log($"[GachaQuest] Saved to PlayerPrefs: {PlayerPrefs.GetInt("GachaQuestCompleted", 0)}");
+        Debug.Log($"[GachaQuest] Quest marked complete: {PlayerDataManager.Instance.playerData.gachaQuestCompleted}");
+
+        foreach (var q in FindObjectsOfType<GachaQuest>())
+        {
+            Debug.Log($"[GachaQuest] Found and refreshing: {q.gameObject.name}");
+            q.RefreshUI();
+        }
+
     if (animationPanel != null)
         animationPanel.SetActive(false);
 
     yield return new WaitForSeconds(0.1f);
 
-    // Show background
     if (resultBackground != null)
         resultBackground.SetActive(true);
 
-    // Show multi result panel
     if (multiResultPanel != null)
         multiResultPanel.SetActive(true);
 
-    // Reveal each marble one by one
     for (int i = 0; i < awardedMarbles.Count && i < marbleSlots.Length; i++)
     {
         yield return StartCoroutine(RevealMarbleInSlot(marbleSlots[i], awardedMarbles[i]));
-        yield return new WaitForSeconds(1f); // Pause between reveals
+        yield return new WaitForSeconds(1f);
     }
 
-    // Re-enable buttons
+    // ✅ FIX BUG 1: Auto-close after all marbles revealed
+    if (multiResultPanel != null)
+        multiResultPanel.SetActive(false);
+
+    if (resultBackground != null)
+        resultBackground.SetActive(false);
+
+    // ✅ FIX BUG 2: Always re-enable buttons and reset isPulling here
     if (pullButton != null) pullButton.interactable = true;
     if (pull5Button != null) pull5Button.interactable = true;
 
     isPulling = false;
 
-    Debug.Log("🎉 Got 5 marbles!");
+        Debug.Log("🎉 Got 5 marbles!");
+
 }
 
 IEnumerator RevealMarbleInSlot(Transform slot, HolenData marble)
@@ -494,37 +544,47 @@ cg.alpha = 1f; // Reset for next time
         }
     }
 
-public void CloseMultiResultPanel()
+
+
+public void CloseMultiResultPanelAnimated()
 {
-    StartCoroutine(CloseMultiResultPanelAnimated());
-}
+    StopAllCoroutines();
 
-IEnumerator CloseMultiResultPanelAnimated()
-{
-    if (multiResultPanel == null) yield break;
-
-    // Get or add CanvasGroup
-    CanvasGroup cg = multiResultPanel.GetComponent<CanvasGroup>();
-    if (cg == null) cg = multiResultPanel.AddComponent<CanvasGroup>();
-
-    float elapsed = 0f;
-    float duration = 0.3f;
-
-    while (elapsed < duration)
+    // Reset all marble slots
+    foreach (Transform slot in marbleSlots)
     {
-        elapsed += Time.deltaTime;
-        cg.alpha = Mathf.Lerp(1, 0, elapsed / duration);
-        yield return null;
+        if (slot != null)
+        {
+            slot.gameObject.SetActive(false);
+            slot.localScale = Vector3.one;
+
+            CanvasGroup cg = slot.GetComponent<CanvasGroup>();
+            if (cg != null) cg.alpha = 1f;
+        }
     }
 
-    multiResultPanel.SetActive(false);
+    // Reset spinning image
+    if (spinningImage != null)
+    {
+        spinningImage.transform.localPosition = Vector3.zero;
+        spinningImage.transform.rotation = Quaternion.identity;
+        spinningImage.transform.localScale = Vector3.one;
+    }
+
+    if (multiResultPanel != null)
+        multiResultPanel.SetActive(false);
 
     if (resultBackground != null)
         resultBackground.SetActive(false);
 
-    cg.alpha = 1f; // Reset for next time
-}
+    if (animationPanel != null)
+        animationPanel.SetActive(false);
 
+    if (pullButton != null) pullButton.interactable = true;
+    if (pull5Button != null) pull5Button.interactable = true;
+
+    isPulling = false;
+}
 // =============================================================================
 // Optional: Weighted Gacha System for Rarity
 // =============================================================================

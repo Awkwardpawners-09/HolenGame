@@ -51,6 +51,27 @@ public class PlayerData
     }
     // ===================== END AVATAR SYSTEM =====================
 
+        // ===================== QUEST SYSTEM =====================
+    public bool gachaQuestCompleted = false;
+    public bool gachaQuestClaimed = false;
+
+public const string KEY_GACHA_QUEST_COMPLETED = "GachaQuestCompleted";
+public const string KEY_GACHA_QUEST_CLAIMED = "GachaQuestClaimed";
+
+public bool loginQuestClaimed = false;
+public const string KEY_LOGIN_QUEST_CLAIMED = "LoginQuestClaimed";
+
+public bool arcadeLevel1QuestCompleted = false;
+public bool arcadeLevel1QuestClaimed = false;
+public const string KEY_ARCADE_LEVEL1_QUEST_COMPLETED = "ArcadeLevel1QuestCompleted";
+public const string KEY_ARCADE_LEVEL1_QUEST_CLAIMED = "ArcadeLevel1QuestClaimed";
+
+public bool gacha1xQuestCompleted = false;
+public bool gacha1xQuestClaimed = false;
+public const string KEY_GACHA1X_QUEST_COMPLETED = "Gacha1xQuestCompleted";
+public const string KEY_GACHA1X_QUEST_CLAIMED = "Gacha1xQuestClaimed";
+    // ===================== END QUEST SYSTEM =====================
+
     // ===================== COMPLETED LEVELS TRACKING =====================
     public string completedLevelsData = "";
     private const string KEY_COMPLETED_LEVELS = "CompletedLevels";
@@ -207,6 +228,13 @@ public class PlayerData
         PlayerPrefs.SetInt(KEY_SOUND_ENABLED, isSoundEnabled ? 1 : 0);
         PlayerPrefs.SetString(KEY_COMPLETED_LEVELS, completedLevelsData);
         PlayerPrefs.SetInt(KEY_AVATAR_INDEX, selectedAvatarIndex); // AVATAR
+        PlayerPrefs.SetInt(KEY_GACHA_QUEST_COMPLETED, gachaQuestCompleted ? 1 : 0); // ✅
+        PlayerPrefs.SetInt(KEY_GACHA_QUEST_CLAIMED, gachaQuestClaimed ? 1 : 0);     // ✅
+        PlayerPrefs.SetInt(KEY_LOGIN_QUEST_CLAIMED, loginQuestClaimed ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_ARCADE_LEVEL1_QUEST_COMPLETED, arcadeLevel1QuestCompleted ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_ARCADE_LEVEL1_QUEST_CLAIMED, arcadeLevel1QuestClaimed ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_GACHA1X_QUEST_COMPLETED, gacha1xQuestCompleted ? 1 : 0);
+PlayerPrefs.SetInt(KEY_GACHA1X_QUEST_CLAIMED, gacha1xQuestClaimed ? 1 : 0);
         PlayerPrefs.Save();
     }
 
@@ -221,6 +249,13 @@ public class PlayerData
         data.isSoundEnabled = PlayerPrefs.GetInt(KEY_SOUND_ENABLED, 1) == 1;
         data.completedLevelsData = PlayerPrefs.GetString(KEY_COMPLETED_LEVELS, "");
         data.selectedAvatarIndex = PlayerPrefs.GetInt(KEY_AVATAR_INDEX, 0); // AVATAR
+        data.gachaQuestCompleted = PlayerPrefs.GetInt(KEY_GACHA_QUEST_COMPLETED, 0) == 1; // ✅
+        data.gachaQuestClaimed = PlayerPrefs.GetInt(KEY_GACHA_QUEST_CLAIMED, 0) == 1;     // ✅
+        data.loginQuestClaimed = PlayerPrefs.GetInt(KEY_LOGIN_QUEST_CLAIMED, 0) == 1;
+        data.arcadeLevel1QuestCompleted = PlayerPrefs.GetInt(KEY_ARCADE_LEVEL1_QUEST_COMPLETED, 0) == 1;
+data.arcadeLevel1QuestClaimed = PlayerPrefs.GetInt(KEY_ARCADE_LEVEL1_QUEST_CLAIMED, 0) == 1;
+data.gacha1xQuestCompleted = PlayerPrefs.GetInt(KEY_GACHA1X_QUEST_COMPLETED, 0) == 1;
+data.gacha1xQuestClaimed = PlayerPrefs.GetInt(KEY_GACHA1X_QUEST_CLAIMED, 0) == 1;
 
         data.RegenerateEnergy();
         return data;
@@ -235,6 +270,13 @@ public class PlayerData
         PlayerPrefs.DeleteKey(KEY_LAST_ENERGY_UPDATE);
         PlayerPrefs.DeleteKey(KEY_COMPLETED_LEVELS);
         PlayerPrefs.DeleteKey(KEY_AVATAR_INDEX); // AVATAR
+        PlayerPrefs.DeleteKey(KEY_GACHA_QUEST_COMPLETED);
+        PlayerPrefs.DeleteKey(KEY_GACHA_QUEST_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_LOGIN_QUEST_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_ARCADE_LEVEL1_QUEST_COMPLETED);
+        PlayerPrefs.DeleteKey(KEY_ARCADE_LEVEL1_QUEST_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_GACHA1X_QUEST_COMPLETED);
+PlayerPrefs.DeleteKey(KEY_GACHA1X_QUEST_CLAIMED);
         PlayerPrefs.Save();
         Debug.Log("[PlayerData] All player data deleted");
     }

@@ -6,8 +6,8 @@ using TMPro;
 /// Attach this to a "Stage Clear" / "Next Level" button inside a stage scene.
 ///
 /// When the player presses the button:
-///   - If they have NOT cleared this level before → highestLevelUnlocked increases by 1
-///     and this level is permanently marked as completed.
+///   - If they have NOT cleared this level before → highestLevelUnlocked increases by 1,
+///     this level is permanently marked as completed, and rewards are given.
 ///   - If they HAVE already cleared this level → nothing changes. No free level farming!
 ///
 /// HOW TO SET UP:
@@ -23,6 +23,10 @@ public class LevelCompleteButton : MonoBehaviour
     [Header("This Stage's Identity")]
     [Tooltip("The 0-based index of this stage, matching ArcadeModeManager.stageScenes.\nStage 1 = 0, Stage 2 = 1, Stage 3 = 2, etc.")]
     public int thisLevelIndex = 0;
+
+    [Header("Rewards")]
+    public int coinReward = 100;
+    public int energyReward = 10;
 
     [Header("Optional Feedback Labels")]
     [Tooltip("Shown when the player presses the button but has already cleared this level before.")]
@@ -45,24 +49,47 @@ public class LevelCompleteButton : MonoBehaviour
 
     /// <summary>
     /// Call this from the Button's onClick event.
-    /// Awards +1 to highestLevelUnlocked if this level hasn't been completed before.
+    /// Awards coins/energy and +1 to highestLevelUnlocked if this level hasn't been completed before.
     /// </summary>
     public void CompleteThisLevel()
     {
+
+         if (thisLevelIndex == 1)
+{
+    Debug.Log($"[ArcadeLevel1Quest] Marking complete. thisLevelIndex={thisLevelIndex}");
+    PlayerDataManager.Instance.playerData.arcadeLevel1QuestCompleted = true;
+    PlayerDataManager.Instance.playerData.Save();
+
+    foreach (var q in FindObjectsOfType<ArcadeLevel1Quest>())
+    {
+        Debug.Log($"[ArcadeLevel1Quest] Found and refreshing: {q.gameObject.name}");
+        q.RefreshUI();
+    }
+
+    Debug.Log($"[ArcadeLevel1Quest] Total found: {FindObjectsOfType<ArcadeLevel1Quest>().Length}");
+}
+
         if (IsAlreadyCleared())
         {
             // Player has already beaten this level — no reward
-            Debug.Log($"[LevelCompleteButton] Level {thisLevelIndex} was already cleared. No level awarded.");
+            Debug.Log($"[LevelCompleteButton] Level {thisLevelIndex} was already cleared. No reward.");
             ShowAlreadyClearedFeedback();
             return;
         }
 
-        // First time clearing this level!
+        // First time clearing — give rewards
+        if (PlayerDataManager.Instance != null)
+        {
+            PlayerDataManager.Instance.AddCoins(coinReward);
+            PlayerDataManager.Instance.AddEnergy(energyReward);
+        }
+
         MarkAsCleared();
         int newHighest = AwardLevelUp();
 
-        Debug.Log($"[LevelCompleteButton] Level {thisLevelIndex} cleared for the first time! highestLevelUnlocked is now {newHighest}.");
+        Debug.Log($"[LevelCompleteButton] Level {thisLevelIndex} cleared for the first time! +{coinReward} coins, +{energyReward} energy. highestLevelUnlocked is now {newHighest}.");
         ShowLevelUpFeedback(newHighest);
+
     }
 
     // ─────────────────────────────────────────────
@@ -101,7 +128,6 @@ public class LevelCompleteButton : MonoBehaviour
         if (PlayerDataManager.Instance != null)
         {
             PlayerData data = PlayerDataManager.Instance.playerData;
-            // UnlockLevel only increases if the new value is higher, so it's safe to call
             int nextLevel = data.highestLevelUnlocked + 1;
             data.UnlockLevel(nextLevel);
             return data.highestLevelUnlocked;

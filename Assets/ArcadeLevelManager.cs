@@ -29,25 +29,18 @@ public void CompleteLevel()
 
     PlayerDataManager.Instance.AddCoins(coinReward);
     PlayerDataManager.Instance.AddEnergy(energyReward);
-    playerData.CompleteLevel(currentLevelNumber);
+    PlayerDataManager.Instance.playerData.CompleteLevel(currentLevelNumber); // ✅ use the singleton
 
-        Debug.Log($"[LevelManager] Level {currentLevelNumber} completed! Next level unlocked.");
-        Debug.Log($"[LevelManager] Rewards: +{coinReward} coins, +{energyReward} energy");
-    }
+    Debug.Log($"[LevelManager] Level {currentLevelNumber} completed!");
+}
 
-    /// <summary>
-    /// Call this if you want to manually unlock the next level without rewards
-    /// </summary>
-    public void UnlockNextLevel()
-    {
-        playerData.UnlockLevel(currentLevelNumber + 1);
-    }
+public void UnlockNextLevel()
+{
+    PlayerDataManager.Instance.playerData.UnlockLevel(currentLevelNumber + 1); // ✅ same fix
+}
 
-    /// <summary>
-    /// Check if the current level is unlocked (useful for debugging)
-    /// </summary>
-    public bool IsCurrentLevelUnlocked()
-    {
-        return playerData.IsLevelUnlocked(currentLevelNumber);
-    }
+public bool IsCurrentLevelUnlocked()
+{
+    return PlayerDataManager.Instance.playerData.IsLevelUnlocked(currentLevelNumber); // ✅ same fix
+}
 }
