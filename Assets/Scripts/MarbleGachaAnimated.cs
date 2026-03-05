@@ -285,9 +285,16 @@ void ShowMarbleResult(HolenData marble)
 
     HolenData GetRandomMarble()
     {
-        // You can add weighted randomness here for rarities
-        int randomIndex = Random.Range(0, marblePool.Count);
-        return marblePool[randomIndex];
+        // Filter out null or incomplete entries
+        var validMarbles = marblePool.FindAll(m => m != null && !string.IsNullOrEmpty(m.holenID));
+
+        if (validMarbles.Count == 0)
+        {
+            Debug.LogError("No valid marbles in marblePool!");
+            return null;
+        }
+
+        return validMarbles[Random.Range(0, validMarbles.Count)];
     }
 
 public void CloseResultPanel()
@@ -394,7 +401,8 @@ IEnumerator MultiPullAnimationAllAtOnce()
     for (int i = 0; i < 5; i++)
     {
         HolenData marble = GetRandomMarble();
-        awardedMarbles.Add(marble);
+            if (marble == null) continue; // skip bad entries
+            awardedMarbles.Add(marble);
         inventoryManager.AddHolen(marble.holenID, 1);
     }
 

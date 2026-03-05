@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf30ea56afba3f448eaab1016cc464c, type: 3}
   m_Name: Clambroth
   m_EditorClassIdentifier: 
-  holenID: FH006
+  holenID: AH003
   rarity: Common
-  holenName: Baby Black
-  holenIcon: {fileID: 21300000, guid: 03f895c457db73e418da6f3d61d2817d, type: 3}
-  holenPrefab: {fileID: 4543069569791729328, guid: 4269b342f2d94774daf8247ad5388ddb, type: 3}
+  holenName: Clambroth
+  holenIcon: {fileID: 21300000, guid: e4de5c11ebbd4cd4daa2134015e7f9b9, type: 3}
+  holenPrefab: {fileID: 4543069569791729328, guid: 09bac36aac8b1e344a031bee95690bd0, type: 3}
+  InventoryImage: {fileID: 21300000, guid: e4de5c11ebbd4cd4daa2134015e7f9b9, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
   maxStack: 9

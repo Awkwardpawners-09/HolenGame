@@ -30349,7 +30349,7 @@ MonoBehaviour:
   - {fileID: 1786927943}
   - {fileID: 1136143925}
   - {fileID: 131511821}
-  multiResultGrid: {fileID: 0}
+  multiResultGrid: {fileID: 1987635197}
   multiResultSlotPrefab: {fileID: 1063991883143232301, guid: f176396e6cd6aa247988308409dd1bfc, type: 3}
   animationPanel: {fileID: 2033686523}
   spinningImage: {fileID: 1669542026}
@@ -31476,7 +31476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &663736028
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43075,9 +43075,9 @@ RectTransform:
   - {fileID: 905675214}
   m_Father: {fileID: 1942615789}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000009536578, y: -253}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.000009536578, y: 883.623}
   m_SizeDelta: {x: 1015.827, y: 1767.246}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &890024888
@@ -43125,7 +43125,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890024886}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
@@ -59575,7 +59575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1451556625
 RectTransform:
   m_ObjectHideFlags: 0
@@ -62195,7 +62195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafcbab3f2662e740b547642d7a78d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holenData: {fileID: 11400000, guid: 8653feb630bdbdb4883ba0cf71107869, type: 2}
+  holenData: {fileID: 11400000, guid: a6dfe7b3c88ea7a43b1e33ab61bd07c7, type: 2}
   price: 100
   iconImage: {fileID: 627303406}
   nameText: {fileID: 784948827}
