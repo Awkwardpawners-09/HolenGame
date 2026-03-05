@@ -2,22 +2,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Gacha1xQuest : MonoBehaviour
+public class AllQuestsQuest : MonoBehaviour
 {
     [Header("Quest Settings")]
-    public int coinReward = 10;
+    public int coinReward = 100;
 
     [Header("UI States")]
     public GameObject lockedPanel;
     public GameObject completedPanel;
     public GameObject claimedPanel;
 
+    [Header("Progress")]
+    public TextMeshProUGUI progressText;
+
     [Header("Optional")]
     public TextMeshProUGUI rewardText;
     public Button claimButton;
 
-    private bool isCompleted => PlayerDataManager.Instance.playerData.gacha1xQuestCompleted;
-    private bool isClaimed => PlayerDataManager.Instance.playerData.gacha1xQuestClaimed;
+    private bool isClaimed => PlayerDataManager.Instance.playerData.allQuestsClaimed;
+
+    private int GetCompletedCount()
+    {
+        var data = PlayerDataManager.Instance.playerData;
+        int count = 0;
+        if (data.loginQuestClaimed) count++;
+        if (data.gacha1xQuestClaimed) count++;
+        if (data.gachaQuestClaimed) count++;
+        if (data.arcadeLevel1QuestClaimed) count++;
+        return count;
+    }
+
+    private bool IsAllCompleted() => GetCompletedCount() >= 4;
 
     private void OnEnable()
     {
@@ -29,6 +44,11 @@ public class Gacha1xQuest : MonoBehaviour
         if (rewardText != null)
             rewardText.text = $"+{coinReward}";
 
+        int count = GetCompletedCount();
+
+        if (progressText != null)
+            progressText.text = $"{count}/4";
+
         if (isClaimed)
         {
             lockedPanel?.SetActive(false);
@@ -36,7 +56,7 @@ public class Gacha1xQuest : MonoBehaviour
             claimedPanel?.SetActive(true);
             if (claimButton != null) claimButton.interactable = false;
         }
-        else if (isCompleted)
+        else if (IsAllCompleted())
         {
             lockedPanel?.SetActive(false);
             completedPanel?.SetActive(true);
@@ -54,17 +74,14 @@ public class Gacha1xQuest : MonoBehaviour
 
     public void ClaimReward()
     {
-        Debug.Log($"[Gacha1xQuest] ClaimReward called. isCompleted={isCompleted}, isClaimed={isClaimed}");
-        if (!isCompleted || isClaimed) return;
+        Debug.Log($"[AllQuestsQuest] ClaimReward called. IsAllCompleted={IsAllCompleted()}, isClaimed={isClaimed}");
+        if (!IsAllCompleted() || isClaimed) return;
 
         PlayerDataManager.Instance.AddCoins(coinReward);
-        PlayerDataManager.Instance.playerData.gacha1xQuestClaimed = true;
+        PlayerDataManager.Instance.playerData.allQuestsClaimed = true;
         PlayerDataManager.Instance.playerData.Save();
 
         RefreshUI();
-        Debug.Log($"[Gacha1xQuest] Claimed! +{coinReward} coins.");
-
-        foreach (var q in FindObjectsOfType<AllQuestsQuest>())
-        q.RefreshUI();
+        Debug.Log($"[AllQuestsQuest] Claimed! +{coinReward} coins.");
     }
 }

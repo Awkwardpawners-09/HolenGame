@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Gacha1xQuest : MonoBehaviour
+public class KalyeStageAchievement : MonoBehaviour
 {
     [Header("Quest Settings")]
-    public int coinReward = 10;
+    public int coinReward = 100;
 
     [Header("UI States")]
     public GameObject lockedPanel;
@@ -16,8 +16,8 @@ public class Gacha1xQuest : MonoBehaviour
     public TextMeshProUGUI rewardText;
     public Button claimButton;
 
-    private bool isCompleted => PlayerDataManager.Instance.playerData.gacha1xQuestCompleted;
-    private bool isClaimed => PlayerDataManager.Instance.playerData.gacha1xQuestClaimed;
+    private bool isCompleted => PlayerDataManager.Instance.playerData.kalyeStageAchievementCompleted;
+    private bool isClaimed => PlayerDataManager.Instance.playerData.kalyeStageAchievementClaimed;
 
     private void OnEnable()
     {
@@ -54,17 +54,14 @@ public class Gacha1xQuest : MonoBehaviour
 
     public void ClaimReward()
     {
-        Debug.Log($"[Gacha1xQuest] ClaimReward called. isCompleted={isCompleted}, isClaimed={isClaimed}");
+        Debug.Log($"[KalyeStageAchievement] ClaimReward called. isCompleted={isCompleted}, isClaimed={isClaimed}");
         if (!isCompleted || isClaimed) return;
 
         PlayerDataManager.Instance.AddCoins(coinReward);
-        PlayerDataManager.Instance.playerData.gacha1xQuestClaimed = true;
+        PlayerDataManager.Instance.playerData.kalyeStageAchievementClaimed = true;
         PlayerDataManager.Instance.playerData.Save();
 
         RefreshUI();
-        Debug.Log($"[Gacha1xQuest] Claimed! +{coinReward} coins.");
-
-        foreach (var q in FindObjectsOfType<AllQuestsQuest>())
-        q.RefreshUI();
+        Debug.Log($"[KalyeStageAchievement] Claimed! +{coinReward} coins.");
     }
 }

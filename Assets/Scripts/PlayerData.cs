@@ -70,7 +70,29 @@ public bool gacha1xQuestCompleted = false;
 public bool gacha1xQuestClaimed = false;
 public const string KEY_GACHA1X_QUEST_COMPLETED = "Gacha1xQuestCompleted";
 public const string KEY_GACHA1X_QUEST_CLAIMED = "Gacha1xQuestClaimed";
+
+public bool allQuestsClaimed = false;
+public const string KEY_ALL_QUESTS_CLAIMED = "AllQuestsClaimed";
     // ===================== END QUEST SYSTEM =====================
+
+// ===================== START ACHIEVEMENT SYSTEM =====================
+    public bool kalyeStageAchievementCompleted = false;
+public bool kalyeStageAchievementClaimed = false;
+public const string KEY_KALYE_ACHIEVEMENT_COMPLETED = "KalyeAchievementCompleted";
+public const string KEY_KALYE_ACHIEVEMENT_CLAIMED = "KalyeAchievementClaimed";
+
+public bool rareHolenAchievementCompleted = false;
+public bool rareHolenAchievementClaimed = false;
+public const string KEY_RARE_HOLEN_ACHIEVEMENT_COMPLETED = "RareHolenAchievementCompleted";
+public const string KEY_RARE_HOLEN_ACHIEVEMENT_CLAIMED = "RareHolenAchievementClaimed";
+
+public bool collect10HolensAchievementCompleted = false;
+public bool collect10HolensAchievementClaimed = false;
+public int totalHolensCollected = 0;
+public const string KEY_COLLECT10_ACHIEVEMENT_COMPLETED = "Collect10AchievementCompleted";
+public const string KEY_COLLECT10_ACHIEVEMENT_CLAIMED = "Collect10AchievementClaimed";
+public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
+// ===================== END ACHIEVEMENT SYSTEM =====================
 
     // ===================== COMPLETED LEVELS TRACKING =====================
     public string completedLevelsData = "";
@@ -234,7 +256,15 @@ public const string KEY_GACHA1X_QUEST_CLAIMED = "Gacha1xQuestClaimed";
         PlayerPrefs.SetInt(KEY_ARCADE_LEVEL1_QUEST_COMPLETED, arcadeLevel1QuestCompleted ? 1 : 0);
         PlayerPrefs.SetInt(KEY_ARCADE_LEVEL1_QUEST_CLAIMED, arcadeLevel1QuestClaimed ? 1 : 0);
         PlayerPrefs.SetInt(KEY_GACHA1X_QUEST_COMPLETED, gacha1xQuestCompleted ? 1 : 0);
-PlayerPrefs.SetInt(KEY_GACHA1X_QUEST_CLAIMED, gacha1xQuestClaimed ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_GACHA1X_QUEST_CLAIMED, gacha1xQuestClaimed ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_ALL_QUESTS_CLAIMED, allQuestsClaimed ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_KALYE_ACHIEVEMENT_COMPLETED, kalyeStageAchievementCompleted ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_KALYE_ACHIEVEMENT_CLAIMED, kalyeStageAchievementClaimed ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_RARE_HOLEN_ACHIEVEMENT_COMPLETED, rareHolenAchievementCompleted ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_RARE_HOLEN_ACHIEVEMENT_CLAIMED, rareHolenAchievementClaimed ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_COLLECT10_ACHIEVEMENT_COMPLETED, collect10HolensAchievementCompleted ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_COLLECT10_ACHIEVEMENT_CLAIMED, collect10HolensAchievementClaimed ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_TOTAL_HOLENS_COLLECTED, totalHolensCollected);
         PlayerPrefs.Save();
     }
 
@@ -253,9 +283,17 @@ PlayerPrefs.SetInt(KEY_GACHA1X_QUEST_CLAIMED, gacha1xQuestClaimed ? 1 : 0);
         data.gachaQuestClaimed = PlayerPrefs.GetInt(KEY_GACHA_QUEST_CLAIMED, 0) == 1;     // ✅
         data.loginQuestClaimed = PlayerPrefs.GetInt(KEY_LOGIN_QUEST_CLAIMED, 0) == 1;
         data.arcadeLevel1QuestCompleted = PlayerPrefs.GetInt(KEY_ARCADE_LEVEL1_QUEST_COMPLETED, 0) == 1;
-data.arcadeLevel1QuestClaimed = PlayerPrefs.GetInt(KEY_ARCADE_LEVEL1_QUEST_CLAIMED, 0) == 1;
-data.gacha1xQuestCompleted = PlayerPrefs.GetInt(KEY_GACHA1X_QUEST_COMPLETED, 0) == 1;
-data.gacha1xQuestClaimed = PlayerPrefs.GetInt(KEY_GACHA1X_QUEST_CLAIMED, 0) == 1;
+        data.arcadeLevel1QuestClaimed = PlayerPrefs.GetInt(KEY_ARCADE_LEVEL1_QUEST_CLAIMED, 0) == 1;
+        data.gacha1xQuestCompleted = PlayerPrefs.GetInt(KEY_GACHA1X_QUEST_COMPLETED, 0) == 1;
+        data.gacha1xQuestClaimed = PlayerPrefs.GetInt(KEY_GACHA1X_QUEST_CLAIMED, 0) == 1;
+        data.allQuestsClaimed = PlayerPrefs.GetInt(KEY_ALL_QUESTS_CLAIMED, 0) == 1;
+        data.kalyeStageAchievementCompleted = PlayerPrefs.GetInt(KEY_KALYE_ACHIEVEMENT_COMPLETED, 0) == 1;
+        data.kalyeStageAchievementClaimed = PlayerPrefs.GetInt(KEY_KALYE_ACHIEVEMENT_CLAIMED, 0) == 1;
+        data.rareHolenAchievementCompleted = PlayerPrefs.GetInt(KEY_RARE_HOLEN_ACHIEVEMENT_COMPLETED, 0) == 1;
+        data.rareHolenAchievementClaimed = PlayerPrefs.GetInt(KEY_RARE_HOLEN_ACHIEVEMENT_CLAIMED, 0) == 1;
+        data.collect10HolensAchievementCompleted = PlayerPrefs.GetInt(KEY_COLLECT10_ACHIEVEMENT_COMPLETED, 0) == 1;
+        data.collect10HolensAchievementClaimed = PlayerPrefs.GetInt(KEY_COLLECT10_ACHIEVEMENT_CLAIMED, 0) == 1;
+        data.totalHolensCollected = PlayerPrefs.GetInt(KEY_TOTAL_HOLENS_COLLECTED, 0);
 
         data.RegenerateEnergy();
         return data;
@@ -276,7 +314,15 @@ data.gacha1xQuestClaimed = PlayerPrefs.GetInt(KEY_GACHA1X_QUEST_CLAIMED, 0) == 1
         PlayerPrefs.DeleteKey(KEY_ARCADE_LEVEL1_QUEST_COMPLETED);
         PlayerPrefs.DeleteKey(KEY_ARCADE_LEVEL1_QUEST_CLAIMED);
         PlayerPrefs.DeleteKey(KEY_GACHA1X_QUEST_COMPLETED);
-PlayerPrefs.DeleteKey(KEY_GACHA1X_QUEST_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_GACHA1X_QUEST_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_ALL_QUESTS_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_KALYE_ACHIEVEMENT_COMPLETED);
+        PlayerPrefs.DeleteKey(KEY_KALYE_ACHIEVEMENT_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_RARE_HOLEN_ACHIEVEMENT_COMPLETED);
+        PlayerPrefs.DeleteKey(KEY_RARE_HOLEN_ACHIEVEMENT_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_COLLECT10_ACHIEVEMENT_COMPLETED);
+        PlayerPrefs.DeleteKey(KEY_COLLECT10_ACHIEVEMENT_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_TOTAL_HOLENS_COLLECTED);
         PlayerPrefs.Save();
         Debug.Log("[PlayerData] All player data deleted");
     }

@@ -2,22 +2,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Gacha1xQuest : MonoBehaviour
+public class Collect10HolensAchievement : MonoBehaviour
 {
-    [Header("Quest Settings")]
-    public int coinReward = 10;
+    [Header("Achievement Settings")]
+    public int coinReward = 50;
 
     [Header("UI States")]
     public GameObject lockedPanel;
     public GameObject completedPanel;
     public GameObject claimedPanel;
 
+    [Header("Progress")]
+    public TextMeshProUGUI progressText; // Shows "3/10" etc
+
     [Header("Optional")]
     public TextMeshProUGUI rewardText;
     public Button claimButton;
 
-    private bool isCompleted => PlayerDataManager.Instance.playerData.gacha1xQuestCompleted;
-    private bool isClaimed => PlayerDataManager.Instance.playerData.gacha1xQuestClaimed;
+    private bool isCompleted => PlayerDataManager.Instance.playerData.collect10HolensAchievementCompleted;
+    private bool isClaimed => PlayerDataManager.Instance.playerData.collect10HolensAchievementClaimed;
 
     private void OnEnable()
     {
@@ -28,6 +31,11 @@ public class Gacha1xQuest : MonoBehaviour
     {
         if (rewardText != null)
             rewardText.text = $"+{coinReward}";
+
+        int count = PlayerDataManager.Instance.playerData.totalHolensCollected;
+
+        if (progressText != null)
+            progressText.text = $"{Mathf.Min(count, 10)}/10";
 
         if (isClaimed)
         {
@@ -54,17 +62,14 @@ public class Gacha1xQuest : MonoBehaviour
 
     public void ClaimReward()
     {
-        Debug.Log($"[Gacha1xQuest] ClaimReward called. isCompleted={isCompleted}, isClaimed={isClaimed}");
+        Debug.Log($"[Collect10HolensAchievement] ClaimReward called. isCompleted={isCompleted}, isClaimed={isClaimed}");
         if (!isCompleted || isClaimed) return;
 
         PlayerDataManager.Instance.AddCoins(coinReward);
-        PlayerDataManager.Instance.playerData.gacha1xQuestClaimed = true;
+        PlayerDataManager.Instance.playerData.collect10HolensAchievementClaimed = true;
         PlayerDataManager.Instance.playerData.Save();
 
         RefreshUI();
-        Debug.Log($"[Gacha1xQuest] Claimed! +{coinReward} coins.");
-
-        foreach (var q in FindObjectsOfType<AllQuestsQuest>())
-        q.RefreshUI();
+        Debug.Log($"[Collect10HolensAchievement] Claimed! +{coinReward} coins.");
     }
 }
