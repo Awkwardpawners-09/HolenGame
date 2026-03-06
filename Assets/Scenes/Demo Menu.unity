@@ -15401,7 +15401,6 @@ GameObject:
   - component: {fileID: 212245773}
   - component: {fileID: 212245772}
   - component: {fileID: 212245771}
-  - component: {fileID: 212245774}
   - component: {fileID: 212245775}
   - component: {fileID: 212245776}
   m_Layer: 5
@@ -15524,24 +15523,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 212245769}
   m_CullTransparentMesh: 1
---- !u!114 &212245774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 212245769}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aee2c7e66137cf40bceee0a2cb001f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelNumber: 2
-  sceneName: Stage 2
-  lockedIcon: {fileID: 0}
-  unlockedIcon: {fileID: 0}
-  lockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  unlockedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &212245775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18716,8 +18697,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: RareHolenAchievement, Assembly-CSharp
+      - m_Target: {fileID: 1466622176}
+        m_TargetAssemblyTypeName: Collect10HolensAchievement, Assembly-CSharp
         m_MethodName: ClaimReward
         m_Mode: 1
         m_Arguments:
@@ -64611,8 +64592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafcbab3f2662e740b547642d7a78d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holenData: {fileID: 11400000, guid: a6dfe7b3c88ea7a43b1e33ab61bd07c7, type: 2}
-  price: 100
+  holenData: {fileID: 11400000, guid: d0c50f5f155d9944db3cc3aee9e85092, type: 2}
+  price: 200
   iconImage: {fileID: 627303406}
   nameText: {fileID: 784948827}
   priceText: {fileID: 870664746}
@@ -66933,7 +66914,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 177, y: 1171}
+  m_AnchoredPosition: {x: 177, y: 1333}
   m_SizeDelta: {x: 3567.19, y: 3567.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!328 &1619766566
@@ -73220,7 +73201,6 @@ GameObject:
   - component: {fileID: 1798910993}
   - component: {fileID: 1798910992}
   - component: {fileID: 1798910991}
-  - component: {fileID: 1798910994}
   - component: {fileID: 1798910995}
   - component: {fileID: 1798910996}
   m_Layer: 5
@@ -73343,24 +73323,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798910989}
   m_CullTransparentMesh: 1
---- !u!114 &1798910994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798910989}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aee2c7e66137cf40bceee0a2cb001f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelNumber: 1
-  sceneName: Stage 1
-  lockedIcon: {fileID: 0}
-  unlockedIcon: {fileID: 0}
-  lockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  unlockedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1798910995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78284,6 +78246,7 @@ GameObject:
   - component: {fileID: 1942615789}
   - component: {fileID: 1942615788}
   - component: {fileID: 1942615787}
+  - component: {fileID: 1942615790}
   m_Layer: 5
   m_Name: Dailies
   m_TagString: Untagged
@@ -78351,6 +78314,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1942615790
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942615786}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e0b16c8843dc8b740a0c62350ba83b76, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1942974787
 GameObject:
   m_ObjectHideFlags: 0
@@ -84652,7 +84636,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 271, y: -362}
+  m_AnchoredPosition: {x: 270.99994, y: -362}
   m_SizeDelta: {x: 366, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1981800081
@@ -86545,7 +86529,6 @@ GameObject:
   - component: {fileID: 2065343305}
   - component: {fileID: 2065343304}
   - component: {fileID: 2065343303}
-  - component: {fileID: 2065343306}
   - component: {fileID: 2065343307}
   m_Layer: 5
   m_Name: Stage 3
@@ -86667,22 +86650,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065343301}
   m_CullTransparentMesh: 1
---- !u!114 &2065343306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065343301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  requiredLevel: 3
-  lockedOverlay: {fileID: 0}
-  lockLabel: {fileID: 0}
-  lockLabelFormat: Locked (Lv.{0})
 --- !u!114 &2065343307
 MonoBehaviour:
   m_ObjectHideFlags: 0

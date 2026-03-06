@@ -46,8 +46,11 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
     public Camera mainCamera;
     public CinemachineVirtualCamera activePlayerCamera;
     public CinemachineVirtualCamera birdsEyeCamera;
-    public TMP_Text playerLabelText;
-    public TMP_Text turnDisplayText;
+    public GameObject playerLabel;
+    [Tooltip("Enable when it is the LOCAL player's turn")]
+    public GameObject yourTurnObject;
+    [Tooltip("Enable when it is the OPPONENT's turn")]
+    public GameObject opponentTurnObject;
     public Transform cameraSpawnPoint;
 
     [Header("UI")]
@@ -229,12 +232,14 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
             SetAllActionButtonsInteractable(true);
             SpawnHolenBall();
             UpdateStatusText("idle");
+            UpdateTurnDisplay();
             Debug.Log("Player 1's turn has started.");
         }
         else
         {
             SetAllActionButtonsInteractable(false);
             UpdateLocalStatusText("idle", "Player 1");
+            UpdateTurnDisplay();
         }
     }
 
@@ -775,6 +780,12 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
     // ─────────────────────────────────────────────
     public bool IsTurn() => isTurn;
 
+    private void UpdateTurnDisplay()
+    {
+        if (yourTurnObject != null) yourTurnObject.SetActive(isTurn);
+        if (opponentTurnObject != null) opponentTurnObject.SetActive(!isTurn);
+    }
+
     public void ShootHolen(Vector3 launchVelocity)
     {
         if (!isTurn || isReady || currentHolenBall == null) return;
@@ -788,8 +799,10 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         // Open the feedback tracking window on both clients.
         // Called AFTER RPC_ShootHolen so currentHolenBall is still valid when
         // PVPScore.OnTriggerExit checks against it to skip the launched ball.
+        // Pass the absolute player number (1 or 2) so PVPScore always knows who
+        // is shooting regardless of which client is the master — fixes wrong-player score.
         PVPScore scoreManager = FindObjectOfType<PVPScore>();
-        if (scoreManager != null) scoreManager.OnTurnStarted();
+        if (scoreManager != null) scoreManager.OnTurnStarted(isPlayer1 ? 1 : 2);
 
         if (!isCompletingTurn) StartCoroutine(CompleteTurn());
     }
@@ -859,6 +872,7 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         CloseInventory();
         SetAllActionButtonsInteractable(false);
         DisableControls();
+        UpdateTurnDisplay();
 
         Debug.Log($"{playerRole} ended their turn.");
 
@@ -879,6 +893,7 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         SetAllActionButtonsInteractable(true);
         SpawnHolenBall();
         UpdateStatusText("idle");
+        UpdateTurnDisplay();
 
         Debug.Log($"{playerRole}'s turn started.");
     }
