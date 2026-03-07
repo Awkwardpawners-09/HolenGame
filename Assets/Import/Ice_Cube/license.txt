@@ -1,0 +1,11 @@
+Model Information:
+* title:	Ice Cube
+* source:	https://sketchfab.com/3d-models/ice-cube-755cfeae1e2449dbb3dc5c182bbac9c8
+* author:	iyaplaysYT (https://sketchfab.com/iyaplaysYT)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Ice Cube" (https://sketchfab.com/3d-models/ice-cube-755cfeae1e2449dbb3dc5c182bbac9c8) by iyaplaysYT (https://sketchfab.com/iyaplaysYT) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

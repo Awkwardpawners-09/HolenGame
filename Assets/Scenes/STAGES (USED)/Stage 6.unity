@@ -1103,6 +1103,114 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126482124}
   m_CullTransparentMesh: 1
+--- !u!1001 &130763476
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -6660900989741209424, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089063761398410965, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089063761398410965, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_Name
+      value: Tiger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 839381066}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 130763478}
+  m_SourcePrefab: {fileID: 100100000, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+--- !u!1 &130763477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+  m_PrefabInstance: {fileID: 130763476}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &130763478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130763477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a763f4d73d5909742a6e27ac704f5db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invulnerableDuration: 3
+  vulnerableDuration: 2
+  postVulnerableDelay: 0.5
+  invulnerableMass: 99
+  invulnerableDrag: 99
+  vulnerableMass: 0.1
+  vulnerableDrag: 0
+  invulnerableIndicator: {fileID: 839381065}
+  currentState: 0
+  isPermanentlyVulnerable: 0
+  stateTimer: 0
+--- !u!4 &130763488 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+  m_PrefabInstance: {fileID: 130763476}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &133991837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,7 +2266,6 @@ Transform:
   - {fileID: 28298198}
   - {fileID: 499032660}
   - {fileID: 1653357365}
-  - {fileID: 404354974}
   - {fileID: 86529177}
   - {fileID: 1348607427}
   - {fileID: 1799698207}
@@ -2549,6 +2656,114 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1001 &264269633
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -6660900989741209424, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089063761398410965, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089063761398410965, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_Name
+      value: Tiger (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 431603171}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 264269636}
+  m_SourcePrefab: {fileID: 100100000, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+--- !u!1 &264269634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+  m_PrefabInstance: {fileID: 264269633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &264269635 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+  m_PrefabInstance: {fileID: 264269633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &264269636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264269634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a763f4d73d5909742a6e27ac704f5db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invulnerableDuration: 3
+  vulnerableDuration: 2
+  postVulnerableDelay: 0.5
+  invulnerableMass: 99
+  invulnerableDrag: 99
+  vulnerableMass: 0.1
+  vulnerableDrag: 0
+  invulnerableIndicator: {fileID: 431603170}
+  currentState: 0
+  isPermanentlyVulnerable: 0
+  stateTimer: 0
 --- !u!1 &266124106
 GameObject:
   m_ObjectHideFlags: 0
@@ -3405,67 +3620,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &312092839
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -1128822790662917089, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4543069569791729328, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_Name
-      value: OpaqueGreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.36
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.47390312
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 39d773a4d02568740a533b319ab4818e, type: 3}
 --- !u!1 &324114216
 GameObject:
   m_ObjectHideFlags: 0
@@ -4379,513 +4533,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397147107}
   m_CullTransparentMesh: 1
---- !u!1001 &404354973
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 205374333}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 444.4652
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1103.9967
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 514.26575
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.01
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 36.22
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -27.3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8909602
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.04859709
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.40727583
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.19481964
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -14.199
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 46.809
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 18.497
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 37f976666bd200947a1227b7d6997e30, type: 2}
-    - target: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      propertyPath: m_Name
-      value: "UnevenGroundusing UnityEngine; using Cinemachine; using UnityEngine.UI;
-        using System.Collections;  public class HolensLauncher : MonoBehaviour {    
-        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  LAUNCH MODE ENUM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        public enum LaunchMode     {         Default  = 0,   // Swipe speed/distance
-        \u2192 force, straight horizontal line         Arc      = 1,   // Finger
-        raycast on Ground \u2192 holen arcs UP and lands exactly there         Downward
-        = 2    // Finger raycast on Ground \u2192 holen launches from raised position
-        DOWN to there     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  REFERENCES     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"References\")]     public Transform holensPosition;     public
-        GameObject holensBallPrefab;     public CinemachineVirtualCamera cinemachineCamera;    
-        public Camera mainCamera;     public Transform cameraSpawnPoint;      //
-        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  UI     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"UI\")]     public GameObject swipeIndicator;     public LineRenderer
-        trajectoryLine;      [Header(\"Launch Mode UI Buttons\")]     public Button
-        buttonModeDefault;     public Button buttonModeArc;     public Button buttonModeDownward;     
-        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  ACTIVE MODE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Active Launch Mode\")]     public LaunchMode activeLaunchMode =
-        LaunchMode.Default;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  SWIPE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Swipe Settings (All Modes)\")]     public float minSwipeDistance  
-        = 50f;     public float maxSwipeDistance   = 500f;     public float minLaunchForce    
-        = 5f;     public float maxLaunchForce     = 100f;     [Tooltip(\"Time window
-        only enforced in Default mode\")]     public float swipeTimeWindow    = 1f;    
-        public bool  requireTouchOnBall = false;     public float swipeDeadZone     
-        = 20f;     public string ballLayerName     = \"HolenBall\";      [Header(\"Force
-        Calculation (Default Mode Only)\")]     public float speedMultiplier = 0.05f;    
-        public bool  useSpeedForce   = true;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  ARC MODE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Arc Mode Settings\")]     public string groundLayerName = \"Ground\";    
-        [Tooltip(\"Launch angle above horizontal (degrees). 45\xB0 = max range.\")]    
-        public float arcAngle = 45f;     [Tooltip(\"1.0 = exact. Reduce if overshooting,
-        increase if undershooting.\")]     [Range(0.1f, 2.0f)]     public float arcForceMultiplier
-        = 1.0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  DOWNWARD MODE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Downward Mode Settings\")]     public float downwardSpawnHeightOffset
-        = 4f;     [Tooltip(\"Angle below horizontal in degrees.\")]     public float
-        downwardAngle = 30f;     [Tooltip(\"1.0 = exact. Reduce if overshooting,
-        increase if undershooting.\")]     [Range(0.1f, 2.0f)]     public float downwardForceMultiplier
-        = 1.0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  TRAJECTORY LINE SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Trajectory Settings\")]     [Tooltip(\"Points on arc/downward trajectory
-        line\")]     public int   trajectoryPointCount = 40;     [Tooltip(\"Time
-        step per arc point (smaller = smoother)\")]     public float trajectoryTimeStep  
-        = 0.08f;     [Tooltip(\"How far the Default mode straight line extends (world
-        units)\")]     public float defaultLineLength    = 10f;      [Header(\"Line
-        Color & Animation\")]     [Tooltip(\"Color of the trajectory line. Alpha
-        controls transparency (0.5 = 50%).\")]     public Color lineColor = new Color(1f,
-        0f, 0f, 0.5f);     [Tooltip(\"How fast the dash travels along the line\")]    
-        public float lineAnimationSpeed  = 2f;     [Tooltip(\"Fraction of the line
-        visible at once (0.6 = 60% of path shown)\")]     [Range(0.01f, 1f)]    
-        public float lineVisibleFraction = 0.6f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  CAMERA SETTINGS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Camera Settings\")]     [Tooltip(\"Camera offset while the holen
-        is at the spawn point (aiming)\")]     public Vector3 cameraFollowOffset
-        = new Vector3(0f, 8f, -6f);      [Tooltip(\"Screen Y for the holen while
-        AIMING (0.8 = upper part of screen)\")]     public float cameraAimScreenY
-        = 0.80f;      [Tooltip(\"Screen Y for the holen while IN FLIGHT. 0.5 = dead
-        centre of screen.\")]     public float cameraFlightScreenY = 0.5f;      //
-        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  SOUND     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Sound\")]     [Tooltip(\"AudioSource to play the launch sound through.
-        \" +              \"If left empty the script will try to find one on this
-        GameObject.\")]     public AudioSource audioSource;     [Tooltip(\"Sound
-        clip that plays the moment the holen is launched.\")]     public AudioClip
-        launchSoundClip;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  TARGETING INDICATOR     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Targeting Indicator\")]     [Tooltip(\"3D GameObject that shows
-        where the holen will land. \" +              \"Assign it here \u2014 it should
-        be disabled in the scene by default. \" +              \"Only visible in
-        Arc and Downward modes while the player is aiming.\")]     public GameObject
-        targetIndicator;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  HOLEN SYSTEM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Holen System\")]     public HolenChanger holenChanger;      //
-        \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  LIFE SYSTEM     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        [Header(\"Life System\")]     public float lifeDeductionDelay = 6.5f;     
-        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  PRIVATE STATE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        private int        ballLayer;     private int        groundLayerMask;    
-        private GameObject currentBall;     private bool       isBusy      = false;    
-        private bool       hasLaunched = false;     private Transform  defaultLookAtTarget;     
-        // Swipe state     private Vector2 swipeStartPos;     private Vector2 swipeEndPos;    
-        private float   swipeStartTime;     private bool    isSwiping      = false;    
-        private Vector3 swipeWorldStart;      // Raycast target (Arc & Downward)    
-        private Vector3 raycastTarget;     private bool    raycastTargetValid;     
-        // Animated line     private Vector3[] fullTrajectoryPoints;     private
-        float     lineAnimOffset = 0f;      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  UNITY LIFECYCLE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        void Start()     {         ballLayer       = LayerMask.NameToLayer(ballLayerName);        
-        groundLayerMask = LayerMask.GetMask(groundLayerName);          if (ballLayer
-        == -1)             Debug.LogWarning($\"Layer '{ballLayerName}' not found.\");        
-        if (groundLayerMask == 0)             Debug.LogWarning($\"Layer '{groundLayerName}'
-        not found. Arc/Downward targeting won't work.\");          if (mainCamera
-        == null)             mainCamera = Camera.main;          // Auto-grab AudioSource
-        from this GameObject if not assigned in Inspector         if (audioSource
-        == null)             audioSource = GetComponent<AudioSource>();         
-        SetInitialCameraPosition();          if (cinemachineCamera != null)            
-        defaultLookAtTarget = cinemachineCamera.LookAt;          if (swipeIndicator
-        != null)             swipeIndicator.SetActive(false);          // \u2500\u2500
-        Trajectory line starts hidden. It only appears while the player is aiming.
-        \u2500\u2500         if (trajectoryLine != null)         {             trajectoryLine.enabled   
-        = false;             trajectoryLine.startColor = lineColor;             trajectoryLine.endColor  
-        = lineColor;             // NOTE: For the alpha (transparency) to work, your
-        LineRenderer material             // must use a transparent shader such as
-        \"Sprites/Default\" or             // \"Particles/Standard Unlit\". The default
-        \"Default-Line\" ignores alpha.         }          // Target indicator is
-        always hidden until the player aims in Arc/Downward mode         if (targetIndicator
-        != null)             targetIndicator.SetActive(false);          // Wire up
-        mode buttons         if (buttonModeDefault  != null) buttonModeDefault .onClick.AddListener(()
-        => SetLaunchMode(LaunchMode.Default));         if (buttonModeArc      !=
-        null) buttonModeArc     .onClick.AddListener(() => SetLaunchMode(LaunchMode.Arc));        
-        if (buttonModeDownward != null) buttonModeDownward.onClick.AddListener(()
-        => SetLaunchMode(LaunchMode.Downward));          RefreshModeButtonVisuals();        
-        SpawnCurrentHolen();     }      void Update()     {         if (!isBusy &&
-        !hasLaunched && currentBall != null)         {             HandleSwipeInput();             
-        if (isSwiping)             {                 // Only build and show the trajectory
-        while the finger is actively held down                 BuildLiveTrajectoryPoints();                
-        AnimateAndDrawLine();             }             else             {                
-        // Hide the line completely when not aiming                 if (trajectoryLine
-        != null)                     trajectoryLine.enabled = false;            
-        }         }     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  LAUNCH MODE SELECTION     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        public void SetLaunchMode(LaunchMode mode)     {         if (hasLaunched)        
-        {             Debug.Log(\"[HolensLauncher] Cannot change mode while holen
-        is in flight.\");             return;         }         if (activeLaunchMode
-        == mode) return;          activeLaunchMode = mode;         Debug.Log($\"[HolensLauncher]
-        Mode \u2192 {mode}\");         RefreshModeButtonVisuals();         SpawnCurrentHolen();    
-        }      public void SetLaunchModeDefault()  => SetLaunchMode(LaunchMode.Default);    
-        public void SetLaunchModeArc()      => SetLaunchMode(LaunchMode.Arc);    
-        public void SetLaunchModeDownward() => SetLaunchMode(LaunchMode.Downward);     
-        private void RefreshModeButtonVisuals()     {         SetButtonSelected(buttonModeDefault, 
-        activeLaunchMode == LaunchMode.Default);         SetButtonSelected(buttonModeArc,     
-        activeLaunchMode == LaunchMode.Arc);         SetButtonSelected(buttonModeDownward,
-        activeLaunchMode == LaunchMode.Downward);     }      private void SetButtonSelected(Button
-        btn, bool selected)     {         if (btn == null) return;         ColorBlock
-        cb  = btn.colors;         cb.normalColor = selected ? new Color(0.3f, 0.8f,
-        0.3f) : Color.white;         btn.colors     = cb;     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  CAMERA     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        private void SetInitialCameraPosition()     {         if (cameraSpawnPoint
-        != null)         {             mainCamera.transform.position = cameraSpawnPoint.position;            
-        mainCamera.transform.rotation = cameraSpawnPoint.rotation;         }    
-        }      /// <summary>     /// Applied while the holen is sitting at the spawn
-        point waiting to be launched.     /// Uses cameraFollowOffset and cameraAimScreenY
-        (typically high on screen).     /// </summary>     private void ApplyAimCameraSettings()    
-        {         if (cinemachineCamera == null) return;         var transposer =
-        cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();        
-        var composer   = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();        
-        if (transposer != null) transposer.m_FollowOffset = cameraFollowOffset;        
-        if (composer   != null) composer.m_ScreenY        = cameraAimScreenY;    
-        }      /// <summary>     /// Applied the moment the holen is launched.    
-        /// Detaches CinemachineTransposer Follow so the camera STAYS in place,    
-        /// but keeps LookAt on the holen so it rotates to track it.     /// Screen
-        Y is set to cameraFlightScreenY (0.5 = dead centre) so the     /// holen
-        appears in the middle of the screen throughout the flight.     /// </summary>    
-        private void ApplyFlightCameraSettings()     {         if (cinemachineCamera
-        == null) return;         // Stop the transposer from chasing the holen \u2014
-        camera stays at its current world position         var transposer = cinemachineCamera.GetCinemachineComponent<CinemachineTransposer>();        
-        if (transposer != null) transposer.m_FollowOffset = Vector3.zero;        
-        // Composer: centre the look-at target on screen         var composer = cinemachineCamera.GetCinemachineComponent<CinemachineComposer>();        
-        if (composer != null) composer.m_ScreenY = cameraFlightScreenY;     }     
-        // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  SWIPE INPUT     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        private void HandleSwipeInput()     {         if (Input.touchCount > 0)        
-        {             Touch touch = Input.GetTouch(0);             switch (touch.phase)            
-        {                 case TouchPhase.Began:                     if (!requireTouchOnBall
-        || IsTouchingBall(touch.position))                         StartSwipe(touch.position);                    
-        break;                 case TouchPhase.Moved:                     if (isSwiping)
-        UpdateSwipe(touch.position);                     break;                 case
-        TouchPhase.Ended:                     if (isSwiping) EndSwipe(touch.position);                    
-        break;                 case TouchPhase.Canceled:                     if (isSwiping)
-        CancelSwipe();                     break;             }         }        
-        else if (Input.GetMouseButtonDown(0))         {             if (!requireTouchOnBall
-        || IsTouchingBall(Input.mousePosition))                 StartSwipe(Input.mousePosition);        
-        }         else if (Input.GetMouseButton(0) && isSwiping)             UpdateSwipe(Input.mousePosition);        
-        else if (Input.GetMouseButtonUp(0) && isSwiping)             EndSwipe(Input.mousePosition);    
-        }      private bool IsTouchingBall(Vector2 screenPos)     {         if (currentBall
-        == null) return false;         Ray ray = mainCamera.ScreenPointToRay(screenPos);        
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f) && hit.collider.gameObject
-        == currentBall)             return true;         Vector3 ballScreen = mainCamera.WorldToScreenPoint(currentBall.transform.position);        
-        return Vector2.Distance(screenPos, new Vector2(ballScreen.x, ballScreen.y))
-        < 100f;     }      private void StartSwipe(Vector2 screenPos)     {        
-        isSwiping          = true;         swipeStartPos      = screenPos;        
-        swipeStartTime     = Time.time;         swipeWorldStart    = currentBall.transform.position;        
-        raycastTargetValid = false;          if (swipeIndicator != null) swipeIndicator.SetActive(true);    
-        }      private void UpdateSwipe(Vector2 screenPos)     {         swipeEndPos
-        = screenPos;          if (activeLaunchMode != LaunchMode.Default)        
-        {             Ray ray = mainCamera.ScreenPointToRay(screenPos);            
-        if (Physics.Raycast(ray, out RaycastHit hit, 500f, groundLayerMask))            
-        {                 raycastTarget      = hit.point;                 raycastTargetValid
-        = true;                  // Show the targeting indicator at the raycast landing
-        point                 if (targetIndicator != null)                 {                    
-        targetIndicator.SetActive(true);                     targetIndicator.transform.position
-        = raycastTarget;                 }             }             else            
-        {                 // Finger moved off the ground layer \u2014 hide indicator                
-        if (targetIndicator != null)                     targetIndicator.SetActive(false);            
-        }         }         else         {             // Default mode never uses
-        the indicator             if (targetIndicator != null)                 targetIndicator.SetActive(false);             
-        Ray   ray   = mainCamera.ScreenPointToRay(screenPos);             Plane plane
-        = new Plane(Vector3.up, currentBall.transform.position);             if (plane.Raycast(ray,
-        out float dist))             {                 raycastTarget      = ray.GetPoint(dist);                
-        raycastTargetValid = true;             }         }     }      private void
-        EndSwipe(Vector2 screenPos)     {         swipeEndPos = screenPos;        
-        float   swipeTime     = Time.time - swipeStartTime;         Vector2 swipeDelta   
-        = swipeEndPos - swipeStartPos;         float   swipeDistance = swipeDelta.magnitude;         
-        isSwiping = false;          // Hide the line and indicator as soon as the
-        finger lifts         if (trajectoryLine    != null) trajectoryLine.enabled
-        = false;         if (swipeIndicator    != null) swipeIndicator.SetActive(false);        
-        if (targetIndicator   != null) targetIndicator.SetActive(false);         
-        bool valid = swipeDistance >= minSwipeDistance &&                      (activeLaunchMode
-        != LaunchMode.Default || swipeTime <= swipeTimeWindow);          if (!valid)        
-        {             Debug.Log($\"[HolensLauncher] Invalid swipe. Dist={swipeDistance:F0}
-        Time={swipeTime:F2}\");             return;         }          Vector3 launchVelocity
-        = ComputeLaunchVelocity(swipeDelta, swipeTime, swipeDistance);         if
-        (launchVelocity == Vector3.zero)         {             Debug.LogWarning(\"[HolensLauncher]
-        Could not compute launch velocity \u2014 finger may not be over Ground layer.\");            
-        return;         }          StartCoroutine(LaunchSequence(launchVelocity));    
-        }      private void CancelSwipe()     {         isSwiping = false;        
-        if (trajectoryLine  != null) trajectoryLine.enabled = false;         if (swipeIndicator 
-        != null) swipeIndicator.SetActive(false);         if (targetIndicator !=
-        null) targetIndicator.SetActive(false);     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  LAUNCH VELOCITY COMPUTATION     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        private Vector3 ComputeLaunchVelocity(Vector2 swipeDelta, float swipeTime,
-        float swipeDistance)     {         switch (activeLaunchMode)         {            
-        case LaunchMode.Arc:             {                 if (!raycastTargetValid)
-        { Debug.LogWarning(\"[Arc] No valid ground target.\"); return Vector3.zero;
-        }                 Vector3 spawnPos  = currentBall.transform.position;                
-        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
-        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
-        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
-        = SolveArcSpeed(horizDist, vertDiff, arcAngle);                 if (rawSpeed
-        <= 0f) return Vector3.zero;                 float   speed    = rawSpeed *
-        arcForceMultiplier;                 float   rad      = arcAngle * Mathf.Deg2Rad;                
-        Vector3 horizDir = new Vector3(toTarget.x, 0f, toTarget.z).normalized;                
-        return horizDir * (speed * Mathf.Cos(rad)) + Vector3.up * (speed * Mathf.Sin(rad));            
-        }              case LaunchMode.Downward:             {                 if
-        (!raycastTargetValid) { Debug.LogWarning(\"[Downward] No valid ground target.\");
-        return Vector3.zero; }                 Vector3 spawnPos  = currentBall.transform.position;                
-        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
-        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
-        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
-        = SolveDownwardSpeed(horizDist, vertDiff, downwardAngle);                
-        if (rawSpeed <= 0f) return Vector3.zero;                 float   speed   
-        = rawSpeed * downwardForceMultiplier;                 float   rad      =
-        downwardAngle * Mathf.Deg2Rad;                 Vector3 horizDir = new Vector3(toTarget.x,
-        0f, toTarget.z).normalized;                 return horizDir * (speed * Mathf.Cos(rad))
-        - Vector3.up * (speed * Mathf.Sin(rad));             }              default:
-        // Default             {                 Vector3 swipeWorldDir = Vector3.zero;                
-        if (raycastTargetValid)                 {                     swipeWorldDir  
-        = raycastTarget - swipeWorldStart;                     swipeWorldDir.y =
-        0f;                     swipeWorldDir.Normalize();                 }                
-        if (swipeWorldDir.sqrMagnitude < 0.01f)                 {                    
-        Vector3 camFwd   = mainCamera.transform.forward; camFwd.y   = 0f; camFwd.Normalize();                    
-        Vector3 camRight = mainCamera.transform.right;   camRight.y = 0f; camRight.Normalize();                    
-        swipeWorldDir    = (camRight * swipeDelta.x + camFwd * swipeDelta.y).normalized;                
-        }                 float force;                 if (useSpeedForce)                
-        {                     float sp = swipeDistance / Mathf.Max(swipeTime, 0.01f);                    
-        force    = Mathf.Clamp(sp * speedMultiplier, minLaunchForce, maxLaunchForce);                
-        }                 else                 {                     float nd  =
-        Mathf.InverseLerp(minSwipeDistance, maxSwipeDistance, swipeDistance);                    
-        force     = Mathf.Lerp(minLaunchForce, maxLaunchForce, nd);                    
-        float sp2 = swipeDistance / Mathf.Max(swipeTime, 0.01f);                    
-        force     = Mathf.Lerp(force, maxLaunchForce, Mathf.Clamp01(sp2 / 2000f));                
-        }                 return swipeWorldDir * force;             }         }    
-        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  PHYSICS SOLVERS     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        private float SolveArcSpeed(float horizDist, float vertDiff, float angleDeg)    
-        {         float \u03B8     = angleDeg * Mathf.Deg2Rad;         float g    
-        = Mathf.Abs(Physics.gravity.y);         float cos\u03B8  = Mathf.Cos(\u03B8);        
-        float tan\u03B8  = Mathf.Tan(\u03B8);         float denom = 2f * cos\u03B8
-        * cos\u03B8 * (horizDist * tan\u03B8 - vertDiff);         if (denom <= 0f)
-        { Debug.LogWarning($\"[Arc Solver] Unreachable. hDist={horizDist:F2} vDiff={vertDiff:F2}\");
-        return -1f; }         return Mathf.Sqrt((g * horizDist * horizDist) / denom);    
-        }      private float SolveDownwardSpeed(float horizDist, float vertDiff,
-        float angleDeg)     {         float \u03B8     = angleDeg * Mathf.Deg2Rad;        
-        float g     = Mathf.Abs(Physics.gravity.y);         float cos\u03B8  = Mathf.Cos(\u03B8);        
-        float tan\u03B8  = Mathf.Tan(\u03B8);         float denom = 2f * cos\u03B8
-        * cos\u03B8 * (-horizDist * tan\u03B8 - vertDiff);         if (denom <= 0f)
-        { Debug.LogWarning($\"[Downward Solver] Unreachable. hDist={horizDist:F2}
-        vDiff={vertDiff:F2}\"); return -1f; }         return Mathf.Sqrt((g * horizDist
-        * horizDist) / denom);     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  TRAJECTORY BUILDING  (only runs while isSwiping)     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        private void BuildLiveTrajectoryPoints()     {         if (currentBall ==
-        null) return;          switch (activeLaunchMode)         {             case
-        LaunchMode.Arc:             {                 if (!raycastTargetValid) return;                
-        Vector3 spawnPos  = currentBall.transform.position;                 Vector3
-        toTarget  = raycastTarget - spawnPos;                 float   horizDist =
-        new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
-        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
-        = SolveArcSpeed(horizDist, vertDiff, arcAngle);                 if (rawSpeed
-        <= 0f) return;                 float   speed    = rawSpeed * arcForceMultiplier;                
-        float   rad      = arcAngle * Mathf.Deg2Rad;                 Vector3 horizDir
-        = new Vector3(toTarget.x, 0f, toTarget.z).normalized;                 Vector3
-        vel      = horizDir * (speed * Mathf.Cos(rad)) + Vector3.up * (speed * Mathf.Sin(rad));                
-        BuildPhysicsPoints(spawnPos, vel);                 break;             }            
-        case LaunchMode.Downward:             {                 if (!raycastTargetValid)
-        return;                 Vector3 spawnPos  = currentBall.transform.position;                
-        Vector3 toTarget  = raycastTarget - spawnPos;                 float   horizDist
-        = new Vector3(toTarget.x, 0f, toTarget.z).magnitude;                 float  
-        vertDiff  = raycastTarget.y - spawnPos.y;                 float   rawSpeed 
-        = SolveDownwardSpeed(horizDist, vertDiff, downwardAngle);                
-        if (rawSpeed <= 0f) return;                 float   speed    = rawSpeed *
-        downwardForceMultiplier;                 float   rad      = downwardAngle
-        * Mathf.Deg2Rad;                 Vector3 horizDir = new Vector3(toTarget.x,
-        0f, toTarget.z).normalized;                 Vector3 vel      = horizDir *
-        (speed * Mathf.Cos(rad)) - Vector3.up * (speed * Mathf.Sin(rad));                
-        BuildPhysicsPoints(spawnPos, vel);                 break;             }            
-        default:             {                 Vector3 spawnPos = currentBall.transform.position;                
-        Vector3 dir      = Vector3.zero;                 if (raycastTargetValid)
-        { dir = raycastTarget - swipeWorldStart; dir.y = 0f; dir.Normalize(); }                
-        if (dir.sqrMagnitude < 0.01f) { dir = mainCamera.transform.forward; dir.y
-        = 0f; dir.Normalize(); }                 BuildStraightPoints(spawnPos, dir);                
-        break;             }         }     }      private void BuildPhysicsPoints(Vector3
-        startPos, Vector3 velocity)     {         fullTrajectoryPoints = new Vector3[trajectoryPointCount];        
-        for (int i = 0; i < trajectoryPointCount; i++)         {             float
-        t = i * trajectoryTimeStep;             fullTrajectoryPoints[i] = startPos
-        + velocity * t + 0.5f * Physics.gravity * t * t;         }     }      private
-        void BuildStraightPoints(Vector3 startPos, Vector3 direction)     {        
-        fullTrajectoryPoints    = new Vector3[2];         fullTrajectoryPoints[0]
-        = startPos;         fullTrajectoryPoints[1] = startPos + direction * defaultLineLength;    
-        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  ANIMATED LINE RENDERING     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        private void AnimateAndDrawLine()     {         if (trajectoryLine == null
-        || fullTrajectoryPoints == null || fullTrajectoryPoints.Length < 2)            
-        return;          lineAnimOffset = (lineAnimOffset + Time.deltaTime * lineAnimationSpeed)
-        % 1f;          int totalPts     = fullTrajectoryPoints.Length;         int
-        visibleCount = Mathf.Max(2, Mathf.RoundToInt(totalPts * lineVisibleFraction));        
-        int startIdx     = Mathf.FloorToInt(lineAnimOffset * totalPts);         
-        trajectoryLine.enabled       = true;         trajectoryLine.positionCount
-        = visibleCount;          for (int i = 0; i < visibleCount; i++)            
-        trajectoryLine.SetPosition(i, fullTrajectoryPoints[(startIdx + i) % totalPts]);         
-        trajectoryLine.startColor = lineColor;         trajectoryLine.endColor  
-        = lineColor;     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  LAUNCH SEQUENCE     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        IEnumerator LaunchSequence(Vector3 launchVelocity)     {         isBusy     
-        = true;         hasLaunched = true;          if (trajectoryLine != null)
-        trajectoryLine.enabled = false;         if (holenChanger   != null) holenChanger.DisableButtons();         
-        LaunchBall(launchVelocity);          yield return new WaitForSeconds(lifeDeductionDelay);         
-        LevelManager levelManager = FindObjectOfType<LevelManager>();         if
-        (levelManager != null)         {             levelManager.OnHolenRespawn();            
-        Debug.Log(\"[HolensLauncher] Life deducted after turn\");         }         
-        yield return new WaitForSeconds(7f - lifeDeductionDelay);          // Reset
-        camera         if (cinemachineCamera != null)         {             cinemachineCamera.Follow
-        = null;             cinemachineCamera.LookAt = defaultLookAtTarget != null
-        ? defaultLookAtTarget : null;             if (cameraSpawnPoint != null)            
-        {                 mainCamera.transform.position = cameraSpawnPoint.position;                
-        mainCamera.transform.rotation = cameraSpawnPoint.rotation;             }        
-        }          if (currentBall != null) { Destroy(currentBall); currentBall =
-        null; }          isBusy      = false;         hasLaunched = false;        
-        isSwiping   = false;          SpawnCurrentHolen();          if (holenChanger
-        != null) holenChanger.EnableButtons();     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  LAUNCH BALL     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        void LaunchBall(Vector3 velocity)     {         if (currentBall == null)
-        return;          Rigidbody rb = currentBall.GetComponent<Rigidbody>();        
-        currentBall.transform.parent = null;         rb.isKinematic = false;        
-        // VelocityChange applies velocity directly regardless of Rigidbody mass        
-        rb.AddForce(velocity, ForceMode.VelocityChange);          // \u2500\u2500
-        Camera: freeze position, only rotate to track the flying holen \u2500\u2500\u2500\u2500        
-        if (cinemachineCamera != null)         {             // Detach Follow \u2192
-        Cinemachine stops moving the camera body.             // Keep LookAt \u2192
-        the camera still rotates to centre the holen on screen.             cinemachineCamera.Follow
-        = null;             cinemachineCamera.LookAt = currentBall.transform;            
-        ApplyFlightCameraSettings();         }          // \u2500\u2500 Sound \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500        
-        if (audioSource != null && launchSoundClip != null)             audioSource.PlayOneShot(launchSoundClip);         
-        Debug.Log($\"[Launch] Mode={activeLaunchMode} Speed={velocity.magnitude:F2}\");    
-        }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  SPAWN \u2014 SINGLE AUTHORITATIVE METHOD     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        private void SpawnCurrentHolen()     {         // 1. Determine the correct
-        prefab (HolenChanger takes priority)         GameObject prefabToUse = holensBallPrefab;        
-        if (holenChanger != null)         {             HolenData data = holenChanger.GetCurrentHolenData();            
-        if (data != null && data.holenPrefab != null)             {                
-        prefabToUse      = data.holenPrefab;                 holensBallPrefab = prefabToUse;            
-        }         }          if (prefabToUse == null)         {             Debug.LogError(\"[HolensLauncher]
-        No holen prefab available to spawn!\");             return;         }         
-        // 2. Destroy tracked ball + nuclear sweep of any stray \"Ball\" tagged objects        
-        if (currentBall != null) { Destroy(currentBall); currentBall = null; }        
-        foreach (GameObject stray in GameObject.FindGameObjectsWithTag(\"Ball\"))            
-        Destroy(stray);          // Always hide the indicator when re-spawning (mode
-        change, holen swap, post-flight)         if (targetIndicator != null)            
-        targetIndicator.SetActive(false);          // 3. Spawn exactly one new ball
-        at the correct height for the active mode         Vector3 spawnPos = holensPosition.position;        
-        if (activeLaunchMode == LaunchMode.Downward)             spawnPos += Vector3.up
-        * downwardSpawnHeightOffset;          currentBall = Instantiate(prefabToUse,
-        spawnPos, holensPosition.rotation);         currentBall.transform.parent
-        = holensPosition;         currentBall.tag = \"Ball\";         if (ballLayer
-        != -1) currentBall.layer = ballLayer;         currentBall.GetComponent<Rigidbody>().isKinematic
-        = true;          // 4. Camera: point at the idle holen using aim settings        
-        if (cinemachineCamera != null)         {             cinemachineCamera.Follow
-        = currentBall.transform;             cinemachineCamera.LookAt = currentBall.transform;            
-        ApplyAimCameraSettings();         }          Debug.Log($\"[Spawn] Mode={activeLaunchMode}
-        Prefab={prefabToUse.name}\");     }      // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        //  PUBLIC API     // \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500    
-        public void ChangeBallPrefab(GameObject newPrefab)     {         if (hasLaunched)        
-        {             Debug.Log(\"[HolensLauncher] Cannot change holen while in flight.\");            
-        return;         }         holensBallPrefab = newPrefab;         SpawnCurrentHolen();    
-        }      public bool GetIsBusy()      => isBusy;     public bool GetHasLaunched()
-        => hasLaunched; } (1)"
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 404354976}
-  m_SourcePrefab: {fileID: 100100000, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
---- !u!4 &404354974 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-  m_PrefabInstance: {fileID: 404354973}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &404354975 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
-  m_PrefabInstance: {fileID: 404354973}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &404354976
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 404354975}
-  m_Material: {fileID: 13400000, guid: 19d151542e181264f933951d2a824b54, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
 --- !u!1001 &419713823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5020,6 +4667,256 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
+--- !u!1001 &431603169
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 264269635}
+    m_Modifications:
+    - target: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_Name
+      value: Ice_Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1622465
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.162246
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.162246
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00074665
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.55702
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00016882
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 431603175}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 431603174}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 431603173}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 431603172}
+  m_SourcePrefab: {fileID: 100100000, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+--- !u!1 &431603170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+  m_PrefabInstance: {fileID: 431603169}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &431603171 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+  m_PrefabInstance: {fileID: 431603169}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &431603172
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431603170}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cfe041d0602a9e740a5f1d4232f4e792, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &431603173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431603170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da9022571d0ef44bae3516f338af8ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleEffectPrefab: {fileID: 4927711562988715638, guid: 7073b9d9fcfaf9041a12fc6654ce6b2d, type: 3}
+  soundEffects:
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  backgroundMusic: {fileID: 0}
+  hitSoundVolume: 2
+--- !u!82 &431603174
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431603170}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a6b2d93bb94e25545a2ee28d1baaca3a, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 100
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!65 &431603175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431603170}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9999999, y: 1.3062515, z: 0.9999999}
+  m_Center: {x: 0, y: 0.4573968, z: 0}
 --- !u!1 &438477191
 GameObject:
   m_ObjectHideFlags: 0
@@ -5932,124 +5829,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 289301614986012343, guid: ff4e15c76a392b34aa81dbcbfc6788d4, type: 3}
---- !u!1 &514023739
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 514023740}
-  - component: {fileID: 514023742}
-  - component: {fileID: 514023741}
-  m_Layer: 9
-  m_Name: Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &514023740
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 514023739}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 654676659}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &514023741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 514023739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
---- !u!108 &514023742
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 514023739}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 2
-  m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 20
-  m_Range: 3
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 8900000, guid: 599e20092e3297247ad7ecc4ba9caf00, type: 3}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!1 &520827350
 GameObject:
   m_ObjectHideFlags: 0
@@ -7231,6 +7010,91 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595121782}
   m_CullTransparentMesh: 1
+--- !u!1001 &601044163
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 130763488}
+    m_Modifications:
+    - target: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_Name
+      value: Ice_Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1622465
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.162246
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.162246
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00074665
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.55702
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00016882
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 839381069}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 839381068}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 839381067}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 839381070}
+  m_SourcePrefab: {fileID: 100100000, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
 --- !u!1 &623931981
 GameObject:
   m_ObjectHideFlags: 0
@@ -7337,11 +7201,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 901898111}
   m_LocalEulerAnglesHint: {x: 60.499, y: 0, z: 0}
---- !u!4 &654676659 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-  m_PrefabInstance: {fileID: 710990341}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &656246651
 GameObject:
   m_ObjectHideFlags: 0
@@ -7913,70 +7772,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1001 &710990341
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -1128822790662917089, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: sceneViewId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4543069569791729328, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_Name
-      value: Pearl
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4739012
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 9.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4965097696903111275, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 514023740}
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
 --- !u!1 &731224806
 GameObject:
   m_ObjectHideFlags: 0
@@ -8555,7 +8350,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level 5
+  m_text: Level 6
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -9001,6 +8796,171 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8689390323139520027, guid: 04c66a62bae973448bac671e6118f352, type: 3}
   m_PrefabInstance: {fileID: 754201581}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &839381065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+  m_PrefabInstance: {fileID: 601044163}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &839381066 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+  m_PrefabInstance: {fileID: 601044163}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &839381067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839381065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da9022571d0ef44bae3516f338af8ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleEffectPrefab: {fileID: 4927711562988715638, guid: 7073b9d9fcfaf9041a12fc6654ce6b2d, type: 3}
+  soundEffects:
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  backgroundMusic: {fileID: 0}
+  hitSoundVolume: 2
+--- !u!82 &839381068
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839381065}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a6b2d93bb94e25545a2ee28d1baaca3a, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 100
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!65 &839381069
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839381065}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9999999, y: 1.3062515, z: 0.9999999}
+  m_Center: {x: 0, y: 0.4573968, z: 0}
+--- !u!95 &839381070
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839381065}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cfe041d0602a9e740a5f1d4232f4e792, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &844587839
 GameObject:
   m_ObjectHideFlags: 0
@@ -9343,7 +9303,7 @@ Transform:
   m_GameObject: {fileID: 858545724}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.26, y: -0.2, z: 12.83}
+  m_LocalPosition: {x: -43.68, y: -0.2, z: 30.76}
   m_LocalScale: {x: 2.9092, y: 0.2489826, z: 2.9092}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9441,7 +9401,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Knock all Holens!
+  m_text: Holens will randomly freeze!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -9913,67 +9873,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908539730}
   m_CullTransparentMesh: 1
---- !u!1001 &916801812
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -1128822790662917089, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: sceneViewId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4543069569791729328, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_Name
-      value: OpaqueBlue
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.47390693
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4965097696903111275, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f17b3d7853d5cdd45adff095a9ab9560, type: 3}
 --- !u!1 &927334011
 GameObject:
   m_ObjectHideFlags: 0
@@ -11247,8 +11146,8 @@ Transform:
   m_GameObject: {fileID: 977062501}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.9, y: 1.31, z: -1.1}
-  m_LocalScale: {x: 1, y: 1, z: 12.723428}
+  m_LocalPosition: {x: 7.83, y: 1.59, z: -0.66}
+  m_LocalScale: {x: 1.1822283, y: 1.1822283, z: 15.041995}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1918146933}
@@ -11603,9 +11502,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 387487144}
-  continueSceneName: Stage 6
+  continueSceneName: Stage 7
   retryButton: {fileID: 1092251883}
-  retrySceneName: Stage 5
+  retrySceneName: Stage 6
   transitionObject: {fileID: 836333308}
   delayBeforeTransition: 5
 --- !u!114 &1005936888
@@ -11620,7 +11519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1f8bca390574d4997604fc1de803e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevelNumber: 5
+  currentLevelNumber: 6
   coinReward: 500
   energyReward: -10
 --- !u!1 &1006261354
@@ -16108,6 +16007,114 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1621048517}
   m_CullTransparentMesh: 1
+--- !u!1001 &1627034745
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -6660900989741209424, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089063761398410965, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089063761398410965, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_Name
+      value: Tiger (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1831151197}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1627034748}
+  m_SourcePrefab: {fileID: 100100000, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+--- !u!1 &1627034746 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+  m_PrefabInstance: {fileID: 1627034745}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1627034747 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4965097696903111275, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+  m_PrefabInstance: {fileID: 1627034745}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1627034748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627034746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a763f4d73d5909742a6e27ac704f5db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invulnerableDuration: 3
+  vulnerableDuration: 2
+  postVulnerableDelay: 0.5
+  invulnerableMass: 99
+  invulnerableDrag: 99
+  vulnerableMass: 0.1
+  vulnerableDrag: 0
+  invulnerableIndicator: {fileID: 1831151196}
+  currentState: 0
+  isPermanentlyVulnerable: 0
+  stateTimer: 0
 --- !u!1 &1637746027 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b96aee3bb377ef24e93889138387e2c5, type: 3}
@@ -18865,6 +18872,256 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812668996}
   m_CullTransparentMesh: 1
+--- !u!1001 &1831151195
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1627034747}
+    m_Modifications:
+    - target: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_Name
+      value: Ice_Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1622465
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.162246
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.162246
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00074665
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.55702
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00016882
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1831151201}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1831151200}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1831151199}
+    - targetCorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1831151198}
+  m_SourcePrefab: {fileID: 100100000, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+--- !u!1 &1831151196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2888890750146197666, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+  m_PrefabInstance: {fileID: 1831151195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1831151197 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6544399280690344830, guid: 957bd709824aeb947b3ea138529c6b1e, type: 3}
+  m_PrefabInstance: {fileID: 1831151195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1831151198
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831151196}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cfe041d0602a9e740a5f1d4232f4e792, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1831151199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831151196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da9022571d0ef44bae3516f338af8ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleEffectPrefab: {fileID: 4927711562988715638, guid: 7073b9d9fcfaf9041a12fc6654ce6b2d, type: 3}
+  soundEffects:
+  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  backgroundMusic: {fileID: 0}
+  hitSoundVolume: 2
+--- !u!82 &1831151200
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831151196}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a6b2d93bb94e25545a2ee28d1baaca3a, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 100
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!65 &1831151201
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831151196}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9999999, y: 1.3062515, z: 0.9999999}
+  m_Center: {x: 0, y: 0.4573968, z: 0}
 --- !u!1 &1849466792
 GameObject:
   m_ObjectHideFlags: 0
@@ -19199,7 +19456,6 @@ GameObject:
   - component: {fileID: 1918146933}
   - component: {fileID: 1918146937}
   - component: {fileID: 1918146936}
-  - component: {fileID: 1918146934}
   - component: {fileID: 1918146938}
   - component: {fileID: 1918146939}
   m_Layer: 0
@@ -19224,41 +19480,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 977062503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1918146934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918146932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxLives: 5
-  livesText: {fileID: 397147109}
-  lifeLostSound: {fileID: 8300000, guid: e4536b1677fb3e94e928d6246ef4be39, type: 3}
-  audioSource: {fileID: 0}
-  checkNoHolensInField: 1
-  waitTime: 3
-  levelCompleteObjects:
-  - {fileID: 1898558417}
-  levelCompleteDelay: 3
-  gameOverObjects:
-  - {fileID: 1964392483}
-  gameOverDelay: 3
-  feedbackNoKnockout: {fileID: 2027864669}
-  feedback1Knockout: {fileID: 927334011}
-  feedback2Knockout: {fileID: 40494448}
-  feedback3Knockout: {fileID: 1143041696}
-  feedback4Knockout: {fileID: 1997132921}
-  feedback5Knockout: {fileID: 1461711782}
-  feedbackDisplayDuration: 4
-  levelCompleteSceneName: 
-  gameOverSceneName: 
-  transitionObject: {fileID: 836333308}
-  transitionDuration: 3
 --- !u!23 &1918146936
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19332,102 +19553,41 @@ CapsuleCollider:
   m_Height: 1.6209426
   m_Direction: 1
   m_Center: {x: 0, y: 0.27221537, z: -0.12799364}
---- !u!82 &1918146939
-AudioSource:
+--- !u!114 &1918146939
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918146932}
   m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea2bb55b7e46ce740ba83fb110ac9559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLives: 9
+  livesText: {fileID: 397147109}
+  lifeLostSound: {fileID: 0}
+  audioSource: {fileID: 0}
+  checkNoHolensInField: 1
+  waitTime: 5
+  levelCompleteObjects:
+  - {fileID: 1898558417}
+  levelCompleteDelay: 3
+  gameOverObjects:
+  - {fileID: 1964392483}
+  gameOverDelay: 3
+  feedbackNoKnockout: {fileID: 2027864669}
+  feedback1Knockout: {fileID: 927334011}
+  feedback2Knockout: {fileID: 40494448}
+  feedback3Knockout: {fileID: 1143041696}
+  feedback4Knockout: {fileID: 1997132921}
+  feedback5Knockout: {fileID: 1461711782}
+  feedbackDisplayDuration: 4
+  levelCompleteSceneName: 
+  gameOverSceneName: 
+  transitionObject: {fileID: 0}
+  transitionDuration: 2
 --- !u!1 &1928430655
 GameObject:
   m_ObjectHideFlags: 0
@@ -26375,7 +26535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896067c4313cb5c45b40a5731cdc3427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisLevelIndex: 5
+  thisLevelIndex: 6
   coinReward: 0
   energyReward: -1
   alreadyClearedLabel: {fileID: 0}
@@ -28585,6 +28745,6 @@ SceneRoots:
   - {fileID: 2481544}
   - {fileID: 1414459468}
   - {fileID: 543450651845173810}
-  - {fileID: 312092839}
-  - {fileID: 916801812}
-  - {fileID: 710990341}
+  - {fileID: 130763476}
+  - {fileID: 264269633}
+  - {fileID: 1627034745}

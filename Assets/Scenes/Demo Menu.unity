@@ -58898,7 +58898,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1376894622}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1376894622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69005,7 +69017,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692068537}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c22d2a11467022408853c335f87579e, type: 3}
   m_Name: 
@@ -73201,8 +73213,8 @@ GameObject:
   - component: {fileID: 1798910993}
   - component: {fileID: 1798910992}
   - component: {fileID: 1798910991}
-  - component: {fileID: 1798910995}
   - component: {fileID: 1798910996}
+  - component: {fileID: 1798910997}
   m_Layer: 5
   m_Name: Stage 1
   m_TagString: Untagged
@@ -73323,22 +73335,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798910989}
   m_CullTransparentMesh: 1
---- !u!114 &1798910995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798910989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  requiredLevel: 1
-  lockedOverlay: {fileID: 0}
-  lockLabel: {fileID: 0}
-  lockLabelFormat: Locked (Lv.{0})
 --- !u!114 &1798910996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73346,7 +73342,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798910989}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
@@ -73357,6 +73353,22 @@ MonoBehaviour:
   notEnoughEnergyMessage: Not enough energy!
   feedbackDuration: 2
   disableWhenNotEnoughEnergy: 1
+--- !u!114 &1798910997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798910989}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredLevel: 1
+  lockedOverlay: {fileID: 0}
+  lockLabel: {fileID: 0}
+  lockLabelFormat: Locked (Lv.{0})
 --- !u!1 &1800737919
 GameObject:
   m_ObjectHideFlags: 0
@@ -75678,7 +75690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData:
     isSoundEnabled: 1
-    playerName: 
+    playerName: Player
     coins: 500
     energy: 100
     highestLevelUnlocked: 1
@@ -86530,6 +86542,7 @@ GameObject:
   - component: {fileID: 2065343304}
   - component: {fileID: 2065343303}
   - component: {fileID: 2065343307}
+  - component: {fileID: 2065343308}
   m_Layer: 5
   m_Name: Stage 3
   m_TagString: Untagged
@@ -86668,6 +86681,22 @@ MonoBehaviour:
   notEnoughEnergyMessage: Not enough energy!
   feedbackDuration: 2
   disableWhenNotEnoughEnergy: 1
+--- !u!114 &2065343308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065343301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredLevel: 3
+  lockedOverlay: {fileID: 0}
+  lockLabel: {fileID: 0}
+  lockLabelFormat: Locked (Lv.{0})
 --- !u!1 &2065646471
 GameObject:
   m_ObjectHideFlags: 0
@@ -87417,7 +87446,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2073322357}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2073322357
 MonoBehaviour:
   m_ObjectHideFlags: 0
