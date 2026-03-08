@@ -7091,7 +7091,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 430}
+  m_AnchoredPosition: {x: -0.000061035156, y: 311}
   m_SizeDelta: {x: 2104, y: 656.47266}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &681042766
@@ -13955,7 +13955,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 140
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -18870,7 +18870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1941618695035734117, guid: 56fdf4d141cf8f44ea0e61b550e40d27, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -2307
+      value: -2447
       objectReference: {fileID: 0}
     - target: {fileID: 5151003996434845050, guid: 56fdf4d141cf8f44ea0e61b550e40d27, type: 3}
       propertyPath: m_Pivot.x
