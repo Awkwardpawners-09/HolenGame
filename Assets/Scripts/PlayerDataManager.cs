@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Manages all player data and provides event-based updates for UI elements.
 /// Singleton pattern with DontDestroyOnLoad for persistence across scenes.
-/// INCLUDES: Coin, Energy, Player Name management + Avatar System
+/// INCLUDES: Coin, Energy, Player Name management + Avatar System + Level System
 /// </summary>
 public class PlayerDataManager : MonoBehaviour
 {
@@ -96,6 +96,7 @@ public class PlayerDataManager : MonoBehaviour
     public static event Action<int> OnCoinsChanged;
     public static event Action<int> OnEnergyChanged;
     public static event Action<string> OnPlayerNameChanged;
+    public static event Action<int> OnLevelChanged;
 
     private void Awake()
     {
@@ -104,10 +105,12 @@ public class PlayerDataManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
+            // Migrate old "HighestLevelUnlocked" key if it exists
+            PlayerData.MigrateLegacyKeys();
+
             playerData = PlayerData.Load();
             Debug.Log($"[PlayerDataManager] gachaQuestCompleted={playerData.gachaQuestCompleted}, gachaQuestClaimed={playerData.gachaQuestClaimed}");
-
-            Debug.Log($"[PlayerDataManager] Loaded - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}/{PlayerData.MAX_ENERGY}, Avatar: {playerData.selectedAvatarIndex}");
+            Debug.Log($"[PlayerDataManager] Loaded - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}/{PlayerData.MAX_ENERGY}, Level: {playerData.level}, Avatar: {playerData.selectedAvatarIndex}");
 
             Invoke(nameof(NotifyInitialValues), 0.1f);
         }
@@ -145,6 +148,7 @@ public class PlayerDataManager : MonoBehaviour
         OnPlayerNameChanged?.Invoke(playerData.playerName);
         OnCoinsChanged?.Invoke(playerData.coins);
         OnEnergyChanged?.Invoke(playerData.energy);
+        OnLevelChanged?.Invoke(playerData.level);
         OnAvatarChanged?.Invoke(GetCurrentAvatarSprite());
 
         Debug.Log($"[PlayerDataManager] Initial UI update complete.");
@@ -256,7 +260,7 @@ public class PlayerDataManager : MonoBehaviour
     {
         if (amount <= 0) return false;
 
-        if (playerData.SpendEnergy(amount))
+        if (playerData.SpendEnergy(2))
         {
             UpdateEnergyUI();
             OnEnergyChanged?.Invoke(playerData.energy);
@@ -302,6 +306,12 @@ public class PlayerDataManager : MonoBehaviour
     public string GetPlayerName() => playerData.playerName;
     public bool HasPlayerName() => !string.IsNullOrWhiteSpace(playerData.playerName);
 
+    // ===================== LEVEL METHODS =====================
+
+    public int GetLevel() => playerData.level;
+
+    public bool IsStageUnlocked(int stageIndex) => playerData.IsStageUnlocked(stageIndex);
+
     // ===================== UTILITY METHODS =====================
 
     public void RefreshAllUI()
@@ -310,6 +320,7 @@ public class PlayerDataManager : MonoBehaviour
         OnPlayerNameChanged?.Invoke(playerData.playerName);
         OnCoinsChanged?.Invoke(playerData.coins);
         OnEnergyChanged?.Invoke(playerData.energy);
+        OnLevelChanged?.Invoke(playerData.level);
         OnAvatarChanged?.Invoke(GetCurrentAvatarSprite());
     }
 
@@ -322,10 +333,10 @@ public class PlayerDataManager : MonoBehaviour
     public void SaveData() => playerData.Save();
 
     private void OnApplicationQuit()
-{
-    playerData.Save();
-    Debug.Log("[PlayerDataManager] Data saved on quit.");
-}
+    {
+        playerData.Save();
+        Debug.Log("[PlayerDataManager] Data saved on quit.");
+    }
 
     // ===================== TESTING METHODS =====================
 
@@ -336,13 +347,37 @@ public class PlayerDataManager : MonoBehaviour
     public void ResetEnergyForTesting() => SetEnergy(0);
     public void GiveStartingEnergyForTesting(int amount = 100) => SetEnergy(amount);
 
+    /// <summary>
+    /// [TESTING] Resets the player's level back to 1 and clears all completed levels.
+    /// Use the Inspector button or call this from a test script.
+    /// </summary>
+    [ContextMenu("⚙ Reset Player Level to 1 (Testing)")]
+    public void ResetLevelForTesting()
+    {
+        playerData.level = 1;
+        playerData.completedLevelsData = "";
+        // Clear the cache by reloading
+        playerData = PlayerData.Load();
+        playerData.level = 1;
+        playerData.completedLevelsData = "";
+        playerData.Save();
+        OnLevelChanged?.Invoke(playerData.level);
+        Debug.Log("[PlayerDataManager] ⚙ Player level reset to 1 and completed levels cleared.");
+
+        // Refresh all LevelUnlockButtons in the scene
+        foreach (var btn in FindObjectsOfType<LevelUnlockButton>())
+            btn.RefreshLockState();
+    }
+
     public void PrintDataForTesting()
     {
         Debug.Log("🧪 [TESTING] ===== PLAYER DATA =====");
         Debug.Log($"🧪 Player Name: {playerData.playerName}");
         Debug.Log($"🧪 Coins: {playerData.coins}");
         Debug.Log($"🧪 Energy: {playerData.energy}");
+        Debug.Log($"🧪 Level: {playerData.level}");
         Debug.Log($"🧪 Avatar Index: {playerData.selectedAvatarIndex}");
+        Debug.Log($"🧪 Completed Stages: {playerData.completedLevelsData}");
         Debug.Log("🧪 [TESTING] ========================");
     }
 
@@ -351,6 +386,8 @@ public class PlayerDataManager : MonoBehaviour
         playerData.playerName = "";
         playerData.coins = 0;
         playerData.energy = 0;
+        playerData.level = 1;
+        playerData.completedLevelsData = "";
         playerData.selectedAvatarIndex = 0;
         playerData.Save();
         RefreshAllUI();

@@ -34,11 +34,15 @@ public class PlayerData
     public string playerName = "PlayerName";
     public int coins = 5000;
     public int energy = 10;
-    public int highestLevelUnlocked = 1;
+
+    /// <summary>
+    /// The player's current level. Starts at 1.
+    /// Stage buttons with a matching index are unlocked when the player reaches that level.
+    /// Example: level=1 unlocks stage index 1 only. level=2 unlocks stage index 1 and 2, etc.
+    /// </summary>
+    public int level = 1;
 
     // ===================== AVATAR SYSTEM =====================
-    // Stores the index of the selected avatar sprite.
-    // The actual Sprite[] lives in PlayerDataManager (set in Inspector).
     public int selectedAvatarIndex = 0;
 
     private const string KEY_AVATAR_INDEX = "SelectedAvatarIndex";
@@ -51,53 +55,93 @@ public class PlayerData
     }
     // ===================== END AVATAR SYSTEM =====================
 
-        // ===================== QUEST SYSTEM =====================
+    // ===================== QUEST SYSTEM =====================
     public bool gachaQuestCompleted = false;
     public bool gachaQuestClaimed = false;
 
-public const string KEY_GACHA_QUEST_COMPLETED = "GachaQuestCompleted";
-public const string KEY_GACHA_QUEST_CLAIMED = "GachaQuestClaimed";
+    public const string KEY_GACHA_QUEST_COMPLETED = "GachaQuestCompleted";
+    public const string KEY_GACHA_QUEST_CLAIMED = "GachaQuestClaimed";
 
-public bool loginQuestClaimed = false;
-public const string KEY_LOGIN_QUEST_CLAIMED = "LoginQuestClaimed";
+    public bool loginQuestClaimed = false;
+    public const string KEY_LOGIN_QUEST_CLAIMED = "LoginQuestClaimed";
 
-public bool arcadeLevel1QuestCompleted = false;
-public bool arcadeLevel1QuestClaimed = false;
-public const string KEY_ARCADE_LEVEL1_QUEST_COMPLETED = "ArcadeLevel1QuestCompleted";
-public const string KEY_ARCADE_LEVEL1_QUEST_CLAIMED = "ArcadeLevel1QuestClaimed";
+    public bool arcadeLevel1QuestCompleted = false;
+    public bool arcadeLevel1QuestClaimed = false;
+    public const string KEY_ARCADE_LEVEL1_QUEST_COMPLETED = "ArcadeLevel1QuestCompleted";
+    public const string KEY_ARCADE_LEVEL1_QUEST_CLAIMED = "ArcadeLevel1QuestClaimed";
 
-public bool gacha1xQuestCompleted = false;
-public bool gacha1xQuestClaimed = false;
-public const string KEY_GACHA1X_QUEST_COMPLETED = "Gacha1xQuestCompleted";
-public const string KEY_GACHA1X_QUEST_CLAIMED = "Gacha1xQuestClaimed";
+    public bool gacha1xQuestCompleted = false;
+    public bool gacha1xQuestClaimed = false;
+    public const string KEY_GACHA1X_QUEST_COMPLETED = "Gacha1xQuestCompleted";
+    public const string KEY_GACHA1X_QUEST_CLAIMED = "Gacha1xQuestClaimed";
 
-public bool allQuestsClaimed = false;
-public const string KEY_ALL_QUESTS_CLAIMED = "AllQuestsClaimed";
+    public bool allQuestsClaimed = false;
+    public const string KEY_ALL_QUESTS_CLAIMED = "AllQuestsClaimed";
     // ===================== END QUEST SYSTEM =====================
 
-// ===================== START ACHIEVEMENT SYSTEM =====================
+    // ===================== ACHIEVEMENT SYSTEM =====================
     public bool kalyeStageAchievementCompleted = false;
-public bool kalyeStageAchievementClaimed = false;
-public const string KEY_KALYE_ACHIEVEMENT_COMPLETED = "KalyeAchievementCompleted";
-public const string KEY_KALYE_ACHIEVEMENT_CLAIMED = "KalyeAchievementClaimed";
+    public bool kalyeStageAchievementClaimed = false;
+    public const string KEY_KALYE_ACHIEVEMENT_COMPLETED = "KalyeAchievementCompleted";
+    public const string KEY_KALYE_ACHIEVEMENT_CLAIMED = "KalyeAchievementClaimed";
 
-public bool rareHolenAchievementCompleted = false;
-public bool rareHolenAchievementClaimed = false;
-public const string KEY_RARE_HOLEN_ACHIEVEMENT_COMPLETED = "RareHolenAchievementCompleted";
-public const string KEY_RARE_HOLEN_ACHIEVEMENT_CLAIMED = "RareHolenAchievementClaimed";
+    public bool rareHolenAchievementCompleted = false;
+    public bool rareHolenAchievementClaimed = false;
+    public const string KEY_RARE_HOLEN_ACHIEVEMENT_COMPLETED = "RareHolenAchievementCompleted";
+    public const string KEY_RARE_HOLEN_ACHIEVEMENT_CLAIMED = "RareHolenAchievementClaimed";
 
-public bool collect10HolensAchievementCompleted = false;
-public bool collect10HolensAchievementClaimed = false;
-public int totalHolensCollected = 0;
-public const string KEY_COLLECT10_ACHIEVEMENT_COMPLETED = "Collect10AchievementCompleted";
-public const string KEY_COLLECT10_ACHIEVEMENT_CLAIMED = "Collect10AchievementClaimed";
-public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
-// ===================== END ACHIEVEMENT SYSTEM =====================
+    public bool collect10HolensAchievementCompleted = false;
+    public bool collect10HolensAchievementClaimed = false;
+    public int totalHolensCollected = 0;
+    public const string KEY_COLLECT10_ACHIEVEMENT_COMPLETED = "Collect10AchievementCompleted";
+    public const string KEY_COLLECT10_ACHIEVEMENT_CLAIMED = "Collect10AchievementClaimed";
+    public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
+    // ===================== END ACHIEVEMENT SYSTEM =====================
 
     // ===================== COMPLETED LEVELS TRACKING =====================
     public string completedLevelsData = "";
     private const string KEY_COMPLETED_LEVELS = "CompletedLevels";
     private HashSet<int> completedLevelsCache = null;
+
+    // ===================== FIRST CLEAR TRACKING =====================
+    // Stores stage IDs that have already been first-cleared, as a comma-separated string.
+    // e.g. "Stage1,Stage2,Stage3"
+    public string firstClearedStages = "";
+    private const string KEY_FIRST_CLEARED_STAGES = "FirstClearedStages";
+    private HashSet<string> firstClearedCache = null;
+
+    private HashSet<string> GetFirstClearedStages()
+    {
+        if (firstClearedCache == null)
+        {
+            firstClearedCache = new HashSet<string>();
+            if (!string.IsNullOrEmpty(firstClearedStages))
+            {
+                foreach (string id in firstClearedStages.Split(','))
+                {
+                    string trimmed = id.Trim();
+                    if (!string.IsNullOrEmpty(trimmed))
+                        firstClearedCache.Add(trimmed);
+                }
+            }
+        }
+        return firstClearedCache;
+    }
+
+    /// <summary>Returns true if this stage has never been first-cleared before.</summary>
+    public bool IsFirstClear(string stageID) => !GetFirstClearedStages().Contains(stageID);
+
+    /// <summary>Marks a stage as first-cleared so the bonus never triggers again.</summary>
+    public void MarkFirstCleared(string stageID)
+    {
+        if (GetFirstClearedStages().Add(stageID))
+        {
+            firstClearedStages = string.Join(",", firstClearedCache);
+            Save();
+            Debug.Log($"[PlayerData] Stage '{stageID}' marked as first-cleared.");
+        }
+    }
+    // ===================== END FIRST CLEAR TRACKING =====================
 
     private HashSet<int> GetCompletedLevels()
     {
@@ -134,7 +178,7 @@ public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
     private const string KEY_PLAYER_NAME = "PlayerName";
     private const string KEY_COINS = "Coins";
     private const string KEY_ENERGY = "Energy";
-    private const string KEY_HIGHEST_LEVEL = "HighestLevelUnlocked";
+    private const string KEY_LEVEL = "PlayerLevel";
     private const string KEY_LAST_ENERGY_UPDATE = "LastEnergyUpdate";
 
     // ===================== COIN METHODS =====================
@@ -222,21 +266,43 @@ public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
         return Mathf.CeilToInt((float)secondsUntilNext);
     }
 
-    // ===================== LEVEL PROGRESSION METHODS =====================
+    // ===================== LEVEL METHODS =====================
 
+    /// <summary>
+    /// Increments the player's level by 1. Only call this once per stage clear.
+    /// The guard against double-incrementing is handled by IsLevelCompleted() in LevelCompleteButton.
+    /// </summary>
+    public void IncrementLevel()
+    {
+        level += 1;
+        Save();
+        Debug.Log($"[PlayerData] Player leveled up! Current level: {level}");
+    }
+
+    public bool IsStageUnlocked(int stageIndex) => stageIndex <= level;
+
+    // ── Compatibility shims ────────────────────────────────────────────────────
+    // These keep existing scripts (ArcadeLevelManager, LevelButton, etc.) compiling
+    // without modification. They delegate to the new level field.
+
+    /// <summary>Unlocks the level if it is higher than the current level. Legacy-compatible.</summary>
     public void UnlockLevel(int levelNumber)
     {
-        if (levelNumber > highestLevelUnlocked)
+        if (levelNumber > level)
         {
-            highestLevelUnlocked = levelNumber;
+            level = levelNumber;
             Save();
-            Debug.Log($"[PlayerData] Level {levelNumber} unlocked! Highest: {highestLevelUnlocked}");
+            Debug.Log($"[PlayerData] UnlockLevel({levelNumber}) called — level is now {level}");
         }
     }
 
-    public bool IsLevelUnlocked(int levelNumber) => levelNumber <= highestLevelUnlocked;
+    /// <summary>Marks stageIndex+1 as unlocked. Legacy-compatible.</summary>
+    public void CompleteLevel(int completedStageIndex) => UnlockLevel(completedStageIndex + 1);
 
-    public void CompleteLevel(int completedLevel) => UnlockLevel(completedLevel + 1);
+    /// <summary>Returns true if the given level number is <= the player's current level. Legacy-compatible.</summary>
+    public bool IsLevelUnlocked(int levelNumber) => levelNumber <= level;
+
+    // ── End compatibility shims ────────────────────────────────────────────────
 
     // ===================== SAVE/LOAD METHODS =====================
 
@@ -245,13 +311,14 @@ public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
         PlayerPrefs.SetString(KEY_PLAYER_NAME, playerName);
         PlayerPrefs.SetInt(KEY_COINS, coins);
         PlayerPrefs.SetInt(KEY_ENERGY, energy);
-        PlayerPrefs.SetInt(KEY_HIGHEST_LEVEL, highestLevelUnlocked);
+        PlayerPrefs.SetInt(KEY_LEVEL, level);
         PlayerPrefs.SetString(KEY_LAST_ENERGY_UPDATE, lastEnergyUpdateTime);
         PlayerPrefs.SetInt(KEY_SOUND_ENABLED, isSoundEnabled ? 1 : 0);
         PlayerPrefs.SetString(KEY_COMPLETED_LEVELS, completedLevelsData);
-        PlayerPrefs.SetInt(KEY_AVATAR_INDEX, selectedAvatarIndex); // AVATAR
-        PlayerPrefs.SetInt(KEY_GACHA_QUEST_COMPLETED, gachaQuestCompleted ? 1 : 0); // ✅
-        PlayerPrefs.SetInt(KEY_GACHA_QUEST_CLAIMED, gachaQuestClaimed ? 1 : 0);     // ✅
+        PlayerPrefs.SetString(KEY_FIRST_CLEARED_STAGES, firstClearedStages);
+        PlayerPrefs.SetInt(KEY_AVATAR_INDEX, selectedAvatarIndex);
+        PlayerPrefs.SetInt(KEY_GACHA_QUEST_COMPLETED, gachaQuestCompleted ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_GACHA_QUEST_CLAIMED, gachaQuestClaimed ? 1 : 0);
         PlayerPrefs.SetInt(KEY_LOGIN_QUEST_CLAIMED, loginQuestClaimed ? 1 : 0);
         PlayerPrefs.SetInt(KEY_ARCADE_LEVEL1_QUEST_COMPLETED, arcadeLevel1QuestCompleted ? 1 : 0);
         PlayerPrefs.SetInt(KEY_ARCADE_LEVEL1_QUEST_CLAIMED, arcadeLevel1QuestClaimed ? 1 : 0);
@@ -274,13 +341,14 @@ public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
         data.playerName = PlayerPrefs.GetString(KEY_PLAYER_NAME, "");
         data.coins = PlayerPrefs.GetInt(KEY_COINS, 5000);
         data.energy = PlayerPrefs.GetInt(KEY_ENERGY, 10);
-        data.highestLevelUnlocked = PlayerPrefs.GetInt(KEY_HIGHEST_LEVEL, 1);
+        data.level = PlayerPrefs.GetInt(KEY_LEVEL, 1);
         data.lastEnergyUpdateTime = PlayerPrefs.GetString(KEY_LAST_ENERGY_UPDATE, DateTime.Now.ToString("o"));
         data.isSoundEnabled = PlayerPrefs.GetInt(KEY_SOUND_ENABLED, 1) == 1;
         data.completedLevelsData = PlayerPrefs.GetString(KEY_COMPLETED_LEVELS, "");
-        data.selectedAvatarIndex = PlayerPrefs.GetInt(KEY_AVATAR_INDEX, 0); // AVATAR
-        data.gachaQuestCompleted = PlayerPrefs.GetInt(KEY_GACHA_QUEST_COMPLETED, 0) == 1; // ✅
-        data.gachaQuestClaimed = PlayerPrefs.GetInt(KEY_GACHA_QUEST_CLAIMED, 0) == 1;     // ✅
+        data.firstClearedStages = PlayerPrefs.GetString(KEY_FIRST_CLEARED_STAGES, "");
+        data.selectedAvatarIndex = PlayerPrefs.GetInt(KEY_AVATAR_INDEX, 0);
+        data.gachaQuestCompleted = PlayerPrefs.GetInt(KEY_GACHA_QUEST_COMPLETED, 0) == 1;
+        data.gachaQuestClaimed = PlayerPrefs.GetInt(KEY_GACHA_QUEST_CLAIMED, 0) == 1;
         data.loginQuestClaimed = PlayerPrefs.GetInt(KEY_LOGIN_QUEST_CLAIMED, 0) == 1;
         data.arcadeLevel1QuestCompleted = PlayerPrefs.GetInt(KEY_ARCADE_LEVEL1_QUEST_COMPLETED, 0) == 1;
         data.arcadeLevel1QuestClaimed = PlayerPrefs.GetInt(KEY_ARCADE_LEVEL1_QUEST_CLAIMED, 0) == 1;
@@ -304,10 +372,11 @@ public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
         PlayerPrefs.DeleteKey(KEY_PLAYER_NAME);
         PlayerPrefs.DeleteKey(KEY_COINS);
         PlayerPrefs.DeleteKey(KEY_ENERGY);
-        PlayerPrefs.DeleteKey(KEY_HIGHEST_LEVEL);
+        PlayerPrefs.DeleteKey(KEY_LEVEL);
         PlayerPrefs.DeleteKey(KEY_LAST_ENERGY_UPDATE);
         PlayerPrefs.DeleteKey(KEY_COMPLETED_LEVELS);
-        PlayerPrefs.DeleteKey(KEY_AVATAR_INDEX); // AVATAR
+        PlayerPrefs.DeleteKey(KEY_FIRST_CLEARED_STAGES);
+        PlayerPrefs.DeleteKey(KEY_AVATAR_INDEX);
         PlayerPrefs.DeleteKey(KEY_GACHA_QUEST_COMPLETED);
         PlayerPrefs.DeleteKey(KEY_GACHA_QUEST_CLAIMED);
         PlayerPrefs.DeleteKey(KEY_LOGIN_QUEST_CLAIMED);
@@ -325,5 +394,20 @@ public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
         PlayerPrefs.DeleteKey(KEY_TOTAL_HOLENS_COLLECTED);
         PlayerPrefs.Save();
         Debug.Log("[PlayerData] All player data deleted");
+    }
+
+    // Legacy key migration: if old "HighestLevelUnlocked" key exists, migrate it once.
+    private const string KEY_HIGHEST_LEVEL_LEGACY = "HighestLevelUnlocked";
+    public static void MigrateLegacyKeys()
+    {
+        if (PlayerPrefs.HasKey(KEY_HIGHEST_LEVEL_LEGACY))
+        {
+            int legacy = PlayerPrefs.GetInt(KEY_HIGHEST_LEVEL_LEGACY, 1);
+            if (!PlayerPrefs.HasKey(KEY_LEVEL))
+                PlayerPrefs.SetInt(KEY_LEVEL, legacy);
+            PlayerPrefs.DeleteKey(KEY_HIGHEST_LEVEL_LEGACY);
+            PlayerPrefs.Save();
+            Debug.Log($"[PlayerData] Migrated legacy HighestLevelUnlocked ({legacy}) → PlayerLevel");
+        }
     }
 }

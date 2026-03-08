@@ -8717,6 +8717,7 @@ GameObject:
   - component: {fileID: 146145148}
   - component: {fileID: 146145147}
   - component: {fileID: 146145150}
+  - component: {fileID: 146145151}
   m_Layer: 5
   m_Name: Stage 7
   m_TagString: Untagged
@@ -8837,10 +8838,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 7
+  stageIndex: 7
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &146145151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146145145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 146145145}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &155160413
 GameObject:
   m_ObjectHideFlags: 0
@@ -15535,7 +15554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 2
+  stageIndex: 2
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
@@ -15552,7 +15571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonType: 1
-  targetGameObject: {fileID: 0}
+  targetGameObject: {fileID: 212245769}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
   feedbackDuration: 2
@@ -19614,6 +19633,7 @@ GameObject:
   - component: {fileID: 355258309}
   - component: {fileID: 355258308}
   - component: {fileID: 355258311}
+  - component: {fileID: 355258312}
   m_Layer: 5
   m_Name: Stage 10
   m_TagString: Untagged
@@ -19734,10 +19754,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 10
+  stageIndex: 10
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &355258312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355258306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 355258306}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &357220924
 GameObject:
   m_ObjectHideFlags: 0
@@ -34730,6 +34768,7 @@ GameObject:
   - component: {fileID: 754367638}
   - component: {fileID: 754367637}
   - component: {fileID: 754367640}
+  - component: {fileID: 754367641}
   m_Layer: 5
   m_Name: Stage 8
   m_TagString: Untagged
@@ -34850,10 +34889,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 8
+  stageIndex: 8
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &754367641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754367635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 754367635}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &757278245
 GameObject:
   m_ObjectHideFlags: 0
@@ -48127,6 +48184,155 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032065312}
   m_CullTransparentMesh: 1
+--- !u!1 &1037806155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1037806156}
+  - component: {fileID: 1037806159}
+  - component: {fileID: 1037806158}
+  - component: {fileID: 1037806157}
+  m_Layer: 5
+  m_Name: Trailerterxt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1037806156
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037806155}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.0936, y: 4.0936, z: 4.0936}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1554230552}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -107}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1037806157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037806155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7de746aeecd16649b697e1c7c1c245e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  url: https://www.youtube.com/watch?v=fl1KHs_C3ss
+--- !u!114 &1037806158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037806155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: TRAILER
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
+  m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: -64.533264, y: 0, z: -73.02442, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1037806159
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037806155}
+  m_CullTransparentMesh: 1
 --- !u!1 &1042840021
 GameObject:
   m_ObjectHideFlags: 0
@@ -48163,8 +48369,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41, y: -5.7}
-  m_SizeDelta: {x: 181.3674, y: 59.6537}
+  m_AnchoredPosition: {x: 57.82, y: -5.7}
+  m_SizeDelta: {x: 208.92, y: 59.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1042840023
 MonoBehaviour:
@@ -48213,8 +48419,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34
-  m_fontSizeBase: 34
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -48249,7 +48455,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -1.3774108, y: -4.1322327, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -48288,8 +48494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11b94a05ac169144bab534f182044ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullEnergyText: 10/10
-  timerFormat: '{0}:{1:00}'
+  regenFormat: '{0}/{1} ({2}:{3:00})'
+  fullEnergyFormat: '{0}/{1} (Full)'
   hideWhenFull: 0
 --- !u!1 &1047203551
 GameObject:
@@ -52378,7 +52584,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1192657792
 RectTransform:
   m_ObjectHideFlags: 0
@@ -58829,6 +59035,7 @@ GameObject:
   - component: {fileID: 1376894622}
   - component: {fileID: 1376894621}
   - component: {fileID: 1376894624}
+  - component: {fileID: 1376894625}
   m_Layer: 5
   m_Name: Stage 5
   m_TagString: Untagged
@@ -58961,10 +59168,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 5
+  stageIndex: 5
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &1376894625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376894619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 1376894619}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &1384292076
 GameObject:
   m_ObjectHideFlags: 0
@@ -59439,6 +59664,7 @@ GameObject:
   - component: {fileID: 1394558584}
   - component: {fileID: 1394558583}
   - component: {fileID: 1394558586}
+  - component: {fileID: 1394558587}
   m_Layer: 5
   m_Name: Stage 9
   m_TagString: Untagged
@@ -59559,10 +59785,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 9
+  stageIndex: 9
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &1394558587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394558581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 1394558581}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &1396641711
 GameObject:
   m_ObjectHideFlags: 0
@@ -59993,8 +60237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11b94a05ac169144bab534f182044ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullEnergyText: 10/10
-  timerFormat: '{0}:{1:00}'
+  regenFormat: '{0}/{1} ({2}:{3:00})'
+  fullEnergyFormat: '{0}/{1} (Full)'
   hideWhenFull: 0
 --- !u!114 &1405005683
 MonoBehaviour:
@@ -60056,8 +60300,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34
-  m_fontSizeBase: 34
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -60092,7 +60336,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -63.35562, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -60597,7 +60841,6 @@ GameObject:
   - component: {fileID: 1426427686}
   - component: {fileID: 1426427690}
   - component: {fileID: 1426427689}
-  - component: {fileID: 1426427688}
   - component: {fileID: 1426427687}
   m_Layer: 0
   m_Name: Value
@@ -60638,22 +60881,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataType: 1
---- !u!114 &1426427688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426427685}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23f33a2b776541344a6881b4f136c720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinText: {fileID: 1426427689}
-  prefix: 
-  suffix: 
-  useThousandsSeparator: 0
 --- !u!114 &1426427689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62954,6 +63181,7 @@ RectTransform:
   m_Children:
   - {fileID: 1728233936}
   - {fileID: 1208103534}
+  - {fileID: 2106428801}
   m_Father: {fileID: 2114986018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -63564,6 +63792,7 @@ GameObject:
   - component: {fileID: 1512757103}
   - component: {fileID: 1512757102}
   - component: {fileID: 1512757105}
+  - component: {fileID: 1512757106}
   m_Layer: 5
   m_Name: Stage 4
   m_TagString: Untagged
@@ -63696,10 +63925,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 4
+  stageIndex: 4
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &1512757106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512757100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 1512757100}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &1517136411
 GameObject:
   m_ObjectHideFlags: 0
@@ -65262,6 +65509,82 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553657875}
+  m_CullTransparentMesh: 1
+--- !u!1 &1554230551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1554230552}
+  - component: {fileID: 1554230554}
+  - component: {fileID: 1554230553}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1554230552
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554230551}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.061274447, y: 0.061274447, z: 0.061274447}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1037806156}
+  m_Father: {fileID: 2106428801}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000019942, y: 0}
+  m_SizeDelta: {x: 1280, y: 720}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1554230553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554230551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 671cec0b215cedb41834d85f95ade8b6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1554230554
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554230551}
   m_CullTransparentMesh: 1
 --- !u!1 &1564961248
 GameObject:
@@ -73342,13 +73665,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798910989}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttonType: 1
-  targetGameObject: {fileID: 0}
+  targetGameObject: {fileID: 1798910989}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
   feedbackDuration: 2
@@ -73360,12 +73683,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798910989}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 1
+  stageIndex: 1
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
@@ -73896,6 +74219,7 @@ GameObject:
   - component: {fileID: 1823017432}
   - component: {fileID: 1823017431}
   - component: {fileID: 1823017434}
+  - component: {fileID: 1823017435}
   m_Layer: 5
   m_Name: Stage 11
   m_TagString: Untagged
@@ -74016,10 +74340,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 11
+  stageIndex: 11
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &1823017435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823017429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 1823017429}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &1825221150
 GameObject:
   m_ObjectHideFlags: 0
@@ -75693,7 +76035,7 @@ MonoBehaviour:
     playerName: Player
     coins: 500
     energy: 100
-    highestLevelUnlocked: 1
+    level: 1
     selectedAvatarIndex: 0
     gachaQuestCompleted: 0
     gachaQuestClaimed: 0
@@ -75711,6 +76053,7 @@ MonoBehaviour:
     collect10HolensAchievementClaimed: 0
     totalHolensCollected: 0
     completedLevelsData: 
+    firstClearedStages: 
     lastEnergyUpdateTime: 
   energyCheckInterval: 1
   playerNameUIElements:
@@ -83633,6 +83976,7 @@ GameObject:
   - component: {fileID: 1952546534}
   - component: {fileID: 1952546533}
   - component: {fileID: 1952546536}
+  - component: {fileID: 1952546537}
   m_Layer: 5
   m_Name: Stage 12
   m_TagString: Untagged
@@ -83753,10 +84097,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 12
+  stageIndex: 12
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &1952546537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952546531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 1952546531}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &1954486788
 GameObject:
   m_ObjectHideFlags: 0
@@ -86676,7 +87038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonType: 1
-  targetGameObject: {fileID: 0}
+  targetGameObject: {fileID: 2065343301}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
   feedbackDuration: 2
@@ -86693,7 +87055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 3
+  stageIndex: 3
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
@@ -87377,6 +87739,7 @@ GameObject:
   - component: {fileID: 2073322357}
   - component: {fileID: 2073322356}
   - component: {fileID: 2073322359}
+  - component: {fileID: 2073322360}
   m_Layer: 5
   m_Name: Stage 6
   m_TagString: Untagged
@@ -87509,10 +87872,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c9a89f45ffce4f9d4c3a18e458916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredLevel: 6
+  stageIndex: 6
   lockedOverlay: {fileID: 0}
   lockLabel: {fileID: 0}
   lockLabelFormat: Locked (Lv.{0})
+--- !u!114 &2073322360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073322354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
+  targetGameObject: {fileID: 2073322354}
+  feedbackText: {fileID: 0}
+  notEnoughEnergyMessage: Not enough energy!
+  feedbackDuration: 2
+  disableWhenNotEnoughEnergy: 1
 --- !u!1 &2073656299
 GameObject:
   m_ObjectHideFlags: 0
@@ -93376,6 +93757,144 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2106428800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2106428801}
+  - component: {fileID: 2106428805}
+  - component: {fileID: 2106428804}
+  - component: {fileID: 2106428803}
+  - component: {fileID: 2106428802}
+  m_Layer: 5
+  m_Name: TRAILER
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2106428801
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106428800}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.3587, y: 4.3587, z: 4.3587}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1554230552}
+  m_Father: {fileID: 1488901449}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -231, y: -861}
+  m_SizeDelta: {x: 89.02002, y: 51.079956}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2106428802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106428800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4848715f6b351ff46a4f3d4a98a1c5d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseScale: {x: 1, y: 1, z: 1}
+  scaleAmplitude: 0.03
+  breathsPerMinute: 8
+  randomizeStartPhase: 1
+--- !u!114 &2106428803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106428800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2106428804}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2106428804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106428800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2106428805
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106428800}
+  m_CullTransparentMesh: 1
 --- !u!1 &2106915322
 GameObject:
   m_ObjectHideFlags: 0

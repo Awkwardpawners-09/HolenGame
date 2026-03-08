@@ -16,8 +16,8 @@ public class EnergyCostButton : MonoBehaviour
 
     public enum ButtonType
     {
-        Arcade = 1,      // Costs 1 energy
-        Multiplayer = 2  // Costs 2 energy
+        Arcade = 2,      // Costs 1 energy
+        Multiplayer = 0  // Costs 2 energy
     }
 
     [Header("Target GameObject")]
@@ -67,6 +67,19 @@ public class EnergyCostButton : MonoBehaviour
     private void UpdateButtonState()
     {
         if (PlayerDataManager.Instance == null) return;
+
+        // If a LevelUnlockButton has locked this stage, never override it.
+        LevelUnlockButton levelLock = GetComponent<LevelUnlockButton>();
+        if (levelLock != null)
+        {
+            int playerLevel = PlayerDataManager.Instance.playerData.level;
+            bool stageIsLocked = playerLevel < levelLock.stageIndex;
+            if (stageIsLocked)
+            {
+                button.interactable = false;
+                return;
+            }
+        }
 
         int energyCost = (int)buttonType;
         bool hasEnoughEnergy = PlayerDataManager.Instance.HasEnergy(energyCost);

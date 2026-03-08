@@ -2,19 +2,19 @@ using UnityEngine;
 using TMPro;
 
 /// <summary>
-/// Displays a countdown timer showing when the next energy will regenerate.
+/// Displays current energy and a countdown timer showing when the next energy will regenerate.
 /// Attach to a TextMeshProUGUI element.
-/// Shows "Full" when energy is maxed, otherwise shows time remaining (e.g., "9:45")
+/// While regenerating shows e.g. "2/5 (9:45)", when full shows e.g. "5/5 (Full)"
 /// </summary>
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class EnergyTimerDisplay : MonoBehaviour
 {
     [Header("Display Settings")]
-    [Tooltip("Text to show when energy is full")]
-    public string fullEnergyText = "Full";
+    [Tooltip("Format while energy is regenerating.\n{0} = current energy, {1} = max energy, {2} = minutes, {3} = seconds.\nExample: \"{0}/{1} ({2}:{3:00})\" shows \"2/5 (9:45)\"")]
+    public string regenFormat = "{0}/{1} ({2}:{3:00})";
 
-    [Tooltip("Format for timer display. Use {0} for minutes and {1} for seconds")]
-    public string timerFormat = "{0}:{1:00}";
+    [Tooltip("Format when energy is full.\n{0} = current energy, {1} = max energy.\nExample: \"{0}/{1} (Full)\" shows \"5/5 (Full)\"")]
+    public string fullEnergyFormat = "{0}/{1} (Full)";
 
     [Header("Optional: Hide When Full")]
     [Tooltip("Hide this text element when energy is full")]
@@ -36,14 +36,15 @@ public class EnergyTimerDisplay : MonoBehaviour
     {
         if (PlayerDataManager.Instance == null)
         {
-            textComponent.text = "--:--";
+            textComponent.text = "--/-- (--:--)";
             return;
         }
 
         int currentEnergy = PlayerDataManager.Instance.GetEnergy();
+        int maxEnergy = PlayerData.MAX_ENERGY;
 
-        // Check if energy is full
-        if (currentEnergy >= PlayerData.MAX_ENERGY)
+        // Energy is full — no timer needed
+        if (currentEnergy >= maxEnergy)
         {
             if (hideWhenFull)
             {
@@ -52,18 +53,19 @@ public class EnergyTimerDisplay : MonoBehaviour
             else
             {
                 textComponent.gameObject.SetActive(true);
-                textComponent.text = fullEnergyText;
+                // e.g. "5/5 (Full)"
+                textComponent.text = string.Format(fullEnergyFormat, currentEnergy, maxEnergy);
             }
             return;
         }
 
-        // Show timer
+        // Still regenerating — show energy + countdown, e.g. "2/5 (9:45)"
         textComponent.gameObject.SetActive(true);
 
         int secondsUntilNext = PlayerDataManager.Instance.GetSecondsUntilNextEnergy();
         int minutes = secondsUntilNext / 60;
         int seconds = secondsUntilNext % 60;
 
-        textComponent.text = string.Format(timerFormat, minutes, seconds);
+        textComponent.text = string.Format(regenFormat, currentEnergy, maxEnergy, minutes, seconds);
     }
 }

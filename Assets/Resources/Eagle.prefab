@@ -158,9 +158,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleEffectPrefab: {fileID: 4927711562988715638, guid: 35e6a72c20dc42545b861587c97794da, type: 3}
   soundEffects:
-  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
+  - {fileID: 8300000, guid: 7b4dee3039390a545ab80cdf80e5865d, type: 3}
   backgroundMusic: {fileID: 0}
-  hitSoundVolume: 40
+  hitSoundVolume: 10
 --- !u!114 &5193278588757229482
 MonoBehaviour:
   m_ObjectHideFlags: 0
