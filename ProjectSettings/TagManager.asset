@@ -7,6 +7,7 @@ TagManager:
   - Objective
   - Ball
   - HolenModel
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - Holen
   - 
   - 11
-  - 
-  - 
+  - Barriers
+  - Objective
   - 
   - 
   - 

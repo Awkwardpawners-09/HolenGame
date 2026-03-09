@@ -224,8 +224,11 @@ public class PVPScore : MonoBehaviourPunCallbacks
     /// </summary>
     public void OnTurnStarted(int shootingPlayerAbsoluteNumber)
     {
-        if (PhotonNetwork.IsMasterClient)
-            photonView.RPC("RPC_OnTurnStarted", RpcTarget.All, shootingPlayerAbsoluteNumber);
+        // The SHOOTER is the authority on their own player number.
+        // Do NOT gate on IsMasterClient — when Player 2 shoots they are not master,
+        // so the RPC would never send and activeTurnPlayerNumber would stay stale,
+        // causing all knockouts to be credited to the wrong player.
+        photonView.RPC("RPC_OnTurnStarted", RpcTarget.All, shootingPlayerAbsoluteNumber);
     }
 
     [PunRPC]

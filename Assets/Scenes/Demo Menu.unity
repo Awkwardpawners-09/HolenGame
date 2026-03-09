@@ -8787,7 +8787,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 146145148}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &146145148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34838,7 +34850,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 754367638}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &754367638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78782,6 +78806,8 @@ MonoBehaviour:
   - Stage 4
   - Stage 5
   - Stage 6
+  - Stage 7
+  - Stage 8
   mainMenuSceneName: Demo Menu
   disconnectTimeout: 5
 --- !u!1 &1943374237
