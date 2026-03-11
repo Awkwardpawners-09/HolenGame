@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 174715349749746958}
   - component: {fileID: 2573982518734136167}
   m_Layer: 9
-  m_Name: Kyrstal Transparent
+  m_Name: Kristal_Yellow
   m_TagString: Objective
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a89ad054ccd6659419c6218e5099d14d, type: 2}
+  - {fileID: 2100000, guid: 99b6299d48550434ea9948b9f62033e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
