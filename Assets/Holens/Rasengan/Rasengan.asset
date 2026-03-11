@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf30ea56afba3f448eaab1016cc464c, type: 3}
+  m_Name: Rasengan
+  m_EditorClassIdentifier: 
+  holenID: AL0002
+  rarity: Mythic
+  holenName: Blue Spiral
+  holenIcon: {fileID: 21300000, guid: 278776a6f1322c94b9c83383b968093a, type: 3}
+  property: 0
+  holenPrefab: {fileID: 8756389757861407499, guid: b858c37823b96b14ab8bb246772b3366, type: 3}
+  InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 2489918361564836060, guid: f10dad2c575041143ae89914e959adbf, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
+  maxStack: 9

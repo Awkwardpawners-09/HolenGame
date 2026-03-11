@@ -17,9 +17,9 @@ MonoBehaviour:
   holenName: Krystal Green
   holenIcon: {fileID: 21300000, guid: 6f7db2a7734b03c4b9d84e69186db31a, type: 3}
   property: 0
-  holenPrefab: {fileID: 4543069569791729328, guid: 4269b342f2d94774daf8247ad5388ddb, type: 3}
+  holenPrefab: {fileID: 4543069569791729328, guid: 7e9454b18e2862c4db8887fe7869cb31, type: 3}
   InventoryImage: {fileID: 0}
-  inventoryPrefab: {fileID: 0}
+  inventoryPrefab: {fileID: 2489918361564836060, guid: 9d682f24f91898947a17127af97d8818, type: 3}
   backgroundSprite: {fileID: 0}
   detailImage: {fileID: 0}
   description: 

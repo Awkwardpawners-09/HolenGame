@@ -10544,8 +10544,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0, g: 0.9033842, b: 1, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.96707535, g: 0, b: 1, a: 1}
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -10603,13 +10603,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.52639264, y: -0.1094324, z: 0.054661058, w: -0.8413962}
+  m_LocalRotation: {x: 0.0544136, y: 0.10225799, z: 0.37589595, w: -0.9193937}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 63.867, y: 376.705, z: 3.023}
+  m_LocalEulerAnglesHint: {x: -10.191, y: 351.403, z: -43.707}
 --- !u!114 &705507996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26459,7 +26459,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ec5c9a0df1d788c4dbeae0c737c46325, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 278776a6f1322c94b9c83383b968093a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -29604,7 +29604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holen1Data: {fileID: 11400000, guid: 5fb0ae32649584a49b3f24d96b141777, type: 2}
-  holen2Data: {fileID: 11400000, guid: 82cfab0a78144964c887874408cea060, type: 2}
+  holen2Data: {fileID: 11400000, guid: 91b9be9dfa91fdb4980d293f45c78293, type: 2}
   holen3Data: {fileID: 11400000, guid: a6dfe7b3c88ea7a43b1e33ab61bd07c7, type: 2}
   chosenHolenImage: {fileID: 656463754}
   holensLauncher: {fileID: 310227659}

@@ -1,0 +1,11 @@
+Model Information:
+* title:	RASENGAN
+* source:	https://sketchfab.com/3d-models/rasengan-c2aedcc6a35e4f448c1e346b699b7772
+* author:	OPREXT (https://sketchfab.com/OPREXT)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "RASENGAN" (https://sketchfab.com/3d-models/rasengan-c2aedcc6a35e4f448c1e346b699b7772) by OPREXT (https://sketchfab.com/OPREXT) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

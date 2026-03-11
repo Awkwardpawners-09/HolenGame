@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holenID: AL0001
   rarity: Mythic
-  holenName: Hollow Purple
+  holenName: Void Mauve
   holenIcon: {fileID: 21300000, guid: c3f18dbd90a4e9c46b51ac8ae3bc1a7b, type: 3}
   property: 2
   holenPrefab: {fileID: 6275871912443945537, guid: 0e3a5b2b52fc236438fe333db02e6b77, type: 3}

@@ -5006,10 +5006,7 @@ MonoBehaviour:
   dragSmoothness: 10
   maxReleaseVelocity: 30
   collisionSounds:
-  - {fileID: 8300000, guid: 2ae46316565441043b82134708522196, type: 3}
-  - {fileID: 8300000, guid: 8c2b831b32c68dc4f89eee97dba9c66f, type: 3}
-  - {fileID: 8300000, guid: aae56b15330d7e547ab136174aa3fda9, type: 3}
-  - {fileID: 8300000, guid: efa1927b2dfa85e4697159d976eef02a, type: 3}
+  - {fileID: 8300000, guid: 7b4dee3039390a545ab80cdf80e5865d, type: 3}
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3
