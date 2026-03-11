@@ -16,5 +16,11 @@ MonoBehaviour:
   rarity: Mythical
   holenName: Bumblebee
   holenIcon: {fileID: 21300000, guid: 5ca77d7c3eee39e4c8d4354759c1b281, type: 3}
+  property: 1
   holenPrefab: {fileID: 4543069569791729328, guid: d5da535c2a2989d4b9a0ac10d6fc492e, type: 3}
+  InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 2268194737071401258, guid: f668998d9b2d89342b9636c0bb5ceeed, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
   maxStack: 1

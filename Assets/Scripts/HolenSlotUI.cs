@@ -6,11 +6,12 @@ using UnityEngine.UI;
 /// UI component for displaying a single holen slot in the inventory grid.
 ///
 /// Click handling is done externally by HolenInventoryPanel — this script
-/// only handles display (icon, name, quantity, rarity border color).
+/// only handles display (icon, name, quantity, rarity border color, property icon).
 ///
 /// SETUP:
 ///  - Attach to your HolenSlotUI prefab.
-///  - Assign iconImage, nameText, quantityText, and itemBorder in the Inspector.
+///  - Assign iconImage, nameText, quantityText, itemBorder, and propertyImage in the Inspector.
+///  - Assign propertySprites: index 0 = Light, index 1 = Bouncy, index 2 = Heavy.
 ///  - Make sure the prefab also has a Button component (HolenInventoryPanel will
 ///    add one automatically if missing, but it's cleaner to have it pre-added).
 /// </summary>
@@ -24,6 +25,13 @@ public class HolenSlotUI : MonoBehaviour
     [Header("Rarity Border")]
     [Tooltip("The Image used as the rarity-coloured border. Also used for selection highlight.")]
     public Image itemBorder;
+
+    [Header("Property")]
+    [Tooltip("The Image component (Property) that shows the holen's property icon.")]
+    public Image propertyImage;
+
+    [Tooltip("Sprites for each property: [0] Light, [1] Bouncy, [2] Heavy")]
+    public Sprite[] propertySprites = new Sprite[3];
 
     // Internal data reference
     private HolenData holenData;
@@ -52,6 +60,9 @@ public class HolenSlotUI : MonoBehaviour
         // Set border to rarity color
         if (itemBorder != null)
             itemBorder.color = GetRarityColor(data.rarity);
+
+        // Set property icon
+        SetPropertyIcon(data.property);
     }
 
     /// <summary>
@@ -70,6 +81,28 @@ public class HolenSlotUI : MonoBehaviour
     /// </summary>
     public bool IsSameItem(string id) =>
         holenData != null && holenData.holenID == id;
+
+    // ─────────────────────────────────────────────
+    //  PROPERTY ICON
+    // ─────────────────────────────────────────────
+
+    private void SetPropertyIcon(HolenData.HolenProperty property)
+    {
+        if (propertyImage == null) return;
+
+        int index = (int)property; // Light=0, Bouncy=1, Heavy=2
+
+        if (propertySprites != null && index < propertySprites.Length && propertySprites[index] != null)
+        {
+            propertyImage.sprite = propertySprites[index];
+            propertyImage.enabled = true;
+        }
+        else
+        {
+            // Hide the image if no sprite is assigned for this property
+            propertyImage.enabled = false;
+        }
+    }
 
     // ─────────────────────────────────────────────
     //  RARITY COLOR

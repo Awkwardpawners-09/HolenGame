@@ -16,5 +16,11 @@ MonoBehaviour:
   rarity: Common
   holenName: Baby Blue
   holenIcon: {fileID: 21300000, guid: 89127c9a0ba25ab408bc0c4fb466bf20, type: 3}
+  property: 1
   holenPrefab: {fileID: 4543069569791729328, guid: 23d9a8c5c4937944eb27fa56acc6ab8b, type: 3}
+  InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 1742550225584048530, guid: 84f587b267fb0774ba61e6f2463a9770, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
   maxStack: 1

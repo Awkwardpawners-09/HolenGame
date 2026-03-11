@@ -1862,7 +1862,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -13134,9 +13134,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 387487144}
-  continueSceneName: Stage 10
+  continueSceneName: Stage 12
   retryButton: {fileID: 1092251883}
-  retrySceneName: Stage 9
+  retrySceneName: Stage 10
   transitionObject: {fileID: 836333308}
   delayBeforeTransition: 5
 --- !u!114 &1005936888
@@ -31854,7 +31854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896067c4313cb5c45b40a5731cdc3427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisStageIndex: 8
+  thisStageIndex: 10
   coinReward: 0
   energyReward: 0
   alreadyClearedLabel: {fileID: 0}

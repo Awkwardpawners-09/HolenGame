@@ -16,5 +16,11 @@ MonoBehaviour:
   rarity: Common
   holenName: Opaque  Black
   holenIcon: {fileID: 21300000, guid: ee096fd6e824bbb4582f7516527eb856, type: 3}
+  property: 0
   holenPrefab: {fileID: 4543069569791729328, guid: cc7ed88985980944bb45e3031943818c, type: 3}
+  InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 7657074990770014302, guid: c694aee7b1e2a674da3ed34d9ce18347, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
   maxStack: 1

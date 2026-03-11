@@ -16,5 +16,11 @@ MonoBehaviour:
   rarity: Epic
   holenName: Batik (Blue)
   holenIcon: {fileID: 21300000, guid: 59342354714e2ab4792d2d697a28b0bc, type: 3}
+  property: 2
   holenPrefab: {fileID: 4543069569791729328, guid: 554362bfe38425b40a2322bdbb046b14, type: 3}
+  InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 251817772535114856, guid: badc7918d7555b8498d338184e9f1b9a, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
   maxStack: 1

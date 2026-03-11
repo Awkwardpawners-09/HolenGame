@@ -16,5 +16,11 @@ MonoBehaviour:
   rarity: Legendary
   holenName: Tiger
   holenIcon: {fileID: 21300000, guid: bd83cae2c77332b4da8cbf468f48391e, type: 3}
+  property: 0
   holenPrefab: {fileID: 4543069569791729328, guid: b96f2043ac82d49478a0d8736b2b7130, type: 3}
+  InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 134758968780199415, guid: 7358e5a25f53b514b8782b2dcbc30d63, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
   maxStack: 9

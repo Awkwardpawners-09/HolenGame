@@ -40,7 +40,7 @@ public class PlayerData
     /// <summary>Set graphics quality. 0 = Low, 1 = Medium, 2 = High.</summary>
     public void SetGraphicsQuality(int quality)
     {
-        graphicsQuality = Mathf.Clamp(quality, 0, 2);
+        graphicsQuality = Mathf.Clamp(quality, 0, 4);
         Save();
         Debug.Log($"[PlayerData] Graphics quality set to {graphicsQuality}");
     }

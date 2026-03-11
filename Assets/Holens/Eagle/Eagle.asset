@@ -16,8 +16,10 @@ MonoBehaviour:
   rarity: Legendary
   holenName: Eagle
   holenIcon: {fileID: 21300000, guid: a7fdf11f9af7cce4289c45357504be03, type: 3}
+  property: 0
   holenPrefab: {fileID: 1037114594539312753, guid: 09621acc2d274384cbe200af973ccafe, type: 3}
   InventoryImage: {fileID: 21300000, guid: a7fdf11f9af7cce4289c45357504be03, type: 3}
+  inventoryPrefab: {fileID: 6223267763169953365, guid: 1ef1276dfdfa37643bcd3a1642c3c5e9, type: 3}
   backgroundSprite: {fileID: 0}
   detailImage: {fileID: 0}
   description: 

@@ -17,7 +17,12 @@ using System.Collections;
 ///   • graphicsLowCheck     → "Check"  child of Low button
 ///   • graphicsMedButton    → "Medium" Button
 ///   • graphicsMedCheck     → "Check"  child of Medium button
-///   • graphicsHighButton   → "High"   Button
+///   • graphicsHighButton      → "High"      Button
+///   • graphicsHighCheck        → "Check"     child of High button
+///   • graphicsVeryHighButton   → "Very High" Button
+///   • graphicsVeryHighCheck    → "Check"     child of Very High button
+///   • graphicsUltraButton      → "Ultra"     Button
+///   • graphicsUltraCheck       → "Check"     child of Ultra button
 ///   • graphicsHighCheck    → "Check"  child of High button
 ///
 /// Shadows Toggle:
@@ -43,7 +48,7 @@ public class SettingUI : MonoBehaviour
     public GameObject soundCheck;      // Child "Check" object — active when sound is ON
 
     // ===================== GRAPHICS QUALITY =====================
-    [Header("Graphics Quality (Low / Medium / High)")]
+    [Header("Graphics Quality (Low / Medium / High / Very High / Ultra)")]
     public Button graphicsLowButton;
     public GameObject graphicsLowCheck;
 
@@ -52,6 +57,12 @@ public class SettingUI : MonoBehaviour
 
     public Button graphicsHighButton;
     public GameObject graphicsHighCheck;
+
+    public Button graphicsVeryHighButton;
+    public GameObject graphicsVeryHighCheck;
+
+    public Button graphicsUltraButton;
+    public GameObject graphicsUltraCheck;
 
     // ===================== SHADOWS =====================
     [Header("Shadows Toggle")]
@@ -92,6 +103,8 @@ public class SettingUI : MonoBehaviour
         if (graphicsLowButton != null) graphicsLowButton.onClick.AddListener(() => OnSetGraphicsQuality(0));
         if (graphicsMedButton != null) graphicsMedButton.onClick.AddListener(() => OnSetGraphicsQuality(1));
         if (graphicsHighButton != null) graphicsHighButton.onClick.AddListener(() => OnSetGraphicsQuality(2));
+        if (graphicsVeryHighButton != null) graphicsVeryHighButton.onClick.AddListener(() => OnSetGraphicsQuality(3));
+        if (graphicsUltraButton != null) graphicsUltraButton.onClick.AddListener(() => OnSetGraphicsQuality(4));
         if (shadowsButton != null) shadowsButton.onClick.AddListener(OnShadowsToggle);
         if (postFxButton != null) postFxButton.onClick.AddListener(OnPostFxToggle);
         if (loadSceneButton != null) loadSceneButton.onClick.AddListener(OnLoadScene);
@@ -130,6 +143,8 @@ public class SettingUI : MonoBehaviour
         SetCheckActive(graphicsLowCheck, quality == 0);
         SetCheckActive(graphicsMedCheck, quality == 1);
         SetCheckActive(graphicsHighCheck, quality == 2);
+        SetCheckActive(graphicsVeryHighCheck, quality == 3);
+        SetCheckActive(graphicsUltraCheck, quality == 4);
     }
 
     private static void SetCheckActive(GameObject check, bool active)

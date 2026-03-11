@@ -1,32 +1,40 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
-/// OPTIONAL ENHANCEMENT: Enhanced version of HolenData with additional display fields
-/// 
-/// If you want more detailed information to display when a Holen is selected,
-/// you can replace your existing HolenData.cs with this version.
-/// 
-/// New fields:
-/// - backgroundSprite: Custom background image for the detail display
-/// - description: Text description of the Holen
-/// - detailImage: Optional larger/alternate image for detail view
-/// 
-/// This is completely optional - HolenDetailDisplay works fine with the original HolenData!
+/// ScriptableObject holding all data for a single Holen item.
 /// </summary>
 [CreateAssetMenu(fileName = "NewHolenData", menuName = "Holens/Holen Data")]
 public class HolenData : ScriptableObject
 {
+    // ─────────────────────────────────────────────
+    //  PROPERTY ENUM
+    // ─────────────────────────────────────────────
+
+    public enum HolenProperty
+    {
+        Light,
+        Bouncy,
+        Heavy
+    }
+
     [Header("Basic Info")]
     public string holenID;          // Unique ID for saving/loading
     public string rarity;           // e.g., "Common", "Rare", "Epic", "Legendary"
     public string holenName;        // Display name
     public Sprite holenIcon;        // Inventory UI image
 
+    [Header("Property")]
+    [Tooltip("The physical property of this Holen (Light, Bouncy, or Heavy)")]
+    public HolenProperty property;
+
     [Header("3D Model")]
     public GameObject holenPrefab;  // Prefab with material assigned
 
-    [Header("Inventory Image")]
-    public Sprite InventoryImage;   // Prefab with material assigned
+    [Header("Inventory")]
+    public Sprite InventoryImage;   // Image used in inventory
+    [Tooltip("Prefab used to represent this Holen in the inventory scene/world")]
+    public GameObject inventoryPrefab; // NEW: Inventory Prefab
 
     [Header("Detail Display (Optional)")]
     [Tooltip("Custom background sprite for the detail panel (optional)")]

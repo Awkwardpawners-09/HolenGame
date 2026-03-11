@@ -14,16 +14,13 @@ using UnityEngine.Rendering.Universal;
 ///    • globalVolume → your scene's Global Volume GameObject
 ///      If left empty, it will be found automatically.
 ///
-/// GRAPHICS QUALITY TIERS (applied directly — no Quality Settings setup needed):
+/// GRAPHICS QUALITY TIERS:
 ///
-///   LOW    Render Scale: 0.5 | No MSAA | Textures: Quarter res
-///          No HDR | No soft particles | Shadow distance: 20 | LOD bias: 0.3
-///
-///   MEDIUM Render Scale: 0.75 | 2x MSAA | Textures: Half res
-///          HDR on | Soft particles on | Shadow distance: 50 | LOD bias: 0.7
-///
-///   HIGH   Render Scale: 1.0 | 4x MSAA | Textures: Full res
-///          HDR on | Soft particles on | Shadow distance: 100 | LOD bias: 1.5
+///   0  LOW       Render Scale: 0.5  | No MSAA  | Textures: Quarter | No HDR  | Shadows: 20
+///   1  MEDIUM    Render Scale: 0.75 | 2x MSAA  | Textures: Half    | HDR on  | Shadows: 50
+///   2  HIGH      Render Scale: 1.0  | 4x MSAA  | Textures: Full    | HDR on  | Shadows: 100  DEFAULT
+///   3  VERY HIGH Render Scale: 1.0  | 4x MSAA  | Textures: Full    | HDR on  | Shadows: 150
+///   4  ULTRA     Render Scale: 1.2  | 8x MSAA  | Textures: Full    | HDR on  | Shadows: 250
 /// ─────────────────────────────────────────────────────────────────────
 /// </summary>
 public class SettingsApplier : MonoBehaviour
@@ -32,8 +29,6 @@ public class SettingsApplier : MonoBehaviour
     [Tooltip("Assign your Global Volume here. If left empty, it will be found automatically.")]
     public Volume globalVolume;
 
-    // Tracks the current shadow toggle state so graphics quality changes
-    // can correctly restore/skip shadow distance.
     private bool _shadowsEnabled = true;
 
     private void Start()
@@ -60,10 +55,6 @@ public class SettingsApplier : MonoBehaviour
         PlayerDataManager.OnPostProcessingSettingChanged -= ApplyPostProcessing;
     }
 
-    // ─────────────────────────────────────────────────────────────────
-    // APPLY ALL
-    // ─────────────────────────────────────────────────────────────────
-
     private void ApplyAllSettings()
     {
         if (PlayerDataManager.Instance == null)
@@ -73,33 +64,21 @@ public class SettingsApplier : MonoBehaviour
         }
 
         _shadowsEnabled = PlayerDataManager.Instance.IsShadowsEnabled();
-
         ApplySound(PlayerDataManager.Instance.IsSoundEnabled());
         ApplyGraphicsQuality(PlayerDataManager.Instance.GetGraphicsQuality());
         ApplyShadows(_shadowsEnabled);
         ApplyPostProcessing(PlayerDataManager.Instance.IsPostProcessingEnabled());
     }
 
-    // ─────────────────────────────────────────────────────────────────
-    // SOUND — mutes/unmutes all audio globally
-    // ─────────────────────────────────────────────────────────────────
-
     private void ApplySound(bool enabled)
     {
         AudioListener.volume = enabled ? 1f : 0f;
-        Debug.Log($"[SettingsApplier] Sound → {(enabled ? "ON" : "OFF")}");
+        Debug.Log($"[SettingsApplier] Sound -> {(enabled ? "ON" : "OFF")}");
     }
-
-    // ─────────────────────────────────────────────────────────────────
-    // GRAPHICS QUALITY
-    // Directly sets URP + Unity render settings per tier.
-    // 0 = Low | 1 = Medium | 2 = High
-    // ─────────────────────────────────────────────────────────────────
 
     private void ApplyGraphicsQuality(int quality)
     {
         UniversalRenderPipelineAsset urpAsset = GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;
-
         if (urpAsset == null)
         {
             Debug.LogWarning("[SettingsApplier] Could not find URP Asset.");
@@ -108,45 +87,62 @@ public class SettingsApplier : MonoBehaviour
 
         switch (quality)
         {
-            case 0: // ── LOW ──────────────────────────────────────────
-                urpAsset.renderScale = 0.5f;   // Half screen resolution
-                urpAsset.msaaSampleCount = 1;      // No anti-aliasing
-                urpAsset.supportsHDR = false;  // No HDR lighting
+            case 0: // LOW
+                urpAsset.renderScale = 0.5f;
+                urpAsset.msaaSampleCount = 1;
+                urpAsset.supportsHDR = false;
                 urpAsset.shadowDistance = _shadowsEnabled ? 20f : 0f;
-                QualitySettings.globalTextureMipmapLimit = 2;   // Quarter texture resolution
-                QualitySettings.lodBias = 0.3f;  // Aggressively pop in lower LODs
-                QualitySettings.maximumLODLevel = 1;     // Skip highest detail LOD
-                Debug.Log("[SettingsApplier] Graphics → LOW");
+                QualitySettings.globalTextureMipmapLimit = 2;
+                QualitySettings.lodBias = 0.3f;
+                QualitySettings.maximumLODLevel = 1;
+                Debug.Log("[SettingsApplier] Graphics -> LOW");
                 break;
 
-            case 1: // ── MEDIUM ───────────────────────────────────────
+            case 1: // MEDIUM
                 urpAsset.renderScale = 0.75f;
-                urpAsset.msaaSampleCount = 2;      // 2x MSAA
+                urpAsset.msaaSampleCount = 2;
                 urpAsset.supportsHDR = true;
                 urpAsset.shadowDistance = _shadowsEnabled ? 50f : 0f;
-                QualitySettings.globalTextureMipmapLimit = 1;   // Half texture resolution
+                QualitySettings.globalTextureMipmapLimit = 1;
                 QualitySettings.lodBias = 0.7f;
                 QualitySettings.maximumLODLevel = 0;
-                Debug.Log("[SettingsApplier] Graphics → MEDIUM");
+                Debug.Log("[SettingsApplier] Graphics -> MEDIUM");
                 break;
 
-            case 2: // ── HIGH ─────────────────────────────────────────
-                urpAsset.renderScale = 1.0f;  // Full native resolution
-                urpAsset.msaaSampleCount = 4;     // 4x MSAA
+            case 2: // HIGH (default)
+                urpAsset.renderScale = 1.0f;
+                urpAsset.msaaSampleCount = 4;
                 urpAsset.supportsHDR = true;
                 urpAsset.shadowDistance = _shadowsEnabled ? 100f : 0f;
-                QualitySettings.globalTextureMipmapLimit = 0;  // Full texture resolution
-                QualitySettings.lodBias = 1.5f; // Always use highest detail LOD
+                QualitySettings.globalTextureMipmapLimit = 0;
+                QualitySettings.lodBias = 1.5f;
                 QualitySettings.maximumLODLevel = 0;
-                Debug.Log("[SettingsApplier] Graphics → HIGH");
+                Debug.Log("[SettingsApplier] Graphics -> HIGH");
+                break;
+
+            case 3: // VERY HIGH
+                urpAsset.renderScale = 1.0f;
+                urpAsset.msaaSampleCount = 4;
+                urpAsset.supportsHDR = true;
+                urpAsset.shadowDistance = _shadowsEnabled ? 150f : 0f;
+                QualitySettings.globalTextureMipmapLimit = 0;
+                QualitySettings.lodBias = 2.0f;
+                QualitySettings.maximumLODLevel = 0;
+                Debug.Log("[SettingsApplier] Graphics -> VERY HIGH");
+                break;
+
+            case 4: // ULTRA
+                urpAsset.renderScale = 1.2f;
+                urpAsset.msaaSampleCount = 8;
+                urpAsset.supportsHDR = true;
+                urpAsset.shadowDistance = _shadowsEnabled ? 250f : 0f;
+                QualitySettings.globalTextureMipmapLimit = 0;
+                QualitySettings.lodBias = 3.0f;
+                QualitySettings.maximumLODLevel = 0;
+                Debug.Log("[SettingsApplier] Graphics -> ULTRA");
                 break;
         }
     }
-
-    // ─────────────────────────────────────────────────────────────────
-    // SHADOWS — toggles via URP shadow distance
-    // Respects the current graphics quality tier for the distance value.
-    // ─────────────────────────────────────────────────────────────────
 
     private void ApplyShadows(bool enabled)
     {
@@ -167,19 +163,17 @@ public class SettingsApplier : MonoBehaviour
 
             urpAsset.shadowDistance = quality == 0 ? 20f
                                     : quality == 1 ? 50f
-                                    : 100f;
+                                    : quality == 2 ? 100f
+                                    : quality == 3 ? 150f
+                                    : 250f;
         }
         else
         {
             urpAsset.shadowDistance = 0f;
         }
 
-        Debug.Log($"[SettingsApplier] Shadows → {(enabled ? $"ON (distance: {urpAsset.shadowDistance})" : "OFF")}");
+        Debug.Log($"[SettingsApplier] Shadows -> {(enabled ? $"ON (distance: {urpAsset.shadowDistance})" : "OFF")}");
     }
-
-    // ─────────────────────────────────────────────────────────────────
-    // POST PROCESSING (URP) — toggles Global Volume weight
-    // ─────────────────────────────────────────────────────────────────
 
     private void ApplyPostProcessing(bool enabled)
     {
@@ -189,7 +183,7 @@ public class SettingsApplier : MonoBehaviour
         if (globalVolume != null)
         {
             globalVolume.weight = enabled ? 1f : 0f;
-            Debug.Log($"[SettingsApplier] Post Processing → {(enabled ? "ON" : "OFF")}");
+            Debug.Log($"[SettingsApplier] Post Processing -> {(enabled ? "ON" : "OFF")}");
         }
         else
         {

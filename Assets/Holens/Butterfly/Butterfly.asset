@@ -16,5 +16,11 @@ MonoBehaviour:
   rarity: Rare
   holenName: Butterfly
   holenIcon: {fileID: 21300000, guid: aacf63472a3bb9b4cb593eb07617fad8, type: 3}
+  property: 0
   holenPrefab: {fileID: 4543069569791729328, guid: 2005926845b634d47b9638fd6c1a63f7, type: 3}
+  InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 8210092876877434821, guid: f0fe146de754059439bd85a16d24e673, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
   maxStack: 9
