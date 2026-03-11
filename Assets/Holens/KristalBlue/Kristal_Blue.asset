@@ -15,9 +15,11 @@ MonoBehaviour:
   holenID: DH005
   rarity: Common
   holenName: Krystal Transparent
-  holenIcon: {fileID: 21300000, guid: 03f895c457db73e418da6f3d61d2817d, type: 3}
+  holenIcon: {fileID: 21300000, guid: 48f55c092f970f143b8c30dc9d71cb2d, type: 3}
+  property: 0
   holenPrefab: {fileID: 4543069569791729328, guid: 4269b342f2d94774daf8247ad5388ddb, type: 3}
   InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 0}
   backgroundSprite: {fileID: 0}
   detailImage: {fileID: 0}
   description: 
