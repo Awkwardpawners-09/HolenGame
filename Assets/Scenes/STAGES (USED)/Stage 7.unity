@@ -11489,6 +11489,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4965097696903111275, guid: cc7ed88985980944bb45e3031943818c, type: 3}
   m_PrefabInstance: {fileID: 1983884178}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &1023717898 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 1779493644018710607, guid: cc7ed88985980944bb45e3031943818c, type: 3}
+  m_PrefabInstance: {fileID: 1983884178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1038969908
 GameObject:
   m_ObjectHideFlags: 0
@@ -11596,17 +11601,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1066827549 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2451384914342867300, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
-  m_PrefabInstance: {fileID: 2024399583}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1068011871
 GameObject:
   m_ObjectHideFlags: 0
@@ -24870,6 +24864,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1779493644018710607, guid: cc7ed88985980944bb45e3031943818c, type: 3}
+      propertyPath: m_Drag
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779493644018710607, guid: cc7ed88985980944bb45e3031943818c, type: 3}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779493644018710607, guid: cc7ed88985980944bb45e3031943818c, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779493644018710607, guid: cc7ed88985980944bb45e3031943818c, type: 3}
       propertyPath: m_IncludeLayers.m_Bits
       value: 4096
       objectReference: {fileID: 0}
@@ -25441,14 +25447,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4255e1fc7399aee4a94138d0d920fcb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
+  maxHealth: 3
   damageTag: Weapon
   destroyWeaponOnHit: 1
   deathPrefab: {fileID: 4927711562988715638, guid: 3c630e9459588ee4383739a85e1e0a11, type: 3}
+  rigidbodyToEnableOnDeath: {fileID: 1023717898}
+  rigidbody2DToEnableOnDeath: {fileID: 0}
   hitSound: {fileID: 8300000, guid: 102886a31330e0d45a6eae59e057363f, type: 3}
-  vibrationDuration: 1
+  vibrationDuration: 2
   vibrationStrength: 0.1
-  vibrationSpeed: 40
+  vibrationSpeed: 100
 --- !u!54 &2014337913
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -25503,7 +25511,7 @@ PrefabInstance:
     - target: {fileID: 3199426122143545063, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
       propertyPath: loadSceneButton
       value: 
-      objectReference: {fileID: 1066827549}
+      objectReference: {fileID: 2024399584}
     - target: {fileID: 3199426122143545063, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
       propertyPath: transitionObject
       value: 
@@ -25593,6 +25601,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+--- !u!114 &2024399584 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5367625665357346972, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+  m_PrefabInstance: {fileID: 2024399583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2027864669
 GameObject:
   m_ObjectHideFlags: 0

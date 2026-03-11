@@ -1,15 +1,69 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+/// <summary>
+/// Settings UI controller.
+/// 
+/// HOW TO SET UP IN INSPECTOR:
+/// ─────────────────────────────────────────────────────────────────────
+/// Sound Toggle:
+///   • soundButton      → Button on the "Sounds" row
+///   • soundCheck       → The "Check" child GameObject of that button
+///
+/// Graphics Quality (mutually exclusive — only one active at a time):
+///   • graphicsLowButton    → "Low"    Button (has a "Check" child)
+///   • graphicsLowCheck     → "Check"  child of Low button
+///   • graphicsMedButton    → "Medium" Button
+///   • graphicsMedCheck     → "Check"  child of Medium button
+///   • graphicsHighButton   → "High"   Button
+///   • graphicsHighCheck    → "Check"  child of High button
+///
+/// Shadows Toggle:
+///   • shadowsButton    → Button on the "Shadows" row
+///   • shadowsCheck     → The "Check" child GameObject
+///
+/// Post Processing Toggle:
+///   • postFxButton     → Button on the "Post Processing" row
+///   • postFxCheck      → The "Check" child GameObject
+///
+/// Scene Navigation (unchanged):
+///   • loadSceneButton, sceneNameToLoad, transitionObject, waitTimeBeforeLoad
+///
+/// Quit:
+///   • quitButton
+/// ─────────────────────────────────────────────────────────────────────
+/// </summary>
 public class SettingUI : MonoBehaviour
 {
+    // ===================== SOUND =====================
     [Header("Sound Toggle")]
-    public Button soundToggleButton;
-    public GameObject soundOnIcon;  // Shows when sound is ON
-    public GameObject soundOffIcon; // Shows when sound is OFF
+    public Button soundButton;
+    public GameObject soundCheck;      // Child "Check" object — active when sound is ON
 
+    // ===================== GRAPHICS QUALITY =====================
+    [Header("Graphics Quality (Low / Medium / High)")]
+    public Button graphicsLowButton;
+    public GameObject graphicsLowCheck;
+
+    public Button graphicsMedButton;
+    public GameObject graphicsMedCheck;
+
+    public Button graphicsHighButton;
+    public GameObject graphicsHighCheck;
+
+    // ===================== SHADOWS =====================
+    [Header("Shadows Toggle")]
+    public Button shadowsButton;
+    public GameObject shadowsCheck;    // Child "Check" object — active when shadows are ON
+
+    // ===================== POST PROCESSING =====================
+    [Header("Post Processing Toggle")]
+    public Button postFxButton;
+    public GameObject postFxCheck;     // Child "Check" object — active when post processing is ON
+
+    // ===================== SCENE NAVIGATION =====================
     [Header("Scene Navigation")]
     [Tooltip("Button to load a scene (e.g., Main Menu button)")]
     public Button loadSceneButton;
@@ -23,73 +77,100 @@ public class SettingUI : MonoBehaviour
     [Tooltip("Wait time in seconds before loading scene")]
     public float waitTimeBeforeLoad = 3f;
 
+    // ===================== QUIT =====================
     [Header("Quit Game")]
-    [Tooltip("Button to close the application")]
     public Button quitButton;
 
     private bool isLoadingScene = false;
 
+    // ─────────────────────────────────────────────────────────────────
+
     void Start()
     {
-        // Setup button listeners
-        if (soundToggleButton != null)
-        {
-            soundToggleButton.onClick.AddListener(OnSoundToggle);
-        }
+        // Wire up buttons
+        if (soundButton != null) soundButton.onClick.AddListener(OnSoundToggle);
+        if (graphicsLowButton != null) graphicsLowButton.onClick.AddListener(() => OnSetGraphicsQuality(0));
+        if (graphicsMedButton != null) graphicsMedButton.onClick.AddListener(() => OnSetGraphicsQuality(1));
+        if (graphicsHighButton != null) graphicsHighButton.onClick.AddListener(() => OnSetGraphicsQuality(2));
+        if (shadowsButton != null) shadowsButton.onClick.AddListener(OnShadowsToggle);
+        if (postFxButton != null) postFxButton.onClick.AddListener(OnPostFxToggle);
+        if (loadSceneButton != null) loadSceneButton.onClick.AddListener(OnLoadScene);
+        if (quitButton != null) quitButton.onClick.AddListener(OnQuitGame);
 
-        if (loadSceneButton != null)
-        {
-            loadSceneButton.onClick.AddListener(OnLoadScene);
-        }
-
-        if (quitButton != null)
-        {
-            quitButton.onClick.AddListener(OnQuitGame);
-        }
-
-        // Initialize UI state
-        UpdateSoundUI();
-
-        // Make sure transition object is hidden at start
+        // Hide transition object at start
         if (transitionObject != null)
-        {
             transitionObject.SetActive(false);
-        }
+
+        RefreshAllUI();
     }
 
     void OnEnable()
     {
-        // Refresh UI when settings panel opens
-        UpdateSoundUI();
+        // Refresh whenever the settings panel is opened
+        RefreshAllUI();
     }
 
-    void OnSoundToggle()
+    // ─────────────────────────────────────────────────────────────────
+    // UI REFRESH
+    // ─────────────────────────────────────────────────────────────────
+
+    private void RefreshAllUI()
     {
-        // Toggle sound using the HolenInventoryManager
-        HolenInventoryManager.Instance.ToggleSound();
+        if (PlayerDataManager.Instance == null) return;
 
-        // Update UI
-        UpdateSoundUI();
+        SetCheckActive(soundCheck, PlayerDataManager.Instance.IsSoundEnabled());
+        SetCheckActive(shadowsCheck, PlayerDataManager.Instance.IsShadowsEnabled());
+        SetCheckActive(postFxCheck, PlayerDataManager.Instance.IsPostProcessingEnabled());
+        RefreshGraphicsUI(PlayerDataManager.Instance.GetGraphicsQuality());
     }
 
-    void UpdateSoundUI()
+    /// <summary>Updates the three graphics check marks so only the active quality shows a check.</summary>
+    private void RefreshGraphicsUI(int quality)
     {
-        if (HolenInventoryManager.Instance == null)
-            return;
-
-        bool soundEnabled = HolenInventoryManager.Instance.IsSoundEnabled();
-
-        // Update icon visuals
-        if (soundOnIcon != null)
-            soundOnIcon.SetActive(soundEnabled);
-
-        if (soundOffIcon != null)
-            soundOffIcon.SetActive(!soundEnabled);
+        SetCheckActive(graphicsLowCheck, quality == 0);
+        SetCheckActive(graphicsMedCheck, quality == 1);
+        SetCheckActive(graphicsHighCheck, quality == 2);
     }
 
-    // ===================== SCENE LOADING =====================
+    private static void SetCheckActive(GameObject check, bool active)
+    {
+        if (check != null) check.SetActive(active);
+    }
 
-    void OnLoadScene()
+    // ─────────────────────────────────────────────────────────────────
+    // TOGGLE HANDLERS
+    // ─────────────────────────────────────────────────────────────────
+
+    private void OnSoundToggle()
+    {
+        PlayerDataManager.Instance.ToggleSound();
+        SetCheckActive(soundCheck, PlayerDataManager.Instance.IsSoundEnabled());
+    }
+
+    /// <summary>Called by each graphics quality button. 0=Low, 1=Medium, 2=High.</summary>
+    private void OnSetGraphicsQuality(int quality)
+    {
+        PlayerDataManager.Instance.SetGraphicsQuality(quality);
+        RefreshGraphicsUI(quality);
+    }
+
+    private void OnShadowsToggle()
+    {
+        PlayerDataManager.Instance.ToggleShadows();
+        SetCheckActive(shadowsCheck, PlayerDataManager.Instance.IsShadowsEnabled());
+    }
+
+    private void OnPostFxToggle()
+    {
+        PlayerDataManager.Instance.TogglePostProcessing();
+        SetCheckActive(postFxCheck, PlayerDataManager.Instance.IsPostProcessingEnabled());
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // SCENE LOADING
+    // ─────────────────────────────────────────────────────────────────
+
+    private void OnLoadScene()
     {
         if (isLoadingScene)
         {
@@ -106,70 +187,57 @@ public class SettingUI : MonoBehaviour
         StartCoroutine(LoadSceneWithDelay());
     }
 
-    IEnumerator LoadSceneWithDelay()
+    private IEnumerator LoadSceneWithDelay()
     {
         isLoadingScene = true;
 
-        // Enable transition object (e.g., loading screen, fade panel)
         if (transitionObject != null)
         {
             transitionObject.SetActive(true);
             Debug.Log($"Transition object enabled. Loading scene in {waitTimeBeforeLoad} seconds...");
         }
 
-        // Wait for specified time
         yield return new WaitForSeconds(waitTimeBeforeLoad);
 
-        // Load the scene
         Debug.Log($"Loading scene: {sceneNameToLoad}");
         SceneManager.LoadScene(sceneNameToLoad);
     }
 
-    // ===================== QUIT GAME =====================
-
-    void OnQuitGame()
-    {
-        Debug.Log("Quitting application...");
-
-#if UNITY_EDITOR
-        // Stop playing in the editor
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        // Quit the application in build
-        Application.Quit();
-#endif
-    }
-
-    // ===================== PUBLIC HELPER METHODS =====================
-
-    /// <summary>
-    /// Load a specific scene immediately without delay (useful for other scripts)
-    /// </summary>
+    /// <summary>Load a specific scene immediately without delay.</summary>
     public void LoadSceneImmediately(string sceneName)
     {
         if (!string.IsNullOrEmpty(sceneName))
-        {
             SceneManager.LoadScene(sceneName);
-        }
     }
 
-    /// <summary>
-    /// Load a scene with custom delay
-    /// </summary>
+    /// <summary>Load a scene with a custom delay.</summary>
     public void LoadSceneWithCustomDelay(string sceneName, float delay)
     {
         StartCoroutine(LoadSceneWithCustomDelayCoroutine(sceneName, delay));
     }
 
-    IEnumerator LoadSceneWithCustomDelayCoroutine(string sceneName, float delay)
+    private IEnumerator LoadSceneWithCustomDelayCoroutine(string sceneName, float delay)
     {
         if (transitionObject != null)
-        {
             transitionObject.SetActive(true);
-        }
 
         yield return new WaitForSeconds(delay);
 
         SceneManager.LoadScene(sceneName);
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // QUIT GAME
+    // ─────────────────────────────────────────────────────────────────
+
+    private void OnQuitGame()
+    {
+        Debug.Log("Quitting application...");
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

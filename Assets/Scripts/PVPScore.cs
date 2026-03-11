@@ -99,6 +99,11 @@ public class PVPScore : MonoBehaviourPunCallbacks
     private MultiplayerHolenControllerNew holenController;
     private List<GameObject> holensToDestroy = new List<GameObject>();
 
+    // Only GameObjects registered here (by WagerSpawnPlacer) are counted as wager holens.
+    // Launch balls and old currentHolenBall objects being swapped out via inventory are
+    // never registered, so they can never accidentally score.
+    private readonly HashSet<GameObject> registeredWagerHolens = new HashSet<GameObject>();
+
     // ─────────────────────────────────────────────
     //  LIFECYCLE
     // ─────────────────────────────────────────────
@@ -132,14 +137,13 @@ public class PVPScore : MonoBehaviourPunCallbacks
         if (holenController == null)
             holenController = FindObjectOfType<MultiplayerHolenControllerNew>();
 
-        // Count only wager holens (not the launched ball) for the game-over check.
-        GameObject[] allHolens = GameObject.FindGameObjectsWithTag("Objective");
+        // Count only REGISTERED wager holens still on the field for the game-over check.
+        // Using the registry means launch balls and inventory-swapped balls are never
+        // counted, making the game-over condition accurate.
         int holensInside = 0;
-        foreach (GameObject holen in allHolens)
+        foreach (GameObject holen in registeredWagerHolens)
         {
-            if (holenController != null && holen == holenController.currentHolenBall)
-                continue;
-
+            if (holen == null) continue;
             Collider col = holen.GetComponent<Collider>();
             if (col != null && IsInsideTrigger(col))
                 holensInside++;
@@ -182,6 +186,20 @@ public class PVPScore : MonoBehaviourPunCallbacks
                 return;
             }
         }
+
+        // Only count holens that were spawned by WagerSpawnPlacer.
+        // This stops the launch ball, AND old balls being destroyed during an inventory
+        // swap (SpawnHolenBall destroys currentHolenBall before spawning the new one —
+        // that destruction fires OnTriggerExit on the old ball, which is still tagged
+        // "Objective" and would previously slip past the currentHolenBall check).
+        if (!registeredWagerHolens.Contains(other.gameObject))
+        {
+            Debug.Log($"[PVPScore] '{other.gameObject.name}' is not a registered wager holen — skipped.");
+            return;
+        }
+
+        // Remove from registry — it can only be knocked out once.
+        registeredWagerHolens.Remove(other.gameObject);
 
         // Only the master client detects knockouts to prevent both clients double-firing.
         // The master broadcasts the result to ALL clients (including itself) via RPC so
@@ -514,6 +532,17 @@ public class PVPScore : MonoBehaviourPunCallbacks
     /// Returns the absolute player number (1 or 2) for the local client.
     /// Matches the ActorNumber == 1 check MultiplayerHolenControllerNew uses.
     /// </summary>
+    /// <summary>
+    /// Called by WagerSpawnPlacer after each wager holen is spawned on the master client.
+    /// Only holens in this registry are ever counted as knockout scores.
+    /// </summary>
+    public void RegisterWagerHolen(GameObject holenObject)
+    {
+        if (holenObject == null) return;
+        registeredWagerHolens.Add(holenObject);
+        Debug.Log($"[PVPScore] Registered wager holen: {holenObject.name}");
+    }
+
     public int GetLocalPlayerNumber()
     {
         if (holenController == null)
@@ -551,6 +580,7 @@ public class PVPScore : MonoBehaviourPunCallbacks
     {
         player1KnockedOut.Clear();
         player2KnockedOut.Clear();
+        registeredWagerHolens.Clear();
         gameOverTriggered = false;
         noHolensTimer = 0f;
         ClearKnockedOutPanels();

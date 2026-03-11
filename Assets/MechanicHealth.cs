@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
@@ -12,6 +12,8 @@ public class HealthSystem : MonoBehaviour
 
     [Header("On Death")]
     [SerializeField] private GameObject deathPrefab;
+    [SerializeField] private Rigidbody rigidbodyToEnableOnDeath;
+    [SerializeField] private Rigidbody2D rigidbody2DToEnableOnDeath;
 
     [Header("Hit Feedback")]
     [SerializeField] private AudioClip hitSound;
@@ -44,7 +46,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    // 2D variant — delete whichever you don't need
+    // 2D variant ï¿½ delete whichever you don't need
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(damageTag))
@@ -102,6 +104,13 @@ public class HealthSystem : MonoBehaviour
     {
         StopAllCoroutines();
         transform.localPosition = originalPosition;
+
+        // Toggle isKinematic on the assigned Rigidbody
+        if (rigidbodyToEnableOnDeath != null)
+            rigidbodyToEnableOnDeath.isKinematic = !rigidbodyToEnableOnDeath.isKinematic;
+
+        if (rigidbody2DToEnableOnDeath != null)
+            rigidbody2DToEnableOnDeath.isKinematic = !rigidbody2DToEnableOnDeath.isKinematic;
 
         if (deathPrefab != null)
             Instantiate(deathPrefab, transform.position, transform.rotation);

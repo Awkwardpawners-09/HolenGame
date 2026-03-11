@@ -171,6 +171,13 @@ public class WagerSpawnPlacer : MonoBehaviourPun
             go.transform.SetParent(transform);
             spawnedHolens.Add(go);
 
+            // Register with PVPScore so only these wager holens can score.
+            // Launch balls and inventory-swap balls are never registered and will be ignored.
+            if (PVPScore.Instance != null)
+                PVPScore.Instance.RegisterWagerHolen(go);
+            else
+                Debug.LogWarning("[WagerSpawnPlacer] PVPScore.Instance is null — wager holen not registered for scoring.");
+
             Debug.Log($"[WagerSpawnPlacer] ✅ Successfully spawned {data.holenName} at {slot.name}");
 
             // Destroy slot marker (local only - non-networked)

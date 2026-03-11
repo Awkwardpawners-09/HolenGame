@@ -148,6 +148,12 @@ public class ArcadeModeManager : MonoBehaviourPunCallbacks
     public void LoadElement7() => LoadStageByIndex(7);
     public void LoadElement8() => LoadStageByIndex(8);
     public void LoadElement9() => LoadStageByIndex(9);
+    public void LoadElement10() => LoadStageByIndex(10);
+    public void LoadElement11() => LoadStageByIndex(11);
+    public void LoadElement12() => LoadStageByIndex(12);
+
+    public void LoadElementSecret() => LoadStageByIndex(13);
+
 
     // Add more stage methods here if you have more than 10 stages:
     // public void LoadStage11() => LoadStageByIndex(10);

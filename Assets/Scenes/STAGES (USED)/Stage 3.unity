@@ -3393,14 +3393,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1779493644018710607, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
       propertyPath: m_Drag
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1779493644018710607, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
       propertyPath: m_Mass
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1779493644018710607, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
       propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781081371303082135, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781081371303082135, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781081371303082135, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781081371303082135, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781081371303082135, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
+      propertyPath: InitialModule.startLifetime.minMaxState
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4543069569791729328, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
@@ -10814,17 +10834,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061725782}
   m_CullTransparentMesh: 1
---- !u!114 &1066827549 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2451384914342867300, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
-  m_PrefabInstance: {fileID: 2024399583}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1068011871
 GameObject:
   m_ObjectHideFlags: 0
@@ -17728,7 +17737,7 @@ PrefabInstance:
     - target: {fileID: 3199426122143545063, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
       propertyPath: loadSceneButton
       value: 
-      objectReference: {fileID: 1066827549}
+      objectReference: {fileID: 2024399584}
     - target: {fileID: 3199426122143545063, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
       propertyPath: transitionObject
       value: 
@@ -17818,6 +17827,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+--- !u!114 &2024399584 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5367625665357346972, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+  m_PrefabInstance: {fileID: 2024399583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2027864669
 GameObject:
   m_ObjectHideFlags: 0

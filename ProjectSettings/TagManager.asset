@@ -8,6 +8,8 @@ TagManager:
   - Ball
   - HolenModel
   - Weapon
+  - WagerHolen
+  - MISC
   layers:
   - Default
   - TransparentFX

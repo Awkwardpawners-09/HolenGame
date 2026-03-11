@@ -8866,7 +8866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 146145145}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -15582,7 +15582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 212245769}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -19715,7 +19715,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 355258309}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement9
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &355258309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19782,7 +19794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 355258306}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -22510,7 +22522,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -34929,7 +34941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 754367635}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -47488,6 +47500,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985509910}
   m_CullTransparentMesh: 1
+--- !u!114 &997482388 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5367625665357346972, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+  m_PrefabInstance: {fileID: 6143275118599973975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &998759548
 GameObject:
   m_ObjectHideFlags: 0
@@ -59208,7 +59231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 1376894619}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -59758,7 +59781,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1394558584}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1394558584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59825,7 +59860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 1394558581}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -63965,7 +64000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 1512757100}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -73694,7 +73729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 1798910989}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -74313,7 +74348,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1823017432}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement11
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1823017432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74380,7 +74427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 1823017429}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -76016,6 +76063,7 @@ GameObject:
   - component: {fileID: 1859279169}
   - component: {fileID: 1859279171}
   - component: {fileID: 1859279170}
+  - component: {fileID: 1859279172}
   m_Layer: 0
   m_Name: PlayerDataManager
   m_TagString: Untagged
@@ -76056,6 +76104,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData:
     isSoundEnabled: 1
+    graphicsQuality: 3
+    isShadowsEnabled: 1
+    isPostProcessingEnabled: 1
     playerName: Player
     coins: 500
     energy: 100
@@ -76197,6 +76248,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859279166}
   m_CullTransparentMesh: 1
+--- !u!114 &1859279172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859279166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9246463acb6815045b8d7ec06a04d1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalVolume: {fileID: 919557184}
 --- !u!1 &1860991847
 GameObject:
   m_ObjectHideFlags: 0
@@ -78808,6 +78872,11 @@ MonoBehaviour:
   - Stage 6
   - Stage 7
   - Stage 8
+  - Stage 9
+  - Stage 10
+  - Stage 11
+  - Stage 12
+  - Secret Level 1
   mainMenuSceneName: Demo Menu
   disconnectTimeout: 5
 --- !u!1 &1943374237
@@ -84072,7 +84141,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1952546534}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1942974792}
+        m_TargetAssemblyTypeName: ArcadeModeManager, Assembly-CSharp
+        m_MethodName: LoadElement10
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1952546534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84139,7 +84220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 1952546531}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -87063,7 +87144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 2065343301}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -87914,7 +87995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71aaee887d905443ac3f94500e82415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 1
+  buttonType: 2
   targetGameObject: {fileID: 2073322354}
   feedbackText: {fileID: 0}
   notEnoughEnergyMessage: Not enough energy!
@@ -100108,14 +100189,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2114986018}
     m_Modifications:
+    - target: {fileID: 935808919142613830, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1475387896495719024, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
       propertyPath: m_Name
       value: SETTINGS
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475387896495719024, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199426122143545063, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+      propertyPath: quitButton
+      value: 
+      objectReference: {fileID: 997482388}
+    - target: {fileID: 3199426122143545063, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+      propertyPath: loadSceneButton
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3199426122143545063, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
       propertyPath: transitionObject
       value: 
       objectReference: {fileID: 1322775149}
+    - target: {fileID: 3805698557163428294, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5437776460760549068, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -100196,7 +100297,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3805698557163428294, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

@@ -6,13 +6,23 @@ using System.Collections.Generic;
 /// Serializable player data class.
 /// Handles saving/loading player information to/from PlayerPrefs.
 /// INCLUDES: Level progression tracking + Time-based Energy System + Completed Levels + Avatar Index
+///           + Graphics Settings (Sound, GraphicsQuality, Shadows, PostProcessing)
 /// </summary>
 [Serializable]
 public class PlayerData
 {
+    // ===================== SETTINGS =====================
+
     public bool isSoundEnabled = true;
+    /// <summary>0 = Low, 1 = Medium, 2 = High</summary>
+    public int graphicsQuality = 2;
+    public bool isShadowsEnabled = true;
+    public bool isPostProcessingEnabled = true;
 
     private const string KEY_SOUND_ENABLED = "SoundEnabled";
+    private const string KEY_GRAPHICS_QUALITY = "GraphicsQuality";
+    private const string KEY_SHADOWS_ENABLED = "ShadowsEnabled";
+    private const string KEY_POST_PROCESSING_ENABLED = "PostProcessingEnabled";
 
     public void ToggleSound()
     {
@@ -27,6 +37,42 @@ public class PlayerData
         Save();
     }
 
+    /// <summary>Set graphics quality. 0 = Low, 1 = Medium, 2 = High.</summary>
+    public void SetGraphicsQuality(int quality)
+    {
+        graphicsQuality = Mathf.Clamp(quality, 0, 2);
+        Save();
+        Debug.Log($"[PlayerData] Graphics quality set to {graphicsQuality}");
+    }
+
+    public void ToggleShadows()
+    {
+        isShadowsEnabled = !isShadowsEnabled;
+        Save();
+        Debug.Log($"[PlayerData] Shadows {(isShadowsEnabled ? "enabled" : "disabled")}");
+    }
+
+    public void SetShadows(bool enabled)
+    {
+        isShadowsEnabled = enabled;
+        Save();
+    }
+
+    public void TogglePostProcessing()
+    {
+        isPostProcessingEnabled = !isPostProcessingEnabled;
+        Save();
+        Debug.Log($"[PlayerData] PostProcessing {(isPostProcessingEnabled ? "enabled" : "disabled")}");
+    }
+
+    public void SetPostProcessing(bool enabled)
+    {
+        isPostProcessingEnabled = enabled;
+        Save();
+    }
+
+    // ===================== END SETTINGS =====================
+
     // Energy system constants
     public const int MAX_ENERGY = 10;
     public const int ENERGY_REGEN_MINUTES = 10;
@@ -38,7 +84,6 @@ public class PlayerData
     /// <summary>
     /// The player's current level. Starts at 1.
     /// Stage buttons with a matching index are unlocked when the player reaches that level.
-    /// Example: level=1 unlocks stage index 1 only. level=2 unlocks stage index 1 and 2, etc.
     /// </summary>
     public int level = 1;
 
@@ -104,8 +149,6 @@ public class PlayerData
     private HashSet<int> completedLevelsCache = null;
 
     // ===================== FIRST CLEAR TRACKING =====================
-    // Stores stage IDs that have already been first-cleared, as a comma-separated string.
-    // e.g. "Stage1,Stage2,Stage3"
     public string firstClearedStages = "";
     private const string KEY_FIRST_CLEARED_STAGES = "FirstClearedStages";
     private HashSet<string> firstClearedCache = null;
@@ -128,10 +171,8 @@ public class PlayerData
         return firstClearedCache;
     }
 
-    /// <summary>Returns true if this stage has never been first-cleared before.</summary>
     public bool IsFirstClear(string stageID) => !GetFirstClearedStages().Contains(stageID);
 
-    /// <summary>Marks a stage as first-cleared so the bonus never triggers again.</summary>
     public void MarkFirstCleared(string stageID)
     {
         if (GetFirstClearedStages().Add(stageID))
@@ -268,10 +309,6 @@ public class PlayerData
 
     // ===================== LEVEL METHODS =====================
 
-    /// <summary>
-    /// Increments the player's level by 1. Only call this once per stage clear.
-    /// The guard against double-incrementing is handled by IsLevelCompleted() in LevelCompleteButton.
-    /// </summary>
     public void IncrementLevel()
     {
         level += 1;
@@ -281,11 +318,6 @@ public class PlayerData
 
     public bool IsStageUnlocked(int stageIndex) => stageIndex <= level;
 
-    // ── Compatibility shims ────────────────────────────────────────────────────
-    // These keep existing scripts (ArcadeLevelManager, LevelButton, etc.) compiling
-    // without modification. They delegate to the new level field.
-
-    /// <summary>Unlocks the level if it is higher than the current level. Legacy-compatible.</summary>
     public void UnlockLevel(int levelNumber)
     {
         if (levelNumber > level)
@@ -296,13 +328,9 @@ public class PlayerData
         }
     }
 
-    /// <summary>Marks stageIndex+1 as unlocked. Legacy-compatible.</summary>
     public void CompleteLevel(int completedStageIndex) => UnlockLevel(completedStageIndex + 1);
 
-    /// <summary>Returns true if the given level number is <= the player's current level. Legacy-compatible.</summary>
     public bool IsLevelUnlocked(int levelNumber) => levelNumber <= level;
-
-    // ── End compatibility shims ────────────────────────────────────────────────
 
     // ===================== SAVE/LOAD METHODS =====================
 
@@ -314,6 +342,9 @@ public class PlayerData
         PlayerPrefs.SetInt(KEY_LEVEL, level);
         PlayerPrefs.SetString(KEY_LAST_ENERGY_UPDATE, lastEnergyUpdateTime);
         PlayerPrefs.SetInt(KEY_SOUND_ENABLED, isSoundEnabled ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_GRAPHICS_QUALITY, graphicsQuality);
+        PlayerPrefs.SetInt(KEY_SHADOWS_ENABLED, isShadowsEnabled ? 1 : 0);
+        PlayerPrefs.SetInt(KEY_POST_PROCESSING_ENABLED, isPostProcessingEnabled ? 1 : 0);
         PlayerPrefs.SetString(KEY_COMPLETED_LEVELS, completedLevelsData);
         PlayerPrefs.SetString(KEY_FIRST_CLEARED_STAGES, firstClearedStages);
         PlayerPrefs.SetInt(KEY_AVATAR_INDEX, selectedAvatarIndex);
@@ -344,6 +375,9 @@ public class PlayerData
         data.level = PlayerPrefs.GetInt(KEY_LEVEL, 1);
         data.lastEnergyUpdateTime = PlayerPrefs.GetString(KEY_LAST_ENERGY_UPDATE, DateTime.Now.ToString("o"));
         data.isSoundEnabled = PlayerPrefs.GetInt(KEY_SOUND_ENABLED, 1) == 1;
+        data.graphicsQuality = PlayerPrefs.GetInt(KEY_GRAPHICS_QUALITY, 2);
+        data.isShadowsEnabled = PlayerPrefs.GetInt(KEY_SHADOWS_ENABLED, 1) == 1;
+        data.isPostProcessingEnabled = PlayerPrefs.GetInt(KEY_POST_PROCESSING_ENABLED, 1) == 1;
         data.completedLevelsData = PlayerPrefs.GetString(KEY_COMPLETED_LEVELS, "");
         data.firstClearedStages = PlayerPrefs.GetString(KEY_FIRST_CLEARED_STAGES, "");
         data.selectedAvatarIndex = PlayerPrefs.GetInt(KEY_AVATAR_INDEX, 0);
@@ -374,6 +408,10 @@ public class PlayerData
         PlayerPrefs.DeleteKey(KEY_ENERGY);
         PlayerPrefs.DeleteKey(KEY_LEVEL);
         PlayerPrefs.DeleteKey(KEY_LAST_ENERGY_UPDATE);
+        PlayerPrefs.DeleteKey(KEY_SOUND_ENABLED);
+        PlayerPrefs.DeleteKey(KEY_GRAPHICS_QUALITY);
+        PlayerPrefs.DeleteKey(KEY_SHADOWS_ENABLED);
+        PlayerPrefs.DeleteKey(KEY_POST_PROCESSING_ENABLED);
         PlayerPrefs.DeleteKey(KEY_COMPLETED_LEVELS);
         PlayerPrefs.DeleteKey(KEY_FIRST_CLEARED_STAGES);
         PlayerPrefs.DeleteKey(KEY_AVATAR_INDEX);
@@ -396,7 +434,6 @@ public class PlayerData
         Debug.Log("[PlayerData] All player data deleted");
     }
 
-    // Legacy key migration: if old "HighestLevelUnlocked" key exists, migrate it once.
     private const string KEY_HIGHEST_LEVEL_LEGACY = "HighestLevelUnlocked";
     public static void MigrateLegacyKeys()
     {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// Manages all player data and provides event-based updates for UI elements.
 /// Singleton pattern with DontDestroyOnLoad for persistence across scenes.
 /// INCLUDES: Coin, Energy, Player Name management + Avatar System + Level System
+///           + Settings (Sound, GraphicsQuality, Shadows, PostProcessing)
 /// </summary>
 public class PlayerDataManager : MonoBehaviour
 {
@@ -38,10 +39,8 @@ public class PlayerDataManager : MonoBehaviour
     [Tooltip("All Image components that should always display the current avatar (e.g. profile picture on HUD).")]
     public List<Image> avatarDisplayImages = new List<Image>();
 
-    /// <summary>Fired whenever the avatar changes. Passes the new Sprite.</summary>
     public static event Action<Sprite> OnAvatarChanged;
 
-    /// <summary>Returns the Sprite for the currently selected avatar index, or null if not set up.</summary>
     public Sprite GetCurrentAvatarSprite()
     {
         if (avatarSprites == null || avatarSprites.Length == 0) return null;
@@ -49,9 +48,6 @@ public class PlayerDataManager : MonoBehaviour
         return avatarSprites[idx];
     }
 
-    /// <summary>
-    /// Call this from AvatarSelector (or any script) to change and persist the avatar.
-    /// </summary>
     public void SetAvatar(int index)
     {
         if (avatarSprites == null || avatarSprites.Length == 0)
@@ -79,7 +75,6 @@ public class PlayerDataManager : MonoBehaviour
             if (img != null) img.sprite = current;
     }
 
-    /// <summary>Register an Image at runtime to always mirror the current avatar.</summary>
     public void RegisterAvatarDisplay(Image image)
     {
         if (image != null && !avatarDisplayImages.Contains(image))
@@ -92,11 +87,18 @@ public class PlayerDataManager : MonoBehaviour
     public void UnregisterAvatarDisplay(Image image) => avatarDisplayImages.Remove(image);
     // ===================== END AVATAR SYSTEM =====================
 
-    // Events for custom UI updates
+    // Events
     public static event Action<int> OnCoinsChanged;
     public static event Action<int> OnEnergyChanged;
     public static event Action<string> OnPlayerNameChanged;
     public static event Action<int> OnLevelChanged;
+
+    // Settings events
+    public static event Action<bool> OnSoundSettingChanged;
+    /// <summary>Fired when graphics quality changes. 0=Low, 1=Medium, 2=High.</summary>
+    public static event Action<int> OnGraphicsQualityChanged;
+    public static event Action<bool> OnShadowsSettingChanged;
+    public static event Action<bool> OnPostProcessingSettingChanged;
 
     private void Awake()
     {
@@ -105,12 +107,12 @@ public class PlayerDataManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // Migrate old "HighestLevelUnlocked" key if it exists
             PlayerData.MigrateLegacyKeys();
 
             playerData = PlayerData.Load();
             Debug.Log($"[PlayerDataManager] gachaQuestCompleted={playerData.gachaQuestCompleted}, gachaQuestClaimed={playerData.gachaQuestClaimed}");
             Debug.Log($"[PlayerDataManager] Loaded - Name: {playerData.playerName}, Coins: {playerData.coins}, Energy: {playerData.energy}/{PlayerData.MAX_ENERGY}, Level: {playerData.level}, Avatar: {playerData.selectedAvatarIndex}");
+            Debug.Log($"[PlayerDataManager] Settings - Sound:{playerData.isSoundEnabled}, Graphics:{playerData.graphicsQuality}, Shadows:{playerData.isShadowsEnabled}, PostFX:{playerData.isPostProcessingEnabled}");
 
             Invoke(nameof(NotifyInitialValues), 0.1f);
         }
@@ -150,8 +152,12 @@ public class PlayerDataManager : MonoBehaviour
         OnEnergyChanged?.Invoke(playerData.energy);
         OnLevelChanged?.Invoke(playerData.level);
         OnAvatarChanged?.Invoke(GetCurrentAvatarSprite());
+        OnSoundSettingChanged?.Invoke(playerData.isSoundEnabled);
+        OnGraphicsQualityChanged?.Invoke(playerData.graphicsQuality);
+        OnShadowsSettingChanged?.Invoke(playerData.isShadowsEnabled);
+        OnPostProcessingSettingChanged?.Invoke(playerData.isPostProcessingEnabled);
 
-        Debug.Log($"[PlayerDataManager] Initial UI update complete.");
+        Debug.Log("[PlayerDataManager] Initial UI update complete.");
     }
 
     // ===================== UI UPDATE METHODS =====================
@@ -309,8 +315,70 @@ public class PlayerDataManager : MonoBehaviour
     // ===================== LEVEL METHODS =====================
 
     public int GetLevel() => playerData.level;
-
     public bool IsStageUnlocked(int stageIndex) => playerData.IsStageUnlocked(stageIndex);
+
+    // ===================== SETTINGS METHODS =====================
+
+    // --- Sound ---
+    public void ToggleSound()
+    {
+        playerData.ToggleSound();
+        OnSoundSettingChanged?.Invoke(playerData.isSoundEnabled);
+        Debug.Log($"[PlayerDataManager] Sound toggled → {playerData.isSoundEnabled}");
+    }
+
+    public void SetSound(bool enabled)
+    {
+        playerData.SetSound(enabled);
+        OnSoundSettingChanged?.Invoke(playerData.isSoundEnabled);
+    }
+
+    public bool IsSoundEnabled() => playerData.isSoundEnabled;
+
+    // --- Graphics Quality ---
+    /// <summary>Set graphics quality. 0 = Low, 1 = Medium, 2 = High.</summary>
+    public void SetGraphicsQuality(int quality)
+    {
+        playerData.SetGraphicsQuality(quality);
+        OnGraphicsQualityChanged?.Invoke(playerData.graphicsQuality);
+        Debug.Log($"[PlayerDataManager] Graphics quality → {playerData.graphicsQuality}");
+    }
+
+    public int GetGraphicsQuality() => playerData.graphicsQuality;
+
+    // --- Shadows ---
+    public void ToggleShadows()
+    {
+        playerData.ToggleShadows();
+        OnShadowsSettingChanged?.Invoke(playerData.isShadowsEnabled);
+        Debug.Log($"[PlayerDataManager] Shadows toggled → {playerData.isShadowsEnabled}");
+    }
+
+    public void SetShadows(bool enabled)
+    {
+        playerData.SetShadows(enabled);
+        OnShadowsSettingChanged?.Invoke(playerData.isShadowsEnabled);
+    }
+
+    public bool IsShadowsEnabled() => playerData.isShadowsEnabled;
+
+    // --- Post Processing ---
+    public void TogglePostProcessing()
+    {
+        playerData.TogglePostProcessing();
+        OnPostProcessingSettingChanged?.Invoke(playerData.isPostProcessingEnabled);
+        Debug.Log($"[PlayerDataManager] PostProcessing toggled → {playerData.isPostProcessingEnabled}");
+    }
+
+    public void SetPostProcessing(bool enabled)
+    {
+        playerData.SetPostProcessing(enabled);
+        OnPostProcessingSettingChanged?.Invoke(playerData.isPostProcessingEnabled);
+    }
+
+    public bool IsPostProcessingEnabled() => playerData.isPostProcessingEnabled;
+
+    // ===================== END SETTINGS METHODS =====================
 
     // ===================== UTILITY METHODS =====================
 
@@ -322,6 +390,10 @@ public class PlayerDataManager : MonoBehaviour
         OnEnergyChanged?.Invoke(playerData.energy);
         OnLevelChanged?.Invoke(playerData.level);
         OnAvatarChanged?.Invoke(GetCurrentAvatarSprite());
+        OnSoundSettingChanged?.Invoke(playerData.isSoundEnabled);
+        OnGraphicsQualityChanged?.Invoke(playerData.graphicsQuality);
+        OnShadowsSettingChanged?.Invoke(playerData.isShadowsEnabled);
+        OnPostProcessingSettingChanged?.Invoke(playerData.isPostProcessingEnabled);
     }
 
     public void ReloadDataFromDisk()
@@ -347,16 +419,11 @@ public class PlayerDataManager : MonoBehaviour
     public void ResetEnergyForTesting() => SetEnergy(0);
     public void GiveStartingEnergyForTesting(int amount = 100) => SetEnergy(amount);
 
-    /// <summary>
-    /// [TESTING] Resets the player's level back to 1 and clears all completed levels.
-    /// Use the Inspector button or call this from a test script.
-    /// </summary>
     [ContextMenu("⚙ Reset Player Level to 1 (Testing)")]
     public void ResetLevelForTesting()
     {
         playerData.level = 1;
         playerData.completedLevelsData = "";
-        // Clear the cache by reloading
         playerData = PlayerData.Load();
         playerData.level = 1;
         playerData.completedLevelsData = "";
@@ -364,7 +431,6 @@ public class PlayerDataManager : MonoBehaviour
         OnLevelChanged?.Invoke(playerData.level);
         Debug.Log("[PlayerDataManager] ⚙ Player level reset to 1 and completed levels cleared.");
 
-        // Refresh all LevelUnlockButtons in the scene
         foreach (var btn in FindObjectsOfType<LevelUnlockButton>())
             btn.RefreshLockState();
     }
@@ -378,6 +444,10 @@ public class PlayerDataManager : MonoBehaviour
         Debug.Log($"🧪 Level: {playerData.level}");
         Debug.Log($"🧪 Avatar Index: {playerData.selectedAvatarIndex}");
         Debug.Log($"🧪 Completed Stages: {playerData.completedLevelsData}");
+        Debug.Log($"🧪 Sound: {playerData.isSoundEnabled}");
+        Debug.Log($"🧪 Graphics Quality: {playerData.graphicsQuality} (0=Low,1=Med,2=High)");
+        Debug.Log($"🧪 Shadows: {playerData.isShadowsEnabled}");
+        Debug.Log($"🧪 PostProcessing: {playerData.isPostProcessingEnabled}");
         Debug.Log("🧪 [TESTING] ========================");
     }
 
@@ -389,6 +459,10 @@ public class PlayerDataManager : MonoBehaviour
         playerData.level = 1;
         playerData.completedLevelsData = "";
         playerData.selectedAvatarIndex = 0;
+        playerData.isSoundEnabled = true;
+        playerData.graphicsQuality = 2;
+        playerData.isShadowsEnabled = true;
+        playerData.isPostProcessingEnabled = true;
         playerData.Save();
         RefreshAllUI();
     }
