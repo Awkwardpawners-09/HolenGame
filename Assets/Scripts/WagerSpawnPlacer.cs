@@ -171,6 +171,14 @@ public class WagerSpawnPlacer : MonoBehaviourPun
             go.transform.SetParent(transform);
             spawnedHolens.Add(go);
 
+            // Add sync corrector if not already present on the prefab.
+            // Only needed on the Master Client — the script handles its own role checks internally.
+            if (go.GetComponent<HolenSyncCorrector>() == null)
+            {
+                go.AddComponent<HolenSyncCorrector>();
+                Debug.Log($"[WagerSpawnPlacer] Added HolenSyncCorrector to {data.holenName}");
+            }
+
             // Register with PVPScore so only these wager holens can score.
             // Launch balls and inventory-swap balls are never registered and will be ignored.
             if (PVPScore.Instance != null)
@@ -181,7 +189,7 @@ public class WagerSpawnPlacer : MonoBehaviourPun
             Debug.Log($"[WagerSpawnPlacer] ✅ Successfully spawned {data.holenName} at {slot.name}");
 
             // Destroy slot marker (local only - non-networked)
-            if (destroySlotAfterSpawn)
+            if (destroySlotAfterSpawn)      
             {
                 Destroy(slot.gameObject);
             }

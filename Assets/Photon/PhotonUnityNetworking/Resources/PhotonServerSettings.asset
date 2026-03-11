@@ -79,6 +79,7 @@ MonoBehaviour:
   - RPC_OnTurnStarted
   - RPC_ShowTurnFeedback
   - RPC_SwapHolenModel
+  - RPC_ReceiveState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
