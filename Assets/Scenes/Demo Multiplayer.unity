@@ -17267,7 +17267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1235888009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20677,6 +20677,7 @@ MonoBehaviour:
   - {fileID: 4543069569791729328, guid: 8b0f2b74dcd477c478c8ea30f9410671, type: 3}
   - {fileID: 1037114594539312753, guid: 09621acc2d274384cbe200af973ccafe, type: 3}
   - {fileID: 4543069569791729328, guid: 09bac36aac8b1e344a031bee95690bd0, type: 3}
+  - {fileID: 6275871912443945537, guid: 0e3a5b2b52fc236438fe333db02e6b77, type: 3}
   selectedHighlightColor: {r: 0.19421315, g: 1, b: 0, a: 1}
   cooldownTintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.8}
 --- !u!114 &1556830101
@@ -28992,7 +28993,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

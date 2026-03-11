@@ -307,9 +307,9 @@ public class HolenInventoryManager : MonoBehaviour
         {
             if (holen != null && !string.IsNullOrEmpty(holen.holenID))
             {
-                inventory.Add(new HolenInventoryEntry(holen.holenID, 99));
+                inventory.Add(new HolenInventoryEntry(holen.holenID, 1));
                 addedCount++;
-                Debug.Log($"🧪 [TESTING] Added {holen.holenName} x99");
+                Debug.Log($"🧪 [TESTING] Added {holen.holenName} x1");
             }
         }
 
