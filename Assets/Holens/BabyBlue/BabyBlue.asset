@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BabyBlue
   m_EditorClassIdentifier: 
   holenID: FH009
-  rarity: Common
+  rarity: Uncommon
   holenName: Baby Blue
   holenIcon: {fileID: 21300000, guid: 89127c9a0ba25ab408bc0c4fb466bf20, type: 3}
   property: 1

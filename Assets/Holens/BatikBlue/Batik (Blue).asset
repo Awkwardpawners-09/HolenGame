@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Batik (Blue)
   m_EditorClassIdentifier: 
   holenID: FH005
-  rarity: Epic
+  rarity: Rare
   holenName: Batik (Blue)
   holenIcon: {fileID: 21300000, guid: 59342354714e2ab4792d2d697a28b0bc, type: 3}
   property: 2

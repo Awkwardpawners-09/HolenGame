@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf30ea56afba3f448eaab1016cc464c, type: 3}
   m_Name: Kristal_Orange
   m_EditorClassIdentifier: 
-  holenID: DH005
+  holenID: DH003
   rarity: Common
-  holenName: Krystal Transparent
+  holenName: Krystal Orange
   holenIcon: {fileID: 21300000, guid: c3922415147af7c48a28e45c789d3f51, type: 3}
   property: 0
   holenPrefab: {fileID: 4543069569791729328, guid: 4269b342f2d94774daf8247ad5388ddb, type: 3}

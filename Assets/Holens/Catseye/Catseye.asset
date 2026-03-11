@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Catseye
   m_EditorClassIdentifier: 
   holenID: FH012
-  rarity: Common
+  rarity: Epic
   holenName: Catseye
   holenIcon: {fileID: 21300000, guid: b68af54e81061cd4bb283d15bca8fa3e, type: 3}
   property: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BabyGreen
   m_EditorClassIdentifier: 
   holenID: FH007
-  rarity: Common
+  rarity: Uncommon
   holenName: Baby Green
   holenIcon: {fileID: 21300000, guid: 54ec0cc9e24565d46a9d2cd71c938b8d, type: 3}
   property: 0

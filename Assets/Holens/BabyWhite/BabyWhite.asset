@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BabyWhite
   m_EditorClassIdentifier: 
   holenID: GH0003
-  rarity: Rare
+  rarity: Uncommon
   holenName: Baby White
   holenIcon: {fileID: 21300000, guid: 4c9ed9fa9dd5c0f40b20b647f4387635, type: 3}
   property: 0

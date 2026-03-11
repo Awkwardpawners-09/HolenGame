@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Clambroth
   m_EditorClassIdentifier: 
   holenID: AH003
-  rarity: Common
+  rarity: Rare
   holenName: Clambroth
   holenIcon: {fileID: 21300000, guid: c934e3943b7fc30418bddbac7fe398b5, type: 3}
   property: 0

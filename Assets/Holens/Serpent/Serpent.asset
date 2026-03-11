@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serpent
   m_EditorClassIdentifier: 
   holenID: JH005
-  rarity: Common
+  rarity: Uncommon
   holenName: Serpent
   holenIcon: {fileID: 21300000, guid: 36e441ecf8792db48af0d97b659f0566, type: 3}
   property: 0
