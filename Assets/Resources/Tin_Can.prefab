@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 7973055060326006674}
   - component: {fileID: 6439538154391335749}
   - component: {fileID: 1382557812575394009}
+  - component: {fileID: -8130416213277814968}
   m_Layer: 8
   m_Name: Tin_Can
   m_TagString: Untagged
@@ -224,6 +225,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7d8fbf2abeb4b2a4c8be6e3a76b2b11d, type: 3}
   backgroundMusic: {fileID: 0}
   hitSoundVolume: 2
+--- !u!114 &-8130416213277814968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467951910310100950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51d01f71887b24d4ea27684d0350f0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 15
 --- !u!1 &5214338375345876584
 GameObject:
   m_ObjectHideFlags: 0
