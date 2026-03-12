@@ -29712,6 +29712,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f96c635d054cd44c976d7f863b89924, type: 2}
   - {fileID: 11400000, guid: 5fb0ae32649584a49b3f24d96b141777, type: 2}
   - {fileID: 11400000, guid: 91b9be9dfa91fdb4980d293f45c78293, type: 2}
+  - {fileID: 11400000, guid: 1d5e5315a5a14cb419e9be92ac1495a2, type: 2}
+  - {fileID: 11400000, guid: 25f30b05777383b468b4117796730496, type: 2}
+  - {fileID: 11400000, guid: bfa02d6591c8bbe4bb60e0ebe2c0c1a4, type: 2}
+  - {fileID: 11400000, guid: f0e44fd7e1d49644db96073d0aba7b86, type: 2}
   inventory: []
   playerName: 
   playerNameDisplayText: {fileID: 0}

@@ -15282,6 +15282,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4198848193166896672, guid: 0e3a5b2b52fc236438fe333db02e6b77, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6275871912443945537, guid: 0e3a5b2b52fc236438fe333db02e6b77, type: 3}
       propertyPath: m_Name
       value: Hollow Purple

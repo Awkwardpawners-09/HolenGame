@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf30ea56afba3f448eaab1016cc464c, type: 3}
+  m_Name: Oxblood
+  m_EditorClassIdentifier: 
+  holenID: AH002
+  rarity: Epic
+  holenName: OxBlood
+  holenIcon: {fileID: 21300000, guid: 6648354a391df62439b481996a4ce11c, type: 3}
+  property: 1
+  holenPrefab: {fileID: 4543069569791729328, guid: 264855878ea5c504faa7a479a24286f7, type: 3}
+  InventoryImage: {fileID: 21300000, guid: e021647af1dc357419041bbca47d9469, type: 3}
+  inventoryPrefab: {fileID: 0}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
+  maxStack: 9

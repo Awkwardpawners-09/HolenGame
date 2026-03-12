@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2441543963924202283}
   - component: {fileID: 7162362494411583802}
   m_Layer: 5
-  m_Name: KristalBrow
+  m_Name: KristalBrown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
