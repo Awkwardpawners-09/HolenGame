@@ -51,6 +51,7 @@ public class MarbleGachaAnimated : MonoBehaviour
 
     [Header("Rarity Colors")]
     public Color commonColor = Color.gray;
+    public Color uncommonColor = new Color(0.145f, 0.588f, 0.745f, 1f);
     public Color rareColor = Color.blue;
     public Color epicColor = Color.magenta;
     public Color legendaryColor = Color.yellow;
@@ -159,6 +160,7 @@ public class MarbleGachaAnimated : MonoBehaviour
         resultPanel.SetActive(true);
         marbleNameText.text = awardedMarble.holenName;
         marbleImage.sprite = awardedMarble.holenIcon;
+        marbleNameText.color = GetRarityColor(awardedMarble.rarity);
 
         if (rarityText != null)
         {
@@ -258,28 +260,36 @@ public class MarbleGachaAnimated : MonoBehaviour
     {
         switch (rarity.ToLower())
         {
-            case "common": return commonColor;
-            case "rare": return rareColor;
-            case "epic": return epicColor;
+            case "common":    return commonColor;
+            case "uncommon":  return uncommonColor;
+            case "rare":      return rareColor;
+            case "epic":      return epicColor;
             case "legendary": return legendaryColor;
-            default: return Color.white;
+            default:          return Color.white;
         }
     }
 
     HolenData GetRandomMarble()
     {
         var validMarbles = marblePool.FindAll(m => m != null && !string.IsNullOrEmpty(m.holenID));
+        if (validMarbles.Count == 0) { Debug.LogError("No valid marbles in marblePool!"); return null; }
 
-        if (validMarbles.Count == 0)
-        {
-            Debug.LogError("No valid marbles in marblePool!");
-            return null;
-        }
+        float roll = Random.Range(0f, 100f);
 
-        return validMarbles[Random.Range(0, validMarbles.Count)];
+        if (roll < 20f)      return GetRandomOfRarity(validMarbles, "common");
+        else if (roll < 40f) return GetRandomOfRarity(validMarbles, "uncommon");
+        else if (roll < 60f) return GetRandomOfRarity(validMarbles, "rare");
+        else if (roll < 80f) return GetRandomOfRarity(validMarbles, "epic");
+        else                 return GetRandomOfRarity(validMarbles, "legendary");
     }
 
-    // ✅ Rare Holen Achievement check
+    HolenData GetRandomOfRarity(List<HolenData> pool, string rarity)
+    {
+        var filtered = pool.FindAll(m => m.rarity.ToLower() == rarity);
+        if (filtered.Count == 0) return pool[Random.Range(0, pool.Count)];
+        return filtered[Random.Range(0, filtered.Count)];
+    }
+
     private void CheckRareHolenAchievement(HolenData marble)
     {
         if (marble == null) return;
@@ -297,7 +307,7 @@ public class MarbleGachaAnimated : MonoBehaviour
         }
     }
 
-        private void CheckCollect10Achievement(int amountAdded)
+    private void CheckCollect10Achievement(int amountAdded)
     {
         if (PlayerDataManager.Instance.playerData.collect10HolensAchievementCompleted) return;
 
@@ -320,7 +330,6 @@ public class MarbleGachaAnimated : MonoBehaviour
                 a.RefreshUI();
         }
     }
-
 
     IEnumerator ShakeButton(Button button = null)
     {
@@ -395,9 +404,8 @@ public class MarbleGachaAnimated : MonoBehaviour
             CheckRareHolenAchievement(marble);
         }
 
-         CheckCollect10Achievement(awardedMarbles.Count);
+        CheckCollect10Achievement(awardedMarbles.Count);
 
-        // ✅ Mark 5x quest complete
         PlayerDataManager.Instance.playerData.gachaQuestCompleted = true;
         PlayerDataManager.Instance.playerData.Save();
         foreach (var q in FindObjectsOfType<GachaQuest>())
