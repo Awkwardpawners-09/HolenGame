@@ -28060,6 +28060,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SETTINGS
       objectReference: {fileID: 0}
+    - target: {fileID: 1475387896495719024, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3199426122143545063, guid: f4e63def80f0543458cbb2c207358bc7, type: 3}
       propertyPath: transitionObject
       value: 

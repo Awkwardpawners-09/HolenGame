@@ -15875,7 +15875,7 @@ MonoBehaviour:
   continueButton: {fileID: 387487144}
   continueSceneName: Demo Menu
   retryButton: {fileID: 1092251883}
-  retrySceneName: Stage 12
+  retrySceneName: Stage 11
   transitionObject: {fileID: 836333308}
   delayBeforeTransition: 5
 --- !u!114 &1005936888
