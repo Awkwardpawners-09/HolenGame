@@ -80,6 +80,7 @@ MonoBehaviour:
   - RPC_ShowTurnFeedback
   - RPC_SwapHolenModel
   - RPC_ReceiveState
+  - RPC_ActivateMud
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
