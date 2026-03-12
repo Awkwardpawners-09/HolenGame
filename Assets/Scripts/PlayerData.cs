@@ -141,6 +141,11 @@ public class PlayerData
     public const string KEY_COLLECT10_ACHIEVEMENT_COMPLETED = "Collect10AchievementCompleted";
     public const string KEY_COLLECT10_ACHIEVEMENT_CLAIMED = "Collect10AchievementClaimed";
     public const string KEY_TOTAL_HOLENS_COLLECTED = "TotalHolensCollected";
+
+    public bool mythicHolenAchievementCompleted = false;
+public bool mythicHolenAchievementClaimed = false;
+public const string KEY_MYTHIC_HOLEN_ACHIEVEMENT_COMPLETED = "MythicHolenAchievementCompleted";
+public const string KEY_MYTHIC_HOLEN_ACHIEVEMENT_CLAIMED = "MythicHolenAchievementClaimed";
     // ===================== END ACHIEVEMENT SYSTEM =====================
 
     // ===================== COMPLETED LEVELS TRACKING =====================
@@ -363,6 +368,9 @@ public class PlayerData
         PlayerPrefs.SetInt(KEY_COLLECT10_ACHIEVEMENT_COMPLETED, collect10HolensAchievementCompleted ? 1 : 0);
         PlayerPrefs.SetInt(KEY_COLLECT10_ACHIEVEMENT_CLAIMED, collect10HolensAchievementClaimed ? 1 : 0);
         PlayerPrefs.SetInt(KEY_TOTAL_HOLENS_COLLECTED, totalHolensCollected);
+        PlayerPrefs.SetInt(KEY_MYTHIC_HOLEN_ACHIEVEMENT_COMPLETED, mythicHolenAchievementCompleted ? 1 : 0);
+PlayerPrefs.SetInt(KEY_MYTHIC_HOLEN_ACHIEVEMENT_CLAIMED, mythicHolenAchievementClaimed ? 1 : 0);
+        
         PlayerPrefs.Save();
     }
 
@@ -396,6 +404,8 @@ public class PlayerData
         data.collect10HolensAchievementCompleted = PlayerPrefs.GetInt(KEY_COLLECT10_ACHIEVEMENT_COMPLETED, 0) == 1;
         data.collect10HolensAchievementClaimed = PlayerPrefs.GetInt(KEY_COLLECT10_ACHIEVEMENT_CLAIMED, 0) == 1;
         data.totalHolensCollected = PlayerPrefs.GetInt(KEY_TOTAL_HOLENS_COLLECTED, 0);
+        data.mythicHolenAchievementCompleted = PlayerPrefs.GetInt(KEY_MYTHIC_HOLEN_ACHIEVEMENT_COMPLETED, 0) == 1;
+data.mythicHolenAchievementClaimed = PlayerPrefs.GetInt(KEY_MYTHIC_HOLEN_ACHIEVEMENT_CLAIMED, 0) == 1;
 
         data.RegenerateEnergy();
         return data;
@@ -430,6 +440,8 @@ public class PlayerData
         PlayerPrefs.DeleteKey(KEY_COLLECT10_ACHIEVEMENT_COMPLETED);
         PlayerPrefs.DeleteKey(KEY_COLLECT10_ACHIEVEMENT_CLAIMED);
         PlayerPrefs.DeleteKey(KEY_TOTAL_HOLENS_COLLECTED);
+        PlayerPrefs.DeleteKey(KEY_MYTHIC_HOLEN_ACHIEVEMENT_COMPLETED);
+PlayerPrefs.DeleteKey(KEY_MYTHIC_HOLEN_ACHIEVEMENT_CLAIMED);
         PlayerPrefs.Save();
         Debug.Log("[PlayerData] All player data deleted");
     }

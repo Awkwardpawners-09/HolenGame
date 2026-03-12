@@ -19,6 +19,7 @@ public class SunrayRevealEffect : MonoBehaviour
     public Color rareColor = new Color(0.3f, 0.5f, 1f); // Blue
     public Color epicColor = new Color(0.8f, 0.2f, 1f); // Purple
     public Color legendaryColor = new Color(1f, 0.8f, 0f); // Gold
+    public Color mythicColor = new Color(1f, 0f, 0f, 1f); // Red
 
     private Coroutine currentEffect;
 
@@ -95,6 +96,7 @@ public class SunrayRevealEffect : MonoBehaviour
             case "rare": return rareColor;
             case "epic": return epicColor;
             case "legendary": return legendaryColor;
+            case "mythic":  return mythicColor;
             default: return Color.white;
         }
     }

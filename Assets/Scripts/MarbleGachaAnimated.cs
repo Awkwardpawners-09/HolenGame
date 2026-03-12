@@ -55,6 +55,7 @@ public class MarbleGachaAnimated : MonoBehaviour
     public Color rareColor = Color.blue;
     public Color epicColor = Color.magenta;
     public Color legendaryColor = Color.yellow;
+    public Color mythicColor = Color.red;
 
     private bool isPulling = false;
 
@@ -136,6 +137,7 @@ public class MarbleGachaAnimated : MonoBehaviour
         {
             inventoryManager.AddHolen(awardedMarble.holenID, 1);
             CheckRareHolenAchievement(awardedMarble);
+            CheckMythicHolenAchievement(awardedMarble);
             CheckCollect10Achievement(1);
         }
 
@@ -265,23 +267,25 @@ public class MarbleGachaAnimated : MonoBehaviour
             case "rare":      return rareColor;
             case "epic":      return epicColor;
             case "legendary": return legendaryColor;
+            case "mythic":  return mythicColor;
             default:          return Color.white;
         }
     }
 
-    HolenData GetRandomMarble()
-    {
-        var validMarbles = marblePool.FindAll(m => m != null && !string.IsNullOrEmpty(m.holenID));
-        if (validMarbles.Count == 0) { Debug.LogError("No valid marbles in marblePool!"); return null; }
+HolenData GetRandomMarble()
+{
+    var validMarbles = marblePool.FindAll(m => m != null && !string.IsNullOrEmpty(m.holenID));
+    if (validMarbles.Count == 0) { Debug.LogError("No valid marbles in marblePool!"); return null; }
 
-        float roll = Random.Range(0f, 100f);
+    float roll = Random.Range(0f, 100f);
 
-        if (roll < 20f)      return GetRandomOfRarity(validMarbles, "common");
-        else if (roll < 40f) return GetRandomOfRarity(validMarbles, "uncommon");
-        else if (roll < 60f) return GetRandomOfRarity(validMarbles, "rare");
-        else if (roll < 80f) return GetRandomOfRarity(validMarbles, "epic");
-        else                 return GetRandomOfRarity(validMarbles, "legendary");
-    }
+    if (roll < 16.6f)      return GetRandomOfRarity(validMarbles, "common");
+    else if (roll < 33.2f) return GetRandomOfRarity(validMarbles, "uncommon");
+    else if (roll < 49.8f) return GetRandomOfRarity(validMarbles, "rare");
+    else if (roll < 66.4f) return GetRandomOfRarity(validMarbles, "epic");
+    else if (roll < 83f)   return GetRandomOfRarity(validMarbles, "legendary");
+    else                   return GetRandomOfRarity(validMarbles, "mythic");
+}
 
     HolenData GetRandomOfRarity(List<HolenData> pool, string rarity)
     {
@@ -330,6 +334,23 @@ public class MarbleGachaAnimated : MonoBehaviour
                 a.RefreshUI();
         }
     }
+
+    private void CheckMythicHolenAchievement(HolenData marble)
+{
+    if (marble == null) return;
+    if (PlayerDataManager.Instance.playerData.mythicHolenAchievementCompleted) return;
+
+    if (marble.rarity.ToLower() == "mythic")
+    {
+        PlayerDataManager.Instance.playerData.mythicHolenAchievementCompleted = true;
+        PlayerDataManager.Instance.playerData.Save();
+
+        foreach (var a in FindObjectsOfType<MythicHolenAchievement>())
+            a.RefreshUI();
+
+        Debug.Log($"[MythicHolenAchievement] Unlocked by pulling: {marble.holenName} ({marble.rarity})");
+    }
+}
 
     IEnumerator ShakeButton(Button button = null)
     {
@@ -402,6 +423,7 @@ public class MarbleGachaAnimated : MonoBehaviour
             awardedMarbles.Add(marble);
             inventoryManager.AddHolen(marble.holenID, 1);
             CheckRareHolenAchievement(marble);
+            CheckMythicHolenAchievement(marble);
         }
 
         CheckCollect10Achievement(awardedMarbles.Count);
