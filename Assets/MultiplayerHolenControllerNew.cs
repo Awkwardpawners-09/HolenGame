@@ -35,6 +35,10 @@ using UnityEngine.UI;
 ///    Tag your 3D model children with "HolenModel" in the Inspector.
 ///    If nothing is tagged, we fall back to destroying ALL children of currentHolenBall
 ///    that are NOT core components (Rigidbody, Collider) — see SwapHolenModel().
+///
+/// 4. RPC_ShootHolen now disables HolenSyncCorrector on the launch ball before
+///    applying velocity, preventing it from snapping the ball back to spawn position
+///    on the non-master client.
 /// </summary>
 public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
 {
@@ -129,6 +133,14 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
     [Header("Targeting Indicator")]
     public GameObject targetIndicator;
 
+    [Header("Turn Timer")]
+    [Tooltip("Seconds the active player has to launch before auto-firing")]
+    public float turnTimeLimit = 15f;
+    [Tooltip("TMP_Text shown only when timer drops below 5 seconds")]
+    public TMP_Text turnTimerText;
+    [Tooltip("Sound played on each whole-second tick while the countdown is visible (5, 4, 3, 2, 1)")]
+    public AudioClip countdownTickClip;
+
     // ── Private State ──
     private int ballLayer;
     private int groundLayerMask;
@@ -154,6 +166,10 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
     private bool isOnChangeCooldown = false;
     private bool isCompletingTurn = false;
 
+    private float turnTimer = 0f;
+    private Coroutine turnTimerCoroutine = null;
+    private int lastTickPlayed = -1;
+
     public GameObject currentHolenBall { get; private set; }
 
     // ─────────────────────────────────────────────
@@ -176,6 +192,7 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         if (activePlayerCamera != null) defaultLookAtTarget = activePlayerCamera.LookAt;
         if (swipeIndicator != null) swipeIndicator.SetActive(false);
         if (targetIndicator != null) targetIndicator.SetActive(false);
+        if (turnTimerText != null) turnTimerText.gameObject.SetActive(false);
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;
@@ -241,6 +258,10 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
             UpdateLocalStatusText("idle", "Player 1");
             UpdateTurnDisplay();
         }
+
+        // Both clients start the timer independently at the same moment.
+        // isTurn gates who actually auto-launches if it hits zero.
+        StartTurnTimer();
     }
 
     // ─────────────────────────────────────────────
@@ -780,6 +801,82 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
     // ─────────────────────────────────────────────
     public bool IsTurn() => isTurn;
 
+    // ─────────────────────────────────────────────
+    //  TURN TIMER
+    // ─────────────────────────────────────────────
+    private void StartTurnTimer()
+    {
+        StopTurnTimer();
+        turnTimer = turnTimeLimit;
+        lastTickPlayed = -1;
+        if (turnTimerText != null) turnTimerText.gameObject.SetActive(false);
+        turnTimerCoroutine = StartCoroutine(TurnTimerCoroutine());
+    }
+
+    private void StopTurnTimer()
+    {
+        if (turnTimerCoroutine != null)
+        {
+            StopCoroutine(turnTimerCoroutine);
+            turnTimerCoroutine = null;
+        }
+        if (turnTimerText != null) turnTimerText.gameObject.SetActive(false);
+    }
+
+    private IEnumerator TurnTimerCoroutine()
+    {
+        turnTimer = turnTimeLimit;
+
+        while (turnTimer > 0f)
+        {
+            yield return null; // tick every frame for smooth countdown display
+            turnTimer -= Time.deltaTime;
+
+            if (turnTimer < 5f)
+            {
+                // Show and continuously update the TMP text
+                if (turnTimerText != null)
+                {
+                    if (!turnTimerText.gameObject.activeSelf)
+                        turnTimerText.gameObject.SetActive(true);
+
+                    float display = Mathf.Max(0f, turnTimer);
+                    turnTimerText.text = display.ToString("F0");
+                }
+
+                // Play a tick sound each time a new whole second is crossed (5, 4, 3, 2, 1)
+                int currentTick = Mathf.CeilToInt(turnTimer);
+                if (currentTick != lastTickPlayed && currentTick >= 1 && currentTick <= 5)
+                {
+                    lastTickPlayed = currentTick;
+                    if (audioSource != null && countdownTickClip != null)
+                        audioSource.PlayOneShot(countdownTickClip);
+                }
+            }
+        }
+
+        // Timer hit zero — auto-launch forward if the holen hasn't been launched yet
+        if (!isHolenLaunched && isTurn && currentHolenBall != null)
+        {
+            if (turnTimerText != null)
+            {
+                turnTimerText.text = "0";
+                turnTimerText.gameObject.SetActive(false);
+            }
+
+            // Build a straight-forward launch velocity using the camera's forward direction
+            Vector3 forward = mainCamera.transform.forward;
+            forward.y = 0f;
+            forward.Normalize();
+
+            float autoForce = Mathf.Lerp(minLaunchForce, maxLaunchForce, 0.5f);
+            Vector3 autoVelocity = forward * autoForce;
+
+            Debug.Log($"[TurnTimer] Time expired — auto-launching for {playerRole}.");
+            ShootHolen(autoVelocity);
+        }
+    }
+
     private void UpdateTurnDisplay()
     {
         if (yourTurnObject != null) yourTurnObject.SetActive(isTurn);
@@ -811,6 +908,15 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
     private void RPC_ShootHolen(Vector3 launchVelocity)
     {
         if (currentHolenBall == null) { Debug.LogError("[RPC_ShootHolen] currentHolenBall is null."); return; }
+
+        // Stop the countdown on all clients — the ball is already in the air.
+        StopTurnTimer();
+
+        // Disable HolenSyncCorrector before launching so it doesn't snap the ball
+        // back to its pre-launch spawn position on the non-master client.
+        var corrector = currentHolenBall.GetComponent<HolenSyncCorrector>();
+        if (corrector != null) corrector.DisableCorrection();
+
         Rigidbody rb = currentHolenBall.GetComponent<Rigidbody>();
         if (rb == null) return;
         rb.isKinematic = false;
@@ -869,6 +975,7 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         isHolenLaunched = false; isInventoryOpen = false;
         isOnChangeCooldown = false; isCompletingTurn = false;
 
+        StopTurnTimer();
         CloseInventory();
         SetAllActionButtonsInteractable(false);
         DisableControls();
@@ -894,6 +1001,7 @@ public class MultiplayerHolenControllerNew : MonoBehaviourPunCallbacks
         SpawnHolenBall();
         UpdateStatusText("idle");
         UpdateTurnDisplay();
+        StartTurnTimer();
 
         Debug.Log($"{playerRole}'s turn started.");
     }

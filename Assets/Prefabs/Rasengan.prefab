@@ -30,14 +30,14 @@ RectTransform:
   m_GameObject: {fileID: 2489918361564836060}
   m_LocalRotation: {x: -0, y: -0, z: 0.9996103, w: 0.027913949}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5214, y: 1.5214, z: 1.5214}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 176.801}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 143, y: 355}
+  m_AnchoredPosition: {x: 142.93, y: 354.87}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8707002397056548570
@@ -127,8 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragSmoothness: 10
   maxReleaseVelocity: 30
-  collisionSounds:
-  - {fileID: 8300000, guid: 5979dead6e1849849b150932fed2bf39, type: 3}
+  collisionSounds: []
   minimumVelocity: 0.5
   maxVolume: 1
   minVolume: 0.3

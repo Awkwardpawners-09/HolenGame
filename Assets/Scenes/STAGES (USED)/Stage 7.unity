@@ -1237,7 +1237,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3142,7 +3142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 04a186fb153eaed4cab5e5ffbf4695a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54ec0cc9e24565d46a9d2cd71c938b8d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3554,7 +3554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holensPosition: {fileID: 347321878}
-  holensBallPrefab: {fileID: 4543069569791729328, guid: 8b0f2b74dcd477c478c8ea30f9410671, type: 3}
+  holensBallPrefab: {fileID: 4543069569791729328, guid: 3554b6375a849ce4f9f965b96067e0f3, type: 3}
   cinemachineCamera: {fileID: 1728861250}
   mainCamera: {fileID: 133991841}
   cameraSpawnPoint: {fileID: 286807596}
@@ -3564,13 +3564,13 @@ MonoBehaviour:
   buttonModeArc: {fileID: 324114218}
   buttonModeDownward: {fileID: 1068011873}
   activeLaunchMode: 0
-  minSwipeDistance: 50
+  minSwipeDistance: 10
   maxSwipeDistance: 500
   minLaunchForce: 5
   maxLaunchForce: 100
   swipeTimeWindow: 1
-  arcSwipeTimeWindow: 0.7
-  downwardSwipeTimeWindow: 0.7
+  arcSwipeTimeWindow: 1
+  downwardSwipeTimeWindow: 1
   requireTouchOnBall: 1
   swipeDeadZone: 20
   ballLayerName: HolenBall
@@ -3578,12 +3578,12 @@ MonoBehaviour:
   useSpeedForce: 1
   groundLayerName: Ground
   arcAngle: 60
-  arcForceMultiplier: 1.1
-  arcDragAmplification: 2.5
+  arcForceMultiplier: 1.65
+  arcDragAmplification: 1
   arcMaxTargetRadius: 100
-  downwardSpawnHeightOffset: 4
-  downwardAngle: 5
-  downwardForceMultiplier: 0.8
+  downwardSpawnHeightOffset: 5
+  downwardAngle: 15
+  downwardForceMultiplier: 1.6
   trajectoryPointCount: 60
   trajectoryTimeStep: 0.1
   defaultLineLength: 30
@@ -4385,7 +4385,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 12d506fcdb1c1d64aa5ff62b7927e268, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f16048033bf23be469965f32f13a5ac1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11215,7 +11215,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1403863d41792134a903d210f3fcf80a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 46c60989e07d1444ea6fb9aab2e9e3cf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.469
   m_Pitch: 1
@@ -16088,7 +16088,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 82}
+  m_AnchoredPosition: {x: 0, y: 38}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1621048519
@@ -16111,7 +16111,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Knock the Black Holen!
+  m_text: 'Destroy the shield then
+
+    knock the Black Holen!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a845496c1561de418503c96f268bafb, type: 2}
   m_sharedMaterial: {fileID: -7574316847757816619, guid: 3a845496c1561de418503c96f268bafb, type: 2}
@@ -16138,8 +16140,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 200
-  m_fontSizeBase: 200
+  m_fontSize: 170
+  m_fontSizeBase: 170
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -17562,7 +17564,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ec5c9a0df1d788c4dbeae0c737c46325, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc0c4cef1e87b714eb46422420a6e5ab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19898,9 +19900,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba09901ada6fa64f802574469a36e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holen1Data: {fileID: 11400000, guid: 82c89cf6c3514be4da62921d5b0ead6c, type: 2}
-  holen2Data: {fileID: 11400000, guid: 82cfab0a78144964c887874408cea060, type: 2}
-  holen3Data: {fileID: 11400000, guid: a6dfe7b3c88ea7a43b1e33ab61bd07c7, type: 2}
+  holen1Data: {fileID: 11400000, guid: 268c332d478c97246af00968fafdf4b5, type: 2}
+  holen2Data: {fileID: 11400000, guid: 4b49251ae8bef0246aafe0df5aaf699b, type: 2}
+  holen3Data: {fileID: 11400000, guid: 07ebc368f9ca7e7478851ecb6e2b647d, type: 2}
   chosenHolenImage: {fileID: 656463754}
   holensLauncher: {fileID: 310227659}
   holen1Button: {fileID: 487662687}
@@ -25447,7 +25449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4255e1fc7399aee4a94138d0d920fcb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 2
   damageTag: Weapon
   destroyWeaponOnHit: 1
   deathPrefab: {fileID: 4927711562988715638, guid: 3c630e9459588ee4383739a85e1e0a11, type: 3}
@@ -31558,7 +31560,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8416272007489913916}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a918cd42a3d5e41489f1847d3cbb4184, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -17,7 +17,7 @@ MonoBehaviour:
   holenName: OxBlood
   holenIcon: {fileID: 21300000, guid: 6648354a391df62439b481996a4ce11c, type: 3}
   property: 1
-  holenPrefab: {fileID: 4543069569791729328, guid: 264855878ea5c504faa7a479a24286f7, type: 3}
+  holenPrefab: {fileID: 1236914517051293868, guid: 5e12034cf02872249be30bb997a79657, type: 3}
   InventoryImage: {fileID: 21300000, guid: e021647af1dc357419041bbca47d9469, type: 3}
   inventoryPrefab: {fileID: 5691183997890672202, guid: bbddb74c967969747bfaa5c6894f21dc, type: 3}
   backgroundSprite: {fileID: 0}

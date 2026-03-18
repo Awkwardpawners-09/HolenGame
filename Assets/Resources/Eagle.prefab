@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4139603104961446652}
   - component: {fileID: 2759734555395339293}
   - component: {fileID: 8642458776637751639}
+  - component: {fileID: -7957347278993827886}
   m_Layer: 9
   m_Name: Eagle
   m_TagString: Objective
@@ -125,9 +126,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1037114594539312753}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.8
   m_Drag: 0.5
-  m_AngularDrag: 0.1
+  m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -343,6 +344,23 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-7957347278993827886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037114594539312753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9024627eb1b8340bf2657f730fd1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncInterval: 0.1
+  positionSnapThreshold: 1.5
+  positionSmoothThreshold: 0.05
+  smoothingSpeed: 12
+  velocitySnapThreshold: 1
 --- !u!1 &2999462271803514063
 GameObject:
   m_ObjectHideFlags: 0

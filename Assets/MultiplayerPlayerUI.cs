@@ -18,11 +18,8 @@ using Photon.Pun;
 ///   2. Assign the Inspector fields below (TMP texts + Image slots).
 ///   3. Before joining a room, set the local player's Photon nickname:
 ///        PhotonNetwork.LocalPlayer.NickName = PlayerDataManager.Instance.GetPlayerName();
-///   4. Before joining a room, set the avatar index in Custom Properties:
-///        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
-///        props["AvatarIndex"] = PlayerDataManager.Instance.playerData.selectedAvatarIndex;
-///        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-///   5. Done — the UI auto-populates once both players are in the room.
+///   4. That's it — this script now handles pushing the AvatarIndex to Photon automatically
+///      via OnJoinedRoom. You no longer need to set Custom Properties manually before joining.
 ///
 /// NOTE: Do NOT modify MultiplayerHolenControllerNew.cs — this script is fully standalone.
 /// </summary>
@@ -61,7 +58,13 @@ public class MultiplayerPlayerUI : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        // Attempt an immediate update in case we joined a room that already has 2 players.
+        // If we're already in a room when this script starts (e.g. scene was loaded
+        // after joining), push our properties immediately and refresh.
+        if (PhotonNetwork.InRoom)
+        {
+            PushLocalPlayerPropertiesToPhoton();
+        }
+
         RefreshUI();
     }
 
@@ -69,13 +72,27 @@ public class MultiplayerPlayerUI : MonoBehaviourPunCallbacks
     //  PHOTON CALLBACKS  (MonoBehaviourPunCallbacks)
     // ────────────────────────────────────────────────────────────────────────
 
+    /// <summary>
+    /// Fires the moment we successfully join a room.
+    /// This is the most reliable place to push our AvatarIndex to Photon
+    /// so the opponent always receives the correct value.
+    /// </summary>
+    public override void OnJoinedRoom()
+    {
+        PushLocalPlayerPropertiesToPhoton();
+        RefreshUI();
+    }
+
     /// <summary>Fires when a new player enters the room — refresh so slot 2 populates.</summary>
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         RefreshUI();
     }
 
-    /// <summary>Fires when a player's Custom Properties change (e.g. avatar index updated mid-session).</summary>
+    /// <summary>
+    /// Fires when any player's Custom Properties change.
+    /// Covers both AvatarIndex and NickName updates that may arrive mid-session.
+    /// </summary>
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer,
                                                   ExitGames.Client.Photon.Hashtable changedProps)
     {
@@ -123,6 +140,46 @@ public class MultiplayerPlayerUI : MonoBehaviourPunCallbacks
     }
 
     // ────────────────────────────────────────────────────────────────────────
+    //  PHOTON PROPERTY SYNC
+    // ────────────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Pushes the local player's current AvatarIndex (and NickName as a safety net)
+    /// into Photon Custom Properties so every other client can read them.
+    ///
+    /// Called automatically in OnJoinedRoom and on Start (if already in a room).
+    /// You can also call this manually after the player changes their avatar mid-session.
+    /// </summary>
+    private void PushLocalPlayerPropertiesToPhoton()
+    {
+        if (PlayerDataManager.Instance == null)
+        {
+            Debug.LogWarning("[MultiplayerPlayerUI] PlayerDataManager.Instance is null — cannot push avatar index.");
+            return;
+        }
+
+        int avatarIndex = PlayerDataManager.Instance.playerData.selectedAvatarIndex;
+
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
+        {
+            { AVATAR_INDEX_KEY, avatarIndex }
+        };
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+        // Also guarantee the NickName is set from PlayerDataManager in case
+        // the caller forgot to set it before joining.
+        if (string.IsNullOrWhiteSpace(PhotonNetwork.LocalPlayer.NickName))
+        {
+            string savedName = PlayerDataManager.Instance.GetPlayerName();
+            if (!string.IsNullOrWhiteSpace(savedName))
+                PhotonNetwork.LocalPlayer.NickName = savedName;
+        }
+
+        Debug.Log($"[MultiplayerPlayerUI] Pushed to Photon → AvatarIndex: {avatarIndex}, NickName: {PhotonNetwork.LocalPlayer.NickName}");
+    }
+
+    // ────────────────────────────────────────────────────────────────────────
     //  HELPERS
     // ────────────────────────────────────────────────────────────────────────
 
@@ -152,6 +209,10 @@ public class MultiplayerPlayerUI : MonoBehaviourPunCallbacks
     /// <summary>
     /// Reads the "AvatarIndex" Custom Property from the given Photon player and
     /// looks up the corresponding sprite from PlayerDataManager.avatarSprites.
+    ///
+    /// For the LOCAL player  → always reads from PlayerDataManager directly (ground truth).
+    /// For the REMOTE player → reads from their Photon Custom Properties.
+    ///
     /// Falls back to fallbackSprite if anything is missing.
     /// </summary>
     private Sprite ResolveAvatarSprite(Photon.Realtime.Player photonPlayer)
@@ -163,17 +224,30 @@ public class MultiplayerPlayerUI : MonoBehaviourPunCallbacks
 
         int index = 0;
 
-        // For the local player, read directly from PlayerDataManager (always accurate).
         if (photonPlayer.IsLocal)
         {
+            // Local player — read directly from PlayerDataManager (always accurate).
             index = PlayerDataManager.Instance.playerData.selectedAvatarIndex;
         }
         else
         {
-            // For remote players, read from their Photon Custom Properties.
+            // Remote player — read from their Photon Custom Properties.
             if (photonPlayer.CustomProperties.TryGetValue(AVATAR_INDEX_KEY, out object raw))
             {
-                index = raw is int i ? i : 0;
+                // Photon sometimes deserialises integers as int or as byte — handle both.
+                if (raw is int i) index = i;
+                else if (raw is byte b) index = b;
+                else
+                {
+                    // Last-resort: try a string parse (edge case with some Photon versions).
+                    int.TryParse(raw.ToString(), out index);
+                }
+            }
+            else
+            {
+                // Key not yet received — this can happen if the opponent joined before
+                // their properties propagated. Log a warning so it's easy to spot.
+                Debug.LogWarning($"[MultiplayerPlayerUI] '{AVATAR_INDEX_KEY}' not found in Custom Properties for player '{photonPlayer.NickName}'. Showing fallback.");
             }
         }
 
@@ -182,7 +256,22 @@ public class MultiplayerPlayerUI : MonoBehaviourPunCallbacks
     }
 
     // ────────────────────────────────────────────────────────────────────────
-    //  OPTIONAL: Call this anywhere to force a full refresh (e.g. after lobby).
+    //  PUBLIC API
     // ────────────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Call this anywhere to force a full refresh (e.g. after returning from a lobby).
+    /// </summary>
     public void ForceRefresh() => RefreshUI();
+
+    /// <summary>
+    /// Call this if the local player changes their avatar WHILE already in a room
+    /// (e.g. in a pre-game lobby scene that uses Photon). Pushes the new index to
+    /// all other clients and refreshes the local UI.
+    /// </summary>
+    public void OnLocalAvatarChanged()
+    {
+        PushLocalPlayerPropertiesToPhoton();
+        RefreshUI();
+    }
 }

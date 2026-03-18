@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 3843011511688220064}
   - component: {fileID: 7705894767857214454}
   - component: {fileID: 2816953180825882225}
+  - component: {fileID: -4323500789716023412}
   m_Layer: 9
   m_Name: Carabao
   m_TagString: Objective
@@ -202,7 +203,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.61, y: 0.731, z: 58.148907}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3343285222776423561}
@@ -346,7 +347,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 8761972755182820141}
   - {fileID: 3843011511688220064}
-  sceneViewId: 7
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &8761972755182820141
@@ -507,6 +508,23 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-4323500789716023412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3390990395302642227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9024627eb1b8340bf2657f730fd1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncInterval: 0.1
+  positionSnapThreshold: 1.5
+  positionSmoothThreshold: 0.05
+  smoothingSpeed: 12
+  velocitySnapThreshold: 1
 --- !u!1 &4113540158091135421
 GameObject:
   m_ObjectHideFlags: 0

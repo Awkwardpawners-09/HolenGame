@@ -3541,7 +3541,7 @@ MonoBehaviour:
   buttonModeArc: {fileID: 324114218}
   buttonModeDownward: {fileID: 1068011873}
   activeLaunchMode: 0
-  minSwipeDistance: 50
+  minSwipeDistance: 10
   maxSwipeDistance: 500
   minLaunchForce: 5
   maxLaunchForce: 100
@@ -3555,12 +3555,12 @@ MonoBehaviour:
   useSpeedForce: 1
   groundLayerName: Ground
   arcAngle: 60
-  arcForceMultiplier: 1.1
-  arcDragAmplification: 2.5
+  arcForceMultiplier: 1.65
+  arcDragAmplification: 1
   arcMaxTargetRadius: 100
-  downwardSpawnHeightOffset: 4
-  downwardAngle: 5
-  downwardForceMultiplier: 0.8
+  downwardSpawnHeightOffset: 5
+  downwardAngle: 15
+  downwardForceMultiplier: 1.1
   trajectoryPointCount: 60
   trajectoryTimeStep: 0.1
   defaultLineLength: 30
@@ -27021,7 +27021,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8416272007489913916}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a918cd42a3d5e41489f1847d3cbb4184, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

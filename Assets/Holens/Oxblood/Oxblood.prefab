@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d15e008992dbd844a42f9174caa0fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holenData: {fileID: 11400000, guid: 25f30b05777383b468b4117796730496, type: 2}
+  holenData: {fileID: 11400000, guid: 1d5e5315a5a14cb419e9be92ac1495a2, type: 2}
 --- !u!96 &2573982518734136167
 TrailRenderer:
   serializedVersion: 3

@@ -21,6 +21,12 @@ using UnityEngine;
 ///    One final "settle" sync is sent when the holen comes to rest so both clients end
 ///    up at exactly the same resting position.
 ///
+/// 4. In offline / single-player mode (not in a Photon room), this component does
+///    nothing and has zero impact on gameplay.
+///
+/// 5. Call DisableCorrection() before launching a ball so the corrector does not fight
+///    the launch velocity on the non-master client.
+///
 /// SETUP
 /// ─────
 /// • Add this script to each wager Holen prefab.
@@ -61,6 +67,31 @@ public class HolenSyncCorrector : MonoBehaviourPun
     // Track whether holen was sleeping last frame to detect wake/sleep transitions
     private bool wasSleeping = false;
 
+    // When false, NonMasterClientUpdate does nothing — prevents the corrector from
+    // fighting the launch velocity after a ball is shot.
+    private bool correctionEnabled = true;
+
+    // ── Public API ─────────────────────────────────────────────────
+
+    /// <summary>
+    /// Call this before launching the ball to prevent the sync corrector from
+    /// snapping the ball back to its pre-launch position on the non-master client.
+    /// </summary>
+    public void DisableCorrection()
+    {
+        correctionEnabled = false;
+    }
+
+    /// <summary>
+    /// Re-enables position correction and resets the sync target so stale
+    /// pre-launch data doesn't cause an unwanted snap.
+    /// </summary>
+    public void EnableCorrection()
+    {
+        correctionEnabled = true;
+        hasReceivedSync = false;
+    }
+
     // ── Unity lifecycle ────────────────────────────────────────────
     private void Awake()
     {
@@ -71,6 +102,9 @@ public class HolenSyncCorrector : MonoBehaviourPun
 
     private void Update()
     {
+        // Skip entirely in offline / single-player mode — no impact on gameplay
+        if (!PhotonNetwork.InRoom) return;
+
         if (PhotonNetwork.IsMasterClient)
         {
             MasterClientUpdate();
@@ -120,6 +154,7 @@ public class HolenSyncCorrector : MonoBehaviourPun
     // ── Non-Master Client: receive and correct ─────────────────────
     private void NonMasterClientUpdate()
     {
+        if (!correctionEnabled) return;
         if (!hasReceivedSync) return;
         if (rb.IsSleeping()) return; // Already at rest; hard snap was already applied
 
@@ -142,6 +177,7 @@ public class HolenSyncCorrector : MonoBehaviourPun
             if (Vector3.Distance(rb.velocity, targetVelocity) > velocitySnapThreshold)
                 rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * smoothingSpeed);
         }
+        // else: error is within dead zone — do nothing and let physics run naturally
     }
 
     // ── RPC received by non-master clients ────────────────────────

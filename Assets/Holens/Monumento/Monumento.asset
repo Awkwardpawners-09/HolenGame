@@ -17,7 +17,7 @@ MonoBehaviour:
   holenName: Monumento
   holenIcon: {fileID: 21300000, guid: 1b42b15f81aa2a944848e1557cc1a6c7, type: 3}
   property: 0
-  holenPrefab: {fileID: 4543069569791729328, guid: 5c3948e4e6397884ba7a8f2e6116cc6e, type: 3}
+  holenPrefab: {fileID: 2055623319550868751, guid: ae96677f96101b541acbf519ede64ada, type: 3}
   InventoryImage: {fileID: 0}
   inventoryPrefab: {fileID: 2489918361564836060, guid: fe3c20851cd256c47ad2603bb4d06bfc, type: 3}
   backgroundSprite: {fileID: 0}

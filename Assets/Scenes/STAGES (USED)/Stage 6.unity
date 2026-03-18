@@ -3450,7 +3450,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 04a186fb153eaed4cab5e5ffbf4695a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4c9ed9fa9dd5c0f40b20b647f4387635, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3862,7 +3862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holensPosition: {fileID: 347321878}
-  holensBallPrefab: {fileID: 4543069569791729328, guid: 8b0f2b74dcd477c478c8ea30f9410671, type: 3}
+  holensBallPrefab: {fileID: 1037114594539312753, guid: 09621acc2d274384cbe200af973ccafe, type: 3}
   cinemachineCamera: {fileID: 1728861250}
   mainCamera: {fileID: 133991841}
   cameraSpawnPoint: {fileID: 286807596}
@@ -3872,13 +3872,13 @@ MonoBehaviour:
   buttonModeArc: {fileID: 324114218}
   buttonModeDownward: {fileID: 1068011873}
   activeLaunchMode: 0
-  minSwipeDistance: 50
+  minSwipeDistance: 10
   maxSwipeDistance: 500
   minLaunchForce: 5
   maxLaunchForce: 100
   swipeTimeWindow: 1
-  arcSwipeTimeWindow: 0.7
-  downwardSwipeTimeWindow: 0.7
+  arcSwipeTimeWindow: 1
+  downwardSwipeTimeWindow: 1
   requireTouchOnBall: 1
   swipeDeadZone: 20
   ballLayerName: HolenBall
@@ -3886,12 +3886,12 @@ MonoBehaviour:
   useSpeedForce: 1
   groundLayerName: Ground
   arcAngle: 60
-  arcForceMultiplier: 1.1
-  arcDragAmplification: 2.5
+  arcForceMultiplier: 1.65
+  arcDragAmplification: 1
   arcMaxTargetRadius: 100
-  downwardSpawnHeightOffset: 4
-  downwardAngle: 5
-  downwardForceMultiplier: 0.8
+  downwardSpawnHeightOffset: 5
+  downwardAngle: 15
+  downwardForceMultiplier: 1.1
   trajectoryPointCount: 60
   trajectoryTimeStep: 0.1
   defaultLineLength: 30
@@ -4693,7 +4693,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 12d506fcdb1c1d64aa5ff62b7927e268, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7fdf11f9af7cce4289c45357504be03, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19681,7 +19681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ec5c9a0df1d788c4dbeae0c737c46325, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7063bcba662bafa46a84f338ad2f1764, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -33506,7 +33506,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8416272007489913916}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a918cd42a3d5e41489f1847d3cbb4184, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

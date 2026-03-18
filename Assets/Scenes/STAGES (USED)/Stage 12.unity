@@ -5248,7 +5248,7 @@ MonoBehaviour:
   buttonModeArc: {fileID: 324114218}
   buttonModeDownward: {fileID: 1068011873}
   activeLaunchMode: 0
-  minSwipeDistance: 50
+  minSwipeDistance: 10
   maxSwipeDistance: 500
   minLaunchForce: 5
   maxLaunchForce: 100
@@ -5262,12 +5262,12 @@ MonoBehaviour:
   useSpeedForce: 1
   groundLayerName: Ground
   arcAngle: 60
-  arcForceMultiplier: 1.1
-  arcDragAmplification: 2.5
+  arcForceMultiplier: 1.65
+  arcDragAmplification: 1
   arcMaxTargetRadius: 100
   downwardSpawnHeightOffset: 4
   downwardAngle: 5
-  downwardForceMultiplier: 1.5
+  downwardForceMultiplier: 1.2
   trajectoryPointCount: 60
   trajectoryTimeStep: 0.1
   defaultLineLength: 30

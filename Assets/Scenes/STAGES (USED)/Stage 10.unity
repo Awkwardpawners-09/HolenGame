@@ -4014,7 +4014,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 04a186fb153eaed4cab5e5ffbf4695a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5ca77d7c3eee39e4c8d4354759c1b281, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4302,7 +4302,7 @@ MonoBehaviour:
   buttonModeArc: {fileID: 324114218}
   buttonModeDownward: {fileID: 1068011873}
   activeLaunchMode: 0
-  minSwipeDistance: 50
+  minSwipeDistance: 10
   maxSwipeDistance: 500
   minLaunchForce: 5
   maxLaunchForce: 100
@@ -4316,12 +4316,12 @@ MonoBehaviour:
   useSpeedForce: 1
   groundLayerName: Ground
   arcAngle: 60
-  arcForceMultiplier: 1.1
+  arcForceMultiplier: 1.65
   arcDragAmplification: 2.5
   arcMaxTargetRadius: 100
   downwardSpawnHeightOffset: 4
-  downwardAngle: 5
-  downwardForceMultiplier: 1.5
+  downwardAngle: 15
+  downwardForceMultiplier: 1.1
   trajectoryPointCount: 60
   trajectoryTimeStep: 0.1
   defaultLineLength: 30
@@ -5487,7 +5487,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 12d506fcdb1c1d64aa5ff62b7927e268, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d43fb82a93496d744afe03f0f767ca17, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21944,7 +21944,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ec5c9a0df1d788c4dbeae0c737c46325, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc0c4cef1e87b714eb46422420a6e5ab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -24765,9 +24765,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba09901ada6fa64f802574469a36e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holen1Data: {fileID: 11400000, guid: 82c89cf6c3514be4da62921d5b0ead6c, type: 2}
-  holen2Data: {fileID: 11400000, guid: 82cfab0a78144964c887874408cea060, type: 2}
-  holen3Data: {fileID: 11400000, guid: a6dfe7b3c88ea7a43b1e33ab61bd07c7, type: 2}
+  holen1Data: {fileID: 11400000, guid: 18a049fcbeba3c34682474b6f6b72c93, type: 2}
+  holen2Data: {fileID: 11400000, guid: 4b49251ae8bef0246aafe0df5aaf699b, type: 2}
+  holen3Data: {fileID: 11400000, guid: 6888456db34ce3745b7fcdba91aa48a4, type: 2}
   chosenHolenImage: {fileID: 656463754}
   holensLauncher: {fileID: 310227659}
   holen1Button: {fileID: 487662687}
