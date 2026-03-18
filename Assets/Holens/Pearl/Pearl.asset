@@ -16,5 +16,11 @@ MonoBehaviour:
   rarity: Epic
   holenName: Pearl
   holenIcon: {fileID: 21300000, guid: d43fb82a93496d744afe03f0f767ca17, type: 3}
+  property: 0
   holenPrefab: {fileID: 4543069569791729328, guid: c32e50549a5cd9d47ac04916774a8e63, type: 3}
+  InventoryImage: {fileID: 0}
+  inventoryPrefab: {fileID: 2489918361564836060, guid: dd87918fca32b0942a1b4803218a7a9c, type: 3}
+  backgroundSprite: {fileID: 0}
+  detailImage: {fileID: 0}
+  description: 
   maxStack: 1

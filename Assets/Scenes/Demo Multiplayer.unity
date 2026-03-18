@@ -4894,26 +4894,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holenControls: {fileID: 158236593}
-  holenStandbyControls: {fileID: 0}
-  tinCanPrefab: {fileID: 0}
-  tinCanSpawnPoint: {fileID: 0}
+  holenStandbyControls: {fileID: 1669519578}
+  tinCanPrefab: {fileID: 4467951910310100950, guid: 941659ca50054d8408a19b2a471b3967, type: 3}
+  tinCanSpawnPoint: {fileID: 2018621327}
   tinCanLifetime: 20
   tinCanCooldown: 40
   tinCanRotationMin: {x: 0, y: 0, z: 0}
   tinCanRotationMax: {x: 0, y: 360, z: 0}
-  tinCanCooldownText: {fileID: 0}
-  tinCanButton: {fileID: 0}
-  wallPrefab: {fileID: 0}
-  wallSpawnPoint: {fileID: 0}
+  tinCanCooldownText: {fileID: 508036888}
+  tinCanButton: {fileID: 2028951951}
+  wallPrefab: {fileID: 8237585093388300316, guid: e4fa85d7ce9a90847bb33dc054bfdf14, type: 3}
+  wallSpawnPoint: {fileID: 745576297}
   wallLifetime: 0
   wallCooldown: 0
-  wallCooldownText: {fileID: 0}
-  wallButton: {fileID: 0}
-  mudEffectObject: {fileID: 0}
+  wallCooldownText: {fileID: 1130790071}
+  wallButton: {fileID: 1849382334}
+  mudEffectObject: {fileID: 1294820818}
   mudLifetime: 10
   mudCooldown: 30
-  mudCooldownText: {fileID: 0}
-  mudButton: {fileID: 0}
+  mudCooldownText: {fileID: 1130156455}
+  mudButton: {fileID: 2143832837}
 --- !u!4 &312863715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 006e93355555c744a8b13f3c21adb4ff, type: 3}

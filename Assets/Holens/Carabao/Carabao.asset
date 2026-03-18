@@ -19,7 +19,7 @@ MonoBehaviour:
   property: 0
   holenPrefab: {fileID: 4543069569791729328, guid: 400319d6afc2cd94892d3e6e2805a269, type: 3}
   InventoryImage: {fileID: 0}
-  inventoryPrefab: {fileID: 0}
+  inventoryPrefab: {fileID: 2489918361564836060, guid: 52a5b41472f89c0449b50f2ab30c6147, type: 3}
   backgroundSprite: {fileID: 0}
   detailImage: {fileID: 0}
   description: 
